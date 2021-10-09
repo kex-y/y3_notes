@@ -1,0 +1,204 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Quantum Mechanics I},
+  pdfauthor={Kexing Ying},
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=red,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin = 1.5in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{esint}
+\usepackage[ruled,vlined]{algorithm2e}
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition*}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem*{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{example}{Example}[section]
+\newcommand{\diag}{\mathop{\mathrm{diag}}}
+\newcommand{\Arg}{\mathop{\mathrm{Arg}}}
+\newcommand{\hess}{\mathop{\mathrm{Hess}}}
+
+\title{Quantum Mechanics I}
+\author{Kexing Ying}
+\date{July 24, 2021}
+
+\begin{document}
+\maketitle
+
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\newpage
+
+\section{Classical Mechanics}
+
+In order to later compare quantum mechanics, let us first introduce some 
+classical mechanics. 
+
+In classical mechanics, we study classical objects/particles 
+which has a mass \(m \in \mathbb{R}\) and a state. In particular, the state 
+of the particle is represented by its position, commonly \(r \in \mathbb{R}^3\), 
+and its velocity \(v = \dot r \in \mathbb{R}^3\). More conveniently, we can also 
+represent the velocity in terms of its momentum \(p = mv\).
+
+We recall Newton's second law which describes how the state of a particle changes 
+in time in the presence of external forces. That is, 
+\[\dot p = F(r),\]
+where \(F\) is the external force depending on \(r\).
+
+As the state of a particle is represented by its position and momentum, visually 
+the state of a particle can be represented by a phase-space with a trajectory 
+corresponding to \((r(t), p(t))\). 
+
+An another formulation of classical mechanics is Hamilton's formulation. While 
+Hamilton's formulation is very powerful, it does not apply to every classical system. 
+In particular, Hamilton's formulation requires the system to be conservative. 
+
+\begin{definition}[Conservative]
+  A classical system is said to be conservative if 
+  \[F(r) = - \nabla V(r),\]
+  where \(V\) is the potential given the position.
+\end{definition}
+
+\begin{definition}[Hamiltonian Function]
+  The Hamiltonian function \(H\) is defined as 
+  \[H(p, q) = \frac{p^2}{2m} + V(q),\]
+  where \(p^2/2m\) is the kinetic energy and \(V\) the potential.
+\end{definition}
+
+Thus, with the definition of conservative in mind, we see that for a one 
+dimensional system with position given by \(q \in \mathbb{R}\), we have
+\[\dot p = F(q) = - \pdv{V}{q} \text{ and } \dot q = \frac{p}{m}.\]
+Writing in terms of the Hamiltonian function, we obtain, 
+\[\dot p = - \pdv{H}{q} \text{ and } \dot q = \pdv{H}{p}.\]
+These two equations are known as Hamilton's canonical equations and describe 
+the motion of a particle in a conservative system. The theory itself is more 
+general in which we simply require \(p, q\) to be canonically conjugate 
+variables.
+
+\begin{example}[Free Particle]
+  Consider a free particle with \(V(q) = 0\) (thus, \(H = p^2 / 2m\)), we have 
+  the canonical equations \(\dot p = 0\) and \(\dot q = p / m\), and thus, 
+  \(p(t) = p(0)\) and \(q(t) = q(0) + \frac{p}{m} t\).
+\end{example}
+
+\begin{example}[Harmonic Oscillator]
+  A harmonic oscillator is described by \(V(q) \propto q^2\). By similar calculation 
+  we find \(\ddot q = - \frac{2k}{m} q\) for some \(k\) such that \(V = k q^2\).
+\end{example}
+
+\subsection{Poisson Brackets}
+
+As for a particle in classical mechanics, the state is given by its position and 
+momentum, any measurable quantity \(A\) is given as a function \(A(p, q)\) 
+such that 
+\[\dv{A}{t} = \pdv{A}{p}\dot p + \pdv{A}{q} \dot q + \pdv{A}{t}.\]
+Substituting the Hamiltonian equations, we have 
+\[\dv{A}{t} = - \pdv{A}{p} \pdv{H}{q} + \pdv{A}{q} \pdv{H}{p} + \pdv{A}{t}
+  = \pdv{A}{q} \pdv{H}{p} - \pdv{A}{p} \pdv{H}{q} + \pdv{A}{t}.\]
+As the first term of this equation is very common, we denote it as \(\{H, A\}\) 
+such that 
+\[\dv{A}{t} = \{H, A\} + \pdv{A}{t}.\] 
+Similarly, for general variables \(F, G\), 
+\[\{F, G\} := \sum_{n = 1}^N \pdv{F}{p_n}\pdv{G}{q_n} - \pdv{F}{q_n}\pdv{G}{q_n},\]
+and is known as the Poisson bracket of \(F\) and \(G\).
+
+\begin{definition}[Poisson Bracket]
+  A Poisson bracket is simply any bracket of functions satisfying 
+  \begin{itemize}
+    \item \(\{A, A\} = 0\);
+    \item \(\{c_1 A + c_2 B, C\} = c_1\{A, C\} + c_2\{B, C\}\);
+    \item \(\{A, B\} = -\{B, A\}\).
+    \item \(\{c, A\} = 0\) for any constant \(c\);
+    \item \(\{AB, C\} = A\{B, C\} + \{A, C\}B\) (Leibniz rule);
+    \item \(\{A, \{B, C\}\} + \{B, \{C, A\}\} + \{C, \{A, B\}\} = 0\) (Jacobi identity).
+  \end{itemize}
+\end{definition}
+As an exercise, one may check that the Poisson bracket defined above is indeed 
+a Poisson bracket.
+
+\begin{proposition}
+  \(\{p, q\} = 1\) and in higher dimensions. \(\{p_i, q_j\} = \delta_{ij}\).
+\end{proposition}
+
+\begin{definition}[Canonical Conjugate Variables]
+  \(P(p, q), Q(p, q)\) are called canonical conjugate variables if \(\{P, Q\} = 1\). 
+  Similarly, for higher dimensions, \(P, Q\) are canonical conjugates if 
+  \(\{P_i, Q_j\} = \delta_{ij}\).
+\end{definition}
+
+\begin{proposition}
+  For any pair of canonical conjugate variables \(P, Q\), we have 
+  \[\dot P_j = - \pdv{H}{Q_j} = \{H, P_j\} \text{ and } 
+    \dot Q_j = \pdv{H}{P_j} = \{H, Q_j\}.\]
+\end{proposition}
+
+\end{document}

@@ -1,0 +1,808 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Functional Analysis},
+  pdfauthor={Kexing Ying},
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=red,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin = 1.5in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{esint}
+\usepackage[ruled,vlined]{algorithm2e}
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{prop}{Proposition}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem*{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{example}{Example}[section]
+\newcommand{\diag}{\mathop{\mathrm{diag}}}
+\newcommand{\Arg}{\mathop{\mathrm{Arg}}}
+\newcommand{\hess}{\mathop{\mathrm{Hess}}}
+
+\title{Functional Analysis}
+\author{Kexing Ying}
+\date{May 30, 2021}
+
+\begin{document}
+\maketitle
+
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\newpage
+
+\section{Basic Concepts}
+
+\subsection{Basic Definitions}
+
+Unless stated otherwise, we assume all topologies are Hausdorff and we denote 
+\(\mathbb{K}\) for the field \(\mathbb{R}\) or \(\mathbb{C}\).
+
+\begin{definition}[Banach Space]
+  A Banach space is a normed linear space \((X, \|\cdot\|)\) that is complete 
+  with respect to the induced metric.
+\end{definition}
+
+\begin{definition}[Linear Hull]
+  Let \((X, \|\cdot\|)\) be a normed space and \(M \subseteq X\). Then, the 
+  linear hull of \(M\), denoted by \(\text{span}(M)\), is the intersection of 
+  all linear subspaces containing \(M\).
+\end{definition}
+
+\begin{definition}[Closed and Open Segment]
+  If \(E\) is a vector space and \(x, y \in E\), then 
+  \[[x, y] := \{\lambda x + (1 - \lambda) y \mid \lambda \in [0, 1]\},\] 
+  is called the closed segment defined by \(x\) and \(y\). Similarly, 
+  \[(x, y) := \{\lambda x + (1 - \lambda) y \mid \lambda \in (0, 1)\},\] 
+  is called the open segment defined by \(x\) and \(y\).
+\end{definition}
+
+\begin{definition}[Convex]
+  Give a vector space \(E\), a set \(C \subseteq E\) is convex if 
+  \([x, y] \subseteq C\) for all \(x, y \in C\).
+\end{definition}
+
+\begin{definition}[Convex Hull]
+  If \(M \subseteq X\), the convex hull of \(M\), denoted \(\text{conv}(M)\) is 
+  smallest convex subset of \(X\) containing \(M\), i.e. the intersection of 
+  all convex subsets of \(X\) containing \(M\).
+\end{definition}
+
+\begin{definition}[Convex Function]
+  Given a convex subset \(U\) of the vector space \(V\), the function 
+  \(f : U \to \mathbb{R}\) is said to be convex if 
+  \[f(\lambda x + (1 - \lambda) y) \le \lambda f(x) + (1 - \lambda) f(y),\]
+  for all \(x, y \in U\) and \(\lambda \in [0, 1]\). Furthermore, we say 
+  \(f\) is strictly convex if 
+  \[f(\lambda x + (1 - \lambda) y) < \lambda f(x) + (1 - \lambda) f(y),\]
+  for all \(x, y \in U\), \(x \neq y\), \(\lambda \in (0, 1)\).
+\end{definition}
+
+By the triangle inequality, we observe that the norm of a normed space is 
+a convex function on that space. 
+
+\begin{definition}[Symmetric and Balanced]
+  A set \(M \subseteq X\) is called symmetric if \((-1) M \subseteq M\) and 
+  balanced if \(\alpha M \subseteq M\) for all \(\alpha \in \mathbb{K}, 
+  |\alpha| \le 1\).
+\end{definition}
+
+\begin{proposition}
+  Let \(Y \le X\) where \((X, \|\cdot\|)\) is a Banach space. Then \(Y\) is 
+  a Banach space if and only if \(Y\) is closed in \(X\). 
+\end{proposition}
+\begin{proof}
+  Clearly, if \(Y\) is closed, it contains all the limits of all Cauchy 
+  sequences, and thus, is Banach. On the other hand, as all convergent sequences 
+  are Cauchy, \(Y\) contains its limit points, and thus is closed.
+\end{proof}
+
+\begin{definition}[Bounded]
+  A subset \(M\) of a normed space \((X, \|\cdot\|)\) is called bounded if 
+  there exists some \(r > 0\) such that \(M \subseteq rB_X\) (where \(B_X\) is 
+  the unit ball in \(X\)). \(M\) is called totally bounded if for every 
+  \(\epsilon > 0\), \(M\) can be can be covered by a finite number of 
+  \(\epsilon\) balls. A sequence \((x_n) \subseteq X\) is bounded if the 
+  set \(\{x_n \mid n \in \mathbb{N}\}\) is bounded.
+\end{definition}
+
+\begin{proposition}
+  Every totally bounded set is bounded.
+\end{proposition}
+\begin{proof}
+  Take \(\epsilon = 1\) and suppose \(M\) is covered by \(n\) balls of radius 
+  \(1\), \((B_1(x_i))_{i = 1}^n\). Then, we have for all \(x \in M\), 
+  there exists some \(i \in \{1, \cdots, n\}\) such that \(x \in B_1(x_i)\), 
+  and thus,
+  \[\|x\| = \|x - x_i + x_i\| \le \|x - x_i\| + \|x_i\| < 1 + \|x_i\| \le 
+    1 + \max_{i = 1, \cdots, n} \|x_i\|.\]
+  Hence, choosing \(r = 1 + \max_{i = 1, \cdots, n} \|x_i\|\) suffices.
+\end{proof}
+
+Alternatively, total boundedness can be described using \(\epsilon\)-nets. 
+
+\begin{definition}[\(\epsilon\)-net and \(\epsilon\)-separated]
+  Let \(M\) be a subset of the normed space \((X, \|\cdot\|)\). Then, 
+  \(A \subseteq M\) is an \(\epsilon\)-net in \(M\) if 
+  \[M \subseteq \bigcup_{x \in A} B_\epsilon(x).\]
+  That is to say, all elements of \(M\) are at most \(\epsilon\) away from 
+  \(A\). 
+  
+  On the other hand \(A \subseteq M\) is said to be \(\epsilon\)-separated in 
+  \(M\) if \(\|x - y\| \ge \epsilon\) for all \(x, y \in A\), \(x \neq y\). 
+\end{definition}
+
+Clearly, we see that a set \(M \subseteq X\) is totally bounded if and only if 
+for every epsilon there exists a finite \(\epsilon\)-net.
+Furthermore, we see that a maximal \(\epsilon\)-separated set is an \(\epsilon\)-net.
+
+\begin{proposition}
+  Let \((X, \|\cdot\|)\) be a \(n\)-dimensional real normed space and suppose
+  \((x_j)_{j = 1}^N\) is an \(\epsilon\)-net of \(B_X\). Then, 
+  \(N \ge \epsilon^{-n}\).
+\end{proposition}
+\begin{proof}
+  Let \(T\) be the natural linear isomorphism between \(X\) and \(\mathbb{R}^n\) 
+  and denote \(\lambda\) the standard Lebesgue measure on \(\mathbb{R}^n\). Then, 
+  \[\lambda(T(B_X)) \le \lambda\left(T\left(\bigcup_{i = 1}^N B_\epsilon(x_i)\right)\right)
+  = \lambda\left(\bigcup_{i = 1}^N T(B_\epsilon(x_i))\right) 
+  \le \sum_{i = 1}^N \lambda(T(B_\epsilon(x_i))).\]
+  Now, since \(T(B_\epsilon(x_i)) = T(B_\epsilon(0)) + T(x_i)\), we have 
+  \[\sum_{i = 1}^N \lambda(T(B_\epsilon(x_i))) = \sum \lambda(T(B_\epsilon(0) + T(x_i))) 
+  = N \lambda(\epsilon T(B_X)) = N \epsilon^{-n} \lambda(T(B_X)),\]
+  and the result follows.
+\end{proof}
+
+\begin{proposition}
+  On the other hand, there is an \(\epsilon\)-net \((x_j)_{j = 1}^N\) with 
+  \(N \le (1 + 2 / \epsilon)^n\).
+\end{proposition}
+\begin{proof}
+  Since the maximal \(\epsilon\)-separated set is an \(\epsilon\)-net we will 
+  show the existence of a maximal \(\epsilon\)-separated set with 
+  \(N \le (1 + 2 / \epsilon)^n\) elements. Let \((x_j)_{j = 1}^N\) be a 
+  maximal \(\epsilon\)-separated set (in which we add points sequentially 
+  until it is impossible to do so), then, it is clear that 
+  \(B_{\epsilon / 2}(x_i) \cap B_{\epsilon / 2}(x_j) = \varnothing\) for all 
+  \(i \neq j\). Thus, as \(B_{\epsilon / 2}(x_i) \subseteq (1 + \epsilon / 2)B_X\), 
+  \[N (2 / \epsilon)^{n} \lambda(T(B_X)) = 
+    \lambda\left(T\left(\bigcup_{i = 1}^N B_{\epsilon / 2}(x_i)\right)\right) 
+    \lambda((1 + \epsilon / 2)T(B_X)) = (1 + \epsilon / 2)^n \lambda(T(B_X)).\]
+  With that, by rearranging, the result follows.
+\end{proof}
+
+\subsection{Classical Spaces}
+
+We recall some results from measure theory including Hölder and Minkowski's 
+inequalities. 
+
+\begin{proposition}
+  \((C[0, 1], \|\cdot\|_\infty)\) is a Banach space (where \(C_[0, 1]\) is the 
+  vector space of continuous functions \(f : [0, 1] \to \mathbb{K}\) and 
+  \(\|\cdot\|_\infty\) is the supremum norm).
+\end{proposition}
+\begin{proof}
+  See first year analysis.
+\end{proof}
+
+By the same argument, the space \(C(K)\) where \(K\) is compact, endowed with 
+the supremum norm is also a Banach space.
+
+It is easy to see \(C[0, 1]\) is infinite dimensional (consider the standard 
+basis for the polynomials) and more generally, \(C(K)\) for compact \(K\) is 
+infinite dimensional as soon as \(K\) is infinite (this follows by applying 
+the Tietze-Urysohn theorem on distinct Kronecker delta functions).
+
+\begin{definition}[Sequence Space]
+  \(\ell^n_\infty\) is the \(n\)-dimensional vector space of all 
+  \(n\)-tuples of \(\mathbb{K}\) endowed with the supremum norm 
+  \(\|\cdot\|_\infty\).
+\end{definition}
+
+We note that \(\ell^n_\infty\) is a special case of \(C(K)\) endowed with the 
+discrete topology.
+
+By considering Hölder and Minkowski's inequalities for the sequence spaces, 
+it is clear that we may define the classical \(\ell^n_p\) spaces.
+
+\begin{definition}[Sequence Space]
+  \(\ell^n_p\) for some \(p \in [1, \infty)\) is the \(n\)-dimensional vector 
+  space of all \(n\)-tuples of \(\mathbb{K}\) endowed with the norm 
+  \(\|\cdot\|_p\) such that 
+  \[\|x\|_p := \left(\sum_{i = 1}^n |x_i|^p \right)^{\frac{1}{p}}.\]
+  Furthermore, we denote \(\ell_p = \ell_p(\mathbb{N})\) for the vector space 
+  of all scalar valued sequences \(x = (x_i)_{i = 1}^\infty\) satisfying 
+  \(\sum |x_i| < \infty\) endowed with the norm  
+  \[\|x\|_p := \left(\sum_{i = 1}^\infty |x_i|^p \right)^{\frac{1}{p}}.\]
+  In the case \(p = \infty\), we define 
+  \[\|x\|_\infty = \sup\{|x_i| \mid i \in \mathbb{N}\}.\]
+  We denote \(c_{00} = c_{00}(\mathbb{N})\) for the subspace of \(\ell_\infty\) 
+  consisting of the sequences with finite support. We also \(c = c(\mathbb{N})\) 
+  for the subspace of convergent sequences. Lastly, we denote 
+  \(c_0 = c_0(\mathbb{N})\) for the subspace of sequences convergent to 0.
+
+  It is clear that \(c_{00} \subseteq c_0 \subseteq c\).
+\end{definition}
+
+\begin{proposition}~
+  \begin{itemize}
+    \item For \(p \in [1, \infty]\), \(\ell_p\) is a Banach space;
+    \item \(c\) and \(c_0\) are closed subspaces of \(\ell_\infty\) (and hence, 
+      also Banach);
+    \item \(c_{00}\) is not complete.
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  The first claim is similar to that for the function spaces while the other 
+  two are simple analysis proofs.
+\end{proof}
+
+We introduce the following generalisation for the above notion. We denote 
+\(\Gamma\) an arbitrary non-empty set and \(\ell_p(\Gamma)\) the set of functions 
+\(f : \Gamma \to \mathbb{K}\) such that \(\sum_{\gamma \in \Gamma} 
+|f(\gamma)|^p < \infty\) equipped with the norm 
+\[\|f\|_p := \sum_{\gamma \in \Gamma} |f(\gamma)|^p,\]
+where we define 
+\[\sum_{\gamma \in \Gamma} |f(\gamma)|^p := \sup \left\{\sum_{\gamma \in F} 
+  |f(\gamma)|^p \mid F \text{ a finite subset of } \Gamma\right\}.\]
+Furthermore, we define \(l_\infty(\Gamma)\) the set of all bounded functions 
+\(f : \Gamma \to \mathbb{K}\) endowed with the supremum norm \(\|\cdot\|_\infty\). 
+Similarly, we define the subspaces \(c_{0}(\Gamma)\) for the set of functions 
+such that \(\{\gamma \in \Gamma \mid |f(\gamma)| \ge \epsilon\}\) is finite for 
+all \(\epsilon > 0\), and \(c_{00}(\Gamma)\) for the set of functions with finite 
+support. Note that \(c_0(\Gamma) = \overline{c_{00}(\Gamma)}\) (clearly 
+\(c_0(\Gamma) \subseteq c_{00}(\Gamma)\) and we may construct a sequence in 
+\(c_0\) converging to each element of \(c_{00}\)).
+ 
+From the same argument as all the others, one can show \(\ell_p(\Gamma)\) and 
+\(c_{0}(\Gamma)\) are Banach spaces.
+
+\begin{definition}[Function Space]
+  Given \(p \in [1, \infty)\), we define \(L^p := \mathcal{L}^p / \sim\) where 
+  \(\sim\) is the equivalence relation
+  \[f \sim g \iff f = g \text{ a.e.}\]
+  and \(\mathcal{L}^p\) the set of measurable functions \(f\) such that 
+  \[\int |f|^p \dd \mu < \infty.\]
+\end{definition}
+
+We recall that \(L^p\) spaces are Banach spaces.
+
+\begin{proposition}
+  A normed space \((X, \|\cdot\|)\) is a Banach space if and only if every 
+  absolutely convergent series in \(X\) is convergent. 
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{definition}[Essential Supremum]
+  Given \(f : [0, 1] \to \mathbb{R}\) measurable sets, we define the essential 
+  supremum of \(f\) to be 
+  \[\text{ess} \sup(f) := \inf_{\substack{N \subseteq [0, 1],\\ \lambda(N) = 1}} 
+    (\sup f(N)).\]
+  Equivalently, 
+  \[\text{ess} \sup(f) = \inf \{\alpha \mid \lambda(f^{-1}(\alpha, \infty)) = 0\}.\]
+\end{definition}
+
+We recall that the essential supremum forms a norm on the function space resulting 
+in the Banach space \(L^\infty\), i.e. \(\|f\|_\infty = \text{ess} \sup |f|\).
+
+\subsection{Operators}
+
+\begin{proposition}
+  Let \((X, \|\cdot\|_X)\) and \((Y, \|\cdot\|_Y)\) be normed spaces and let 
+  \(T : X \to Y\) be a linear map. Then the following are equivalent,
+  \begin{enumerate}
+    \item \(T\) is continuous on \(X\);
+    \item \(T\) is continuous at \(0_X\);
+    \item there exists some \(C > 0\) such that \(\|T(x)\|_Y \le C \|x\|_X\) for all \(x \in X\);
+    \item \(T\) is Lipschitz;
+    \item \(T(B_X)\) is a bounded set in \(Y\).
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  Clearly \(1 \implies 2\), \(4 \implies 1\) and \(3, 4, 5\) are equivalent, it 
+  suffices to show \(2 \implies 1\) and \(1 \implies 5\).
+
+  Suppose \(T\) is continuous at \(0_X\), then, we will show \(T\) is continuous 
+  at \(x\) for all \(x \in X\). Fix \(\epsilon > 0\), as \(T\) is continuous at 
+  \(0_X\), there exists some \(\delta > 0\) such that for all 
+  \(y \in X, \|y\|_X < \delta\), \(\|T(y)\|_Y < \epsilon\). Then, for all 
+  \(z \in X, \|z - x\|_X < \delta\), we have \(\|T(z) - T(x)\|_Y = 
+  \|T(z - x)\|_Y < \epsilon\), and so \(T\) is continuous at \(x\).
+
+  Suppose \(T\) is continuous on \(X\), then, there exists some \(\delta > 0\) 
+  such that for all \(\|x\|_X < \delta\), \(T(x) \in B_Y\). Thus, for all 
+  \(x \in B_X\), as \(\|\delta x\|_X = \delta \|x\| < \delta\), \(\delta T(x) = 
+  T(\delta x) \in B_X\), and hence, \(T(B_X) \subseteq \delta^{-1} B_Y\) implying 
+  \(T(B_X)\) is bounded.
+\end{proof}
+
+\begin{definition}[Operator]
+  Let \(X, Y\) be normed spaces. An operator from \(X\) to \(Y\) is simply a 
+  linear map \(T : X \to Y\) and is called bounded if \(T(B_X)\) is bounded. 
+
+  We endow the space of all bounded operators from \(X\) to \(Y\), 
+  \(\mathcal{B}(X, Y)\) with the operator norm \(\|\cdot\|\) where 
+  \[\|T\| := \sup \{\|T(x)\|_Y \mid x \in B_X\}.\]
+\end{definition}
+
+It is easy to see that \(\mathcal{B}(X, Y)\) is a normed space. 
+
+\begin{proposition}
+  Let \(X, Y\) be normed spaces. Then, if \(Y\) is Banach then so is 
+  \(\mathcal{B}(X, Y)\).
+\end{proposition}
+\begin{proof}
+  Follows similarly to the proof that \(C(X, Y)\) is Banach.
+\end{proof}
+
+\begin{definition}[Dual]
+  Let \((X, \|\cdot\|_X)\) be a normed space and we denote \(X^*\) for the 
+  dual of \(X\) consisting the linear functionals of \(X\), i.e. 
+  \(X^* := \mathcal{B}(X, \mathbb{K})\).
+\end{definition}
+
+\begin{remark}
+  As \(X^*\) forms an additive group, it is easy to see that there exists a 
+  natural group action of \(X^*\) on \(X\) where given \(f \in X^*\), 
+  \(x \in X\), we define \(f \cdot x = f(x)\).
+\end{remark}
+
+We recall from second year linear algebra that for finite dimensional spaces 
+\(X\), \(\dim X = \dim X^*\). On the other hand, it is clear that if \(X\) is 
+infinite dimensional, so is \(X^*\). Indeed, if \(X^*\) is finite dimensional, 
+then \(\dim X^{**} = \dim X^* < \infty\). But, by considering the canonical 
+isomorphism from \(X^{**}\) to \(X\), it follows \(\dim X = \dim X^{**} < \infty\).
+
+\begin{proposition}
+  \(X^*\) is a Banach space for every normed space \(X\).
+\end{proposition}
+\begin{proof}
+  This is clear since \(\mathbb{K}\) is complete.
+\end{proof}
+
+\begin{definition}[Isomorphism]
+  An operator \(T \in \mathcal{B}(X, Y)\) is an linear isomorphism if it is 
+  bijective and \(T^{-1} \in \mathcal{B}(Y, X)\). We denote the set of all 
+  linear isomorphisms between \(X\) and \(Y\) by \(GL(X, Y)\).
+\end{definition}
+
+It is clear that a linear map \(T \in \mathcal{L}(X, Y)\) is a linear isomorphism 
+if and only if there exist some \(C_1, C_2\) such that for all \(x \in X\), 
+\[C_1\|x\| \le \|T(x)\| \le C_2 \|x\|.\]
+Indeed, we see that \(C_2\) bounds \(T\) while \(C_1\) bounds \(T^{-1}\).
+
+\begin{definition}[Equivalent Norms]
+  Let \(\|\cdot\|_1, \|\cdot\|_2\) be two norms on the vector space \(X\). Then 
+  we say \(\|\cdot\|_1, \|\cdot\|_2\) are equivalent if the identity map 
+  \(I_X : X \to X : x \mapsto x\) from \((X, \|\cdot\|_1)\) to \((X, \|\cdot\|_2)\) 
+  is a linear isomorphism.
+\end{definition}
+
+By the above property we see that the two norms are equivalent if and only if 
+there exists some \(C_1, C_2\) such that for all \(x \in X\), 
+\[C_1 \|x\|_1 \le \|x\|_2 \le C_2 \|x\|_1.\]
+
+Normed spaces \(X, Y\), are called linearly isomorphic if there exists a linear 
+isomorphism between \(X\) and \(Y\). It is clear that since linear isomorphisms 
+are both vector space isomorphisms and topological homeomorphisms, a linear 
+isomorphism preserves both vector space and topological properties. In particular, 
+if \(X, Y\) are linearly isomorphic and \(X\) is Banach, so is \(Y\).
+
+\begin{definition}[Isometry]
+  An operator \(T \in \mathcal{B}(X, Y)\) is an linear isometry if for all 
+  \(x \in X\), \(\|x\| = \|T(x)\|\).
+\end{definition}
+
+\begin{definition}[Banach-Mazur Distance]
+  Let \(X, Y\) be linearly isomorphic normed spaces. The Banach-Mazur distance 
+  between \(X\) and \(Y\) is defined to be 
+  \[d(X, Y) := \inf \{\|T\| \|T^{-1}\| \mid T \in GL(X, Y)\}.\]
+\end{definition}
+
+By taking the logarithm of the above, it is easy to see that \(\log \circ d\) 
+forms a metric on the space of linearly isomorphic normed spaces. In particular, 
+it turns out, the isometry classes of \(n\)-dimensional normed spaces becomes 
+a compact space with respect to this metric. This fact is called the 
+\textit{Banach-Mazur Compactum}.
+
+\begin{definition}[Compact Operator]
+  An operator \(\mathcal{B}(X, Y)\) is called a compact operator if 
+  \(\overline{T(B_X)}\) is compact. We denote the space of all compact operators 
+  from \(X\) to \(Y\) by \(\mathcal{K}(X, Y)\).
+\end{definition}
+
+\begin{definition}[Finite Rank Operator]
+  An operator \(\mathcal{B}(X, Y)\) is called a finite rank operator if 
+  \(\dim T(X) < \infty\). We denote the space of all finite rank operators from 
+  \(X\) to \(Y\) by \(\mathcal{F}(X, Y)\).
+\end{definition}
+
+\begin{definition}[Linear Projection]
+  Let \(V\) be a vector space. Then a linear projection \(P\) on \(V\) is 
+  simply a idempotent \(V\)-endomorphism, i.e. \(P : V \to V\) is a linear map 
+  such that \(P \circ P = P\). 
+\end{definition}
+
+It is not difficult to see that a linear projection provides a natural algebraic 
+decomposition of \(V\). In particular, we observe \(V = \ker P \oplus P(V)\) 
+(consider \(x = P(x) + (x - P(x))\)). Furthermore, given a decomposition 
+\(V = X \oplus Y\), we may define a projection on \(V\) by defining \(P\) 
+such that for each \(x + y \in V, P(x + y) = x\).
+
+\begin{definition}[Topological Direct Sum]
+  Given \((X, \|\cdot\|_X)\) and \((Y, \|\cdot\|_Y)\) normed spaces, we may 
+  endow the outer direct sum \(X \oplus Y\) with the norm 
+  \[\|(x, y)\| := \|x\|_X + \|y\|_Y,\]
+  with the resulting normed space called the topological direct sum of \(X\) and 
+  \(Y\).
+\end{definition}
+
+\subsection{Quotient Spaces}
+
+We recall the quotient vector space from year 2 linear algebra and apply its 
+definitions directly to normed spaces.
+
+As normed spaces are additive groups, we may quotient them by its normal subgroups. 
+
+\begin{definition}[Quotient Subspace]
+  Given a normed space \(X\) and \(Y \le X\) a closed subspace, \(X / Y\) is 
+  the space \(X / \sim\) where \(\sim\) is the equivalence relation 
+  \[x_1 \sim x_2 \iff x_1 + Y = x_2 + Y,\]
+  endowed with the norm \(\|[x]\| := \inf \{\|x\| \mid x \in [x]\}\).
+\end{definition}
+
+\begin{definition}[Quotient Map]
+  The quotient map is the canonical mapping \(q : X \to X / Y : x \mapsto [x]\).
+\end{definition}
+
+It is clear that the quotient map is linear and continuous.
+
+\begin{proposition}
+  Let \(Y\) be a closed subspace of a Banach space \(X\). Then \(X / Y\) is also 
+  Banach.
+\end{proposition}
+\begin{proof}
+  It suffices to show every absolutely convergent series in \(X / Y\) converges. 
+  Suppose \(\sum \|[x_n]\| < \infty\). Then, since for all \(n\), there exists 
+  some \(x_n \in [x_n]\) such that \(\|x_n\| \le \|[x_n]\| + 2^{-n}\), we have 
+  \(\sum \|x_n\| \le \sum (\|[x_n]\| + 2^{-n}) = \sum \|[x_n]\| + 1 < \infty\). 
+  Thus, as \(X\) is Banach, \(\sum x_n\) converges. With that, by sequential 
+  continuity, 
+  \[\sum [x_n] = \sum q(x_n) = q\left(\sum x_n\right)\]
+  also converges.
+\end{proof}
+
+\begin{theorem}\label{equiv}
+  Let \(X\) be a finite dimensional vector space. Any two norms on \(X\) are 
+  equivalent. In particular, all finite dimensional normed spaces are Banach 
+  spaces and every normed space of dimension \(n\) is isomorphic to \(\ell^n_2\).
+\end{theorem}
+\begin{proof}
+  Let \(B = \{e_1, \cdots, e_n\}\) be a basis of \(X\) and for each 
+  \(x = \sum_{i = 1}^n \lambda_i e_i \in X\), we define 
+  \(\|x\|_1 := \sum_{i = 1}^n |\lambda_i|\). By checking the axioms, it is 
+  clear that \(\|\cdot\|_1\) is a norm on \(X\). Let \(S_1 := \{x \in X \mid \|x\|_1 = 1\}\) 
+  and I claim it suffices to show \(S_1\) is compact. Indeed, if \(S_1\) is 
+  compact, as \(\|\cdot\|\) is continuous on \(S_1\), \(\|\cdot\|\) achieves its 
+  its maximum and minimum on \(S_1\). Hence, there exists some \(c_1, c_2 > 0\) 
+  such that 
+  \[c_1 \le \left\| \frac{x}{\|x\|_1}\right\| \le c_2.\]
+  Now, to show \(S_1\) is compact, take \(x^m = \sum_{i = 1}^n \lambda_i^m e_i\) 
+  a sequence in \(S_1\) and we will show it has a convergent subsequence. By 
+  definition \(\sum_i |\lambda_i^m| = 1\) and thus, \(\lambda_i^m\) is bounded 
+  for all \(m\). Thus, by Bolzanno-Weierstrass, \(\lambda_i^m\) has a convergent 
+  subsequence (with respect to \(m\)), i.e. \(\lambda_i^{m_j} \to \lambda_i\) 
+  as \(j \to \infty\) for some \(\lambda_i \in \mathbb{K}\). With that, 
+  defining \(x := \sum_i \lambda_i e_i\), we see 
+  \[\|x^{m_j} - x\| = \left\|\sum_i (\lambda_i^{m_j} - \lambda_i) e_i \right\| 
+    \to 0 \text{ as } j \to \infty.\] 
+  To show that \(\ell_2^n\) is linear isomorphic to \(X\) simply take \(T\) to 
+  be a vector space isomorphism between \(X\) and \(\ell_2^n\), then we may 
+  define \(\|\cdot\|_2\) where \(\|x\|_2 := \|T(x)\|_{\ell_2^n}\). With that 
+  \(T\) forms an linear isometry between \((X, \|\cdot\|_2)\) and \(\ell_2^n\) 
+  implying \(\|\cdot\|_{\ell_2^n} \simeq \|\cdot\|_2 \simeq \|\cdot\|_X\).
+\end{proof}
+
+By the above proposition, we see that given \(X, Y\) finite dimensional 
+normed spaces, \(\|(x, y)\|_p := (\|x\|_X^p + \|y\|_Y^p)^{1 / p}\) is a 
+equivalent renorming of \(X \oplus Y\). We denote this renormed space by 
+\((X \oplus Y)_p\).
+
+\begin{lemma}[Riesz's Lemma]
+  Let \(X\) be a normed space. If \(Y\) is a proper closed subspace of \(X\), 
+  then for every \(\epsilon > 0\), there exists some \(x \in X\), \(\|x\| = 1\), 
+  such that \(\text{dist} (x, Y) \ge 1 - \epsilon\).
+\end{lemma}
+\begin{proof}
+  Since \(Y\) is proper, \(X / Y\) is non-trivial and thus, there exists some 
+  \([x] \in X / Y\), \(\|[x]\| = 1\). Thus, as \(\|\cdot\|\) is continuous, 
+  by the intermediate value theorem, there exists some \([z] \in X / Y\), 
+  \(1 > \|[z]\| > 1 - \epsilon\). By definition, 
+  \[1 > \inf \{\|z\| \mid z \in [z]\} > 1 - \epsilon,\]
+  and thus, there exists some \(z \in [z]\), \(\|z\| < 1\). Now, defining 
+  \(x := z / \|z\|\), we have \(\|x\| = 1\) and 
+  \[\text{dist}(x, Y) = \inf_{y \in Y} \|x - y\| = 
+    \frac{1}{\|z\|} \inf_{y \in Y} \|z - y\| = \frac{\|[z]\|}{\|z\|} \ge 
+    \frac{1 - \epsilon}{1} = 1 - \epsilon.\]
+\end{proof}
+
+From Riesz's lemma, we obtain that, for proper subspaces \(Y\), the 
+quotient map \(q : X \to X / Y\) satisfies \(\|q\| = 1\) (since 
+we may construct a sequence \(x_n \in B_X\) such that \(\|q(x_n)\| \ge 
+1 - \frac{1}{n}\)).    
+
+\begin{proposition}
+  A normed space \(X\) is finite dimensional if and only if \(B_X\) is compact.
+\end{proposition}
+\begin{proof}
+  If \(X\) is finite dimensional, then \(B_X\) is compact by the same proof as 
+  theorem~\ref{equiv}. On the other hand, if \(X\) is infinitely dimensional, 
+  we construct the following sequence inductively. Choose \(x_1 \in B_X\) and 
+  for \(n \in \mathbb{N}\), choose \(x_{n + 1} \in B_X\) such that 
+  \[\text{dist}(x_{n + 1}, \text{span}\{x_1, \cdots, x_n\}) > \frac{1}{2},\]
+  which existence is guaranteed by Riesz's lemma. It is clear that \((x_n)\) 
+  does not have a convergent subsequence and thus, \(B_X\) is not compact. 
+\end{proof}
+
+\begin{proposition}
+  Every operator \(T\) from a finite-dimensional normed space \(X\) into a 
+  normed space \(Y\) is continuous.
+\end{proposition}
+\begin{proof}
+  This follows by simply bounding \(T(B_X)\) which is bounded naturally.
+\end{proof}
+
+From this, we see that every finite dimensional normed space is linearly isomorphic 
+if they have the same dimension. Indeed, as they are already algebraically 
+isomorphic, we obtain the isomorphisms (and its inverse) are continuous by 
+above. Alternatively, the same result follows as they are linearly isomorphic to 
+\(\ell^n_2\)
+
+\begin{proposition}
+  Let \(X, Y\) be normed spaces. Then \(\mathcal{F}(X, Y)\) is a linear subspace 
+  of \(\mathcal{K}(X, Y)\). Furthermore, \(\mathcal{K}(X, Y)\) is a closed subspace 
+  of \(\mathcal{B}(X, Y)\), and thus, if \(Y\) is a Banach space, so is 
+  \(\mathcal{K}(X, Y)\).
+\end{proposition}
+\begin{proof}
+  For the first claim, it suffices to show \(\mathcal{F}(X, Y) \subseteq 
+  \mathcal{K}(X, Y)\). Let \(T \in \mathcal{F}(X, Y)\), then, 
+  \(\dim T(X) < \infty\) and \(T(X)\) is homeomorphic to \(\mathbb{R}^n\) 
+  where \(n = \dim T(X)\). Thus, as the Heine-Borel property is topologically 
+  invariant, it follows \(\overline{T(B_X)}\) is compact as it is closed and 
+  bounded. Hence, \(T \in \mathcal{K}(X, Y)\) and \(\mathcal{F}(X, Y) \le 
+  \mathcal{K}(X, Y)\).
+
+  To show \(\mathcal{K}(X, Y)\) is closed let \((T_n) \subseteq \mathcal{K}(X, Y)\) 
+  such that \(T_n \to T \in \mathcal{B}(X, Y)\), then it suffices to show 
+  \(T \in \mathcal{K}(X, Y)\), in particular, we will show \(T(B_X)\) is totally 
+  bounded. Fix \(\epsilon > 0\), then as \(T_n \to T\) (where the convergence is 
+  uniform), there exists some \(N\) such that for all \(x \in B_X\), \(n \ge N\), 
+  \(\|T_n(x) - T(x)\| < \epsilon / 2\). Now, since \(T_n(B_X)\) is totally 
+  bounded, there exists a finite \(\epsilon / 2\)-net \(F\) for \(T_n(B_X)\). 
+  Clearly, \(F\) is a finite \(\epsilon\)-net for \(T(B_X)\). Indeed, for all 
+  \(x \in B_X\), there exists some \(y \in F\) such that \(\|T_n(x) - y\| < 
+  \epsilon / 2\) and so, 
+  \[\|T(x) - y\| \le \|T(x) - T_n(x)\| + \|T_n(x) - y\| < \frac{\epsilon}{2}
+    + \frac{\epsilon}{2} = \epsilon.\]
+\end{proof}
+
+\subsection{Hilbert Spaces}
+
+We recall that Hilbert spaces are inner product spaces which is complete with 
+respect to the induced norm. We will in this section let \(H\) equipped with 
+the inner produce \(\langle \cdot, \cdot \rangle\) be a Hilbert space.
+
+\begin{lemma}
+  For all \(y \in H\), \(\langle \cdot, y \rangle : H \to \mathbb{F}\) is 
+  continuous.
+\end{lemma}
+\begin{proof}
+  This follows straight away from the Cauchy-Schwarz inequality.
+\end{proof}
+
+\begin{proposition}
+  If \(F\) be a subspace of \(H\), then \(F^\perp\) is closed.
+\end{proposition}
+\begin{proof}
+  Let \((x_n) \subseteq F^\perp\) such that \(x_n \to x \in H\), then for all 
+  \(f \in F\), \(0 = \langle x_n, f\rangle \to \langle x, f\rangle\), and so 
+  \(\langle x, f\rangle = 0\) for all \(f \in F\), i.e. \(x \in F^\perp\). 
+\end{proof}
+
+\begin{theorem}
+  If \(F\) be a closed subspace of the Hilbert space \(H\), then
+  \(F \oplus F^\perp = H\). In particular, the map 
+  \(T : F \oplus F^\perp \to H : (x, y) \mapsto x + y\) is a topological, 
+  and algebraic isomorphism.
+\end{theorem}
+\begin{proof}
+  Clearly, \(F \cap F^\perp = \{0\}\) so it suffices to show 
+  \(H \subseteq F + F^\perp\).
+
+  Let \(h \in H\) and define 
+  \[x_1 := \arg \min_{f \in F} \|h - f\|,\]
+  which exists in \(F\) as it is closed. Furthermore, define \(x_2 := h - x_1\)
+  (noting that \(\|x_2\|^2 = \text{dist}(x, F)^2\)), 
+  it remains to show that \(x_2 \in F^\perp\). Suppose otherwise, then 
+  there exists some \(f \in F\) such that \(\langle x_2, f \rangle > 0\). 
+  Now, for all \(\epsilon > 0\), we have, 
+  \begin{align*}
+    \|h - (x_1 + \epsilon f)\|^2 & = \|x_2 - \epsilon f\|^2 = \langle x_2 - \epsilon f, x_2 - \epsilon f \rangle\\
+    & = \|x_2\|^2 + \epsilon^2\|f\| - 2\epsilon \langle x_2, f \rangle\\
+    & = \text{dist}(x, F)^2 - \epsilon (2 \langle x_2, f \rangle - \epsilon \|f\|).
+  \end{align*}
+  Thus, as for sufficiently small \(\epsilon\), we have 
+  \(2 \langle x_2, f \rangle - \epsilon \|f\| > 0\), we found an element of \(F\) 
+  achieving better distance, a contradiction! Hence, \(x_2 \in F^\perp\) and 
+  \(F \oplus F^\perp = H\). 
+\end{proof}
+
+A consequence of this is that \(F = (F^\perp)^\perp\) for closed subspace \(F\). 
+Indeed, it is clear that \(F \subseteq (F^\perp)^\perp\) and for 
+\(h \in (F^\perp)^\perp\), there exists unique \(f \in F, g \in F^\perp\) such 
+that \(h = f + g\) and so, \(f = h - g\). Now, since \(F^\perp\) is closed, we 
+also have \(F^\perp \oplus (F^\perp)^\perp = H\) and so, the representation 
+\(f = h + (-g)\) is unique. But, since \(f \in F \subseteq (F^\perp)^\perp\), 
+we have \(f = f + 0\) and thus, \(g = 0\) and finally, \(h = f \in F\).
+
+\begin{definition}[Orthonormal]
+  Let \(H\) be a Hilbert space and \(S \subseteq H\). Then \(S\) is called 
+  orthonormal if for all \(s_i, s_j \in S\), \(\langle s_i, s_j\rangle = \delta_{ij}\).
+
+  We call an orthonormal set an orthonormal basis if it is maximal.
+\end{definition}
+
+\begin{theorem}
+  Every Hilbert space has an orthonormal basis.
+\end{theorem}
+\begin{proof}
+  Clearly, the union of a chain of orthonormal sets is orthonormal, thus, by 
+  Zorn's lemma, there exists a maximal orthonormal set.
+\end{proof}
+
+\begin{proposition}
+  Let \(H\) be a Hilbert space and \(H_0\) a closed subspace of \(H\). Then, every 
+  orthonormal basis of \(H_0\) can be extended to an orthonormal basis of \(H_0\).
+\end{proposition}
+\begin{proof}
+  This follows straight away by Zorn's lemma again since every chain of the set 
+  of orthonormal sets has an upper bound.
+\end{proof}
+
+Consequently, if \(M\) is an orthonormal basis of \(H\), then 
+\(\overline{\text{span}}M = H\). Indeed, if otherwise, we may simply take a 
+vector \(v\) of norm 1 in \(\overline{\text{span}}M^\perp\), constructing a larger 
+orthonormal set \(M \cup {v}\), contradicting the maximality of \(M\).
+
+\begin{theorem}
+  Every separable infinite-dimensional Hilbert space \(H\) has a countable 
+  orthonormal basis \((e_i)_{i = 1}^\infty\). Furthermore, if \((e_i)_{i = 1}^\infty\) 
+  is a countable basis of \(H\), then for all \(x \in H\), 
+  \[x = \sum_{i = 1}^\infty \langle x, e_i \rangle e_i,\]
+  where we call the coefficients \(\langle x, e_i \rangle\) the Fourier 
+  coefficients and the sum itself as the Fourier expansion of \(x\).
+\end{theorem}
+\begin{proof}
+  Let \((e_\mu)_{\mu \in M}\) be a orthonormal basis of \(H\) and suppose \(M\) 
+  is uncountable. Then, for all \(e_\mu \neq e_\lambda\), by orthogonality, we 
+  have 
+  \[\| e_\mu - e_\lambda \| = \sqrt{2}.\]
+  Thus, we have \(\{ B_{1/2}(e_\mu) \mid \mu \in M \}\) is a set of pairwise disjoint 
+  balls, each containing one and only one basis vector. Now, as \(H\) is separable, 
+  there exists some \((h_i)_{i = 1}^\infty\) which is dense in \(H\). Hence, 
+  each ball contain at least one \(h_i\). But then, we have a injective function 
+  from a countable set to an uncountable set, which is a contradiction. Thus, 
+  the basis must be countable.
+\end{proof}
+
+\begin{proposition}
+  Let \((e_i)_{i = 1}^\infty\) be an orthonormal set in a Hilbert space \(H\) and 
+  \(x \in H\). Then 
+  \begin{itemize}
+    \item (The Bessel inequality) \(\sum \langle x, e_i \rangle^2 \le \|x\|^2\);
+    \item (The Parseval equality) if \((e_i)_{i = 1}^\infty\) is an orthonormal 
+      basis of \(H\), then \(\sum \langle x, e_i \rangle^2 = \|x\|^2\);
+    \item if the Parseval equality holds for every \(x \in H\), then 
+      \((e_i)_{i = 1}^\infty\) is an orthonormal basis of \(H\);
+    \item if \(\overline{\text{span}}(e_i)_{i = 1}^\infty = H\), then 
+      \((e_i)_{i = 1}^\infty\) is an orthonormal basis of \(H\).
+  \end{itemize}
+\end{proposition}
+
+\begin{theorem}[Riesz-Fischer theorem]
+  Every separable infinite-dimensional Hilbert space \(H\) is linearly isometric 
+  to \(\ell_2\).
+\end{theorem}
+
+\newpage
+\section{Hahn-Banach Theorem and Open Mapping Theorems}
+
+\begin{definition}
+  A real-valued function \(p : X \to \mathbb{R}\) is said to be subadditive if for all 
+  \(x, y \in X\), \(p(x + y) \le p(x) + p(y)\); positively homogenous if for all 
+  \(x \in X, a \ge 0\), we have \(p(a x) = a p(x)\). Finally, if \(p\) is 
+  subadditive, and for all scalars \(a\), \(p(a x) = |a| p(x)\), we call \(p\)
+  a seminorm.
+\end{definition}
+
+It is clear that any positively homogenous subadditive function is convex. 
+
+\begin{theorem}[Hahn-Banach]
+ Let \(Y\) be a subspace of the real-linear space \(X\), and \(p\) a positively 
+ homogenous subadditive functional on \(X\). Then, if \(f\) is a linear functional 
+ on \(Y\), such that \(f(x) \le p(x)\) for all \(x \in Y\), there exists a linear 
+ functional \(F\) on \(X\), such that for all \(x \in Y\), \(F(x) = f(x)\) and 
+ \(F(x) \le p(x)\) for all \(x \in F\).
+\end{theorem}
+
+\end{document}

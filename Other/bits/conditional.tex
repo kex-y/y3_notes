@@ -1,0 +1,213 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{fontspec}
+  \setmainfont{Bitstream Charter}
+  % Cabin -- round
+  % Bitstream Charter -- almost computer modern
+  % \usepackage{unicode-math}
+  % \defaultfontfeatures{Scale=MatchLowercase}
+  % \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Conditional Expectation},
+  pdfauthor={Kexing Ying},
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=red,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin = 1.5in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{esint}
+\usepackage[ruled,vlined]{algorithm2e}
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition*}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem*{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{example}{Example}[section]
+\newcommand{\diag}{\mathop{\mathrm{diag}}}
+\newcommand{\Arg}{\mathop{\mathrm{Arg}}}
+\newcommand{\hess}{\mathop{\mathrm{Hess}}}
+\newcommand\eqae{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily a.e.}}}{=}}}
+
+\title{A Bit About Conditional Expectation}
+\author{Kexing Ying}
+\date{July 24, 2021}
+
+\begin{document}
+\maketitle
+
+Measure-theoretically, conditional expectation is defined in terms of conditioning 
+on a sub-\(\sigma\) algebra. 
+
+\begin{definition*}[Conditional Expectation]
+  Let \(f : \Omega \to \mathbb{R}^+\) be a random variable on some probability 
+  space \((\Omega, \mathcal{F}, \mathbb{P})\) such that \(\int f \dd \mathbb{P} < \infty\). 
+  Then, given a sub-\(\sigma\)-algebra \(\mathcal{G}\) of \(\mathcal{F}\), the 
+  conditional expectation of \(f\) with respect to \(\mathcal{G}\) is the 
+  essentially unique \(\mathcal{G}\)-random variable \(f'\), such that 
+  \begin{equation}\label{eq:cond_expect}
+    \int_A f \dd \mathbb{P} = \int_A f' \dd \mathbb{P},
+  \end{equation}
+  for all \(A \in \mathcal{G}\). We denote \(f'\) by \(\mathbb{E}(f \mid \mathcal{G})\).
+\end{definition*}
+
+We note that the integrals within this definition are computed with respect to 
+the larger \(\mathcal{F}\) rather than the smaller \(\mathcal{G}\). Indeed, 
+while \(f'\) is measurable with respect to \(\mathcal{F}\), \(f\) is not 
+measurable with respect to \(\mathcal{G}\).
+
+We also note that, if \(f\) is already measurable with respect to \(\mathcal{G}\), 
+then \(f' = f\), \(\mathbb{P}\)-a.e. This follows since the Radon-Nikodym derivative 
+is essentially unique and clearly, \(f\) satisfy the integral equation~\ref{eq:cond_expect}.
+Written, using the Radon-Nikodym derivative notation, we have 
+\[f' = \dv{(f \mathbb{P})|_\mathcal{G}}{\mathbb{P}|_\mathcal{G}}.\]
+Thus, if \(f\) is \(\mathcal{G}\)-measurable, we simply exploiting the fact that,
+\[(f \mathbb{P})|_\mathcal{G} = f (\mathbb{P}|_\mathcal{G}).\]
+
+Geometrically, we may think about conditioning on a sub-\(\sigma\)-algebra as projection 
+onto the sub-\(\sigma\)-algebra. This notion is made rigorous in the case of 
+\(L^2\)-random variables. 
+
+\begin{definition*}[Conditional Expectation in \(L^2\)]
+  Let \(f : \Omega \to \mathbb{R}^+\) be a \(L^2\)-random variable on some probability 
+  space \((\Omega, \mathcal{F}, \mathbb{P})\). Then, given a sub-\(\sigma\)-algebra 
+  \(\mathcal{G}\) of \(\mathcal{F}\), the conditional expectation of 
+  \(f\) with respect to \(\mathcal{G}\) is the orthogonal projection of \(f\) into 
+  \(L^2(\Omega, \mathcal{G}, \mathbb{P}|_\mathcal{G})\).
+\end{definition*}
+
+In this definition, the conditional expectation \(f'\) is the \(\mathcal{G}\)-random variable 
+which minimizes 
+\[\mathbb{E}[(f - f')^2] = \int (f - f')^2 \dd \mathbb{P}.\]
+
+By now, one might wonder how does this definition relate to the classical definition 
+of conditional expectation where we condition on an event. In particular, how 
+does this notion relate to \(\mathbb{E}(X \mid B) = \mathbb{E}(X1|_B) = 
+\frac{1}{\mathbb{P}(B)}\int_B X \dd \mathbb{P}\) where \(B \in \mathcal{F}, \mathbb{P}(B) > 0\).
+
+\begin{prop}
+  Given \(B \in \mathcal{F}\), 
+  \[\mathbb{E}(X \mid \sigma(\{B\})) \eqae \omega \mapsto 
+    \begin{cases}
+      \mathbb{E}(X \mid B) & \text{if } \omega \in B \\
+      \mathbb{E}(X \mid B^c) & \text{if } \omega \notin B.
+    \end{cases}\]
+\end{prop}
+\begin{proof}
+  Denote \(Y\) as the random variable defined by the right hand side.
+
+  Since \(\sigma(\{B\}) = \{\varnothing, B, B^c, \Omega\}\), it is clear that the 
+  \(Y\) is \(\sigma(\{B\})\)-measurable. Furthermore, it is also clear that, for all 
+  \(A \in \sigma(\{B\})\), \(\int_A Y \dd \mathbb{P} = \int_A X \dd \mathbb{P}\). 
+  Thus, the two random variables are equal almost everywhere.
+\end{proof}
+
+To obtain the other elementary definitions learnt during an introduction to probability 
+course regarding conditional probabilities, we may simply define, 
+\begin{definition*}\label{eq:cond_prop}
+  Given \(A \in \mathcal{F}\), we write
+  \(\mathbb{P}(A \mid \mathcal{G}) := \mathbb{E}(1|_A \mid \mathcal{G})\).
+\end{definition*}
+\begin{definition*}\label{eq:cond_expect_rv}
+  Given \(f, g\) \(\mathcal{F}\)-random variables, we write 
+  \(\mathbb{E}(f \mid g) := \mathbb{E}(f \mid \sigma(g))\).
+\end{definition*}
+
+Using this measure-theoretic definition of conditional expectation, some standard 
+results are extremely simple to derive. 
+
+\begin{prop}
+  If \(\{A_i \mid i \in \mathbb{N}\}\) form a partition of \(\mathcal{F}\), then 
+  \[\mathbb{E}(X \mid \mathcal{G}) = \sum_{i \in\mathbb{N}} \mathbb{E}(X \mid A_i) 1|_{A_i},\]
+  where \(\mathcal{G} = \sigma(\{A_i \mid i \in \mathbb{N}\})\).
+\end{prop}
+\begin{proof}
+  Clear by considering for all \(G \in \mathcal{G}\), there exists some 
+  \(I \subseteq \mathbb{N}\) such that \(G = \bigcup_{i \in I} A_i\).
+\end{proof}
+
+
+
+\begin{prop}[Law of Total Expectation]
+  Let \(\mathcal{H} \le \mathcal{G} \le \mathcal{F}\), and \(X\) a 
+  \(\mathcal{F}\)-random variable, then 
+  \[\mathbb{E}(\mathbb{E}(X \mid \mathcal{G})) = \mathbb{E}(X)\]
+  and 
+  \[\mathbb{E}(\mathbb{E}(X \mid \mathcal{G}) \mid \mathcal{H}) = 
+    \mathbb{E}(X \mid \mathcal{H}),\mathbb{P}\text{-a.e.}\]
+\end{prop}
+\begin{proof}
+  The first result is immediate as,
+  \[\mathbb{E}(\mathbb{E}(X \mid \mathcal{G})) 
+    = \int_\Omega \mathbb{E}(X \mid \mathcal{G}) \dd \mathbb{P} 
+    = \int_\Omega X \dd \mathbb{P} = \mathbb{E}(X).\]
+  For the second result, we see, for all \(A \in \mathcal{H}\),
+  \[\int_A \mathbb{E}(\mathbb{E}(X \mid \mathcal{G}) \mid \mathcal{H}) \dd \mathbb{P}
+    = \int_A \mathbb{E}(X \mid \mathcal{G}) \dd \mathbb{P}
+    = \int_A X \dd \mathbb{P}.\]
+  Thus, as the conditional expectation is essentially unique, we have 
+  \[\mathbb{E}(\mathbb{E}(X \mid \mathcal{G}) \mid \mathcal{H}) = 
+    \mathbb{E}(X \mid \mathcal{H}), \mathbb{P}\text{-a.e.}\]
+\end{proof}
+
+\end{document}

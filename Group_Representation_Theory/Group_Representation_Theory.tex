@@ -1,0 +1,245 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Group Representation Theory},
+  pdfauthor={Kexing Ying},
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=red,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin = 1.5in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{esint}
+\usepackage{pst-node}
+\usepackage{auto-pst-pdf}
+\usepackage{tikz-cd} 
+\usepackage[ruled,vlined]{algorithm2e}
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition*}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem*{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{example}{Example}[section]
+\newcommand{\diag}{\mathop{\mathrm{diag}}}
+\newcommand{\Arg}{\mathop{\mathrm{Arg}}}
+\newcommand{\hess}{\mathop{\mathrm{Hess}}}
+
+\title{Group Representation Theory}
+\author{Kexing Ying}
+\date{July 24, 2021}
+
+\begin{document}
+\maketitle
+
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\newpage
+
+\section{Introduction}
+
+Group representation theory is a field of mathematics that applies linear algebra 
+to study properties of groups. The field itself originated through a letter 
+from Dedekind to Frobenius in which he noted that, given \(f = \det A\), where 
+\(A\) is the Cayley table of a group of \(n\) elements, by factorising \(f\) 
+into irreducible polynomials, \(f = \prod_i f_i^{d_i}\), we have \(d_i = \deg f_i\). 
+And this led Frobenius to invent group representation theory.
+
+Group representation theory is applicable in many different areas.
+\begin{itemize}
+  \item Group theory arises in Klein's "Erlangen program" as symmetries of 
+    geometric spaces.
+  \item Burnside in 1904 proves the following using representation theory 
+    (and so shall we later on)
+    \begin{proposition}
+      Let \(G\) be a group such that \(|G| = p^r q^s\) where \(p, q\) are 
+      prime and \(r + s \ge 2\), then \(G\) is not simple.
+    \end{proposition}
+  \item In number theory, representations of Galois groups arises in the 
+    number field case 
+    \[\overline{F} / F, \mathbb{Q} \subseteq F, [F : \mathbb{Q}] < \infty,\]
+    which has implications in Wiles' proof of Fermat's last theorem.
+  \item In chemistry the symmetry and rotation of molecules can be represented 
+    by group actions.
+  \item In quantum mechanics, spherical symmetry gives rise to discrete energy 
+    levels, orbitals, etc.
+  \item In differential geometry, the vector space of solutions is a representation 
+    of the symmetry group of an equation.
+\end{itemize}
+
+Recalling the definition of a group, informally, the representation of a group \(G\) 
+is a way if writing group elements as linear transformations of a vector space 
+such that the natural group properties are satisfied. 
+
+Some examples of group representations are the following:
+\begin{itemize}
+  \item For all group \(G\), the trivial representation of \(G\) is \(\rho\) such 
+    that \(\rho(g) = \text{id}\) for all \(g \in G\).
+  \item Let \(\zeta \in \mathbb{C}\) be a \(n\)-th root of \(1\) and let 
+    \(G = C_n = \{1, g, \cdots, g^{n - 1}\}\). Then \(\rho : g^i \mapsto (\zeta^i)\)
+    is a representation of \(G\).
+  \item In the case \(G = S_n\), the mapping of \(\sigma \in S_n\) to its 
+    corresponding permutation matrix \(P_\sigma\) is a representation of \(G\).
+  \item Another representation of \(S_n\) is 
+    \(\sigma \in S_n \mapsto (\text{sign}(\sigma))\)\footnote{\(\text{sign}(\sigma) = \det P_\sigma\)}.
+  \item Let \(G = D_n\) the dihedral group of order \(2n\). Then, a representation 
+    \(D_n\) maps elements of \(D_n\) to the corresponding \(2 \times 2\) matrices 
+    which rotates/reflects \(\mathbb{R}^2\) by the appropriate amount.
+\end{itemize}
+
+We shall in this module study and construct representations, and furthermore, 
+classify up to isomorphism finite-dimensional complex representations of 
+every finite group \(G\). 
+
+\section{Fundamentals of Group Representation}
+
+\begin{definition}[Representation]
+  Let \(G\) be a group, then a representation of \(G\) is the pair \((V, \rho)\) 
+  where \(V\) is a (finite-dimensional) vector space and \(\rho : G \mapsto GL(V)\) 
+  is a group homomorphism.
+\end{definition}
+
+Alternatively, we may consider a group representation of \(G\) is a group action 
+\((\cdot) : G \times V \to V : (g, v) \mapsto v\) such that \((\cdot)\) is 
+linear with respect to the second parameter. In particular, we recall a group 
+action \((\cdot)\) satisfies \(e \cdot v = v\) and 
+\(g \cdot (h \cdot v) = gh \cdot v\). 
+
+\begin{definition}[Dimension of a Representation]
+  If \((V, \rho)\) is a representation of \(G\), then the dimension of 
+  \((V, \rho)\) is \(\dim(V, \rho) = \dim V\).
+\end{definition}
+
+Similar to other objects in mathematics, we introduce a notion of morphisms 
+between representations.
+
+\begin{definition}[Homomorphism of Representation]
+  Let \(G\) be a group and \((V, \rho_V)\) and \((W, \rho_W)\) be two representations 
+  of \(G\). Then a homomorphism of representations is a linear map 
+  \(T : V \to W\) such that for all \(g \in G\),
+  \[T \circ \rho_V(g) = \rho_W(g) \circ T.\]
+  Furthermore, we say \(T\) is an isomorphism is bijective (or equivalently, 
+  it has an inverse which is also a homomorphism).
+\end{definition}
+
+In particular, one might imagine the homomorphism as a linear map such that 
+the following diagram commute.
+\[\begin{tikzcd}
+  V \arrow{r}{T} \arrow[swap]{d}{\rho_V(g)} & W \arrow{d}{\rho_W(g)} \\
+  V \arrow{r}{T}& W
+  \end{tikzcd}\]
+As with any definitions which work with finite-dimensional vector spaces, 
+there are equivalent but ``worse'' (as we will have to choose a basis) corresponding 
+definitions in terms of matrices. Nonetheless, these definitions with matrices 
+are easier computationally and we shall recall the contrast here.
+
+Clearly, if \(G\) is a group and \((\mathbb{C}^n, \rho)\) is a representation, 
+we have \(\rho(e) = I_n\). Furthermore, we have a natural isomorphism between 
+\(GL_n(\mathbb{C}) \cong GL(\mathbb{C}^n)\) and more generally 
+\(\text{Mat}_{n, m}(\mathbb{C}) \cong \text{Hom}(\mathbb{C}^n, \mathbb{C}^m)\).
+Similarly, given a representation \((V, \rho)\), with \(\dim V < \infty\), we may 
+choose a basis \(B\) of \(V\) and write the representation as a 
+matrix which we denote \(\rho^B(g) = [\rho(g)]_B\). Thus, we may use first year 
+linear algebra methods to manipulate representations. 
+
+\begin{definition}
+  Given two matrix representations \(\rho, \rho' : G \mapsto GL_n(\mathbb{C})\), 
+  we say \(\rho\) and \(\rho'\) are equivalent/isomorphic if there exists 
+  \(P \in GL_n(\mathbb{C})\) such that for all \(g \in G\), 
+  \(\rho'(g) = P^{-1} \rho(g) P\).
+\end{definition}
+  
+This definition is motivated by the following.
+
+\begin{proposition}
+  Given \((V, \rho_V)\) and \((W, \rho_W)\) representations of \(G\),
+  we have \(\rho_V \cong \rho_W\) if and only if there exists some 
+  \(P \in GL_n(\mathbb{C})\) such that for all \(g \in G\), 
+  \(\rho_W^C(g) = P^{-1} \rho_V^BP(g) P\) for some basis \(B, C\) of \(V\) and 
+  \(W\) respectively.
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{proposition}
+  Given a cyclic group \(C_n = \langle g \rangle\) with representations 
+  \((V, \rho_V)\) and \((W, \rho_W)\) of equal dimensions, we have 
+  \(\rho_V \cong \rho_W\) if and only if \(\rho_V^B(g)\) is conjugate to 
+  \(\rho_W^C(g)\) for some basis \(B, C\) of \(V\) and \(W\) respectively.
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+In fact the proposition above holds for the infinite cyclic group 
+\(C_\infty \cong \mathbb{Z}\).
+
+\end{document} 
+
+\end{document}

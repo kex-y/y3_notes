@@ -1,0 +1,15 @@
+{
+  "spellright.language": [
+    "English (British)"
+  ],
+  "spellright.documentTypes": [
+    "markdown",
+    "plaintext",
+    "latex"
+  ],
+  "spellright.parserByClass": {
+    "rmd": {
+      "parser": "latex"
+    }
+  }
+}
