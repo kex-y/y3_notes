@@ -1,0 +1,210 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor} \pagecolor[RGB]{28,30,38} \color[RGB]{213,216,218}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Martingales},
+  pdfauthor={Kexing Ying},
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=red,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin = 1.5in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{esint}
+\usepackage[ruled,vlined]{algorithm2e}
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition*}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem*{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{example}{Example}[section]
+\newcommand{\diag}{\mathop{\mathrm{diag}}}
+\newcommand{\Arg}{\mathop{\mathrm{Arg}}}
+\newcommand{\hess}{\mathop{\mathrm{Hess}}}
+
+\title{Martingales}
+\author{Kexing Ying}
+\date{July 24, 2021}
+
+\begin{document}
+\maketitle
+
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\newpage
+
+\section{Discrete Time Martingales}
+
+\begin{definition}[Filtration]
+  Let \((X, \mathcal{A}, \mu)\) be a measure space, then a filtration on this 
+  measure space is a sequence \((\mathcal{A}_n)_{n \in \mathbb{N}}\) of 
+  increasing sub-\(\sigma\)-algebras of \(\mathcal{A}\). If 
+  \((X, \mathcal{A}_0, \mu)\) is \(\sigma\)-finite, then we call 
+  \((X, \mathcal{A}, (\mathcal{A}_n), \mu)\) a \(\sigma\)-finite filtered 
+  measure space.
+\end{definition}
+
+\begin{definition}[Natural Filtration]
+  Given a sequence of functions \((f_n : X \to Y)\) where \(Y\) is a measurable 
+  space, the natural filtration is the measure space 
+  \((X, \sigma(f_n \mid n \in \mathbb{N}), \mu)\) equipped with the filtration
+  \[(\mathcal{A}_n) = (\sigma(f_1, \cdots, f_n)).\]
+\end{definition}
+
+It is clear that the natural filtration is the least filtration such that \(f_n\) 
+is \(\mathcal{A}_n\)-measurable. As we shall see in the continuous case, one 
+may define filtrations more generally with a pre-order index. 
+
+\begin{definition}[Discrete Time Martingale]
+  Let \((X, \mathcal{A}, (\mathcal{A}_n), \mu)\) be a \(\sigma\)-finite filtered 
+  measure space. Then a sequence of \(\mathcal{A}\)-measurable functions 
+  \((f_n)_{n \in \mathbb{N}}\) is a martingale if 
+  \(f_n \in \mathcal{L}^1(\mathcal{A}_n)\) and 
+  \[\int_A f_{n + 1} \dd \mu = \int_A f_n \dd \mu\]
+  for all \(n \in \mathbb{N}\) and \(A \in \mathcal{A}_n\).
+\end{definition}
+
+Using probabilistic notation, the above property for martingales is simply 
+\(\mathbb{E}[f_{n + 1} \mid \mathcal{A_n}] = f_n\).
+
+\begin{definition}[Sub/Super-martingale]
+  The sequence of \(\mathcal{A}\)-measurable functions \((f_n)_{n \in \mathbb{N}}\) 
+  is a submartingale if \(f_n \in \mathcal{L}^1(\mathcal{A}_n)\) and 
+  \[\int_A f_{n + 1} \dd \mu \ge \int_A f_n \dd \mu\]
+  for all \(n \in \mathbb{N}\) and \(A \in \mathcal{A}_n\). Similarly, \((f_n)\) 
+  is a supermartingale if \(f_n \in \mathcal{L}^1(\mathcal{A}_n)\) and 
+  \[\int_A f_{n + 1} \dd \mu \le \int_A f_n \dd \mu\]
+  for all \(n \in \mathbb{N}\) and \(A \in \mathcal{A}_n\).
+\end{definition}
+
+It is clear that a martingale is both a submartingale and a supermartingale and 
+the negative of a submartingale is a supermartingale (and vice-versa).
+
+\begin{proposition}
+  The sequence of \(\mathcal{L}^1\) functions \((f_n)_{n \in \mathbb{N}}\) is a 
+  submartingale if and only if 
+  \[\int \phi f_{n + 1} \dd \mu \ge \int \phi f_n \dd \mu\]
+  for all \(\phi \in \mathcal{L}^\infty(\mathcal{A}_n) \cap \ge 0\). 
+  Similar statements hold for martingales and supermartingales by the same proof.
+\end{proposition}
+\begin{proof}
+  The backwards implication is clear by choosing \(\phi = \mathbb{1}_A\) so 
+  let us consider the forward direction. By approximation by simple functions, 
+  there exists a sequence of simple functions 
+  \(\left(s_N = \sum_{i = 0}^N \alpha_i \mathbb{1}_{A_i}\right)_{N \in \mathbb{N}}\) 
+  such that \(s_N \uparrow \phi\). Then, as \(\phi \in \mathcal{L}^\infty\), 
+  there exists some \(M \in \mathbb{R}\) such that \(M \ge \phi \ge s_N\). 
+  Thus, by dominated convergence theorem, 
+  \[\begin{split}
+    \int \phi f_{n + 1} = \int \lim_{N \to \infty} s_N f_{n + 1} 
+    & = \lim_{N \to \infty} \int s_N f_{n + 1} 
+      = \lim_{N \to \infty} \sum_{i = 0}^N \int_{A_i} f_{n + 1}\\
+    & \ge \lim_{N \to \infty} \sum_{i = 0}^N \int_{A_i} f_n 
+      = \lim_{N \to \infty} \int s_N f_n = \int \lim_{N \to \infty} s_N f_n 
+      = \int \phi f_n.
+    \end{split}\] 
+\end{proof}
+
+\begin{proposition}
+  If \((f_n)\) and \((g_n)\) are martingales and \(\alpha, \beta \in \mathbb{R}\),
+  then \(\alpha f_n + \beta g_n\) is also a martingale. Similar statements 
+  hold for submartingales and supermartingales (with consideration to the  
+  sign of \(\alpha\) and \(\beta\)).
+\end{proposition}
+
+Let us recall some definitions from probability theory.
+
+\begin{definition}[Independence]
+  Let \((X, \mathcal{A}, \mu)\) be a probability space. A sequence of 
+  functions \((f_n)_{n \in \mathbb{N}} \subseteq \mathcal{L}^1\) is said to be 
+  independent if 
+  \[\mu\left(\bigcap_{n = 1}^N f_n^{-1}(B_n)\right) = 
+    \prod_{n = 1}^N\mu(f_n^{-1}(B_n)),\]
+  for all \((B_n)_{n = 1}^N \subseteq \mathcal{B}(\mathbb{R})\).
+\end{definition}
+
+\begin{lemma}
+  Given a sequence of independent functions \((f_n)_{n = 1}^{N + 1} 
+  \subseteq \mathcal{L}^1\), for all \(A \in \sigma(f_1, \cdots, f_N)\),
+  \[\int_A f_{N+ 1} \dd \mu = \mu(A) \int f_{N + 1} \dd \mu,\]
+  and for all \(\phi \in \mathcal{L}^1(\sigma(f_1, \cdots, f_N))\),  
+  \[\int \phi f_{N + 1} \dd\mu = \int \phi \dd\mu \cdot\int f_{N + 1}\dd\mu.\]
+  Furthermore, 
+  \[\int \prod_{n = 1}^k f_n \dd \mu = \prod_{n = 1}^k \int f_n \dd \mu,\]
+  for all \(k = 1, \cdots, N\).
+\end{lemma}
+
+\begin{proposition}
+  Given a sequence of independent functions \((f_n)_{n \in \mathbb{N}} 
+  \subseteq \mathcal{L}^1\), \((s_n) := \left(\sum_{i = 1}^n f_i\right)\) is 
+  a submartingale with respect to the natural filtration if and only if 
+  \(\int f_n \ge 0\) for all \(n\).
+\end{proposition}
+
+
+\end{document}
