@@ -67,7 +67,6 @@
 \usepackage{physics}
 \usepackage{amsthm}
 \usepackage{mathtools}
-\usepackage{esint}
 \usepackage[ruled,vlined]{algorithm2e}
 \theoremstyle{definition}
 \newtheorem{theorem}{Theorem}
@@ -128,5 +127,207 @@ one may study the object independently of the ambient space. This is the approac
 we shall take throughout this course. In particular, we will study spaces 
 which at a local level ``looks like'' a Euclidean space directly without embedding 
 the structure into \(\mathbb{R}^n\).
+
+\newpage
+\section{Topological and Smooth Manifolds}
+
+Let us first recall some notions from topology.
+
+\begin{definition}
+  Let \(X, Y\) be topological spaces and let \(f : X \to Y\) be a function,
+  then 
+  \begin{itemize}
+    \item \(f\) is continuous if \(f^{-1}(U)\) is open in \(X\) for all \(U\) open 
+      in \(Y\).
+    \item \(f\) is a homeomorphism if it is continuous and has a continuous inverse.
+  \end{itemize}
+\end{definition}
+
+\begin{definition}
+  A topological space \(X\) is 
+  \begin{itemize}
+    \item Hausdorff if for all \(x, y \in X\), \(x \neq y\), there exists open 
+      sets \(U, V\) in \(X\) such that \(x \in U, y \in V\) and 
+      \(U \cap V = \varnothing\).
+    \item second-countable if there exists countable 
+      \(\mathcal{F} \subseteq \mathcal{T}_X\) such that any open set in \(X\) 
+      can be written as a union of elements of \(\mathcal{F}\), i.e. 
+      \(\mathcal{F}\) is a countable basis of \(X\).
+  \end{itemize}
+\end{definition}
+
+In general, in this module, we will assume our topology is Hausdorff and 
+second-countable in order to avoid pathological examples in smooth and 
+topological manifolds. 
+
+\begin{definition}[Co-ordinate Chart]
+  Let \(X\) be a topological space. A co-ordinate chart on \(X\) is 
+  the collection of
+  \begin{itemize}
+    \item an open set \(U \subseteq X\),
+    \item an open set \(\tilde U \subseteq \mathbb{R}^n\) for some \(n \ge 0\), 
+    \item a homeomorphism \(f : U \to \tilde U\).
+  \end{itemize}
+  We denote a co-ordinate chart by \((U, f)\).
+\end{definition}
+
+\begin{definition}
+  Let \(X\) be a (Hausdorff and second-countable) topological space. We say 
+  that \(X\) is a topological manifold of dimension \(n\) if for all 
+  \(x \in X\), there exists a co-ordinate chart \((U, f)\) with 
+  \(\tilde U \subseteq \mathbb{R}^n\) such that \(x \in U\).
+\end{definition}
+
+The classical example of a topological manifold is the circle, in particular 
+\[S^1 := \{(x, y) \mid x^2 + y^2 = 1\} \subseteq \mathbb{R}^2,\]
+is a 1 dimensional topological manifold. Consider \(U_1 = S^1 \setminus \{(0, -1)\}\),
+and we define the stereographic projection \(f_1 : U_1 \to \mathbb{R}\), 
+\[f : (x, y) \mapsto \frac{x}{y + 1} := \tilde x.\]
+It is not difficult to see that \(f_1\) is invertible with the inverse 
+\[f_1^{-1} : \tilde x \mapsto \left(\frac{2\tilde x}{1 + {\tilde x}^2}, 
+  \frac{1 - {\tilde x}^2}{1 + {\tilde x}^2}\right).\]
+Furthermore, as \(f_1\) and \(f^{-1}\) are continuous, we have \((U_1, f_1)\) is 
+a co-ordinate chart. Similarly, we define \(U_2 = S^1 \setminus \{(0, 1)\}\), 
+and we my show the existence of a homeomorphism \(f_2 : U_2 \to \mathbb{R}\), 
+providing the second co-ordinate chart \((U_2, f_2)\). Thus, as 
+\(S^1 = U_1 \cup U_2\), we have \(S^1\) is a 1 dimensional topological manifold.
+
+The above example can be expanded to \(n\)-dimensional sphere 
+\[S^n := \{(x_0, \cdots, x_n) \mid x_0^2 + \cdots + x_n^2 = 1\} 
+  \subseteq \mathbb{R}^n.\]
+Similarly as before, we can construct two co-ordinate charts covering all points 
+on the sphere except for the poles allowing us to conclude \(S^n\) is a (
+\(n\)-dimensional topological manifold.
+
+\begin{definition}[Transition Function]
+  Let \(X\) be a topological manifold and let \((U_1, f_1)\) and \((U_2, f_2)\) 
+  be two co-ordinate charts on \(X\) such that \(U_1 \cap U_2 \neq \varnothing\). 
+  Then the transition function between these two co-ordinate charts is the 
+  function 
+  \[\phi_{21} := f_2 \circ f_1^{-1} : f_1(U_1 \cap U_2) \to f_2(U_1 \cap U_2).\]
+\end{definition}
+
+Let \(X\) be a topological manifold with co-ordinate charts \((U_i, f_i)\) for 
+\(i = 1, 2, 3\) such that \(U_1 \cap U_2 \cap U_3 \neq \varnothing\). Then it 
+is clear that \(\phi_{21} := f_2 \circ f_1^{-1}\) is a homeomorphism with 
+the inverse \(\phi_{12} := f_1 \circ f_2^{-1}\). Furthermore, by considering 
+\(\phi_{31} := f_3 \circ f_1^{-1}\) we observe 
+\[\phi_{31} = (f_3 \circ f_2^{-1}) \circ (f_2 \circ f_1^{-1}) = 
+  \phi_{32} \circ \phi_{21}.\]
+This is known as the cocycle property and explains the subscript notation.
+
+\begin{definition}[Atlas]
+  Let \(X\) be a topological manifold. An atlas for \(X\) is the collection of
+  co-ordinate charst \(\{(U_i, f_i)\}_{i \in I}\) such that 
+  \[\bigcup_{i \in I} U_i = X.\]
+\end{definition}
+
+We note that we do not require the index set \(I\) to be finite. 
+Although, since \(\{U_i\}_{i \in I}\) is an open cover, if \(X\) is compact, 
+it is possible to obtain a finite sub-cover, and hence a finite atlas. Nonetheless, 
+since we assumed \(X\) is second-countable, we can always choose \(I\) to be 
+countable.
+
+So far, we have only considered ourselves with the topological structure. As 
+we would like to do calculus on our manifolds, we will now equip our manifolds 
+with the property of smoothness. Recall the following definition for Euclidean 
+spaces. 
+
+\begin{definition}
+  A function \(F : \mathbb{R}^n \to \mathbb{R}^n\) is smooth (or \(C^\infty\)) 
+  if all the partial derivatives of \(F\) of any order exists.
+\end{definition}
+
+Of course, this is technically a property not a definition though it will suffice 
+for our purposes.
+
+\begin{definition}[Smooth Atlas]
+  Let \(X\) be a topological manifold of dimension \(n\). Then an atlas 
+  \(\{(U_i, f_i)\}_{i \in I}\) on \(X\) is smooth if for all \(i, j \in I\),
+  the transition function 
+  \[\phi_{ij} : f_j(U_i \cap U_j) \subseteq \mathbb{R}^n \to 
+    f_i(U_i \cap U_j) \subseteq \mathbb{R}^n\]
+  is smooth.
+\end{definition}
+
+Since \(\phi_{ij}\) is a (bijective) map between open subsets of Euclidean 
+spaces, it makes sense to ask whether or not \(\phi_{ij}\) is smooth.
+
+\begin{definition}[Diffeomorphism]
+  Let \(U, V \subseteq \mathbb{R}^n\) be open sets and let \(f : U \to V\). 
+  Then \(f\) is a diffeomorphism if \(f\) is smooth and has a smooth inverse.
+\end{definition}
+
+As \((\phi_{ij})^{-1} = \phi_{ji}\), and both \(\phi_{ij}\) and \(\phi_{ji}\) 
+are smooth, the transition functions of any smooth manifold are diffeomorphisms.
+
+\begin{definition}[Compatible]
+  Let \(X\) be a topological manifold and let \(\mathcal{A} := \{(U_i, f_i)\}\) 
+  be a smooth atlas. Let \((U, f)\) be any co-ordinate chart on \(X\), then 
+  \((U, f)\) is compatible with the atlas \(\mathcal{A}\) if the transition 
+  function between \((U, f)\) and any chart in \(\mathcal{A}\) is a 
+  diffeomorphism.
+\end{definition}
+
+Clearly, any chart in a smooth atlas is compatible with that atlas, and if 
+\((U, f)\) is compatible with the smooth atlas \(\mathcal{A}\), then 
+\((U, f) \cup \mathcal{A}\) is also a smooth atlas.
+
+\begin{definition}
+  Let \(X\) be a topological manifold and \(\mathcal{A}, \mathcal{B}\) be 
+  two atlases on \(X\). Then \(\mathcal{A}\) is compatible with \(\mathcal{B}\) 
+  if every chart in \(\mathcal{B}\) is compatible with \(\mathcal{A}\).
+\end{definition}
+
+Similarly as before, if \(\mathcal{A}, \mathcal{B}\) are compatible, then 
+\(\mathcal{A} \cup \mathcal{B}\) is a smooth atlas on \(X\).
+
+\begin{lemma}
+  Let \(X\) be a topological manifold and let 
+  \[\mathcal{A} := \{(U_i, f_i)\}_{i \in I}, 
+    \mathcal{B} := \{(U_j, f_j)\}_{j \in J},\]
+  be two compatible smooth atlases on \(X\). Then for all \((U, f)\) co-ordinate 
+  charts compatible with \(\mathcal{A}\), \((U, f)\) is compatible with 
+  \(\mathcal{B}\).
+\end{lemma}
+\begin{proof}
+  It suffices to show that for all \((U_j, f_j) \in \mathcal{B}\), 
+  \(U \cap U_j \neq \varnothing\), the transition map 
+  \[\phi := f_j \circ f^{-1} : f(U \cap U_j) \to f_j(U \cap U_j)\]
+  and its inverse are smooth. 
+
+  Let \(y \in f(U \cap U_j)\), then there exist some \(x \in U \cap U_j\) such 
+  that \(f(x) = y\). As \(\mathcal{A}\) is an atlas, it contains a co-ordinate 
+  chart \((U_i, f_i) \in \mathcal{A}\) such that \(x \in U_i\). Then, defining 
+  \(W := U \cap U_i \cap U_j \neq \varnothing\), we have the homomorphisms 
+  \(f : W \to f(W), f_i : W \to f_i(W)\) and \(f_j : W \to f_j(W)\). As 
+  remarked before, we have 
+  \[\phi = (f^{-1} \circ f_i) \circ (f_i^{-1} \circ f_j)\]
+  on \(W\). Now, by compatibility, the right hand side is smooth, and so 
+  we have \(\phi\) is smooth on \(W\) implying it is smooth at \(y\). Thus, 
+  as \(y \in f(U \cap U_j)\) was arbitrary, \(\phi\) is smooth (by a similar 
+  argument \(\phi^{-1}\) is also smooth) and \((U, f)\) is compatible with 
+  \(\mathcal{B}\).
+\end{proof}
+
+With this lemma it is easy to see that compatibility defines an equivalence 
+relation on the set of smooth atlases and with this we can define smooth 
+manifolds.
+
+\begin{definition}[Smooth Manifold]
+  A smooth manifold is a topological manifold with an equivalence class 
+  \([\mathcal{A}]\) of compatible smooth atlases on \(X\). The equivalence 
+  class of atlases is called a smooth structure on \(X\).
+\end{definition}
+
+The reason for the definition considering only the equivalence class 
+of compatible smooth atlases is because we do not want to distinguish between 
+compatible smooth atlases. Indeed, recalling our example of a sphere, 
+we would like to not consider the atlases which projects the sphere with 
+respect to two other points that are not the poles as an alternative manifold.
+
+From this point forward, we will always work with smooth manifolds and thus, 
+omit the word ``smooth'' whenever it is clear from the context, i.e. a manifold 
+is a smooth manifold and a atlas is a smooth atlas. 
 
 \end{document}

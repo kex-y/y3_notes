@@ -205,6 +205,11 @@ Let us recall some definitions from probability theory.
   a submartingale with respect to the natural filtration if and only if 
   \(\int f_n \ge 0\) for all \(n\).
 \end{proposition}
-
+\begin{proof}
+  The statement follows by the following chain of equalities,
+  \[\int_A s_{n + 1} \dd \mu = \int_A s_n + f_{n + 1} \dd \mu = 
+    \int_A s_n \dd \mu + \int_A f_{n + 1} \dd \mu = 
+    \int_A s_n \dd \mu + \mu(A) \int f_{n + 1} \dd \mu.\] 
+\end{proof}
 
 \end{document}
