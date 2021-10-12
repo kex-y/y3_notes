@@ -69,6 +69,7 @@
 \usepackage{mathtools}
 \usepackage{esint}
 \usepackage[ruled,vlined]{algorithm2e}
+\usepackage{tikz-cd}
 \theoremstyle{definition}
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition*}{Definition}
@@ -264,7 +265,7 @@ on the \(L_p\) space remains. We will recall them here for \(\ell_p\) spaces.
   Let \(\frac{1}{p} + \frac{1}{q} = 1\) where \(p, q \in (1, \infty)\). Then 
   for \(a = (a_i)_{i \in \mathbb{N}}, b = (b_i)_{i \in \mathbb{N}} \in \ell_p\), 
   we have 
-  \[|\langle a, b\rangle| \le \|a\|_p \|b\|_p,\] 
+  \[|\langle a, b\rangle| \le \|a\|_p \|b\|_q,\] 
   where \(\langle a, b\rangle := \sum_{i \in \mathbb{N}} a_i b_i\).
 \end{proposition}
 
@@ -365,6 +366,39 @@ limit of the sequences indeed belong to \(\ell_p\).
   for all \(n \ge N\). Hence, taking \(n \to \infty\), we have 
   \[\epsilon > \lim_{n \to \infty} |x_i^n| = |x_i|,\]
   implying \(x_i \to 0\) as \(i \to \infty\).
+\end{proof}
+
+\begin{proposition}
+  \(c\) is complete.
+\end{proposition}
+\begin{proof}
+  Similar to above, let \((x_i^n)\) be Cauchy and define \((x^n)\) such that for 
+  all \(n \in \mathbb{N}\), \(x^n = \lim_{i \to \infty} x_i^n\) and  
+  \((x_i)\) such that \((x_i^n) \to (x_i)\) in \(\ell_\infty\). It is not 
+  difficult to see that \((x^n)\) is Cauchy and thus converges to some \(x\).
+  \[\begin{tikzcd}
+    (x_i^n) \arrow{r}{n \to \infty} 
+    \arrow[swap]{d}{i \to \infty} & (x_i) \arrow{d}{i \to \infty} \\
+    (x^n) \arrow{r}{n \to \infty}& x
+    \end{tikzcd}\]
+  Indeed, as \((x_i^n)\) is Cauchy, for all \(\epsilon > 0\), there exists some 
+  \(N \in \mathbb{N}\) such that for all 
+  \(p, q \ge N\), \(\|x_i^p - x_i^q\|_\infty < \epsilon / 3\).
+  Furthermore, there exists some \(I \in \mathbb{N}\) such that for all 
+  \(j \ge I\), \(|x_j^p - x^p|, |x_j^q - x^q| < \epsilon / 3\). Thus, 
+  \[|x^p - x^q| < |x_j^p - x^p| + |x_j^p - x_j^q| + |x_j^q - x^q| 
+    < \frac{\epsilon}{3} + \|x_i^p - x_i^q\|_\infty + \frac{\epsilon}{3} 
+    = \epsilon.\]
+  Hence, it remains to show \(x_i \to x\) as \(i \to \infty\). 
+  Fix \(\epsilon > 0\), then there exists \(N \in \mathbb{N}\) such that for 
+  all \(n \ge N\), \(|x^n - x| < \epsilon / 3\). Furthermore, there exists 
+  \(M \in \mathbb{N}\) such that for all \(n \ge M\), 
+  \(\|x_i^n - x_i\|_\infty < \epsilon / 3\). Then, for all 
+  \(p \ge \max\{N, M\}\), there exists \(I \in \mathbb{N}\) such that 
+  for all \(j \ge I\), \(|x_j^p - x^p| < \epsilon / 3\). Finally, 
+  \[|x_j - x| \le |x_j - x_j^p| + |x_j^p - x^p| + |x^p - x| \le 
+    \|x_i - x_i^p\|_\infty + \frac{\epsilon}{3} + \frac{\epsilon}{3} < \epsilon,\]
+  implying \(x_i \to x\) as \(i \to \infty\) and \((x_i) \in c\).
 \end{proof}
 
 \end{document}
