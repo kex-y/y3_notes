@@ -72,13 +72,12 @@
 \theoremstyle{definition}
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition*}{Definition}
-\newtheorem{prop}{Proposition}
-\newtheorem{corollary}{Corollary}[theorem]
 \newtheorem*{remark}{Remark}
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 \newtheorem{lemma}{Lemma}[section]
 \newtheorem{proposition}{Proposition}[section]
+\newtheorem{corollary}{Corollary}[section]
 \newtheorem{example}{Example}[section]
 \newcommand{\diag}{\mathop{\mathrm{diag}}}
 \newcommand{\Arg}{\mathop{\mathrm{Arg}}}
@@ -98,5 +97,274 @@
 }
 \newpage
 
+\section{Introduction}
+
+We have thus far looked at abstract vector spaces in linear algebra and 
+(metric) topological spaces in topology. In this course, we will combine these 
+concepts and study linear metric space. In particular, we will study 
+vector spaces equipped with a topology such that certain properties are 
+satisfies. 
+
+In this course, we will often study the space of functions and hence 
+the name of the course. As we have seen before, given that the codomain space 
+possesses a certain structure, it is possible to define point-wise addition and 
+scalar multiplications on functions, and thus, possible to equip the space 
+with a vector space structure. 
+
+Let us recall some definitions.
+
+\begin{definition}[Metric]
+  A metric \(\rho\) on a non-empty set \(X\) is a function with type signature 
+  \(X \times X \to \mathbb{R}^+\) such that for all \(x, y, z \in X\)
+  \begin{itemize}
+    \item \(\rho(x, y) = 0 \iff x = y\);
+    \item \(\rho(x, y) = \rho (y, x)\);
+    \item \(\rho(x, y) \le \rho(x, z) + \rho(z, y)\).
+  \end{itemize}
+\end{definition}
+
+\begin{definition}[Translation Invariant]
+  A metric space \((V, \rho)\) where \(V\) is equipped with the binary operation 
+  \((+) : V \times V \to V\) is translational invariant if for all \(w, z, v \in V\), 
+  \[\rho(w + v, z + v) = \rho(w, z).\]
+\end{definition}
+
+\begin{definition}[Norm]
+  A norm \(\|\cdot\|\) on the vector space \(V\) (over the field 
+  \(\mathbb{K}\) equipped with a modulus \(|\cdot|\)) 
+  is a function with type signature \(X \to \mathbb{R}^+\) such that for all 
+  \(x, y \in V, k \in \mathbb{K}\),
+  \begin{itemize}
+    \item \(\|x\| = 0 \iff x = 0\);
+    \item \(\|k \cdot x\| = |k| \|x\|\);
+    \item \(\|x + y\| \le \|x\| + \|y\|\).
+  \end{itemize} 
+\end{definition}
+
+We recall that a norm induces a metric by defining \(\rho(x, y) = \|x - y\|\). 
+In this case, it is possible to show that \((+)\) and \((\cdot)\) are 
+continuous with respect to this metric and \(\rho\) is translational invariant. 
+
+\begin{definition}[Banach Space]
+  A normed space is said to be a Banach space if it is complete, i.e. every 
+  Cauchy sequence converge. 
+\end{definition}
+
+\begin{definition}[Separable]
+  A topological space is said to be separable if there exists a dense 
+  countable subset.
+\end{definition}
+
+As we shall see, for \(0 < 0 < \infty\), \(\ell_p\) is separable while 
+\(\ell_\infty\) is not.
+
+\begin{definition}[Compact]
+  A topological space is said to be compact if every open cover has a finite 
+  sub-cover. 
+\end{definition}
+
+Unlike what we have seen before, as we consider infinite dimensional spaces, 
+we will see that the Heine-Borel property will no longer hold, i.e.
+closed and bounded is no longer equivalent to compact.
+
+\newpage
+
+\section{Linear Spaces}
+
+\begin{definition}[Equivalent Norms and Metrics]
+  Two norms \(\|\cdot\|_k\) for \(k = 1, 2\) are said to be equivalent if there 
+  exists some \(M > 0\) such that for all \(x\), 
+  \[\frac{1}{M} \|x\|_1 \le \|x\|_2 \le M \|x\|_1.\]
+  Similarly, two metrics \(\rho_k\) are said to be equivalent if there exists
+  some \(M > 0\) such that for all \(x, y\), 
+  \[\frac{1}{M} \rho_1(x, y) \le \rho_2(x, y) \le M \rho_1(x, y).\]
+\end{definition}
+
+It is clear that equivalent is a symmetric relation and as we have seen before,
+all norms on a finite dimensional space are equivalent.
+
+\begin{definition}[Concave and Convex Function]
+  A function \(f : V \to \mathbb{R}\) is 
+  \begin{itemize}
+    \item concave if for all \(s \in [0, 1], x, y \in V\), we have  
+      \[sf(x) + (1 - s)f(y) \le f(sx + (1 - s)y);\]
+    \item convex if for all \(s \in [0, 1], x, y \in V\), we have  
+      \[sf(x) + (1 - s)f(y) \ge f(sx + (1 - s)y).\] 
+  \end{itemize}
+\end{definition}
+
+\begin{proposition}
+  If \(f : \mathbb{R}^+ \to \mathbb{R}^+\) is concave and \(f(0) = 0\). Then 
+  \[f(x + y) \le f(x) + f(y).\]
+\end{proposition}
+\begin{proof}
+  Clear by taking \(s = \frac{y}{x + y}\), we have 
+  \[(1 - s)f(x + y) = s f(0) + (1 - s)f(x + y) \le f(s \cdot 0 + (1 - s)(x + y))
+    = f(x),\]
+  and 
+  \[sf(x + y) = sf(x + y) + (1 - s)f(0) \le f(s(x + y) + (1 - s) \cdot 0) = 
+    f(y).\]
+  Adding the two equations, we have
+  \[f(x + y) = (1 - s)f(x + y) + sf(x + y) \le f(x) + f(y).\]
+\end{proof}
+
+\begin{corollary}
+  If \(\rho\) is a metric and \(\eta : \mathbb{R}^+ \to \mathbb{R}^+\) is a 
+  concave and vanishing at \(0\), then \(\rho \circ \eta\) is also a metric.
+\end{corollary}
+
+\begin{definition}[Linear Metric Space]
+  A vector space \(V\) over the field \(\mathbb{K}\) equipped with a metric 
+  \(\rho\) on \(V\) and a metric \(|\cdot - \cdot|\) on \(\mathbb{K}\) is a 
+  linear metric space if \((+) : V \times V \to V\) and 
+  \((\cdot) : \mathbb{K} \times V \to V\) are continuous with respect to the 
+  induced metric.
+\end{definition}
+
+\begin{proposition}
+  Any normed space is a linear metric space.
+\end{proposition}
+\begin{proof}
+  Let \((x_n, y_n) \to (x, y)\) in \(V^2\), then we have 
+  \[\|(x_n + y_n) - (x + y)\| \le \|x_n - x\| + \|y_n - y\| \to 0.\]
+  Thus, \((+)\) is continuous. 
+  
+  Similarly, if \((\lambda_n, x_n) \to (\lambda, x)\) in \(\mathbb{K} \times V\),
+  \[\begin{split}
+    \|\lambda_n x_n - \lambda x\| 
+      & = \|\lambda_n x_n - \lambda_n x + \lambda_n x - \lambda x\| \\
+      & \le \|\lambda_n x_n - \lambda_n x\| + \|\lambda_n x - \lambda x\| \\
+      & = |\lambda_n| \|x_n - x\| + |\lambda_n - \lambda| \|x\|.
+  \end{split}\]
+  Now, since \((\lambda_n)\) is convergent, it is bounded by some \(M > 0\) and 
+  thus, 
+  \[\|\lambda_n x_n - \lambda x\| 
+    \le |\lambda_n| \|x_n - x\| + |\lambda_n - \lambda| \|x\|
+    \le M \|x_n - x\| + |\lambda_n - \lambda| \|x\| \to 0,\]
+  implying \((\cdot)\) is continuous.
+\end{proof}
+
+\subsection{Sequence Spaces}
+
+We recall the \(L_p\) spaces from second year measure theory, and in particular, 
+when we consider the counting measure \(\mu\), we have the nice property that 
+\[\int f \dd \mu = \sum_{n = 0}^\infty f(n),\]
+and we no longer require a quotient to define the linear space as the only 
+null-set is the empty set (thus, two function are a.e equal if and only if they 
+are equal). In this special case, we call the resulting space \(\ell_p\) with 
+the \(p\)-norm 
+\[\|f\|_p = \left(\int |f|^p \dd \mu\right)^{\frac{1}{p}} = 
+  \left(\sum_{n = 0}^\infty |f(n)|^p \right)^{\frac{1}{p}}.\]
+We will use the sequence notation and write \(a_n := a(n)\) for \(a \in \ell_p\).
+
+As this is simply a special case of the \(L_p\) space, the inequalities proved 
+on the \(L_p\) space remains. We will recall them here for \(\ell_p\) spaces.
+
+\begin{proposition}[Hölder's Inequality]
+  Let \(\frac{1}{p} + \frac{1}{q} = 1\) where \(p, q \in (1, \infty)\). Then 
+  for \(a = (a_i)_{i \in \mathbb{N}}, b = (b_i)_{i \in \mathbb{N}} \in \ell_p\), 
+  we have 
+  \[|\langle a, b\rangle| \le \|a\|_p \|b\|_p,\] 
+  where \(\langle a, b\rangle := \sum_{i \in \mathbb{N}} a_i b_i\).
+\end{proposition}
+
+\begin{proposition}[Minkowski's Inequality]
+  Let \(a, b \in \ell_p\) for some \(1 \le p \le \infty\). 
+  Then \(a + b \in \ell_p\) and
+  \[\|a + b\|_p \le \|a\|_p + \|b\|_p.\]
+\end{proposition}
+
+\begin{lemma}
+  Let \(I \subseteq \mathbb{R}\) be an interval and 
+  \(\phi : I \to \mathbb{R}^+\) be a function. 
+  Then \(\phi\) is convex if and only if for all \(y \in I\), there exists 
+  a \(\gamma \in \mathbb{R}\), such that for all \(x \in I\),
+  \[\gamma(x - y) \le \phi(x) - \phi(y).\]
+\end{lemma}
+
+\begin{proposition}[Jensen's Inequality]
+  let \(\phi \ge 0\) be convex and suppose \(\sum_{i \in \mathbb{N}} \eta_i = 1\), 
+  \(|\langle \alpha \rangle| < \infty\) and \(\langle \phi(\alpha) \rangle\) 
+  (where \(\langle \beta \rangle = \sum_{i \in \mathbb{N}} \eta_i \beta_i\)), 
+  then 
+  \[\phi(\langle \alpha \rangle) \le \langle \phi(\alpha) \rangle.\]
+\end{proposition}
+\begin{proof}
+  By the above lemma, there exists some \(\gamma\) such that 
+  \[\gamma(\alpha_j - \langle \alpha \rangle) \le 
+    \phi(\alpha_j) - \phi(\langle \alpha \rangle).\]
+  Thus, 
+  \[\begin{split}
+    0 = \sum \eta_i \gamma(\alpha_j - \langle \alpha \rangle) 
+      & \le \sum \eta_i (\phi(\alpha_j) - \phi(\langle \alpha \rangle)) \\
+      & = \sum \eta_i \phi(\alpha_j) - \phi(\langle \alpha \rangle) \sum \eta_i \\
+      & = \langle \phi(\alpha_j) \rangle - \phi(\langle \alpha \rangle)
+    \end{split}\]
+  where the first equality follows as \(\gamma\) is independent of the index 
+  \(i\).
+\end{proof}
+
+\begin{proposition}
+  For \(p < p'\), \(\ell_p \subseteq \ell_{p'}\). On the other hand, if 
+  \(\sum \eta_i = 1\), we have \(\ell_p(\eta) \supseteq \ell_{p'}(\eta)\).
+\end{proposition}
+
+\begin{definition}
+  Let \(\phi\) be a convex function such that \(\phi(0) = 0\), 
+  \(\phi(x) \to \infty\) as \(x \to \infty\). If \(\phi\) has the doubling 
+  property such that there exists some \(M > 0\) such that for all 
+  \(x \in \mathbb{R}\), \(\phi(2 |x|) \le M \phi(|x|)\), then 
+  \[V := \left\{a : \mathbb{N} \to \mathbb{R} \mid \sum \eta_i 
+    \phi(|a_i|) < \infty\right\}\]
+  where \(\sum \eta_i = 1\) is a vector space with point-wise operations.
+\end{definition}
+
+\begin{proposition}
+  Given a metric space \((X, \rho)\), there exists a complete metric space 
+  \((\tilde X, \tilde \rho)\) and an isometric embedding 
+  \(\iota : X \to \tilde X\) such that for all \(x, x' \in X\),
+  \(\tilde \rho(\iota(x), \iota(x')) = \rho(x, x')\).
+\end{proposition}
+\begin{proof}
+  We have seen similar ideas in the completion of \(\mathbb{Q}\) though 
+  completing the space with equivalence classes of mutually Cauchy sequences 
+  as elements of \(\tilde X\).
+\end{proof}
+
+As we have seen last year, the \(L_p\) spaces are complete, and thus are 
+Banach spaces. Thus, we have \(\ell_p\) spaces are also complete and are 
+Banach spaces. In fact, the proof that \(\ell_p\) spaces are complete is 
+easier, in that one may show completeness through showing the point-wise 
+limit of the sequences indeed belong to \(\ell_p\).
+
+\begin{definition}
+  We define 
+  \begin{itemize}
+    \item \(c_0 := \{x \in \ell_\infty \mid \lim_{n \to \infty} x_n = 0\}\),
+    \item \(c := \{x \in \ell_\infty \mid \exists \lim_{n \to \infty} x_n\}\),
+  \end{itemize}
+  be subspaces of \(\ell_\infty\).
+\end{definition}
+
+\begin{proposition}
+  \(c_0\) is complete.
+\end{proposition}
+\begin{proof}
+  Let \((x_i^n) \subseteq c_0\) be a Cauchy sequence and let 
+  \(x_i = \lim_{n \to \infty} x_i^n\), then it suffices to show 
+  \(\lim_{i \to \infty} x_i = 0\). 
+
+  Since \((x_i^n)\) is Cauchy, for all \(\epsilon > 0\), there exists some
+  \(N \in \mathbb{N}\) such that for all \(n \ge N\), 
+  \[\|x^n - x^N\|_\infty < \frac{\epsilon}{2}.\]
+  Furthermore, as \(x_i^N \to 0\) as \(i \to \infty\), there exists some 
+  \(I \in \mathbb{N}\) such that for all \(i \ge I\), 
+  \(|x_i^N| < \epsilon / 2\). Thus, for all \(i \ge I\), we have 
+  \[\frac{\epsilon}{2} > \|x^n - x^N\|_\infty > |x_i^n - x_i^N| >
+    |x_i^n| - \frac{\epsilon}{2} \implies \epsilon > |x_i^n|,\]
+  for all \(n \ge N\). Hence, taking \(n \to \infty\), we have 
+  \[\epsilon > \lim_{n \to \infty} |x_i^n| = |x_i|,\]
+  implying \(x_i \to 0\) as \(i \to \infty\).
+\end{proof}
 
 \end{document}
