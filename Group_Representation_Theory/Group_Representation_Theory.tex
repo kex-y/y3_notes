@@ -240,6 +240,279 @@ This definition is motivated by the following.
 In fact the proposition above holds for the infinite cyclic group 
 \(C_\infty \cong \mathbb{Z}\).
 
+\subsection{Regular Representation}
+
+Let us first recall some definition about group actions though we will omit 
+stabilizers, the orbit-stabilizer theorem and transitive actions 
+(though it might be helpful to recall them from last year).
+
+\begin{definition}[Group Action]
+  Let \(G\) be a group and \(X\) a set, then a group action \((\cdot)\) of 
+  \(G\) on \(X\) is a function \(G \times X \to X\) such that for all 
+  \(g, h \in G\), \(x \in X\), we have 
+  \begin{itemize}
+    \item \(g \cdot (h \cdot x) = gh \cdot x\),
+    \item \(1 \cdot x = x\).
+  \end{itemize}
+\end{definition}
+
+Equivalently, a group action can be represented by a group homomorphism between 
+\(G\) to \(S_n\) if \(|X| = n < \infty\). We note that there exists an 
+bijection between \(\text{Perm}(X)\) (a.k.a \(\text{Aut}(X)\) though we will 
+avoid this term in case \(X\) has additional structures) and \(S_n\) with 
+depends on a choice of \(X \simeq \{1, \cdots, |X|\}\). 
+
+\begin{definition}[Kernel]
+  A kernel of a representation (or group action) is simply the kernel of the 
+  corresponding group homomorphism, i.e. if \(\rho\) is a representation 
+  (or group action), 
+  \[\ker \rho := \{ g \in G \mid \rho(g) = \text{id}\}. \]
+  We say a representation (or group action) is faithful if \(\ker \rho = \{e\}\), 
+  i.e. \(\rho\) is injective.
+\end{definition}
+
+\begin{definition}[Morphism of Group Actions]
+  A morphism \(T : X \to Y\) of group actions on \(X\) and \(Y\) is a map 
+  such that \(T(g \cdot x) = g \cdot T(x)\) for all \(g \in G\), \(x \in X\).
+
+  This is also called a ``\(G\)-equivariant map'' from \(X\) to \(Y\) and 
+  one can see the resemblance of this definition and the definition 
+  for homomorphisms between representations.
+\end{definition}
+
+For any group \(G\), it acts on itself in three different ways. In particular, 
+we have the left regular action \(g \cdot h = gh\), the right regular action 
+\(g \cdot h = h g^{-1}\) (where the inverse is required for associativity) 
+and the adjoint action \(g \cdot h = g h g^{-1}\). One can see that the left 
+and right regular actions are isomorphic via \(T(g) = g^{-1}\). On the other 
+hand, they are not isomorphic to the adjoint action (consider 
+\(\rho_{\text{ad}}(g)(e) = e\) for all \(g \in G\)).
+
+\begin{proposition}
+  Given two actions (or representations) \(\rho, \rho'\) on \(G\), 
+  \(g \mapsto \rho(g)\rho'(g)\) is an action (or representation) if and only if 
+  \(\rho(g)\rho'(g) = \rho'(g)\rho(g)\), that is \(\rho\) and \(\rho'\) are 
+  commuting actions.
+\end{proposition}
+
+\begin{definition}
+  A subset \(Y \subseteq X\) is said to be stable under an action 
+  \((\cdot)\) of \(G\) on \(X\) if \(g \cdot y \in Y\) for all 
+  \(y \in Y, g \in G\).
+\end{definition}
+
+In the case that \(Y \subseteq X\) is stable, then we may restrict the action 
+on \(Y\) to obtain a new action of \(G\) on \(Y\). 
+
+\begin{definition}[Orbit]
+  Let \(x \in X\), then \(G \cdot x := \{ g \cdot x \mid g \in G \}\) is called 
+  an orbit of \(x\) and we denote this by \(\text{orb}(x)\). 
+\end{definition}
+
+It is not difficult to see that orbits are stable and in fact, as an exercise, 
+one might show that \(Y \subseteq X\) is stable if and only if it is a union of 
+orbits.
+
+In a group \(G\) under the adjoint action, we see that the orbits are the 
+conjugacy classes\footnote{What are the orbits of the left action?}. Thus, 
+for every conjugacy class, we obtain a action on that class from the adjoint 
+action on the whole group. 
+
+\begin{example}
+  Let \(G = S_4\) and let \(c = \{(12)(34), (13)(24), (14)(23)\}\). Then 
+  as \(c\) is a conjugacy class, we have the adjoint action on \(c\) 
+  \[\phi : S_4 \to \text{Perm}(c) \cong S_3.\]
+  It is not difficult to show that \(\phi\) is surjective and 
+  \(\ker \phi = c \cup \{e\} \cong K_4 \cong C_2 \times C_2\). Thus, 
+  by the first isomorphism theorem we have 
+  \[S_3 \cong S_4 / K_4.\]
+\end{example}
+
+\begin{definition}
+  Given a finite set \(X\), let 
+  \[\mathbb{C}[X] := \left\{\sum_{x \in X} a_x x \mid a_x 
+    \in \mathbb{C}\right\},\]
+  equipped with the addition 
+  \(\sum_{x \in X} a_x x + \sum_{x \in X} b_x x = 
+   \sum_{x \in X} (a_x + b_x) x\) and scalar multiplication 
+   \(c \cdot \sum_{x \in X} a_x x = \sum_{x \in X} (c a_x) x\).
+  This sum here does not represent some addition operation on \(X\) but a 
+  notational trick. One might instead consider elements of \(\mathbb{C}[X]\) 
+  as functions \(a : X \to \mathbb{C}\) equipped with point-wise addition and 
+  scalar multiplication.
+\end{definition}
+
+We observe that \(\mathbb{C}[X] \cong \mathbb{C}^{|X|}\) depending on a 
+choice of \(X \cong \{1, \cdots, |X|\}\). Furthermore, we have 
+\(X \subseteq \mathbb{C}[X]\) and is a basis (if we interpret \(\mathbb{C}[X]\) 
+as a space of functions, the canonical basis is 
+\(\{a_x : y \mapsto \chi_{\{x\}} \mid x \in X\}\)). 
+In the case that \(X\) is infinite we can still define \(\mathbb{C}[X]\) 
+allowing only finite sums.
+
+\begin{proposition}
+  If \((\cdot)\) is a group action of \(G\) on \(X\), then,
+  the map \((g, \sum a_x x) \mapsto \sum a_x (g \cdot x)\) is a 
+  group action of \(G\) on \(\mathbb{C}[X]\).
+\end{proposition}
+
+\begin{definition}
+  The left regular, right regular, adjoint representations are representations 
+  \[\tilde \rho_L, \tilde \rho_R, \tilde \rho_{\text{ad}} :
+    G \to GL(\mathbb{C}[G])\] 
+  obtained from the left regular, right regular and adjoint actions 
+  \[\rho_L, \rho_R, \rho_{\text{ad}} :
+    G \to \text{Perm}(G).\] 
+\end{definition}
+
+\begin{proposition}
+  If \(X\) is any set with a \(G\)-actin, then for all \(g \in G\), 
+  \([\rho_{\mathbb{C}[X]}(g)]_B\) is always a permutation matrix.
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{definition}
+  Given \((V, \rho_V), (W, \rho_W)\) representations of \(G\), we denote 
+  \[\text{Hom}_G(V, W) := \{T : V \to W \mid G\text{-linear}\}.\]
+\end{definition}
+
+\begin{proposition}
+  Let \((V, \rho_V)\) be a representation of \(G\) and \(v \in V\). Then, 
+  there exists a unique homomorphism of representations 
+  \(\mathbb{C}[G] \to V\) where \(\mathbb{C}[G]\) is equipped with the left 
+  regular representation such that \(e_G \mapsto v\) and thus, 
+  \[\text{Hom}_G(\mathbb{C}[G], V) \cong (V, \rho_V).\]
+\end{proposition}
+\begin{proof}
+  For all \(g \in G\), \(c = \sum_{h \in G} a_h h\), we have 
+  \[\begin{split}
+    T(g \cdot c) = \rho_V(g)(Tc) 
+    & \iff T\left(\sum a_h gh\right) = 
+      \rho_V(g)\left(T\left(\sum a_h h\right)\right)\\
+    & \iff \sum a_h T(gh) = \sum a_h \rho_V(g)(Th)\\
+    & \iff T(gh) = \rho_V(g)(Th), \ \forall h \in G,
+  \end{split}\]
+  where the second if and only if follows as both \(T\) and \(\rho_V\) 
+  are linear. Then choosing \(h = e_G\), we have \(T(g) = \rho_V(g)(v)\) and 
+  thus \(T\) is uniquely determined on \(G\) and hence is unique as \(G\) is 
+  a basis of \(\mathbb{C}[G]\).
+  
+  It remains to show that the map \(T\) defined by \(g \mapsto \rho_V(g)(v)\) is 
+  a homomorphism of representations. This is clear since 
+  \[\begin{split}
+    T(g \cdot c) & = T\left(\sum a_h gh\right) = \sum a_h T(gh) \\
+      & = \sum a_h \rho_V(gh)(v) = \sum a_h \rho_V(g)(\rho_V(h)(v))\\
+      & = \sum a_h \rho_V(g)(Th) = \rho_V(g)\left(T\left(\sum a_h h\right)\right), 
+  \end{split}\]
+  where the fourth equality follows by the associativity of group actions.
+\end{proof}
+
+\subsection{Subrepresentation and Quotient Representation}
+
+\begin{definition}[Subrepresentation]
+  A subrepresentation of a representation \((V, \rho_V)\) is a subspace \(W \le V\) 
+  such that \(\rho_V(g)(W) \subseteq W\) for all \(g \in G\).
+\end{definition}
+
+Clearly, both \(\{0\}\) and \(V\) are subrepresentations of \((V, \rho_V)\), 
+and we say a representation is irreducible if these two subrepresentations are 
+the only subrepresentations. We say a representation is reducible if it is 
+not irreducible. In general, every 1-dimension representation is irreducible.
+
+\begin{proposition}
+  Irreducibility is invariant under isomorphisms.
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{proposition}
+  Let \(G\) be finite and \((V, \rho_V)\) is an irreducible representation 
+  of \(G\). Then \(\dim V < \infty\).
+\end{proposition}
+\begin{proof}
+  Let \(w \in V \setminus \{0\}\) and let 
+  \(W := \text{span}(\{\rho_V(g)(w) \mid g \in G\})\) which is a finite dimensional 
+  subrepresentation as \(G\) is finite and for all \(h \in G\), 
+  \(\rho_V(h)(\rho_V(g)(w)) = \rho_V(hg)(w)\). Thus, if \(\dim V\) is not finite, 
+  we have found a proper subrepresentation which contradicts the irreducibility 
+  of \((V, \rho_V)\). 
+\end{proof}
+
+\begin{definition}[Quotient Representation]
+  For \(W \le V\) a subrepresentation, the quotient representation 
+  is \((V / W, \rho_{V / W})\) given by 
+  \[\rho_{V / W}(g)(v + W) := \rho_V(g)(v) + W.\]
+  This is well-defined as \(W\) is stable under \(\rho_V\).
+\end{definition}
+
+\begin{proposition}
+  For \(T : (V, \rho_V) \to (W, \rho_W)\) a \(G\)-linear map, \(\ker T\) and 
+  \(\text{Im} T\) are subrepresentations.
+\end{proposition}
+\begin{proof}
+  Let \(v \in \ker T\), then \(T(\rho_V(g)(v)) = \rho_W(g)(Tv) = 
+  \rho_W(g)(0) = 0\) implying \(\rho_V(g)(v) \in \ker T\) and thus, \(\ker T\) 
+  is a subrepresentation. On the other hand, for all \(w \in \text{Im}T\), there 
+  exists some \(v \in V\) such that \(Tv = w\). Then \(\rho_W(g)(w) = 
+  \rho_W(g)(Tv) = T\rho_W(g)(v)\) implying \(\rho_W(g)(w) \in \text{Im}T\) 
+  showing \(\text{Im}T\) is also a subrepresentation.
+\end{proof}
+
+\begin{proposition}
+  For \(T : (V, \rho_V) \to (W, \rho_W)\) a \(G\)-linear map, we have 
+  \[\text{Im} T \cong V / \ker T.\]
+\end{proposition}
+\begin{proof}
+  Follows from the first isomorphism for vector spaces and it remains to check 
+  \(V / \ker T \to \text{Im} T\) is \(G\)-linear.
+\end{proof}
+
+\begin{proposition}
+  If \(T \in \text{End}_G V\) is a \(G\)-linear projection (i.e. \(T^2 = T\)), 
+  then \(V\) is a direct sum of subrepresentations \(\ker T \oplus \text{Im} T\).
+\end{proposition}
+\begin{proof}
+  Follows from the vector space case.
+\end{proof}
+
+\subsection{Maschke's Theorem}
+
+Recalling internal and external direct sums of vector spaces, we will in this 
+section introduce and prove a powerful result in representation theory known as 
+the Maschke's theorem.
+
+\begin{definition}[Decomposable]
+  The representation \((V, \rho_V)\) is decomposable if there exists a 
+  decomposition \(V = U \oplus W\) where \(U, W\) are non-zero subrepresentations.
+\end{definition}
+
+\begin{definition}[Semisimple]
+  The representation \((V, \rho_V)\) is semisimple if there exists a 
+  irreducible subrepresentations \(W_1, \cdots, W_n\) such that 
+  \[V = \bigoplus_{i = 1}^n W_i.\]
+\end{definition}
+
+\begin{theorem}[Maschke's Theorem]
+  If \(G\) is finite, then for all \(W \le V\) subrepresentations of 
+  \((V, \rho_V)\), there exists a complementary subrepresentation \(U\), 
+  \(V = W \oplus U\). 
+\end{theorem}
+
+A direct consequence of Maschke's theorem is that every finite-dimensional 
+representation of \(G\) is semisimple.
+
+Maschke's theorem does not hold in the case that \(G\) is not finite. 
+Consider \(G = \mathbb{Z}\) and let 
+\[\rho : g \to GL_2(\mathbb{C}) : m \mapsto \begin{bmatrix}
+  1 & m \\ 0 & 1
+\end{bmatrix}.\]
+Then the only non-zero proper subrepresentation is \(\text{span}\{e_1\}\) since 
+\(e_1\) is the only eigenvector and as \(\rho\) is a 2-dimensional representation, 
+the only non-zero proper subrepresentation is 1-dimensional, hence an eigenspace.
+Thus, \(\rho\) is indecomposable but not irreducible, and hence not semisimple.
+
 \end{document} 
 
-\end{document}
