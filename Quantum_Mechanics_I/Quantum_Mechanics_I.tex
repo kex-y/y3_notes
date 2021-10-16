@@ -155,8 +155,6 @@ variables.
   we find \(\ddot q = - \frac{2k}{m} q\) for some \(k\) such that \(V = k q^2\).
 \end{example}
 
-\subsection{Poisson Brackets}
-
 As for a particle in classical mechanics, the state is given by its position and 
 momentum, any measurable quantity \(A\) is given as a function \(A(p, q)\) 
 such that 
@@ -199,5 +197,135 @@ a Poisson bracket.
   \[\dot P_j = - \pdv{H}{Q_j} = \{H, P_j\} \text{ and } 
     \dot Q_j = \pdv{H}{P_j} = \{H, Q_j\}.\]
 \end{proposition}
+
+\newpage
+\section{Schödinger Dynamics}
+
+The Scrhödinger equations is a function of position and time which is written 
+in its compact form as 
+\[i \hbar \dot \psi = \hat H \psi\]
+where \(\hat H\) is known as the Hamiltonian and \(\hbar = h / 2\pi\) where 
+\(h\) is Plank's constant. 
+
+Similar to the Hamiltonian in classical mechanics, 
+the Hamiltonian is an linear operator that often encodes energy and in that case, 
+it is written as 
+\[\hat H = - \frac{\hbar^2}{2m} \grad^2 + V(r),\]
+where \(\grad^2\) is the Laplacian operator. Furthermore, the expectation 
+of the Hamiltonian, defined by 
+\[\langle \hat H \rangle := \frac{1}{\int_{\mathbb{R}^n} |\psi|^2 \dd x^n} 
+  \int_{\mathbb{R}^n}\psi^* \hat H \psi \dd x^n\]
+provides the total energy of the system.
+As \(\hat H\) is a linear operator, it has eigenfunctions where \(\phi_E\) is 
+said to be an eigenfunction if \(\hat H \phi_E = E \phi_E\) and this equation 
+is known as the time-independent Schrödinger equation. It is possible to show that 
+this eigenfunctions are orthogonal with respect to the \(L^2\) inner product 
+and form an eigenbasis of all possible states of a system.
+
+As the Schrödinger equation is a linear differential equation, the solution space 
+of the equation is a linear space. In particular, if \(\psi_i\) are solutions 
+to the Schrödinger equations, so is \(c_1 \psi_1 + c_2 \psi_2\) for \(c_1, c_2\) 
+constants.
+
+The function \(\psi\) is known as the wave function and it is interpreted as 
+the probability of finding the particle it describes at a given time in a certain 
+region. As \(\psi\) is a complex functions, it values is known as a probability 
+amplitude by while \(|\psi|^2\) is the probability distribution function. Thus, 
+the probability of finding a particle is the interval \([a, b]\) is 
+\[\int_a^b |\psi(x, t)|^2 \dd x,\]
+if \(\psi\) is normalized, i.e. \(\int_{-\infty}^\infty |\psi(x, t)| \dd x = 1\) 
+for all \(t\). In particular, we note that this interpretation is meaningful 
+only if \(\psi\) is square integrable, i.e. \(\psi \in L^2\).
+
+Let us consider the following 1-dimensional example. Let 
+\(\hat H\) be the Hamiltonian as described above, then we have the Schödinger 
+equation
+\[i\hbar \dot \psi(x, t) = - \frac{\hbar^2}{2m} \pdv[2]{x} \psi(x, t) +
+   V(x) \psi(x, t).\]
+Then, defining \(N(t) := \int_{-\infty}^\infty |\psi(x, t)|^2 \dd x\), we have 
+\[\begin{split}
+  \dv{N}{t} & = \dv{t}\int_{-\infty}^\infty \psi^*(x, t) \psi(x, t) \dd x\\
+  & = \int_{-\infty}^\infty \dot \psi^* \psi + \psi^* \dot \psi \dd x\\
+\end{split}\]
+substituting \(\dot \psi\) and \(\dot \psi^*\) using the Schrödinger equation, 
+we have 
+\[\begin{split}
+  \dv{N}{t} & = \frac{i}{\hbar}\int_{-\infty}^\infty 
+    \left(-\frac{\hbar^2}{2m}\pdv[2]{x} \psi^* + V \psi^*\right) \psi 
+    - \psi^*\left(-\frac{\hbar^2}{2m}\pdv[2]{x}\psi + V \psi\right)\dd x\\
+  & = \frac{i\hbar}{2m} \int_{-\infty}^\infty \psi \pdv[2]{x} \psi^* - 
+    \psi^* \pdv[2]{x} \psi \dd x\\
+  & = \frac{i\hbar}{2m} \int_{-\infty}^\infty \pdv{x}\left(
+    \psi \pdv{x} \psi^* - \psi^* \pdv{x} \psi\right) \dd x\\
+  & = 0
+\end{split}\]
+where the last equality follows by the fundamental theorem of calculus and 
+the fact that \(\psi \in L^2\). Thus, \(N\) is conserved over time and we may 
+normalize \(\psi\) by simply divide by \(N\).
+
+\begin{definition}[Probability Flux]
+  The probability flux of a wave function \(\psi\) is defined as 
+  \[j(x, t) := \frac{i\hbar}{2m} \left(\psi^* \pdv{x} \psi -
+    \psi \pdv{x} \psi^*\right).\]
+\end{definition}
+In particular, we see that \(\pdv{|\psi|^2}{t} = -\pdv{j}{x}\), and so, we have 
+the continuity equation
+\[\pdv{|\psi|^2}{t} + \pdv{j}{x} = 0.\]
+Unlike the total probability \(N\), the probability in a certain region does 
+fluctuate over time and we see that, if \(P_{[a, b]}(t)\) is the probability that 
+a particle is in the region \([a, b]\) at time \(t\), then
+\[\dv{P_{[a, b]}}{t} = \dv{t}\int_a^b |\psi|^2 \dd x = 
+  -\int_a^b \pdv{j}{x} \dd x = j(a, t) - j(b, t).\]
+Similarly, for higher dimensions, we define the probability flux of \(\psi\) as 
+\[j(r, t) = \frac{\hbar}{2mi}(\psi^* \grad \psi - \psi \grad \psi^*),\]
+and we have the continuity equation 
+\[\pdv{|\psi|^2}{t} + \grad \cdot j = 0.\]
+Then, if \(P_V\) is the probability of finding a particle in the region \(V\), 
+we have 
+\[\dv{P_V}{t} = - \int_V \grad \cdot j \dd V = - \int_S j \cdot \dd S\]
+by the divergence theorem. Thus, the probability change is the total flux 
+through the boundary of the volume.
+
+\subsection{Stationary Solution}
+
+Let us consider a special family of solutions. Consider the Schrödinger equation 
+\[i\hbar \dot \psi = \hat H \psi,\]
+where \(\psi\) is expressible in the form \(\psi(r, t) = \phi(r)\chi(t)\). Then,
+we have 
+\[i\hbar \dot \chi(t) \phi(r) = 
+  i\hbar \dot \psi = 
+  \hat H \phi(r) \chi(t) = \chi(t) \hat H \phi(r),\]
+and so,
+\[i\hbar \frac{\dot \chi(t)}{\chi(t)} = \frac{\hat H \phi(r)}{\phi(r)}.\]
+By observing that the right hand side and the left hand sides of the equation 
+depend on different variables, we conclude that both values must be constants 
+and we denote this constant by \(E\) such that 
+\[\dot \chi(t) = - \frac{i}{\hbar}E \chi(t), \text{ and } 
+  \hat H \phi(r) = E \phi(r).\]
+Thus, solving the first differential equation, we have 
+\[\chi(t) = e^{-iEt / \hbar}\chi(0),\]
+while the second is the time-independent Schrödinger equation.
+The time-independent Schrödinger equation is not always easy to solve though 
+it is solvable analytically in special cases. In particular, for Hamiltonians 
+in of form \(- \frac{\hbar^2}{2m} \pdv[2]{x} + V(x)\) where the potient \(V\) 
+tends to \(\infty\) as \(x \to \infty\), normalizable solutions to the 
+time-independent Schrödinger equation only exist for special discrete 
+values of \(E\).
+
+In this case, the wave function is simply 
+\[\psi(r, t) = \chi_0 e^{-iEt/ \hbar} \phi_E(r),\]
+and if \(\psi(r, 0) = \phi(r)\) the probability distribution of the particle is
+\(|\psi(r, t)|^2 = |\phi_E(r)|^2\) which is independent of time, and thus 
+we call solutions of this form stationary states. Note that the superposition 
+of stationary states is not necessarily stationary (exercise).
+
+As an example, let us consider a particle in moving freely in an 1-dimensional 
+interval \([0, L]\). This can be modelled by the potential 
+\[V(x) = \infty \mathbf{1}_{[0, L]^c}.\]
+Then, solving the time-independent Schrödinger equation 
+\(\hat H \phi_n(x) = E_n \phi_n(x)\), we find 
+\[E_n = \frac{\pi^2 \hbar^2}{2mL^2} n^2, \text{ and } 
+  \phi_n(x) = \sqrt{\frac{2}{L}} \sin \left(\frac{n\pi x}{L}\right) 
+  \mathbf{1}_{[0, L]}.\]
 
 \end{document}
