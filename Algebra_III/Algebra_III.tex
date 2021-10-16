@@ -69,6 +69,7 @@
 \usepackage{mathtools}
 \usepackage{esint}
 \usepackage[ruled,vlined]{algorithm2e}
+\usepackage{tikz-cd}
 \theoremstyle{definition}
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition*}{Definition}
@@ -106,7 +107,7 @@
 }
 \newpage
 
-\section{Definitions}
+\section{Fundamental Definitions}
 
 We will in this section recall some fundamental definitions which 
 we will study throughout the course.
@@ -400,5 +401,98 @@ necessary equal (consider \(\langle 2 \rangle \langle 2 \rangle = \langle 4
   \(I \cap J = IJ\).
 \end{proposition}
 
+As with other mathematical objects, we would like to construct a quotient 
+object for the rings. The equivalence relation we shall quotient on it the 
+following. Let \(I \subseteq R\) be an ideal and we define say
+\(r \equiv s \mod I\) for \(r, s \in R\) if \(r - s \in I\). It is not difficult 
+to check that \(\equiv_I\) is a equivalence relation and thus, we may take 
+a quotient of \(R\) with respect to this equivalence relation and we denote 
+the equivalence classes with \(r + I\).
+
+\begin{definition}[Quotient Ring]
+  Given \(R\) a ring and \(I\) an ideal of \(R\), then the quotient ring 
+  of \(R\) by \(I\) is the ring with the underlying set 
+  \[R / I := R / \equiv_I = \{r + I \mid r \in R\},\]
+  where \(0_{R/I} = 0_R + I\), \(1_{R/I} = 1_R + I\), and for all 
+  \(r + I, s + I \in R / I\), \((r + I) + (s + I) = (r + s) + I\) 
+  and \((r + I) \cdot (s + I) = rs + I\).
+\end{definition}
+
+\begin{definition}[Quotient Map]
+  Given \(R\) a ring and \(I\) an ideal of \(R\), the quotient map is then the 
+  surjective ring homomorphism \(q : R \to R / I : r \mapsto r + I\).
+\end{definition}
+
+It is clear that \(\ker q = I\).
+
+A more modern interpretation of the quotient ring is by defining it as an 
+object satisfying its universal property. In particular, the ring \(R / I\),
+taken together with a ring homomorphism \(q : R \to R / I\), has the following 
+universal property.
+
+\begin{proposition}
+  If \(f : R \to S\) is a ring homomorphism such that \(I \subseteq \ker f\), 
+  then there exists a unique ring homomorphism \(\tilde f : R / I \to S\)
+  such that for all \(r \in R\), \(\tilde f(r + I) = f(r)\).
+\end{proposition}
+
+Essentially, the universal property states that there exists a unique \(\tilde f\) 
+such that the following diagram commutes.
+\[\begin{tikzcd}
+  R \arrow[r, "f"] \arrow[swap, d, "q"] & S \\
+  R / S \arrow[swap, dashed, ru, "\tilde f"]
+  \end{tikzcd}\]
+\begin{proof}
+  Uniqueness is clear and thus we will show \(\tilde f\) is well-defined and 
+  is a ring homomorphism. Let \(r \equiv s \mod I\), and will show \(f(r) = f(s)\). 
+  Indeed, since \(r - s \in I\), we have \(r - s \in \ker f\) and so, 
+  \(f(r) - f(s) = f(r - s) = 0\), hence \(f(r) = f(s)\) and \(\tilde f\) is 
+  well-defined. Now, let \(r + I, s + I \in R / I\), we have 
+  \[\tilde f((r + I) + (s + I)) = \tilde f((r + s) + I) = f(r + s) = 
+    f(r) + f(s) = \tilde f(r + s) + \tilde f(s + I),\]
+  hence by similar argument for multiplication, we have \(\tilde f\) is a ring 
+  homomorphism.
+\end{proof}
+
+As an example consider the surjective map \(\mathbb{R}[X] \to \mathbb{C}\) 
+which is \(\text{id}\) on \(\mathbb{R}\) and sends \(X\) to \(i\). Then 
+this map have kernel \(\{P \in \mathbb{R}[X] \mid P(i) = 0\} = 
+\langle X^2 + 1 \rangle\). Thus, we have the diagram 
+\[\begin{tikzcd}
+  \mathbb{R}[X] \arrow[d, swap, "q"] \arrow[r] & \mathbb{C}\\
+  \mathbb{R}[X] / \langle X^2 + 1 \rangle \arrow[swap, leftrightarrow, ru]
+\end{tikzcd}\]
+where the pull-back map is an isomorphism as the map itself is surjective while 
+injectivity follows as we have quotiented out its kernel. As we shall see, 
+whenever we have one field inside another, there is a construction similar this 
+such that we can construct the larger field from the smaller field.
+
+By recalling the evaluation map, if \(\alpha \in R\), by the above process, we 
+see that 
+\[R[X] / I \cong R[\alpha],\]
+where \(I\) is the kernel of the evaluation map at \(\alpha\).
+
+\begin{definition}
+  Let \(R\) be a ring and \(I\) an ideal of \(R\). Then we say \(I\) is a 
+  prime ideal if \(R / I\) is an integral domain. Furthermore, we say 
+  \(I\) is a maximal ideal if \(R / I\) is a field.
+\end{definition}
+
+Since fields are integral domains, maximal ideals are prime.
+
+\begin{proposition}
+  An ideal \(I\) of \(R\) is prime if and only if for all \(rs \in I\), either 
+  \(r \in I\) or \(s \in I\).
+\end{proposition}
+
+\begin{proposition}
+  An ideal \(I\) of \(R\) is maximal if and only if the only ideal of \(R\) 
+  containing \(I\) is \(I\) or the unit ideal \(R\).
+\end{proposition}
+\begin{proof}
+  Follows by considering that a ring is a field if and only if its only ideals 
+  are the zero or the unit ideal, and the image of an ideal by a surjective 
+  homomorphism is also an ideal.
+\end{proof}
 
 \end{document}
