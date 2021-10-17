@@ -514,5 +514,151 @@ Then the only non-zero proper subrepresentation is \(\text{span}\{e_1\}\) since
 the only non-zero proper subrepresentation is 1-dimensional, hence an eigenspace.
 Thus, \(\rho\) is indecomposable but not irreducible, and hence not semisimple.
 
+\begin{proof}[Proof of Maschke's Theorem]
+  To prove the theorem, we will attempt to find some \(G\)-linear map 
+  \(T : V \to V\) that is a projection, i.e. \(T^2 = T\), such that 
+  \(\text{im} T = W\) and so \(V = \ker T \oplus \text{Im} T = \ker T \oplus W\).
+
+  In the case of linear maps, a map satisfying the above proposition must map
+  \[T(u + w) = Tu + Tw = 0 + w = w,\]
+  where \(u \in \ker T\) and \(w \in W\). As, \(\ker T \oplus W = V\), this 
+  property uniquely identifies \(T\) on \(V\). However, this map is not 
+  \(G\)-linear and so we will modify \(T\) such that it is \(G\)-linear. 
+  
+  By recalling that a linear map is \(G\)-linear if and only if it is conjugate 
+  with it self by \(\rho(g)\) for all \(g \in G\), let us define 
+  \[\tilde T := \frac{1}{|G|} \sum_{g \in G} \rho_V(g) \circ T \circ \rho_V(g)^{-1},\]
+  such that it is in some sense the average of all conjugates over all \(g\).
+
+  We will now show that \(\tilde T\) is a \(G\)-linear projection and 
+  \(\text{im} \tilde T = W\). Indeed, for all \(h \in G\), we have 
+  \[\rho_V(h) \circ \frac{1}{|G|} 
+    \left(\sum_{g \in G} \rho_V(g) \circ T \circ \rho_V(g)^{-1}\right) \circ
+    \rho_V(h)^{-1} = 
+    \frac{1}{|G|} \sum_{g \in G} \rho_V(hg) \circ T \circ \rho_V((hg)^{-1})
+    = \tilde T,\]
+  as \(g \mapsto h \cdot g\) is bijective as it has the inverse 
+  \(g \mapsto h^{-1} g\). On the other hand, it is clear that 
+  \(\tilde T(V) \subseteq W\) as for all \(v \in V\), \(T(\rho_V(g)^{-1}v) \in W\), 
+  and as \(W\) is a subrepresentation, we have \(\rho_V(g)T(\rho_V(g)^{-1}v) \in W\).
+  Thus, as \(\tilde T\mid_W = \text{id}\mid_W\), since 
+  \[\tilde T w = \frac{1}{|G|} \sum_{g \in G} \rho_V(g)T(\rho_V(g)^{-1}w) = 
+    \frac{1}{|G|} \sum_{g \in G} \rho_V(g) \rho_V(g)^{-1} w =
+    \frac{1}{|G|} \sum_{g \in G} w = w,\] 
+  we have \(\text{Im} \tilde T = W\) and \(\tilde T\) is a projection.
+\end{proof}
+
+We note that we used the property of \(\mathbb{C}\) precisely when we needed 
+\(|G|^{-1}\) and thus, the same proof works for all field in which \(|G|\) is 
+invertible, i.e. of characteristic not a factor of \(|G|\).
+
+This decomposition needs not be unique. Indeed, if \(V, \rho_V\) is a trivial 
+representation with dimension \(>1\). Then any vector space decomposition is 
+a decomposition of representations. For example, if \(V = \mathbb{C}^2\), 
+then 
+\[\mathbb{C}^2 = \{(a, 0)\} \oplus \{(0, b)\} = \{(a, a)\} \oplus \{(b, -b)\},\]
+and in fact any pair of subspaces spanned by two linearly independent basis 
+form a decomposition.
+
+\begin{proposition}
+  For \(G = C_m = \langle g \rangle\), \((V, \rho_V)\) a representation of \(G\), 
+  there exists a unique decomposition of \((V, \rho_V)\) into 1-dimensional 
+  subrepresentations if and only if \(\rho_V(g)\) has distinct eigenvalues.
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\subsection{Uniqueness and Schur's Lemma}
+
+\begin{lemma}[Schur's Lemma]
+  Let \(V\) and \(W\) be irreducible representations of \(G\), then 
+  \begin{itemize}
+    \item every \(G\)-linear map \(T : V \to W\) is invertible or zero;
+    \item let \(V = W\) be finite-dimensional, then every \(G\)-linear map 
+      \(T : V \to V\) is a multiple of the identity, i.e. 
+      \(\text{End}_G V = \mathbb{C} \cdot \text{id}\).
+  \end{itemize}
+\end{lemma}
+
+We note that the first property does not require \(V, W\) to be finite dimensional,
+and in fact it is true for arbitrary fields. On the other hand the second property 
+only works for algebraically closed fields. 
+
+\begin{proof}
+  The first property is rather trivial. Indeed, if \(T \neq 0\) then \(\ker T\) 
+  must be \(\{0\}\) as \(\ker T\) is a subrepresentation and \(V\) is irreducible.
+  Similarly, for the same reason \(\text{Im} T = W\) and thus, \(T\) is bijective. 
+
+  For the second property, we recall that the eigenvalues of \(T\) are the roots 
+  of the characteristic polynomial of \(T\). Now since \(\mathbb{C}\) is 
+  algebraically closed, there exists some \(\lambda \in \mathbb{C}\) such that 
+  \(\ker (\lambda I - T) \neq \{0\}\). Now since \(\ker (\lambda I - T)\) is 
+  a subrepresentation of \(V\), as \(V\) is irreducible, we have 
+  \(\ker (\lambda I - T) = V\). Thus, for all \(v \in V\), 
+  \[\lambda v - T v = 0 \implies T v = \lambda v \implies T = \lambda \cdot \text{id}\]
+  as required.
+\end{proof}
+
+\begin{theorem}
+  Up to isomorphism (and reordering), the representation decomposition is unique.
+  That is, if \(T : V := V_1 \oplus \cdots \oplus V_m \cong 
+    W := W_1 \oplus \cdots \oplus W_n\), 
+  then \(V_i \cong W_i\) up to ordering.
+\end{theorem}
+\begin{proof}
+  We have \(T : V \to W\) is a \(G\)-isomorphism map and so \(T(V_i)\) is a 
+  subrepresentation of \(W\). Then, as \(W = W_1 \oplus \cdots \oplus W_n\), 
+  there exists some \(j\) such that \(W_j \cap T(V_i) \neq \varnothing\). Thus, 
+  we have \(T\mid_{V_i} : V_i \to W_j\) is a \(G\)-linear map between two 
+  irreducible representations. As \(T\mid_{V_i} \neq 0\), by Schur's lemma, it 
+  follows \(T(V_i) = W_i\). Now, since for \(i \neq k\), \(T(V_i) \neq T(V_k)\) 
+  as \(T\) is bijective and \(V_i \cap V_k = \varnothing\), by pairing the 
+  \(V_i\) and \(W_j\), we are able to correspond each \(V_i\) with a \(W_j\). 
+  Reversing this process with \(T^{-1}\), we are able to pair each \(W_j\) with
+  a \(V_i\) and thus, we have \(V_i \cong W_i\) up to ordering as required.
+\end{proof}
+
+\begin{theorem}
+  In the case that \(V\) is finite dimensional, there is a unique decomposition 
+  \(V = \bigoplus_{i = 1}^n V_m\) (up to reordering) if and only if in some 
+  decomposition, \(V_i\) are all non-isomorphic.
+\end{theorem}
+\begin{proof}
+  Suppose first that \(V_1 \oplus \cdots \oplus V_n = V\), 
+  and \(V_1, \cdots, V_n\) are all non-isomorphic. Then, for all \(G\)-linear maps
+  \(T : V_i \to V\), we have by a similar argument as above, if \(T \neq 0\), 
+  there exists some \(j\) such that \(T : V_i \cong V_j\). But as \(V_i, V_j\) 
+  are non-isomorphic for \(i \neq j\), we have \(T \in \text{End}_G V_i\). Thus, 
+  by the second part of Schur's lemma, there exists some \(\lambda\) such that 
+  \(T = \lambda \cdot \text{id}\mid_{V_i}\). Now, if 
+  \(V = W_1 \oplus \cdots \oplus W_m\), by the above theorem, WLOG, we have 
+  \(T_i : V_i \cong W_i \subseteq V\). But we just shown 
+  \(T_i = \lambda \cdot \text{id}\mid_{V_i}\) and so, \(V_i = W_i\) and the 
+  decomposition is unique.
+
+  Conversely, consider that for any representation \(V_i\), there exists infinitely
+  many subrepresentations of \(V_i \oplus V_i\) by taking 
+  \[V_a := \{(v, av) \mid v \in V\}.\]
+  Thus, if \(V_i \cong V_j\), we have
+  \[V_a \le V_i \oplus_{ext} V_i \cong V_i \oplus_{ext} V_j \cong V_i \oplus_{int} V_j.\]
+  Denoting the isomorphism from \(V_i \oplus_{ext} V_i\) to \(V_i \oplus_{int} V_j\) 
+  as \(T\), we have \(T(V_a) \le V_i \oplus_{int} V_j\) and by Maschke's theorem, 
+  there exists some subrepresentation \(U\) such that, \(U\) is complement to 
+  \(T(V_a)\) and
+  \[T(V_a) \oplus U = V_i \oplus_{int} V_j.\]
+  Thus, as \(T\) is an isomorphism, \(a \neq b\) implies \(T(V_a) \neq T(V_b)\), 
+  we have found infinitely many non-equal decompositions of \(V_i \oplus_{int} V_j\) 
+  and hence, also \(V\).
+\end{proof}
+
+\begin{corollary}
+  For \(V_1, \cdots, V_n\) irreducible, non-isomorphic, subrepresentations of 
+  \(V\) such that \(V = V_1 \oplus \cdots \oplus V_n\) all subrepresentations 
+  of \(V\) are of the form \(V_{i_1} \oplus \cdots \oplus V_{i_m}\). In particular 
+  \(V\) has \(2^n\) different subrepresentations.
+\end{corollary}
+
+
 \end{document} 
 
