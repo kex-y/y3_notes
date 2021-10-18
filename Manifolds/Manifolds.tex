@@ -228,6 +228,8 @@ it is possible to obtain a finite sub-cover, and hence a finite atlas. Nonethele
 since we assumed \(X\) is second-countable, we can always choose \(I\) to be 
 countable.
 
+\subsection{Smooth Manifolds}
+
 So far, we have only considered ourselves with the topological structure. As 
 we would like to do calculus on our manifolds, we will now equip our manifolds 
 with the property of smoothness. Recall the following definition for Euclidean 
@@ -329,5 +331,192 @@ respect to two other points that are not the poles as an alternative manifold.
 From this point forward, we will always work with smooth manifolds and thus, 
 omit the word ``smooth'' whenever it is clear from the context, i.e. a manifold 
 is a smooth manifold and a atlas is a smooth atlas. 
+
+\subsection{Submanifolds}
+
+\begin{definition}[Affine Subspace]
+  An affine subspace \(A \subseteq \mathbb{R}^n\) is a translation of a 
+  linear subspace of \(\mathbb{R}^n\), i.e. there exists some \(v \in V\) and 
+  \(W \le \mathbb{R}^n\) such that 
+  \[A := v + W = \{v + w \mid w \in W\}.\]
+\end{definition}
+
+\begin{definition}[Submanifold]
+  Let \(X\) be an \(n\)-dimensional manifold and let \(Y \subseteq X\). Then 
+  \(Y\) is an \(m\)-dimensional submanifold of \(X\) if for all \(y \in Y\), 
+  there exists a 
+  \begin{itemize}
+    \item a co-ordinate chart \((U, f)\) of \(X\) which is compatible with 
+      the smooth structure of \(X\) such that \(y \in U\) and,
+    \item an \(m\)-dimensional affine subspace \(A \subseteq \mathbb{R}^n\) 
+      \[f(U \cap Y) = f(U) \cap A.\]
+  \end{itemize}
+\end{definition}
+
+\begin{proposition}
+  Let \(X\) be an \(n\)-dimensional manifold and \(Y\) an \(m\)-dimensional 
+  submanifold of \(X\), then \(Y\) is an \(m\)-dimensional manifold.
+\end{proposition}
+\begin{proof}
+  As \(Y\) is a topological subspace of \(X\), it is Hausdorff and 
+  second-countable. Thus, it remains to show that \(Y\) is equipped with a 
+  smooth structure. 
+
+  By linear algebra, it is easy to see that the linear map 
+  \(\tau : A = v + W \to W : a \mapsto a - v\) is continuously invertible, and thus, 
+  for all \(y \in Y\) there exists a chart \((U, f' := \tau \circ f)\) of \(X\) 
+  such that \(y \in U\) and \(f'(U \cap Y) = f'(U) \cap W\). 
+  Let \(T : W \cong \mathbb{R}^m\), then defining the atlas 
+  \[\{(U_y, \tilde f_y)\}_{y \in Y} := \{(U_y, T \circ f')\}_{y \in Y},\]
+  for all \(a, b \in Y\), its transition map 
+  \[\phi_{ab} = (T \circ \tau \circ f_b) \circ (T \circ \tau \circ f_a)^{-1}
+    = T \circ \tau \circ (f_b \circ f_a^{-1}) \circ \tau^{-1} \circ T^{-1},\]
+  is a composition of smooth functions, and thus is smooth. Hence \(Y\) is 
+  a smooth manifold.
+\end{proof}
+
+Let \(f : \mathbb{R} \to \mathbb{R}\) be smooth, then 
+define the set \(s_f := \{(x, y) \mid y = f(x)\} \subseteq \mathbb{R}^2\) and 
+I claim that \(s_f\) is a submanifold of \(\mathbb{R}^2\). Define the chart 
+\((U, g)\) on \(\mathbb{R}^2\) where \(U = \mathbb{R}^2\) and 
+\[g(x, y) = (x, y - f(x)).\]
+It is clear that \(g : \mathbb{R}^2 \to \mathbb{R}^2\) is a diffeomorphism as it 
+is invertible with the inverse \(g^{-1}(x, y) = (x, y + f(x))\) and so, 
+\(\{(U, g)\}\) is a smooth atlas of \(\mathbb{R}^2\). Now considering 
+\(g\mid_{s_f} : s_f \to g(s_f) : (x, f(x)) \mapsto (x, 0)\) we have \(s_f\) is 
+a smooth submanifold of \(\mathbb{R}^2\).
+
+Let us recall the following proposition from year-two analysis.
+
+\begin{proposition}[Inverse Function Theorem]
+  Let \(U \subseteq \mathbb{R}^n\) be an open subset and let 
+  \(F : U \to \mathbb{R}^n\) be smooth. Let \(x \in U\) such that the Jacobian 
+  as \(x\), \(DF\mid_x : \mathbb{R}^n \to \mathbb{R}^n\) is an isomorphism, 
+  then there exists an open neighbourhood \(V \subseteq U\) of \(x\) such that 
+  \(F \mid_V : V \to F(V) \subseteq \mathbb{R}^n\) is a diffeomorphism.
+\end{proposition}
+
+\begin{corollary}
+  A smooth, bijective function \(F : U \subseteq \mathbb{R}^n \to \mathbb{R}^n\) 
+  which has non-zero Jacobian everywhere has a smooth inverse.
+\end{corollary}
+
+The inverse function theorem is useful for showing whether a subset of a manifold 
+is a submanifold. Consider the circle \(S_1 := \{x^2 + y^2 = 1\}\) as a subset 
+of the manifold \(\mathbb{R}^2\). Then, let 
+\[U = \mathbb{R}^2 \setminus \{(x, 0) \mid x \le 0\} \text{ and } 
+  f : U \to \mathbb{R}^2 : (r\cos \theta, r\sin \theta) \mapsto (r, \theta).\]
+As \(f : U \to f(U)\) is smooth, bijective and has non-zero Jacobian on \(U\), 
+then \(f^{-1} : f(U) \to U\) is also smooth. Thus, \((U, f)\) is a smooth chart 
+on \(U \to \tilde U := \mathbb{R}^+ \times (-\pi, \pi) \subseteq \mathbb{R}^2\). 
+Then, for all \((\cos \theta, \sin \theta) \in S_1 \setminus \{(-1, 0)\}\), 
+we have \(f(\cos \theta, \sin \theta) = (1, \theta)\) implying 
+\[f(U \cap S_1) = \{(1, \theta) \mid \theta \in (-\pi, \pi)\} = 
+  f(U) \cap A,\]
+where \(A\) is the affine subspace \((1, 0) + \{(0, y) \mid y \in \mathbb{R}\}\).
+Hence \(S_1\) is a submanifold of \(\mathbb{R}^2\).
+
+\begin{definition}[Level Sets]
+  Let \(h : \mathbb{R}^n \to \mathbb{R}^k\) be a function and let 
+  \(\alpha \in \mathbb{R}^k\). Then the level set of \(h\) at \(\alpha\) is 
+  \[h^{-1}(\{\alpha\}) = 
+    \{x \in \mathbb{R}^n \mid h(x)= \alpha\} \subseteq \mathbb{R}^n.\]
+\end{definition}
+
+\begin{definition}[Regular Points and Values]
+  Let \(h : \mathbb{R}^n \to \mathbb{R}^k\) be a smooth function. A point 
+  \(x \in \mathbb{R}^n\) is called a regular point of \(h\) if the Jacobian of 
+  \(h\) at \(x\) 
+  \[Dh\mid_x : \mathbb{R}^n \to \mathbb{R}^k\]
+  is surjective.
+
+  \(\alpha \in \mathbb{R}^k\) is called a regular value if every point of 
+  the \(\alpha\)-level set \(h^{-1}(\{\alpha\})\) is regular.
+
+  If \(x \in \mathbb{R}^n\) is not a regular point, then it is called a critical 
+  point. Similarly, if \(\alpha \in \mathbb{R}^k\) is not a regular value, 
+  then it is called a critical value. 
+\end{definition}
+
+\begin{definition}[Standard Projection]
+  Let \(k \le n\). The standard projection is the morphism 
+  \[\pi : \mathbb{R}^n \to \mathbb{R}^k : (x_1, \cdots, x_n) \mapsto 
+    (x_{n-k+1}, \cdots, x_n).\]
+  That is \(\pi\) forgets the first \(n-k\) entries.
+\end{definition}
+
+Level sets are a useful tool for constructing submanifolds.
+
+\begin{theorem}
+  Let \(U \subseteq \mathbb{R}^n\) be an open subset and let 
+  \(h : U \to \mathbb{R}^k\) be a smooth function where \(k \le n\). Let 
+  \(z \in U\) be a regular point of \(h\). Then there exists an open 
+  neighbourhood \(V \subseteq U\) of \(z\) and a diffeomorphism 
+  \[f : V \to f(V) \subseteq \mathbb{R}^n \text{ s.t. } 
+    h \circ f^{-1} = \pi : f(V) \to \mathbb{R}^k.\]
+\end{theorem}
+
+Informally, this theorem states that a smooth function around a regular point 
+looks like the standard projection.
+
+\begin{proof}
+  Let \(x_1, \cdots, x_n\) be co-ordinates on \(\mathbb{R}^n\) and let 
+  us write 
+  \[h(x) = (h_1(x), \cdots, h_k(x)).\] 
+  As \(z\) is regular, we have \(Dh\mid_z : \mathbb{R}^n \to \mathbb{R}^k\) is 
+  surjective and thus, possibly by reordering, the set 
+  \[\left\{\pdv{h(z)}{x_{n-k+1}}, \cdots, \pdv{h(z)}{x_n}\right\}\]
+  form a basis of \(\mathbb{R}^k\) and the matrix 
+  \[M := \begin{pmatrix}
+    \pdv{h_1(z)}{x_{n-k+1}} & \cdots & \pdv{h_1(z)}{x_n} \\
+    \vdots & & \vdots \\
+    \pdv{h_k(z)}{x_{n-k+1}} & \cdots & \pdv{h_k(z)}{x_n}
+  \end{pmatrix}\]
+  is invertible. Then, by defining 
+  \[f : U \to f(U) : (x^1, \cdots, x^n) \mapsto 
+    (x^1, \cdots, x^{n - k}, h_1(x), \cdots, h_k(x)),\]
+  we have, 
+  \[Df\mid_z = 
+  \left(\begin{array}{c|c}
+    I_{n - k} & 0\\
+    \hline
+    \star & M
+  \end{array}\right)\]
+  which is invertible as \(\det Df\mid_z = \det I_{n-k} \det M = \det M \neq 0\).
+  Thus, by the inverse function theorem, there exists some open \(V \subseteq U\) 
+  such that \(f : V \to f(V)\) is a diffeomorphism. Then, by considering 
+  \(\pi \circ f = h\), we have \(\pi = h \circ f^{-1}\).
+\end{proof}
+
+\begin{corollary}
+  If \(h : \mathbb{R}^n \to \mathbb{R}^k\) is a smooth function, and \(\alpha\) 
+  is a regular value, then the level set of \(h\) at \(\alpha\) is a submanifold 
+  of \(\mathbb{R}^n\) of dimension \(n - k\).
+\end{corollary}
+\begin{proof}
+  For all \(z \in h^{-1}(\{\alpha\})\), we have \(z\) is a regular point. Thus, 
+  by the above theorem, there exists an open neighbourhood \(V\) of \(z\) and a 
+  diffeomorphism \(f : V \to f(V)\) such that \(h \circ f^{-1} = \pi\). Then, 
+  \[f(h^{-1}(\{\alpha\}) \cap V) = f(h^{-1}(\{\alpha\})) \cap f(V) = 
+    \pi^{-1}(\{\alpha\}) \cap f(V).\]
+  Hence, as \(\pi^{-1}(\{\alpha\}) = 
+  \{(x_1, \cdots, x_{n - k}, \alpha_1, \cdots, \alpha_k)\} = \alpha + A_{n - k}\),
+  we have \(h^{-1}(\{\alpha\})\) is a submanifold of dimension \(n - k\).
+\end{proof}
+
+This corollary is extremely useful. Consider the sphere 
+\(S^n = \{x_0^2 + \cdots + x_n^2 = \alpha\}\), by defining 
+\(h : \mathbb{R}^n \to \mathbb{R} : (x_0, \cdots, x_n) \mapsto 
+x_0^2 + \cdots + x_n^2\), we see that \(h\) is smooth with the the Jacobian 
+\[Dh\mid_x = (2x_0, \cdots, 2x_n).\]
+Thus, \(\alpha\) is a regular value of \(h\) for all \(\alpha > 0\). Hence, 
+\(S^n = \{h(x) = \alpha\}\) is a submanifold of \(\mathbb{R}^{n+1}\) for 
+all \(\alpha > 0\).
+
+\begin{theorem}[Sard's Theorem]
+  Let \(h : \mathbb{R}^n \to \mathbb{R}^k\) be a smooth function. Then the set 
+  of regular values \(Z \subseteq \mathbb{R}^k\) is dense. Furthermore, 
+  \(\mathbb{R}^k \setminus Z\) has Lebesgue measure zero.
+\end{theorem}
 
 \end{document}
