@@ -478,7 +478,7 @@ not irreducible. In general, every 1-dimension representation is irreducible.
   Follows from the vector space case.
 \end{proof}
 
-\subsection{Maschke's Theorem}
+\subsection{Maschke's Theorem and Schur's Lemma}
 
 Recalling internal and external direct sums of vector spaces, we will in this 
 section introduce and prove a powerful result in representation theory known as 
@@ -569,8 +569,6 @@ form a decomposition.
   Exercise.
 \end{proof}
 
-\subsection{Uniqueness and Schur's Lemma}
-
 \begin{lemma}[Schur's Lemma]
   Let \(V\) and \(W\) be irreducible representations of \(G\), then 
   \begin{itemize}
@@ -646,7 +644,7 @@ only works for algebraically closed fields.
   as \(T\), we have \(T(V_a) \le V_i \oplus_{int} V_j\) and by Maschke's theorem, 
   there exists some subrepresentation \(U\) such that, \(U\) is complement to 
   \(T(V_a)\) and
-  \[T(V_a) \oplus U = V_i \oplus_{int} V_j.\]
+  \[T(V_a) \oplus_{int} U = V_i \oplus_{int} V_j.\]
   Thus, as \(T\) is an isomorphism, \(a \neq b\) implies \(T(V_a) \neq T(V_b)\), 
   we have found infinitely many non-equal decompositions of \(V_i \oplus_{int} V_j\) 
   and hence, also \(V\).
@@ -658,6 +656,95 @@ only works for algebraically closed fields.
   of \(V\) are of the form \(V_{i_1} \oplus \cdots \oplus V_{i_m}\). In particular 
   \(V\) has \(2^n\) different subrepresentations.
 \end{corollary}
+
+\subsubsection{Representation of Abelian Groups}
+
+\begin{definition}[Centre]
+  The centre of a group \(G\) is the subgroup with the underlying set 
+  \[Z(G) := \{z \in G \mid z g = g z, \forall g \in G\}.\]
+\end{definition}
+
+\begin{proposition}
+  Let \((V, \rho_V)\) be a finite dimensional irreducible representation and let 
+  \(z \in Z(G)\). Then \(\rho_V(z)\) is a scalar, i.e. \(\rho_V(z) = 
+  \lambda \cdot \text{id}_V\) for some \(\lambda \in \mathbb{C}\).
+\end{proposition}
+\begin{proof}
+  For all \(g \in G\), we have \(\rho_V(z) \rho_V(g) = \rho_V(zg) = \rho_V(gz) = 
+  \rho_V(g) \rho_V(z)\). So \(\rho_V(z) : V \to V\) is \(G\)-linear. Thus, by 
+  the second property of Schur's lemma, there exists some \(\lambda\) such that 
+  \(\lambda \cdot \text{id}_V\).
+\end{proof}
+
+\begin{corollary}
+  If \(G\) is abelian and if \((V, \rho_V)\) is an irreducible representation of 
+  \(G\), then \(\dim V = 1\).
+\end{corollary}
+\begin{proof}
+  As for abelian groups \(G\), \(Z(G) = G\), we have \(\rho_V(g) = 
+  \lambda_g \cdot \text{id}_V\) for all \(g \in G\). Then, for all subspaces \(W\) of 
+  \(V\), \(W\) is a subrepresentation. However, as \(V\) is irreducible, 
+  \(W\) must either be zero or \(V\), and thus, \(\dim V = 1\).
+\end{proof}
+
+\begin{corollary}
+  If \(G\) is finite and abelian, then every finite dimensional representation is a 
+  direct sum of 1-dimensional subrepresentations.
+\end{corollary}
+
+The finite dimensional condition is necessary. Indeed, if \(F\) be a field 
+\(C \subsetneq F\) (then \(\dim F = \infty\)), e.g. 
+\[F := \left\{\frac{P(X)}{Q(X)} \mid P, Q \in \mathbb{C}[X], Q \neq 0 \right\},\]
+then \(F\) is an irreducible \(\infty\)-dimensional representation over \(\mathbb{C}\)
+of \(G = F^\times\) although the latter is abelian. 
+
+\begin{corollary}
+  The irreducible representations of \(C_m\) are up to isomorphism  
+  \((\mathbb{C}, \rho_\zeta)\) where \(\zeta\) is a \(m\)-th root of unity.
+  Furthermore, the irreducible representations of \(C_{m_1} \times \cdots \times 
+  C_{m_l}\) are up to isomorphism,
+  \[\rho_{\zeta_1, \cdots, \zeta_l}(g_1^{j_1}, \cdots, g_l^{j_l}) = 
+    (\zeta_1^{j_1}, \cdots, \zeta_l^{j_l}).\]
+\end{corollary}
+
+The above corollary is important as every finite abelian group is an internal 
+direct product of cyclic groups, we have classified all irreducible representations 
+of finite abelian groups.
+
+\begin{proposition}
+  Every 1-dimensional representation of a group \(G\) is of the form 
+  \((V, \rho_V)\), \(\rho_V(g) = \lambda_g \text{id}_V\) for some 
+  \(\lambda_g \in \mathbb{C}\). Furthermore, two such representations are isomorphic 
+  if and only if the \(\lambda_g\) are the same.
+\end{proposition}
+\begin{proof}
+  The first statement is clear while the second state follows since, if 
+  \((V, \rho_V : g \mapsto \lambda_g \text{id}_V), 
+    (W, \rho_W : g \mapsto \lambda'_g \text{id}_W)\) are two isomorphic 
+  1-dimensional representations of \(G\) along \(T : V \to W\), then given some 
+  \(v \in V \setminus \{0\}\), we have \(T(v) \neq 0\) and
+  \[\lambda_g T(v) = T(\lambda_g v) = T(\rho_V(g)(v)) = \rho_W(g)(T(v)) = 
+    \lambda_g' T(v).\]
+  Thus, \(\lambda_g = \lambda_g'\).
+\end{proof}
+
+As all 1-dimensional vector spaces over \(\mathbb{C}\) are isomorphic to 
+\(GL_1(\mathbb{C}) \cong \mathbb{C}^\times\), we can simply only consider 
+\(\mathbb{C}^\times\) as the vector space of all 1-dimensional representations.
+
+Consider the 1-dimensional representations on \(S_n\). Let \((\mathbb{C}^\times, \rho)\)
+be a representation of \(S_n\), then by considering 
+\(\sigma(a_1, \cdots, a_n)\sigma^{-1} = (\sigma(a_1), \cdots, \sigma(a_n))\), we 
+have 
+\[(ij) = ((1i)(2j))(12)((2j)(1i)),\]
+and so \((ij)\) is conjugate to \((12)\) for all \(i, j\). Furthermore, by considering 
+\(\rho(ij)^2 = \rho((ij)^2) = \rho(e) = \text{id}\), \(\rho(ij) = \pm \text{id}\).
+Now, by recalling that 
+\(\sigma = \tau \sigma' \tau^{-1} \iff \text{sign}(\sigma) = \text{sign}(\sigma')\), 
+and the fact that every permutation can be represented as a product of transpositions, 
+either, \(\rho(\sigma) = \text{sign}(\sigma) \cdot \text{id}\) or 
+\(\rho(\sigma) = \text{id}\). Thus, there exists exactly two 1-dimensional 
+representation up to isomorphism.
 
 
 \end{document} 
