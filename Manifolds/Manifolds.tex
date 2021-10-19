@@ -519,4 +519,125 @@ all \(\alpha > 0\).
   \(\mathbb{R}^k \setminus Z\) has Lebesgue measure zero.
 \end{theorem}
 
+\subsection{Smooth Functions}
+
+We know what a smooth function between two Euclidean spaces is. We will extend 
+this notion to functions between two manifolds. 
+
+\begin{definition}
+  Let \(X\) be a manifold and let \(h : X \to \mathbb{R}\) be a function. Then 
+  \(h\) is said to be smooth at \(x \in X\) if for any chart \((U, f)\) containing 
+  \(x\) such that it is compatible with the smooth structure of \(X\), the 
+  function 
+  \[h \circ f^{-1} : f(U) \to \mathbb{R}\]
+  is smooth at the point \(f(x)\).
+
+  We say \(h\) is smooth if it is smooth at all points in \(X\).
+\end{definition}
+
+It is not difficult to see that smoothness is independent of the chart we 
+pick, i.e. \(h\) is smooth at \(x\) as long as there exists a compatible chart 
+\((U, f)\) containing \(x\) such that \(h \circ f^{-1}\) is smooth at \(x\).
+
+\begin{proposition}
+  Let \(X\) be a manifold and let \(h : X \to \mathbb{R}\) be a function. Then, 
+  if \((U_1, f_1), (U_2, f_2)\) are two compatible charts on \(X\) such that 
+  \(x \in U_1 \cap U_2\), \(h \circ f_1^{-1}\) is smooth at \(x\) if and only if 
+  \(h \circ f_2^{-1}\) is smooth at \(x\).
+\end{proposition}
+\begin{proof}
+  Since the two charts are compatible the transition function 
+  \(\phi_{12} = f_1 \circ f_2^{-1}\) is smooth. Thus, if \(h \circ f_1^{-1}\) 
+  is smooth at \(f_1(x)\), so is 
+  \[h \circ f_1^{-1} \circ \phi_{12} = h \circ f_1^{-1} \circ f_1 \circ f_2^{-1} 
+    = h \circ f_2^{-1}.\]
+  Similar argument for the other direction.
+\end{proof}
+
+Thus, to show that \(h\) is smooth at some \(x\), it suffices to find a compatible 
+chart \((U, f)\) at \(x\) such that \(h \circ f^{-1}\) is smooth at \(f(x)\).
+
+\begin{definition}[Smooth]
+  Let \(X, Y\) be manifolds of dimension \(n\) and \(m\). Then a function 
+  \(H : X \to Y\) is smooth at \(x \in X\) if there exists a chart 
+  \((U, f)\) compatible with the smooth structure of \(X\) such that \(x \in U\) 
+  and a chart \((V, g)\) compatible with the smooth structure of \(Y\) such that 
+  \(H(x) \in V\) and \(H(U) \subseteq V\) and
+  \[g \circ H \circ f^{-1} : f(U) \subseteq \mathbb{R}^n \to g(V) 
+    \subseteq \mathbb{R}^m\]
+  is smooth at \(f(x)\).
+
+  We say \(H\) is smooth if it is smooth at all points in \(X\).
+\end{definition}
+
+In the case that \(H\) is a continuous function, we see that the condition of 
+\(H(U) \subseteq V\) can be relaxed by considering the chart on \(X\), 
+\((U \cap H^{-1}(V), f)\) in which \(U \cap H^{-1}(V) \subseteq V\) is open 
+by the continuity of \(H\).
+
+\begin{definition}[Diffeomorphism]
+  A function \(H : X \to Y\) between manifolds is said to be a diffeomorphism 
+  if it is smooth, a bijection, and \(H^{-1}\) is smooth.
+\end{definition}
+
+Similar to before, the definition of smoothness is independent of the choice 
+of the charts (consider \(\phi^Y_{21} \circ g_1 \circ h \circ f_1 \circ \phi^X_{12}\)).
+
+\begin{proposition}
+  Let \(Y \subseteq X\) be a submanifold of \(X\) and let 
+  \[\iota_Y : Y \hookrightarrow X\]
+  be the inclusion map from \(Y\) to \(X\). Then \(\iota_Y\) is smooth.
+\end{proposition}
+\begin{proof}
+  Let \(y \in Y\), then by definition, there exists a chart \((V, g)\) on 
+  \(X\) containing \(y\) such that \(g(V \cap Y) = g(V) \cap A\) for some 
+  \(A\) an affine space. Then defining \(U = V \cap Y\) and \(f = g\mid_U\), 
+  we have \((U, f)\) is a chart on \(Y\) and \(g \circ \iota_Y \circ f^{-1}\) 
+  is the identity on \(f(U)\). Thus \(\iota_Y\) is smooth.
+\end{proof}
+
+\begin{proposition}
+  Let \(X, Y, Z\) be manifolds and let \(H : X \to Y\) and \(G : Y \to Z\) be
+  smooth, then \(G \circ H\) is also smooth.
+\end{proposition}
+\begin{proof}
+  Follows by considering 
+  \[g \circ G \circ f_1^{-1} \circ \phi_{12} \circ f_2 \circ H \circ h = 
+    g \circ (G \circ H) \circ h,\]
+  for some appropriately chosen charts which is restricted whenever necessary. 
+\end{proof}
+
+From the two propositions above, we see that the restriction of any smooth 
+maps on a submanifold is smooth as \(F\mid_Y = F \circ \iota_Y\). In particular, 
+we have that any smooth maps between Euclidean spaces restricted on some 
+submanifolds of that Euclidean space is smooth (e.g. any smooth map restricted 
+on the \(n\)-sphere is smooth).
+
+\begin{definition}[Product Manifold]
+  Given \(X, Y\) manifolds of dimension \(n\) and \(m\). Then the Cartesian 
+  product \(X \times Y\) is a manifold of dimension \(n + m\).
+\end{definition}
+
+To see why this is a topological manifold, consider for all 
+\((x, y) \in X \times Y\) we may choose a chart \((U, f)\) on \(X\) such that \(x \in U\) and a chart 
+\((V, g)\) in \(Y\) such that \(y \in V\). Then, if we define 
+\(W := U \times V\) and \(h : W \to h(W) \subseteq \mathbb{R}^{n + m} := 
+(x, y) \mapsto (f(x), g(y))\), we have \((W, h)\) is a chart of \(X \times Y\) 
+containing \((x, y)\). Similarly, using the same construction, if \(X, Y\) are 
+smooth, one may show that \(X \times Y\) is also smooth.
+
+\begin{definition}[Lie Group]
+  A Lie group is a manifold \(G\) which has a group structure \((G, \cdot)\) 
+  such that the multiplication and the inverse are both smooth.
+\end{definition}
+
+An important example of a Lie group is the general linear group. In particular, 
+as the space \(M_n(\mathbb{R})\) of all \(n \times n\) matrices of real 
+coefficients is a vector space of dimension \(n^2\), it is an \(n^2\)-dimensional 
+manifold. Now, as \(GL_n(\mathbb{R})\) is an open subset of \(M_n(\mathbb{R})\), 
+it follows that it is also an \(n^2\)-dimensional manifold. Now, as 
+\(GL_n(\mathbb{R})\) is a group equipped with matrix multiplication, one may 
+show that it is a Lie group by checking that the multiplication and the inverse 
+are smooth.
+
 \end{document}
