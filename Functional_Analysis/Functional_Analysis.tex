@@ -245,7 +245,7 @@ all norms on a finite dimensional space are equivalent.
   implying \((\cdot)\) is continuous.
 \end{proof}
 
-\subsection{Sequence Spaces}
+\subsection{Classical Spaces}
 
 We recall the \(L_p\) spaces from second year measure theory, and in particular, 
 when we consider the counting measure \(\mu\), we have the nice property that 
@@ -399,6 +399,223 @@ limit of the sequences indeed belong to \(\ell_p\).
   \[|x_j - x| \le |x_j - x_j^p| + |x_j^p - x^p| + |x^p - x| \le 
     \|x_i - x_i^p\|_\infty + \frac{\epsilon}{3} + \frac{\epsilon}{3} < \epsilon,\]
   implying \(x_i \to x\) as \(i \to \infty\) and \((x_i) \in c\).
+\end{proof}
+
+\subsubsection{Separability}
+
+In this section we will consider the separability of different classical spaces.
+
+\begin{proposition}
+  The space \(\ell_p\) is separable for all \(p \ge 1\).
+\end{proposition}
+\begin{proof}
+  It is easy to see that the subspace of all finite sequences is dense in 
+  \(\ell_p\). Indeed, if \(x \in \ell_p\) and \(x^n\) is the sequence such that 
+  \(x^n_i = x_i\) for all \(i \le n\) and \(x^n_i = 0\) for all \(i > n\), 
+  we have 
+  \[\|x - x^n\|_p^p = \sum_{i = 0}^\infty |x_i - x_i^n|^p = 
+    \sum_{i = n + 1}^\infty |x_i|^p\]
+  which tends to \(0\) as \(n \to \infty\). Now, by defining 
+  \(\ell_{\mathbb{Q}, n}\) as the set of rational sequences with length \(n\),
+  we have \(d := \bigcup_{n \in \mathbb{N}} \ell_{\mathbb{Q}, n}\) is dense in the 
+  space of all finite sequences. Now, since \(d\) is countable as it is a countable 
+  union of countable sets, we have found a countable dense set of \(\ell_p\).
+\end{proof}
+
+\begin{lemma}
+  A metric space is \(X\) not separable if there exists an uncountable subset \(S\) 
+  such that for some some \(k > 0\), \(d(x, y) > k\) for all \(x, y \in S\).
+\end{lemma}
+\begin{proof}
+  As subset of a separable \textit{metric} space is separable, \(S\), must be 
+  separable. But as \(d(x, y) > k\) for all \(x, y \in S\), no sequences of 
+  \(S\) but the constant sequence can converge. Thus, for all countable subsets 
+  of \(S\), simply picking a point of \(S\) not in that subset suffices.
+\end{proof}
+
+\begin{proposition}
+  \(\ell_\infty\) is not separable.
+\end{proposition}
+\begin{proof}
+  Clearly the set containing all sequences of only \(0\) and \(1\)s is 
+  a subset of \(\ell_\infty\). Furthermore, this sequence is uncountable as 
+  it bijects \(\mathbb{R}\) be considering the binary representation of a real 
+  number. Thus, since all distinct elements in this set have distance 1 apart, 
+  the conclusion follows by the above lemma.
+\end{proof}
+
+\begin{proposition}
+  \(C^k([a, b])\) (the set of \(k\)-differentiable functions from the interval 
+  \([a, b]\)) for all \(k \in \mathbb{N}\) is separable.
+\end{proposition}
+\begin{proof}
+  Recalling the Weierstass approximation theorem, we have for all continuous 
+  function \(f\), there exists a sequence of polynomials \(f_n\) such that 
+  \(f_n \to f\) uniformly. Thus, as the set of polynomials with rational 
+  coefficients is countable, and dense in the space of all polynomials, we 
+  have found a countable dense set of \(C^0([a, b])\). Now as 
+  \(C^k([a, b]) \subseteq C^0([a, b])\) for all \(k \in \mathbb{N}\), we have 
+  \(C^k([a, b])\) is separable as required. 
+\end{proof}
+
+\begin{definition}[Absolutely Convergent]
+  Let \(X\) be a normed space and let \((x_n)\) be a sequence of \(X\), then 
+  a series \(\sum_{n \in \mathbb{N}} x_n\) is said to be absolutely convergent 
+  if \(\sum_{n \in \mathbb{N}} \|x_n\| < \infty\).
+\end{definition}
+
+\begin{proposition}
+  A normed space \(X\) is complete if and only if for all sequences \((x_n)\) 
+  of \(X\) such that \(\sum x_n\) is absolutely convergent implies \(x_n\) 
+  converges. Thus, a normed space is Banach if and only if this property is 
+  satisfied.
+\end{proposition}
+\begin{proof}
+  See problem sheet.
+\end{proof}
+
+By recalling the proof of the completeness of \(L_p\) spaces, we note that 
+this property was used extensively. As a consequence, we see that \(L_p(\mu)\) 
+is separable if the measure \(\mu\) is separable. In particular, the spaces 
+\(L_p(\mathbb{R}^n, \lambda)\) are separable for all \(n\). On the other hand, 
+\(L_\infty\) is in general not separable.
+
+\subsection{Hamel and Schauder Basis}
+
+In this small section we will introduce two new notions of basis for infinite 
+dimensional spaces. In particular, we will introduce the Hamel basis which is 
+a natural extension of the definition of basis for the finite dimensional case 
+and the Schauder basis which is a notion of basis that incorporates the 
+topological properties of the space.
+
+\begin{definition}[Linear Independent]
+  A set \(W \subseteq V\) is linear independent if for all 
+  \((\lambda_i)_{i = 1}^m \subseteq \mathbb{K}\), \((w_i)_{i = 1}^n \subseteq W\), 
+  \[\sum \lambda_i w_i = 0 \implies \lambda_i = 0\]
+  for all \(i = 1, \cdots, n\).
+\end{definition}
+
+\begin{definition}[Hamel Basis]
+  A set \(W \subseteq V\) is a Hamel basis for a linear space \(V\) if 
+  \(W\) is linearly independent and for all \(x \in V\), there exists a unique 
+  finite linear combination of vectors \((w_i)_{i = 1}^n \subseteq W\), 
+  \((\lambda_i)_{i = 1}^m \subseteq \mathbb{K}\) 
+  such that 
+  \[x = \sum \lambda_i w_i.\]
+\end{definition}
+
+\begin{proposition}
+  Every linear space has a Hamel basis.
+\end{proposition}
+We will come back to the proof of this proposition after discussing an important 
+result known as the Hahn-Banach theorem.
+
+\begin{definition}[Schauder Basis]
+  A set \(W \subseteq V\) is a Schauder basis for a normed space \(V\) if 
+  \(W\) is countable, linearly independent, and for all \(x \in V\), there 
+  exists a unique (possibly infinite)-sequence 
+  \((\lambda_i)_{i = 1}^\infty \subseteq \mathbb{K}\) and 
+  \((w_i)_{i = 1}^\infty \subseteq W\) such that
+  \[x = \sum_{i = 1}^\infty \lambda_i w_i.\]
+\end{definition}
+
+\begin{proposition}
+  If a Banach space \(X\) has a Schauder basis, then it is separable.
+\end{proposition}
+
+The proof of the above proposition is left as an exercise. It is notable that 
+the reverse of the above is not true and was in fact a Scottish book problem 
+which an counterexample was given by Per Enflo in 1972 who was awarded a live 
+goose.
+
+It is clear that for \(p \ge 1\), the set \(W := \{e_j \mid j \in \mathbb{N}\}\) 
+where \((e_j)_i = \delta_{ij}\) is a Schauder basis of \(\ell_p\). 
+
+Recall that \(c \subseteq \ell_\infty\) is the set of sequences which has 
+a limit. By considering the sequence \(x_n = 1\), we see that the set of 
+standard basis vectors no longer form a basis of \(c\) as 
+\[\left\|x - \sum^n_{i = 1} e_i\right\|_\infty = 1,\]
+for all \(n\). Defining \(W := \{e_0 := (1, 1, \cdots)\} \cup 
+\{e_j \mid j \in \mathbb{N}\}\), for all \((a_n) \in c\), let 
+\(\lambda_0 := \lim_{n \to \infty} a_n\) and \(\lambda_n = a_n - \lambda_0\).
+Then, for all \(\epsilon > 0\), there exists some \(N \in \mathbb{N}\) such that 
+for all \(n \ge N\), \(|a_n - \lambda_0| \leq \epsilon\). Thus, 
+\[\left\|\lambda_0 e_0 + \sum_{i = 1}^n \lambda_i e_i - a\right\|_\infty 
+  = \|(0, \cdots, 0, \lambda_0 - a_n, \lambda_0 - a_{n + 1}, \cdots)\|_\infty
+  < \epsilon,\]
+implying \(W\) is a Schauder basis of \(c\).
+
+Furthermore, one may show that \(C([0, 1])\) has a Schauder basis consisting of 
+all the ``spike'' functions at the points \(k2^{-n}\) for all \(n \in \mathbb{N}\), 
+\(k = 1, \cdots 2^{-n}\).
+
+\subsection{Hilbert Spaces}
+
+Recall the definition of sesquilinear forms over some vector space \(\mathbb{H}\).
+
+\begin{definition}[Sesquilinear Form]
+  A sesquilinear form \(\langle \cdot, \cdot \rangle : 
+  \mathbb{H} \times \mathbb{H} \to \mathbb{K}\) on \(\mathbb{H}\) where 
+  \(\mathbb{K}\) is \(\mathbb{R}\) or \(\mathbb{C}\) is a function such that
+  \begin{itemize}
+    \item it is linear with respect to the second argument;
+    \item and is conjugate symmetric.
+  \end{itemize}
+  We say \(\langle \cdot, \cdot \rangle\) is nondegenerate if \(x = 0\) if and 
+  only if \(\langle x, y\rangle = 0\) for all \(y \in \mathbb{H}\). 
+  Nondegenerate sesquilinear forms are called scalar products and a 
+  vector space equipped with a scalar product is called a unitary space 
+  (or a scalar product space).
+\end{definition}
+
+We see that a scalar product induces a norm by defining 
+\(\|f\|^2 := \langle f, f \rangle\). In particular, we recall the 
+\(\ell_2, C([a, b])\) and \(L_2\) are all scalar product spaces.
+
+\begin{proposition}
+  Let \(\mathbb{H}\) be a unitary space, then 
+  \begin{itemize}
+    \item \(\|f + g\|^2 + \|f - g\|^2 = 2 \|f\|^2 + 2\|g\|^2\) 
+      (parallelogram identity);
+    \item \(\langle f, g\rangle = \frac{1}{4}(\|f + g\|^2 - |f - g\|^2)\) if 
+      \(\mathbb{K} = \mathbb{R}\) and 
+      \(\langle f, g\rangle = \frac{1}{4} \sum_{k = 0, \cdots 3} 
+      i^k \|f + i^k g\|^2\) if \(\mathbb{K} = \mathbb{C}\)
+      (polarisation identity).
+  \end{itemize}
+\end{proposition}
+
+\begin{definition}[Hilbert Space]
+  A unitary space is a Hilbert space if it is complete with respect to its 
+  induced norm.
+\end{definition}
+
+\begin{definition}[Convex Set]
+  A set \(S\) is said to be convex if for all \(x, y \in S\), 
+  \((1 - t)x + ty \in S\) for all \(t \in [0, 1]\).
+\end{definition}
+
+\begin{proposition}[Nearest Point Property]
+  Every nonempty closed convex set \(\mathcal{K}\) in a Hilbert space 
+  \(\mathbb{H}\) contains a vector of the smallest norm. Moreover, if 
+  \(h \in \mathbb{H}\), there exists a unique \(h_0 \in \mathcal{K}\) 
+  such that 
+  \[\|h - h_0\| = \text{dist}(h, \mathcal{K}) := \inf_{k \in K} \|h - k\|.\]
+\end{proposition}
+\begin{proof}
+  By the definition of infimum, there exists a sequence 
+  \((k_n) \subseteq \mathcal{K}\) such that 
+  \[\lim_{n \to \infty} \|k_n\| \to d := \inf_{k \in \mathbb{K}} \|k\|.\]
+  Consider, for all \(n, m \in \mathbb{N}\), by the parallelogram identity,
+  \[\left\|\frac{1}{2}(k_n - k_m)\right\|^2 = 
+    \frac{1}{2}(\|k_n\|^2 + \|k_m\|^2) - \left\|\frac{1}{2}(k_n + k_m)\right\|^2.\]
+  Then, as \(\mathbb{K}\) is convex, \(\frac{1}{2}(k_n + k_m) \in \mathbb{K}\) 
+  and so \(\|(k_n + k_m) / 2\|^2 \ge d^2\) and 
+  \[\left\|\frac{1}{2}(k_n - k_m)\right\|^2 \le 
+    \frac{1}{2}(\|k_n\|^2 + \|k_m\|^2) - d^2.\]
+  Thus, taking \(n, m \to \infty\), the right hand side tends to zero and so 
+  \((k_n)\) is Cauchy and hence convergent. Now as \(\mathcal{K}\) is closed, 
+  the limit is in \(\mathcal{K}\) and hence the statement.
 \end{proof}
 
 \end{document}
