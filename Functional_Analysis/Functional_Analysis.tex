@@ -618,4 +618,75 @@ We see that a scalar product induces a norm by defining
   the limit is in \(\mathcal{K}\) and hence the statement.
 \end{proof}
 
+\begin{definition}[Orthogonal Systems]
+  Let \((\mathbb{H}, \langle \cdot, \cdot \rangle)\) be an unitary space. 
+  A set of vectors \(\{e_j \in \mathbb{H} \mid j \in J\}\) for some index 
+  set \(J\) is called an orthogonal system if for all distinct \(i, j \in J\), 
+  \[\langle e_i, e_j \rangle = 0.\]
+  If furthermore, \(\langle e_i, e_i \rangle = 1\) for all \(i \in J\), then 
+  we say the system is orthonormal.
+\end{definition}
+
+\begin{proposition}
+  Every orthogonal system is linearly independent.
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+Using Zorn's lemma, one can show that every unitary space contains an orthogonal 
+basis.
+
+\begin{definition}[Fourier Coefficients]
+  Let \((\mathbb{H}, \langle \cdot, \cdot \rangle)\) be an unitary space 
+  and let \(\{e_j \in \mathbb{H} \mid j \in J\}\) be an orthogonal system. 
+  Then for each \(f \in \mathbb{H}\), the Fourier coefficients with respect to 
+  the orthogonal system are 
+  \[c_j := \frac{\langle e_j, f \rangle}{\|e_j\|^2}.\]
+\end{definition} 
+
+\begin{proposition}
+  If \(f = \sum_{k \in \mathbb{N}} \alpha_k e_k\), then \(a_j = c_j\).
+\end{proposition}
+\begin{proof}
+  Let \(n < m\) and \(S_m := \sum_{k = 1}^m \alpha_k e_k\). Then, 
+  \(\langle S_m, e_n\rangle = \overline{\alpha_n} \|e_n\|^2\). Thus, we have 
+  \[|\overline{\alpha_n} \|e_n\|^2 - \langle f, e_n\rangle| = 
+    |\langle S_m, e_n\rangle - \langle f, e_n\rangle | = 
+    |\langle S_m - f, e_n \rangle|\le\|S_m - f\| \|e_n\| \to 0\]
+  as \(m \to \infty\). 
+\end{proof}
+
+\begin{proposition}
+  Suppose \((e_j)_{j \in \mathbb{N}}\) is orthogonal and 
+  \(g(a_1, \cdots, a_n) := \left\| f - \sum_{j = 1}^n a_je_j\right\|^2\). 
+  Then \(g\) attains its minimum at \(a_j = c_j\). Furthermore, 
+  we have 
+  \[\sum_{j = 1}^\infty |c_j|^2\|e_k\|^2 \le \|f\|^2.\]
+  This inequality is known as Bessel's inequality.
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{definition}
+  An orthogonal system \(\{e_j \mid j \in J\}\) is called complete if 
+  for all \(f \in \mathbb{H}\), if \(\langle f, e_j \rangle = 0\) for all 
+  \(j\), then \(f = 0\).
+\end{definition}
+
+\begin{proposition}
+  The following are equivalent
+  \begin{enumerate}
+    \item \((e_j)_{j \in \mathbb{N}}\) is complete;
+    \item \(\left\|f - \sum_{j = 1}^n c_je_j\right\| \to 0\) as \(k \to \infty\) where 
+      \(c_j\) are the Fourier coefficients;
+    \item \(\|f\|^2 = \sum_{j = 1}^\infty |c_j|^2\|e_k\|^2\) for all 
+      \(f \in \mathbb{H}\).
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
 \end{document}
