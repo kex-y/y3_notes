@@ -864,5 +864,101 @@ From the above proposition, we see that simple nonabelian implies perfect.
 Furthermore, \(G\) is perfect implies all 1-dimensional representations of \(G\) 
 are trivial. In the case the \(G\) is finite, the converse is also true.
 
+\subsection{Decomposition of the Regular Representation}
+
+% Are we missing a section? In particular 2.14
+
+Recall that for linear maps, the space of all linear maps between two vector 
+spaces form a linear map and we have the following isomorphisms.
+
+\begin{lemma}
+  \[\text{Hom}(V, W_1 \oplus W_2) \cong \text{Hom}(V, W_1) \oplus \text{Hom}(V, W_2),\]
+  and similarly,
+  \[\text{Hom}(V_1 \oplus V_2, W) \cong \text{Hom}(V_1, W) \oplus \text{Hom}(V_2, W).\]
+\end{lemma}
+\begin{proof}
+  Clear using the natural bijections.
+\end{proof}
+
+Similarly to the situation for vector spaces, the space of representations also 
+form a vector space and similar isomorphisms hold. In particular, 
+\[\text{Hom}_G(V, W_1 \oplus W_2) \cong \text{Hom}_G(V, W_1) \oplus \text{Hom}_G(V, W_2),\]
+and
+\[\text{Hom}_G(V_1 \oplus V_2, W) \cong \text{Hom}_G(V_1, W) \oplus \text{Hom}_G(V_2, W).\]
+
+If \(G\) is finite, By Maschke's theorem, \(\mathbb{C}[G]\) is finite dimensional, 
+and so, \(\mathbb{C}[G]\) is always decomposable into irreducible representations. 
+We will now prove some properties about this decomposition.
+
+\begin{proposition}
+  Let \(V_1, \cdots, V_m\) be irreducible representations that are 
+  non-isomorphic such that 
+  \[\mathbb{C}[G] \cong V_1^{r_1} \oplus \cdots \oplus V_m^{r_m},\]
+  where \(W^k = W \oplus \cdots \oplus W\) \(k\)-times. Then, \(\dim V_i = r_i\).
+\end{proposition}
+\begin{proof}
+  Recall that \(\text{Hom}_G(\mathbb{C}[G], V) \cong V\) by the bijection 
+  \(\phi \mapsto \phi(e)\). So, by this and the above isomorphism,
+  \[V_i \cong \text{Hom}_G(\mathbb{C}[G], V_i) \cong 
+    \bigoplus_{j = 1}^m \text{Hom}_G(V_j, V_i)^{r_j}.\]
+  By Schur's lemma, for all \(i \neq j\), we have \(\text{Hom}_G(V_i, V_j) = 0\) 
+  and so,
+  \[\bigoplus_{j = 1}^m \text{Hom}_G(V_j, V_i)^{r_j} \cong 
+    (\mathbb{C} \cdot \text{Id}_{V_i})^{r_i} \cong \mathbb{C}^{r_i}.\]
+  Thus, we have \(\dim V_i = r_i\).
+\end{proof}
+
+\begin{corollary}
+  Let \(V_1, \cdots, V_m\) be irreducible representations that are 
+  non-isomorphic such that 
+  \[\mathbb{C}[G] \cong V_1^{r_1} \oplus \cdots \oplus V_m^{r_m}.\]
+  Then, \(r_i = 1\) for all \(i\) if \(G\) is abelian.
+\end{corollary}
+
+As we shall see, converse is also true.
+
+\begin{corollary}
+  Let \(V_1, \cdots, V_m\) be irreducible representations that are 
+  non-isomorphic such that 
+  \[\mathbb{C}[G] \cong V_1^{r_1} \oplus \cdots \oplus V_m^{r_m},\]
+  then 
+  \[|G| = \sum_{i = 1}^m (\dim V_i)^2.\]
+\end{corollary}
+\begin{proof}
+  \[|G| = \dim \mathbb{C}[G] = \dim (V_1^{r_1} \oplus \cdots \oplus V_m^{r_m}) 
+    = \dim (V_1^{\dim V_1} \oplus \cdots \oplus V_m^{\dim V_m}) 
+    = \sum_{i = 1}^m (\dim V_i)^2.\]
+\end{proof}
+
+This is the sum of squares formula though it provided that 
+every irreducible representation of \(G\) is isomorphic to exactly one of the
+\(V_i\).
+
+\begin{proposition}
+  Let \(V_1, \cdots, V_m\) be irreducible representations that are 
+  non-isomorphic such that 
+  \[\mathbb{C}[G] \cong V_1^{r_1} \oplus \cdots \oplus V_m^{r_m}.\]
+  Then for all irreducible representations \(W\) of \(G\), there exists uniquely 
+  \(i\) such that \(W \cong V_i\).
+\end{proposition}
+\begin{proof}
+  By assumption \(V_i \not\cong V_j\) for \(i \neq j\) and so, it remains to 
+  show \(W\) must be isomorphic at some \(V_i\). Suppose otherwise, 
+  then, 
+  \[W \cong \text{Hom}_G(\mathbb{C}[G], W) \cong \bigoplus_i 
+    \text{Hom}_G(V_i, W) = 0,\]
+  by Schur's lemma, which is a contradiction.
+\end{proof}
+
+\begin{corollary}
+  For non-trivial \(G\), every irreducible representation has dimension strictly 
+  less than \(\sqrt{|G|}\).
+\end{corollary}
+\begin{proof}
+  Given \((V, \rho)\) a non-trivial representation,
+  \[|G| = \dim \mathbb{C}[G] = \dim (\mathbb{C} \oplus V^{\dim V} \oplus \cdots) 
+    \ge \dim (\mathbb{C} \oplus V^{\dim V}) = 1 + (\dim V)^2.\]
+\end{proof}
+
 \end{document} 
 
