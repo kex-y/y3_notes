@@ -864,9 +864,9 @@ From the above proposition, we see that simple nonabelian implies perfect.
 Furthermore, \(G\) is perfect implies all 1-dimensional representations of \(G\) 
 are trivial. In the case the \(G\) is finite, the converse is also true.
 
-\subsection{Decomposition of the Regular Representation}
+\subsection{Decomposition of Representations}
 
-% Are we missing a section? In particular 2.14
+\subsubsection{Regular Representation}
 
 Recall that for linear maps, the space of all linear maps between two vector 
 spaces form a linear map and we have the following isomorphisms.
@@ -884,7 +884,10 @@ Similarly to the situation for vector spaces, the space of representations also
 form a vector space and similar isomorphisms hold. In particular, 
 \[\text{Hom}_G(V, W_1 \oplus W_2) \cong \text{Hom}_G(V, W_1) \oplus \text{Hom}_G(V, W_2),\]
 and
-\[\text{Hom}_G(V_1 \oplus V_2, W) \cong \text{Hom}_G(V_1, W) \oplus \text{Hom}_G(V_2, W).\]
+\[\text{Hom}_G(V_1 \oplus V_2, W) \cong \text{Hom}_G(V_1, W) \oplus \text{Hom}_G(V_2, W),\]
+where the space \((\text{Hom}_G(V, W), \rho_{\text{Hom}(V, W)})\) is defined such 
+that 
+\[\rho_{\text{Hom}(V, W)}(g)(\phi) = \rho_W(g) \circ \rho \circ \rho_V(g)^{-1}.\]
 
 If \(G\) is finite, By Maschke's theorem, \(\mathbb{C}[G]\) is finite dimensional, 
 and so, \(\mathbb{C}[G]\) is always decomposable into irreducible representations. 
@@ -958,6 +961,144 @@ every irreducible representation of \(G\) is isomorphic to exactly one of the
   Given \((V, \rho)\) a non-trivial representation,
   \[|G| = \dim \mathbb{C}[G] = \dim (\mathbb{C} \oplus V^{\dim V} \oplus \cdots) 
     \ge \dim (\mathbb{C} \oplus V^{\dim V}) = 1 + (\dim V)^2.\]
+\end{proof}
+
+\subsubsection{Revisiting Maschke's Theorem}
+
+\begin{definition}[\(G\)-invariant Subspace]
+  Given a representation \((V, \rho_V)\) of \(g\), then the \(G\)-invariant subspace 
+  of \(V\) is 
+  \[V^G := \{v \in V \mid \rho_V(g)(v) = v, \ \forall g \in G\}.\]
+\end{definition}
+
+A useful note is that, \(V^G\) is the intersection of all eigenspaces of 
+\(\rho_V(g)\) of eigenvalue 1 for all \(g\).
+
+\begin{lemma}
+  \(V^G \subseteq V\) is the largest trivial subrepresentation of \(V\). 
+\end{lemma}
+\begin{proof}
+  \(V^G\) is a trivial subrepresentation as it sends every element of \(V^G\) 
+  to itself and thus, \(\rho_{V^G}(g) = \text{Id}_{V^G}\) for all \(g \in G\). 
+  Lastly, if \(W \subseteq V\) is a trivial subrepresentation, for all \(v \in W\), 
+  \(\rho_W(g)(v) = \text{Id}_W v = v\) for all \(g \in G\), and so 
+  \(v \in V^G\) and hence, \(W \subseteq V^G\).
+\end{proof}
+
+\begin{definition}[Averaging Map]
+  If \(G\) is finite and \((V, \rho_V)\) is a representation of \(G\), then 
+  the averaging map is the function 
+  \[\text{avg} : V \to V : v \mapsto \frac{1}{|G|} \sum_{g \in G} \rho_V(g)(v).\]
+\end{definition}
+
+\begin{proposition}
+  The averaging map is a \(G\)-linear projection with the image \(V^G\).
+\end{proposition}
+\begin{proof}
+  Clearly, \(\text{Im}(\text{avg}) \subseteq V^G\) since for all \(h \in G\), 
+  \(v \in V\),
+  \[\rho(h)(\text{avg}(v)) = 
+    \rho(h)\left(\frac{1}{|G|}\sum_{g \in G}\rho(g)(v)\right) = 
+    \frac{1}{|G|}\sum_{g \in G}\rho(hg)(v) = 
+    \frac{1}{|G|}\sum_{g \in G}\rho(g)(v) = \text{avg}(v).\]
+  Furthermore, as \(\text{avg}\mid_{V^G} = \text{Id}_{V^G}\), we have 
+  \(\text{Im}(\text{avg}) = V^G\) and thus, \(\text{avg}\) is a projection.
+  Finally, by the same calculation, we have 
+  \[\rho(h)(\text{avg}(v)) = 
+    \frac{1}{|G|}\sum_{g \in G}\rho(hg)(v) =
+    \frac{1}{|G|}\sum_{g \in G}\rho(gh)(v) = 
+    \frac{1}{|G|}\sum_{g \in G}\rho(g)(\rho(h)(v)) = \text{avg}(\rho(h)(v)),\]
+  which shows \(\text{avg}\) is a \(G\)-linear map.
+\end{proof}
+
+With this proposition, we obtain that \(V = \ker(\text{avg}) \oplus V^G\) with 
+\(\ker(\text{avg})\) being a subrepresentation with no \(G\)-invariant vectors, 
+i.e. \(\ker(\text{avg})^G = \{0\}\). With these definitions in mind, let us 
+revisit Maschke's theorem.
+
+\begin{proposition}
+  \(\text{Hom}_G(V, W) = \text{Hom}(V, W)^G\).
+\end{proposition}
+\begin{proof}
+  Definition check.
+\end{proof}
+
+\begin{corollary}
+  The map 
+  \[\text{avg} : \text{Hom}(V, W) \to \text{Hom}(V, W)^G = \text{Hom}_G(V, W)\]
+  is a \(G\)-linear projection.
+\end{corollary}
+
+Thus, with this corollary, we see that the averaging map provides a (\(G\)-linear) 
+map between \(\text{End}(V)\) and \(\text{End}_G(W)\). Nonetheless, to obtain 
+Maschke's theorem, it remains to show that it \(\text{avg}\) maps 
+linear projections to \(G\)-linear projections (with the same image).
+
+\subsubsection{Adjoint Representation}
+
+Consider \(V_1, \cdots, V_m\) be all irreducible representations 
+(up to isomorphism) of \(G\) with \(|G|\). Then, we may define the map 
+\[G \to \bigoplus_{i = 1}^m\text{End}(V_i) : g \mapsto 
+  (\rho_{V_1}(g), \cdots, \rho_{V_m}(g)).\]
+Linearly extending, we obtain a map \(\phi : \mathbb{C}[G] \to \bigoplus 
+\text{End}(V_i)\). Then, by the sum of squares formula, since 
+\(\dim(\text{End}(W)) = (\dim W)^2\), the source and target of \(\phi\) have 
+the same dimension.
+
+\begin{proposition}
+  The map \(\phi : \mathbb{C}[G] \to \bigoplus \text{End}(V_i)\) is a 
+  linear isomorphism and is \(G\)-linear with respect to the adjoint 
+  representation.
+\end{proposition}
+\begin{proof}
+  It suffices to show \(G\)-linearity. For all \(h \in G\), we have 
+  \[\begin{split}
+    \phi(\rho_{ad}(g)(h)) & = \phi(ghg^{-1}) = 
+    (\rho_{V_1}(ghg^{-1}), \cdots, \rho_{V_m}(ghg^{-1}))\\
+    & = (\rho_{\text{End}(V_1)}(g)(\rho_{V_1}(h)), \cdots, 
+      \rho_{\text{End}(V_m)}(g)(\rho_{V_m}(h)))\\
+    & = \rho(g)(\phi(h)).
+  \end{split}\]
+\end{proof}
+
+Thus, we have found found an isomorphism 
+\(\mathbb{C}[G]_{ad} \cong \bigoplus \text{End}(V_i)\) and thus, taking the 
+dimension of both sides, we recover the sum of squares formula 
+\(|G| = \sum \dim(V_i)^2\). In particular, we have replaced an equality by an 
+isomorphism and in general, this process is called ``categorification''.
+
+Continuing with \(V_1, \cdots, V_m\) as the irreducible representations of 
+\(G\), \(|G| < \infty\) up to isomorphism, we have the following corollaries.
+
+\begin{corollary}
+  Since,
+  \[\mathbb{C}[G]_{ad} \cong \bigoplus_{i = 1}^m \text{End}(V_i).\]
+  By taking \(G\)-invariant subspaces, we have 
+  \[\mathbb{C}[G]_{ad}^G \cong \bigoplus_{i = 1}^m \text{End}(V_i)^G = 
+  \bigoplus \text{End}_G(V_i) = \bigoplus \mathbb{C} \cdot \text{Id}_{V_i} 
+  \cong \mathbb{C}^m\]
+  by Schur's lemma. 
+\end{corollary}
+
+\begin{proposition}
+  \((\mathbb{C}[G], \rho_{ad})^G\) have a basis \(f_1, \cdots, f_{m'}\) given 
+  by 
+  \[f_i = \sum_{g \in \mathcal{C_i}}g,\]
+  where \(\mathcal{C}_1, \cdots, \mathcal{C}_{m'}\) are the conjugacy classes 
+  of \(G\).
+\end{proposition}
+\begin{proof}
+  Follows by considering \(\sum a_g g \in \mathbb{C}[G]_{ad}^G \iff a_h = a_{ghg^{-1}}\) 
+  for all \(g, h \in G\).
+\end{proof}
+
+\begin{corollary}
+  The number of conjugacy classes of \(G\) equals the number of irreducible 
+  representation up to isomorphisms.
+\end{corollary}
+\begin{proof}
+  Follows by taking the dimensions on both sides of the isomorphism 
+  \(\mathbb{C}[G]_{ad}^G \cong \mathbb{C}^m\).
 \end{proof}
 
 \end{document} 
