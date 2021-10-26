@@ -447,7 +447,7 @@ Hence \(S_1\) is a submanifold of \(\mathbb{R}^2\).
 
 Level sets are a useful tool for constructing submanifolds.
 
-\begin{theorem}
+\begin{theorem}[Implicit Function theorem]
   Let \(U \subseteq \mathbb{R}^n\) be an open subset and let 
   \(h : U \to \mathbb{R}^k\) be a smooth function where \(k \le n\). Let 
   \(z \in U\) be a regular point of \(h\). Then there exists an open 
@@ -639,5 +639,153 @@ it follows that it is also an \(n^2\)-dimensional manifold. Now, as
 \(GL_n(\mathbb{R})\) is a group equipped with matrix multiplication, one may 
 show that it is a Lie group by checking that the multiplication and the inverse 
 are smooth.
+
+\subsubsection{Rank of a Smooth Function}
+
+For linear maps between Euclidean spaces, we have a notion of a rank by considering 
+the dimension of the image of that map. Similarly, for smooth functions between 
+Euclidean spaces, its rank is defined by considering the rank of its derivative.
+We will in this section extend this notion for smooth functions between manifolds.
+
+\begin{definition}[Rank]
+  Let \(X, Y\) be manifolds of dimension \(n\) and \(k\), and let \(H : X \to Y\) 
+  be a smooth function. Let \(x \in X\) and let \((U, f)\) be a chart on \(X\) 
+  such that \(x \in U\), and \((V, g)\) be a chart on \(Y\) at \(H(x)\) such 
+  that \(H(U) \subseteq V\). Then, we may define 
+  \[\tilde H := g \circ H \circ f^{-1} : f(U) \to g(V).\]
+  As \(\tilde H\) is a smooth function between Euclidean spaces, it has 
+  a Jacobian at \(f(x)\), 
+  \[D \tilde H \mid_{f(x)} : \mathbb{R}^n \to \mathbb{R}^k.\]  
+  Then the rank of \(H\) at \(x\) is simply the rank of \(D \tilde H \mid_{f(x)}\).
+\end{definition}
+
+It is clear that the rank of a smooth function at a point is independent of the 
+choice of the chart as the transition functions are diffeomorphisms. In particular, 
+if \(\tilde H\) and \(\tilde H'\) results from two different choices of charts, we 
+have \(\tilde H' = \psi^{-1} \circ \tilde H \circ \phi\) where \(\psi\) and 
+\(\phi\) are appropriate transition maps. Then, by the chain rule, we have 
+\[D \tilde H' \mid_{f'(x)} = D\psi^{-1} \mid_{g(H(x))} \circ D 
+  \tilde H\mid_{f(x)} \circ D \phi\mid_{f'(x)}.\]
+Now, as \(\phi, \psi\) are diffeomorphisms, both \(D\psi^{-1} \mid_{g(H(x))}\) 
+and \(D \phi\mid_{f'(x)}\) are invertible, and hence, the rank of 
+\(D \tilde H' \mid_{f'(x)}\) is the same as \(D \tilde H \mid_{f(x)}\).
+
+\begin{definition}[Regular]
+  Let \(X, Y\) be manifolds of dimension \(n\) and \(k\), and let \(F : X \to Y\) 
+  be a smooth function. Then \(x \in X\) is said to be a regular point if the 
+  rank of \(F\) at \(x\) is \(k\). If \(x\) is not regular, then it is 
+  called a critical point.
+
+  Furthermore, \(y\in Y\) is called a regular value if every point 
+  \(x \in F^{-1}(y)\) is regular. Otherwise, it is called a critical value.
+\end{definition}
+
+\begin{lemma}
+  Let \(X, Y\) be manifolds of dimension \(n\) and \(k\), and let \(F : X \to Y\)
+  be a smooth function. Let \(y \in Y\) be a regular value of \(F\). Then 
+  the level set 
+  \[Z_y := F^{-1}(y) \subseteq X\]
+  is a submanifold of \(X\) of dimension \(n - k\).
+\end{lemma}
+\begin{proof}
+  Let \(x \in Z_y\), then there exists a chart \((U, f)\) on \(X\) containing 
+  \(x\) and a chart \((V, g)\) on \(Y\) containing \(F(U)\). Then we have the 
+  smooth function 
+  \[\tilde F := g \circ F \circ f^{-1} : f(U) \to g(V).\]
+  Then by construction, we have \(\tilde F^{-1}(g(y)) = f(Z_y \cap U)\). Now, 
+  since \(y\) is a regular value of \(F\), \(x\) is a regular point of \(F\), and 
+  so \(f(x)\) is a regular point of \(\tilde F\). Then, as \(x \in Z_y \cap U\) 
+  was chosen arbitrarily, \(\tilde F^{-1}(g(y))\) is a regular set (by choosing the 
+  same chart for all \(x \in \tilde F^{-1}(g(y))\)). Thus, the set 
+  \(\tilde F^{-1}(g(y))\) is a submanifold of \(\mathbb{R}^n\), and by definition, 
+  there exists a chart \((W, h)\) containing \(f(x)\) such that 
+  \[h(\tilde F^{-1}(g(y))) = h(W) \cap A,\]
+  for some affine subspace \(A\). Hence, it follows \((f^{-1}(W), h \circ f)\) is 
+  a co-ordinate chart on \(X\) such that 
+  \[h \circ f(f^{-1}(W) \cap Z_y) = h \circ f(f^{-1}(W)) \cap A.\]
+\end{proof}
+
+\subsubsection{Immersion and Submersion}
+
+\begin{definition}
+  Let \(X, Y\) be manifolds of dimension \(n\) and \(k\), and let \(F : X \to Y\) 
+  be a smooth function. Then \(F\) is said to be a submersion if the rank of 
+  \(F\) at any \(x \in X\) is \(k\). Furthermore, \(F\) is said to be an 
+  immersion if the rank of \(F\) at any \(x \in X\) is \(n\).
+\end{definition}
+
+Thus, \(F\) is a submersion if its Jacobian at any point \(x\) is surjective. 
+Similarly, \(F\) is a immersion of its Jacobian at any point \(x\) is injective.
+
+\begin{lemma}
+  Let \(Y \subseteq X\) be a \(m\)-dimensional submanifold, then the inclusion 
+  map 
+  \[\iota : Y \hookrightarrow X\]
+  is an immersion.
+\end{lemma}
+\begin{proof}
+  By the definition of a submanifold, for all \(y \in Y\), there exists 
+  some chart \((V, g)\) of \(X\) containing \(y\) such that 
+  \[g(V \cap Y) = g(Y) \cap A,\]
+  for some affine subspace \(A\). Then, restricting the chart on to \(Y\), 
+  we have \((V \cap Y, g\mid_Y)\) is a chart on \(Y\) containing \(y\). Thus, 
+  \[\tilde \iota := g \circ \iota \circ g\mid_Y^{-1} = \text{Id}_{g(V \cap Y)}.\]
+  Hence, as \(D \tilde \iota\mid_{g(y)} = D \text{Id}_{g(V \cap Y)}\mid_{g(y)}\) has 
+  dimension \(m\), \(\iota\) is a immersion.
+\end{proof}
+
+\begin{proposition}
+  Let \(X, Y\) be \(n\)-dimensional manifolds, and let \(F : X \to Y\) be a 
+  function which is smooth, bijective and of rank \(n\) at any point \(x \in X\). 
+  Then \(F\) is a diffeomorphism.
+\end{proposition}
+\begin{proof}
+  It suffices to show that \(F^{-1}\) is smooth. For all \(y \in Y\), let 
+  \((U, f)\) be a chart of \(F^{-1}(y)\) on \(X\) and \((V, g)\) be a chart of 
+  \(Y\) containing \(f(U)\). Then, by definition, 
+  \[\tilde F := g \circ F \circ f^{-1} : f(U) \to g(V)\]
+  is smooth with invertible derivative \(D \tilde F\mid_{f(F^{-1}(y))}\). 
+  By the inverse function theorem, \(\tilde F^{-1} = f \circ F^{-1} \circ g^{-1}\) 
+  is locally smooth at \(g^{-1}(y)\) with derivative 
+  \(D F^{-1}\mid_{g(y)} = D \tilde F\mid_{f(F^{-1}(y))}^{-1}\). Thus, as 
+  \(y \in Y\) was chosen arbitrarily, \(F^{-1}\) is smooth at any \(y \in Y\), 
+  and so \(F^{-1}\) is smooth. 
+\end{proof}
+
+\begin{proposition}
+  If \(X, Y\) are manifolds of dimension \(n\) and \(k\), the projection map 
+  \[p_1 : X \times Y \to X : (x, y) \mapsto x\]
+  is a submersion.
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{proposition}
+  Let \(X, Y\) be manifolds of dimension \(n\) and \(k\), and let \(F : X \to Y\) 
+  be a submersion (so \(k \le n\)). Then \(F\) is an open map, i.e. for any 
+  open subset \(W \subseteq X\), \(F(W)\) is open in \(Y\).
+\end{proposition}
+\begin{proof}
+  Let \(y \in F(W)\) and we will show that \(F(W)\) is locally open as \(y\). 
+  Let \(x \in F^{-1}(y) \cap W\) and suppose \((U, f)\) be a chart at \(x\) 
+  contained in \(W\) and \((V, g)\) be a chart at \(y\) such that 
+  \(F(U) \subseteq V\). Since \(F\) is a submersion, the function 
+  \[\tilde F := g \circ F \circ f^{-1} : f(U) \to g(V)\]
+  is smooth and has rank \(k\) at \(f(x)\), and so \(f(x)\) is a regular point 
+  of \(\tilde F\). Then, by the implicit function theorem, 
+  there exists an open set \(U' \subseteq f(U)\) containing \(f(x)\) and a 
+  diffeomorphism \(h : U' \to h(U')\) such that 
+  \(\tilde F \circ h^{-1} = \pi : h(U') \to \mathbb{R}^k\) is the standard 
+  projection.
+
+  Now as the standard projection and diffeomorphisms are an open maps, we have 
+  \(\tilde F = \pi \circ h\) is also an open map, and in particular, 
+  \(\tilde F(U')\) is open. Hence, as \(g\) is a homeomorphism, 
+  \(\tilde F(U') = g(F(f^{-1}(U')))\) is open in \(g(V)\) implies 
+  \(F(f^{-1}(U')) \subseteq F(U) \subseteq F(W)\) is open in \(Y\). Thus, 
+  \(F(W)\) is locally open at \(y\), and so \(F(W)\) is open and \(F\) is an 
+  open map.
+\end{proof}
 
 \end{document}
