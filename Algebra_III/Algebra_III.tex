@@ -496,4 +496,123 @@ Since fields are integral domains, maximal ideals are prime.
   homomorphism is also an ideal.
 \end{proof}
 
+\subsection{Factorization}
+
+\begin{definition}[Unit]
+  Let \(R\) be a integral domain, then \(R^\times\) is the set of elements \(r\) 
+  of \(R\) such that there exists some \(r' \in R\) such that \(rr' = 1\). If 
+  \(r \in R^\times\), then we call \(r\) a unit.
+\end{definition}
+
+\begin{definition}[Divides]
+  Let \(r, s \in R\), we say \(r\) divides \(s\) if \(s \in \langle r \rangle\).
+\end{definition}
+
+It is clear that a unit divides any element. Indeed, if \(u \in R^\times\) 
+and \(s \in R\) such that \(uu' = 1\), then \(s = (su')u\) implying 
+\(s \in \langle u \rangle\).
+
+\begin{definition}[Associate]
+  An associate of \(r \in R\) is an element \(ur\) of \(r\) with \(u \in R^\times\).
+\end{definition}
+
+\begin{definition}[Irreducible]
+  An element \(r \in R\) is irreducible if \(r \neq 0\), \(r \not\in R^\times\) 
+  and the only dividors of \(r\) are units and associates of \(r\).
+\end{definition}
+
+\begin{definition}[Unique Factorization Domain]
+  A ring \(R\) is a unique factorization domain (UFD) if it is a integral domain 
+  and 
+  \begin{itemize}
+    \item for all non-zero, non-unit element of \(R\) is a product of finitely 
+      many irreducibles.
+    \item for all \(r \in R\) non-zero, non-unit such that 
+    \[r = p_1 \cdots p_s = q_1 \cdots q_t,\]
+    where \(p_i, q_i\) are irreducibles, then \(s = t\) and after reordering, 
+    \(p_i\) is an associate of \(q_i\).
+  \end{itemize}
+\end{definition}
+
+Some typical examples of UFDs are \(\mathbb{Z}, \mathbb{F}[X], 
+\mathbb{Z}[X], \cdots\) (where \(\mathbb{F}\) is a field), though it is more 
+challenging to come up with counter-examples. Consider the ring 
+\(\mathbb{Z}[\sqrt{-5}] = \{a + b\sqrt{-5} \mid a, b \in \mathbb{Z}\}\), define 
+\[N : \mathbb{Z}[\sqrt{-5}] \to \mathbb{Z} : z \mapsto z \overline{z}.\]
+It is easy to see that \(N\) is multiplicative, and thus, if 
+\(u \in \mathbb{Z}[\sqrt{-5}]\) is a unit such that \(uu' = 1\), we have
+\[N(u)N(u') = N(uu') = N(1) = 1,\]
+implying \(N(u) = \pm 1\) and so \(u = \pm 1\). Then, as \(\pm 1\) are the 
+only units of \(\mathbb{Z}[\sqrt{-5}]\), we have 
+\(3 \cdot 2 = (1 - \sqrt{-5})(1 + \sqrt{-5})\) are products of non-units which 
+are not associate with each other. Hence, to show that \(\mathbb{Z}[\sqrt{-5}]\) 
+is not a UFD it suffices to show that the factors are irreducibles. To show this, 
+one again use \(N\) by plugging the factors. 
+
+Let us construct a ring such that the first 
+condition of UFD fails, i.e. a ring for which a non-zero, non-unit element is 
+not a product of finitely many irreducibles. Define 
+\[\mathbb{C}[t^{\mathbb{Q}_\ge 0}] := 
+  \left\{\sum_{i = 0}^r c_i t^{a_i} \mid c_i \in \mathbb{C}, a_i \in \mathbb{Q} 
+  \right\} = \bigcup_{n = 1} \{f^{1/n} \mid f \in \mathbb{C}[X]\}.\]
+Then, \(\mathbb{C}[t^{\mathbb{Q}_\ge 0}]^\times = \mathbb{C}^\times\) and 
+in fact, \(\mathbb{C}[t^{\mathbb{Q}_\ge 0}]\) does not have any irreducible 
+elements. Let \(f \in \mathbb{C}[t^{\mathbb{Q}_\ge 0}]^\times\) such that 
+\(f = P(t^{1/n})\) and \(f^{-1} = Q(t^{1/m})\), then we may write 
+\(f = P'(t^{1/(nm)})\) and \(f^{-1} = Q'(t^{1/(nm)})\). Hence, 
+\[1 = P'(t^{1/(nm)}) Q'(t^{1/(nm)}) \implies P'Q' = 1 \implies P', Q' 
+\text{ are constants,}\]
+and so \(f \in \mathbb{C}^\times\). On the other hand, if 
+\(P(t^{1 / n}) \in \mathbb{C}[t^{\mathbb{Q}_\ge 0}]\) is irreducible, by the 
+fundamental theorem of algebra, it is a product of linear polynomials implying 
+\(P(t^{1 / n}) = t^{1 / n} - a\) for some \(a \in \mathbb{C}\). But, 
+\(t^{1 / n} - a = (t^{1 / (2n)} + \sqrt{a})(t^{1 / (2n)} - \sqrt{a})\), a 
+contradiction.
+
+\begin{definition}[Prime]
+  An element \(r\) of a ring \(R\) is prime if \(\langle r \rangle\) is a prime 
+  ideal. Equivalently, \(r\) is prime if for all \(s, t \in R\), \(r \mid st\) 
+  implies either \(r \mid s\) or \(r \mid t\).
+\end{definition}
+
+\begin{proposition}
+  Let \(R\) be an integral domain in which every element is a finite product of 
+  irreducibles. Then every irreducible element of \(R\) is prime if 
+  and only if for all 
+  \[p_1 \cdots p_s = q_1 \cdots q_t,\]
+  where \(p_i, q_i\) are irreducible, then \(s = t\) and after reordering, 
+  \(p_i\) is an associate of \(q_i\).
+\end{proposition}
+\begin{proof}
+  Suppose every irreducible element of \(R\) is prime. Then, if 
+  \[p_1 \cdots p_s = q_1 \cdots q_t,\]
+  where \(p_i, q_i\) are irreducible, we have 
+  \(p_1 \mid q_1,\cdots, q_t\) and so, \(p_1 \mid q_i\) for some 
+  \(i = 1, \cdots, t\), and hence \(p_i\) is an associate of \(q_1\). Then, 
+  by reordering, we have \(p_1\) and \(q_1\) are associates. Repeating this 
+  argument, we may cancel all associates with some terms remaining if \(s > t\),
+  \[p_{t + 1} \cdots p_s = 1.\]
+  But this is a contradiction since then \(p_{t + 1}\) is a unit and so 
+  \(s = t\) as required.  
+
+  Conversely, suppose \(r\) is irreducible and \(r \mid st\) and so there exists 
+  some \(rx = st\) for some \(x \in R\). Then, we may factor \(x, s, t\) into 
+  irreducibles such that 
+  \[r p_1 \cdots p_l = q_1 \cdots q_m n_1 \cdots n_k.\]
+  Then, as such factorizations are unique, \(r\) must be an associate of some 
+  \(q_i\) or \(n_i\) which implies that \(r \mid s\) or \(r \mid t\), 
+  so \(r\) is prime.
+\end{proof}
+
+\begin{proposition}
+  In an integral domain \(R\), if \(r \in R\) is prime, then \(r\) is irreducible.
+\end{proposition}
+\begin{proof}
+  Suppose otherwise, \(r = st\). Then \(r \mid st\) but neither \(r \mid s\) 
+  nor \(r \mid t\).
+\end{proof}
+
+A counter-example of the reverse is that 2 is irreducible in 
+\(\mathbb{Z}[\sqrt{-5}]\) but is not a prime.
+
 \end{document}
