@@ -319,4 +319,134 @@ and if \(\psi(r, 0) = \phi(r)\) the probability distribution of the particle is
 we call solutions of this form stationary states. Note that the superposition 
 of stationary states is not necessarily stationary (exercise).
 
+\newpage
+\section{Principles}
+
+\subsection{Mathematics Review}
+
+Let us recall some definitions which is required for quantum mechanics. 
+
+\begin{definition}[Inner Product Space]
+  A inner product space is a vector space \(V\) equipped with a map 
+  \(\langle \cdot, \cdot \rangle : V \times V \to \mathbb{C}\) such that 
+  for all \(u, v, w \in V, \lambda, \mu \in \mathbb{C}\),
+  \begin{itemize}
+    \item \(\langle u, v \rangle = \langle v, u \rangle^*\);
+    \item \(\langle u, u \rangle \ge 0\) with equality if and only if \(u = 0\);
+    \item \(\langle u, \lambda v + \mu w \rangle = 
+      \lambda \langle u, v \rangle + \mu \langle u, w\rangle\).
+  \end{itemize}
+\end{definition}
+
+Recall that inner product induces a norm by defining 
+\(\|\cdot\| : V \to \mathbb{R} : v \mapsto \sqrt{\langle v, v \rangle}\).
+
+\begin{definition}[Complete]
+  A topological space is complete if every Cauchy sequence converge in that space.
+\end{definition}
+
+\begin{definition}[Separable]
+  A topological space is separable if there exists a countable dense subset.
+\end{definition}
+
+\begin{definition}[Hilbert Space]
+  A Hilbert space is a inner product space such that the induced topology 
+  is complete and is separable\footnote{We note that the condition for 
+  separability is normally omitted for in mathematical contexts.}.
+\end{definition}
+
+In finite dimensional spaces, an inner product space is automatically complete 
+and separable. In particular, a finite dimensional inner product space over 
+\(\mathbb{R}\) or \(\mathbb{C}\) is complete and separable since 
+\(\mathbb{R}\) and \(\mathbb{C}\) are complete and separable.
+
+\begin{definition}[Linear Operator]
+  A linear operator is simply a function belonging to \(\text{End}(V)\).
+\end{definition}
+
+As linear operators are simply linear maps, definitions such as eigenvalues and 
+eigenvectors are defined analogously.
+
+\begin{definition}[Adjoint Operator]
+  Given a linear operator \(A : V \to V\), the adjoint of \(A\) is a linear 
+  operator \(A^\dagger\) such that 
+  \[\langle A u, v \rangle = \langle u, A^\dagger v \rangle\] 
+  for all \(u, v \in V\).
+\end{definition}
+
+\begin{definition}[Self-Adjoint Operator]
+  A linear operator \(A\) is self-adjoint if \(A = A^\dagger\) and an operator 
+  satisfying this property is refereed to as a Hermitian operator.
+\end{definition}
+
+Recalling the spectral theorem from second year, we have that the eigenvalues 
+of a self-adjoint operator are real and furthermore, its eigenvectors form a 
+basis and are orthogonal. One may also show that for \(A\) is Hermitian if and 
+only if the expectation values \(\langle v, Av\rangle\) are real for all 
+\(v \in V\).
+
+\begin{definition}[Dual Space]
+  The dual space of a vector space \(V\) is the vector space of linear 
+  functionals of \(V\).
+\end{definition}
+
+Recall that the dual space of a vector space is (non-canonically) isomorphic 
+to that space, and this is summarized by the Riesz representation theorem.
+
+\begin{theorem}[Riesz Representation Theorem]
+  Every Hilbert space \(\mathcal{H}\) is (anti-)isomorphic to its dual space. 
+  In particular, there exists a bijective map between the linear functionals 
+  \(F \in \mathcal{H}^*\) and vectors \(f \in \mathcal{H}\) such that 
+  \(F(\phi) = \langle f, \phi \rangle\) for all \(\phi \in \mathcal{H}\).
+\end{theorem}
+\begin{proof}
+  See last year for the finite dimensional case while the general case can 
+  be found in the functional analysis course.
+\end{proof}
+
+\subsection{Dirac Notation}
+
+Given a vector \(\phi\) in the Hilbert space \(\mathcal{H}\), we denote 
+\(\phi\) by \(\ket{\phi}\) and we call it a ``ket''-vector. On the other hand, 
+given \(F = \phi \mapsto \langle f, \phi\rangle \in \mathcal{H}^*\) we 
+denote \(F\) by \(\bra{f}\) and we call it a ``bra''-vector. With this, we denote 
+\[F(\phi) = \langle f, \phi \rangle = \bra{f} \ket{\phi}.\]
+
+If \(A\) is a linear operator, it makes sense to denote \(A \ket{\phi}\) by 
+the ket-vector \(\ket{A \phi}\). On the other hand, if 
+\(\ket{\chi} := A \ket{\phi}\), we see that, for all \(\psi \in \mathcal{H}\),
+\[\bra{\chi} \ket{\psi} = \langle A \phi, \psi\rangle = 
+  \langle \phi, A^\dagger \psi \rangle = \bra{\phi} A^\dagger \ket{\psi}.\]
+Hence, we denote the linear operator \(\bra{\chi} = \langle A\phi, \cdot\rangle\) 
+by the notation \(\bra{\phi} A^\dagger\). Thus, the notation \(\bra{\phi} A \ket{\psi}\)
+might denotes two equal equations, i.e. 
+\(\langle A^\dagger \phi, \psi \rangle = \bra{\phi} A \ket{\psi} = 
+\langle \phi, A \psi \rangle\).
+
+Given an expression in Dirac notation, there are a set of easy rules for finding 
+the adjoint of that expression (easy check by unfolding definitions). In particular,
+to find the adjoint, one needs to replace
+\begin{itemize}
+  \item \(c \leftrightarrow c^*\) for scalars \(c\);
+  \item \(\bra{\phi} \leftrightarrow \ket{\phi}\) for vectors \(\phi\);
+  \item \(A \leftrightarrow A^\dagger\) for linear operators \(A\);
+  \item reverse the order of factors.
+\end{itemize}
+
+By definition, we have \(\bra{\phi}\ket{\psi} = \langle \phi, \psi \rangle\) 
+is the inner product of \(\phi\) and \(\psi\). On the other hand, one can define 
+the outer product by \(\ket{\phi} \bra{\psi}\) which is a linear operator such 
+that \(\ket{\chi} \mapsto \ket{\phi}\bra{\psi}\ket{\chi} = \bra{\psi}\ket{\chi}\ket{\phi}\). 
+In the case that \(\phi = \psi\), we see that the operator \(\ket{\phi} \bra{\phi}\) 
+is the projection operator on to the vector \(\phi\).
+
+Now, if \(\{\ket{\phi_n}\}\) is countable basis of a Hilbert space \(\mathcal{H}\), 
+then for all \(\ket{\chi} \in \mathcal{H}\), we have 
+\[\ket{\chi} = \sum_n \chi_n \ket{\phi_n}.\]
+Then, if \(\{\ket{\phi_n}\}\) is orthonormal, we have 
+\[\ket{\chi} = \sum_n \bra{\phi_n}\ket{\chi} \ket{\phi_n} = 
+  \sum_n \ket{\phi_n} \bra{\phi_n} \ket{\chi} = 
+  (\sum_n \ket{\phi_n} \bra{\phi_n}) \ket{\chi}.\]
+Thus, the operator \(\sum_n \ket{\phi_n} \bra{\phi_n}\) is the identity operator.
+
 \end{document}
