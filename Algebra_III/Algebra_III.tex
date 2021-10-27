@@ -496,7 +496,7 @@ Since fields are integral domains, maximal ideals are prime.
   homomorphism is also an ideal.
 \end{proof}
 
-\subsection{Factorization}
+\subsection{Factorization and PIDs}
 
 \begin{definition}[Unit]
   Let \(R\) be a integral domain, then \(R^\times\) is the set of elements \(r\) 
@@ -575,7 +575,7 @@ contradiction.
   implies either \(r \mid s\) or \(r \mid t\).
 \end{definition}
 
-\begin{proposition}
+\begin{proposition}\label{ufdiff}
   Let \(R\) be an integral domain in which every element is a finite product of 
   irreducibles. Then every irreducible element of \(R\) is prime if 
   and only if for all 
@@ -614,5 +614,149 @@ contradiction.
 
 A counter-example of the reverse is that 2 is irreducible in 
 \(\mathbb{Z}[\sqrt{-5}]\) but is not a prime.
+
+\begin{definition}[Principal Ideal Domain]
+  A ring \(R\) is a principal ideal domain (PID) if \(R\) is an integral 
+  domain and every ideal \(I\) is principal.
+\end{definition}
+
+\begin{lemma}
+  If \(R\) is a PID, then any increasing tower of ideals 
+  \[I_1 \subseteq I_2 \subseteq I_3 \subseteq \cdots\]
+  is eventually constant, i.e. there exists an \(N \in \mathbb{N}\) such that 
+  for all \(n \geq N\), \(I_n = I_N\).
+\end{lemma}
+\begin{proof}
+  Let \(I = \bigcup_{j = 1}^\infty I_j\). Since \(x, y \in I\), there exists 
+  \(j, k \in \mathbb{N}\), such that \(x \in I_j, y \in I_j\), and so 
+  \(x, y \in I_{\max\{j, k\}} \implies x + y \in I_{\max\{j, k\}} \subseteq I\). 
+  Similarly, by the same argument we have \(I\) is closed under multiplication 
+  by elements of \(R\). Thus, \(I\) is an ideal, and so 
+  \(I = \langle r \rangle\) is principal. Finally, as \(r \in I\), there exists 
+  some \(N \in \mathbb{N}\) such that \(r \in I_N\), and so 
+  \(I = \langle r \rangle \subseteq I_N\) implying \(I = I_N\).
+\end{proof}
+
+\begin{lemma}
+  Let \(R\) be a PID, \(r \in R\) which is non-zero, non-unit. Then there 
+  exists some irreducible \(s \in R\) which divides \(r\).
+\end{lemma}
+\begin{proof}
+  If \(r\) is irreducible, then simply take \(s = r\). On the other hand, if 
+  \(r\) is not irreducible, then there exists \(r_0, s_0\) non-zero, non-associates 
+  of \(r\) such that \(r = r_0s_0\). If \(r_0\) is irreducible, then we are 
+  done while otherwise, we may repeat the process such that \(r_0 = r_1s_1\). 
+  This process must terminate since if otherwise, we have 
+  \[\langle r \rangle \subsetneq \langle r_0 \rangle \subsetneq 
+    \langle r_1 \rangle \subsetneq \cdots\]
+  which is non-terminating strictly increasing tower of ideals contradicting 
+  our previous lemma. 
+\end{proof}
+
+\begin{lemma}
+  Let \(R\) be a PID, then any non-zero, non-unit of \(r\) factors into 
+  irreducibles.
+\end{lemma}
+\begin{proof}
+  Similar to before, all factors of \(r\) must terminate since otherwise we 
+  have produces an non-terminating increasing tower of ideals.
+\end{proof}
+
+\begin{theorem}
+  Let \(R\) be a PID, then \(R\) is a UFD.
+\end{theorem}
+\begin{proof}
+  We already shown the existence of factorizations and so, it remains to show 
+  uniqueness. By proposition \ref{ufdiff}, it suffices to show that every 
+  irreducible element of \(R\) is prime. Let \(r \in R\) be irreducible, 
+  \(r \mid st\) and \(r \not\mid s\). Then, since \(\langle r, s \rangle\) is 
+  principal, there exists some \(q \in R\), such that 
+  \(\langle r, s \rangle = \langle q \rangle\) implying \(q \mid r\) and 
+  \(q \mid s\). But since \(r\) is irreducible, either \(q\) is an associate 
+  of \(r\) or a unit. If \(q\) is an associate of \(r\), there exists a 
+  unit \(u\) such that \(uq = r\). But \(q \mid s\) and so, there exists some 
+  \(a \in R\), \(aq = s\) implying \((au^{-1})r = au^{-1}uq = aq = s\) 
+  contradicting \(r \not\mid s\). Thus, \(q\) is a unit and so 
+  \(\langle r, s \rangle = R\) and there exists some \(a, b \in R\) such that 
+  \(ar + bs = 1\), and so \(t = art + bst\). Finally, as \(r \mid st\), we have 
+  \(r \mid art + bst = t\) implying \(r\) is prime.
+\end{proof}
+
+\begin{corollary}
+  Let \(R\) be a PID, then every non-zero prime ideal of \(R\) is maximal.
+\end{corollary}
+\begin{proof}
+  Let \(I = \langle r \rangle \trianglelefteq R\) be a non-zero prime ideal. 
+  Then \(r\) is a prime and so, it is irreducible. Now, if 
+  \(I \le J = \langle s \rangle\) for some element \(s\), there exists some 
+  \(t \in R\) such that \(st = r\) implying \(s\) is a unit or an associate of 
+  \(r\). If \(s\) is an associate, then there exists some unit \(u\) such that 
+  \(us = r\) and thus, \(s = u^{-1}r\) and so 
+  \(\langle s \rangle \subseteq \langle r \rangle\) implying
+  \(\langle s \rangle =\langle r \rangle\). On the other hand if 
+  \(s\) is a unit, then \(s^{-1}s = 1 \in \langle s \rangle\) and so 
+  \(\langle s \rangle = R\). 
+\end{proof}
+
+\subsection{Euclidean Domains}
+
+So far we have developed a nice theory about PIDs though we have yet to have 
+any tools to prove that ring is a PID. We will now develop the notion called 
+Euclidean domains to aid us in this matter.
+
+\begin{definition}[Euclidean Norm]
+  For integral domain \(R\), a Euclidean norm on \(R\) is a function 
+  \(N : R \to \mathbb{N}\) such that for all \(a, b \in R\), \(b \neq 0\), 
+  there exists \(q, r \in R\) such that \(a = qb + r\) and either 
+  \(N(r) < N(b)\) or \(r = 0\).
+\end{definition}
+
+\begin{definition}[Euclidean Domain]
+  A Euclidean domain is a ring \(R\) that admits a Euclidean norm.
+\end{definition}
+
+\begin{proposition}
+  Any Euclidean domain \(R\) is a PID.
+\end{proposition}
+\begin{proof}
+  Let \(N\) be the Euclidean norm on \(R\) and suppose \(I \neq 0\) is an ideal of 
+  \(R\). Now since \(N(I) \subseteq \mathbb{N}\) is non-empty, \(N(I)\) admits 
+  some minimal element \(k = N(r)\) for some \(r \in I\). Suppose 
+  \(I \neq \langle r \rangle\), then there exists some \(s \in I\), 
+  \(s \not\in \langle r \rangle\). Then, by the definition of the Euclidean norm, 
+  there exists some \(a, b \in R\) such that \(s = ar + b\) and either \(b = 0\) 
+  or \(N(b) < N(r)\). But if \(b = 0\) then \(s = ar\) implying 
+  \(s \in \langle r \rangle\), so \(N(b) < N(r)\). But this contradicts the 
+  minimality of \(N(r)\) and hence, \(I = \langle r \rangle\).
+\end{proof}
+
+We see that the notion of an Euclidean norm is very similar to the quotient 
+remainder for the integers, and so it is not very surprising that \(\mathbb{Z}\) 
+is a Euclidean domain. In particular, we define \(N(n) = |n|\) and for 
+\(a, b \in \mathbb{Z}\), \(b \neq 0\), we can define 
+\[q := \left\lfloor\frac{a}{b}\right\rfloor,\]
+so \(0 \le \frac{a}{b} - q < 1\), and thus, \(0 \le a - bq < b\) which 
+implies \(|a - bq| < |b|\).
+
+A more complicated example is the Gaussian integers \(\mathbb{Z}[i]\). 
+Let \(N(n + mi) = n^2 + m^2\) and given \(x, y \in \mathbb{Z}[i]\), 
+\(y \neq 0\), we can define \(q' = x / y = a + bi\) 
+for some \(a, b \in \mathbb{R}\). Then, defining \(q = a' + b'i\) where 
+\(a', b' \in \mathbb{Z}\) such that \(|a - a'|, |b - b'| < 1 / 2\). Finally, 
+by noticing \(N\) is multiplicative (as \(N(z) = z \overline{z}\)),
+we have 
+\[\begin{split}
+  N(r) & = N(x - qy) = N(y)N\left(\frac{x}{y} - q\right) = 
+  N(y)N(q' - q)\\ & = N(y)(|a - a'|^2 + |b - b'|^2) < \frac{N(y)}{2} < N(y).
+\end{split}\]
+Thus, \(\mathbb{Z}[i]\) is a Euclidean domain.
+
+Given a field \(\mathbb{F}\), we can define \(N(P) = \deg P\) for 
+\(P \in \mathbb{F}[X]\). Then, for \(P, S \in \mathbb{F}[X]\), it is not 
+difficult to see that the Euclidean norm conditions hold by long division and 
+induction. A direct corollary of this is that, since \(\mathbb{F}[X]\) is 
+a Euclidean domain, it is a PID, and thus, for any irreducible polynomial 
+\(P \in \mathbb{F}[X]\), \(\langle P \rangle\) is a prime ideal, hence maximal, 
+i.e. by definition \(\mathbb{F}[X] / \langle P \rangle\) is a field.
 
 \end{document}
