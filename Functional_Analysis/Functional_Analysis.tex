@@ -689,4 +689,233 @@ basis.
   Exercise.
 \end{proof}
 
+\subsection{Finite Dimensional Spaces}
+
+\begin{theorem}
+  Let \((X, \|\cdot\|)\) be a finite dimensional normed space and let 
+  \(\{e_i\}\) be a basis for \(X\). Then, there exists some 
+  \(M, m \in \mathbb{R}^+\) such that for all \(x = \sum_{i = 1}^n a_i e_i\),
+  \[m \sum_{i = 1}^n |a_i| \le \|x\| \le M \sum_{i = 1}^n|a_i|.\]
+\end{theorem}
+\begin{proof}
+  WLOG. assume \(\sum_{i = 1}^n |a_i| = 1\) since if otherwise, we may just scale 
+  \(x\) by \(1 / \sum |a_i|\). Then the function 
+  \(f : (a_i) \mapsto \|\sum_i a_i e_i\|\) for all sequences \((a_i)\). Now, 
+  by checking that \(f\) is continuous, and by considering that the set 
+  \(\{(a_i) \mid \sum \|a_i = 1\|\}\) is a closed subspace, \(f\) must 
+  attain a minimum \(m\) implying the left hand side inequality. 
+  On the other hand, consider the inequality 
+  \[\left\| \sum_{i = 1} a_i e_i \right\| \le \sum |a_i| \|e_j\| \le 
+    \max_k \|e_k\| \sum |a_i| = \max_k \|e_k\|.\]
+  Hence, it suffices to choose \(M = \max \|e_k\|\).
+\end{proof}
+
+A direct corollary is that all norms on finite dimensional spaces are equivalent.
+
+\begin{definition}[Equivalent Norms]
+  Two norms \(\|\cdot\|_1, \|\cdot\|_2\) on \(X\) are said to be equivalent 
+  if there exists some \(C \in \mathbb{R}^+\) such that 
+  \[\frac{1}{C}\|x\|_1 \le \|x\|_2 \le C\|x\|_1,\]
+  for all \(x \in X\).
+\end{definition}
+
+\begin{proposition}
+  Equivalence of norms is an equivalence relation.
+\end{proposition}
+\begin{proof}
+  Easy check.
+\end{proof}
+
+\begin{corollary}
+  Every norm on a finite dimensional space is equivalent.
+\end{corollary}
+\begin{proof}
+  If \(\|\cdot\|_1, \|\cdot\|_2\) are two norms on \(X\), then
+  let \(\{e_i\}\) be a basis of \(X\). Thus, by simply defining the norm 
+  \[\|x\| = \left\| \sum_{i = 1}^n a_i e_i \right\| := 
+    \sum_i |a_i|,\]
+  we have \(\|\cdot\|_1\) is equivalent to \(\|\cdot\|\) which is equivalent 
+  to \(\|\cdot\|_2\). Hence, \(\|\cdot\|_1\) is equivalent to \(\|\cdot\|_2\) 
+  by transitivity.
+\end{proof}
+
+\begin{proposition}
+  Every finite dimensional space over a complete field is complete.
+\end{proposition}
+\begin{proof}
+  Follows by considering the individual coefficients of a Cauchy sequence with 
+  respect to some basis is also Cauchy.
+\end{proof}
+
+\begin{proposition}
+  Every compact set of a normed space is closed and bounded.
+\end{proposition}
+\begin{proof}
+  As a normed space is a metric space, it suffices to consider sequential compactness. 
+  In particular, if a set is not closed, then it contains a sequence converging 
+  to a point not within the set. Then every sub-sequence of that sequence also 
+  converges to that point outside of the set, and so is not compact. On the other 
+  hand, if the set is not bounded, we can construct a sequence with norms 
+  tending to \(\infty\). It is then clear that the sequence does not contain any 
+  convergent subsequence.
+\end{proof}
+
+We note that the converse of the above proposition is not true for infinite 
+dimensional spaces. Indeed, we see that the canonical basis of \(\ell_2\) 
+is closed and bounded but not complete.
+
+\begin{proposition}
+  If \((X, \|\cdot\|)\) is a finite dimensional normed space, then every closed 
+  and bounded set is compact (this property is known as the Heine-Borel property). 
+\end{proposition}
+\begin{proof}
+  Follows by choosing a subsequence for each coefficient by using 
+  Bolzano-Weierstrass.
+\end{proof}
+
+In fact this property is sufficient to determine whether or not a normed space 
+is finite dimensional.
+
+\begin{lemma}[Riesz's lemma]
+  Let \(Y\) be a closed proper subspace of a subspace \(Z\) of \(X\) where 
+  \((X, \|\cdot\|)\) is a normed space. Then 
+  for any \(\theta \in (0, 1)\), there exists some \(z \in Z\) such that 
+  \[\|z\| = 1 \text{ and } \|y - z\| \ge \theta\]
+  for all \(y \in Y\). 
+\end{lemma}
+\begin{proof}
+  Let \(v \in Z \setminus Y\), and define \(a := \inf_{y \in Y} \|y - v\| > 0\). 
+  Then, as \(Y\) is closed, \(\|y_0 - v\|\) attains \(a\) for some \(y_0 \in Y\). 
+  Thus, 
+  \[0 < a = \|v - y_0\| \le \frac{a}{\theta}.\]
+  Then, defining 
+  \[z := \frac{v - y_0}{\|v - y_0\|} =: c(v - y_0),\]
+  we have for all \(y \in Y\),
+  \[\|z - y\| = \|c(v - y_0) - y\| = 
+    c\left\|v - \left(y_0 + \frac{1}{c}y\right)\right\|.\]
+  Since \(y_0 + \frac{1}{c}y =: y_1 \in Y\), we have \(\|v - y_1\| \ge a\), 
+  and so 
+  \[\|z - y\| = c\|v - y_1\| \ge ca = \frac{a}{\|v - y_0\|} \ge 
+    \frac{a}{a / \theta} = \theta.\]
+\end{proof}
+
+\begin{proposition}
+  A normed space is finite dimensional if and only if 
+  \(\{x \mid \|x\| = 1\}\) is compact.
+\end{proposition}
+\begin{proof}
+  Clearly, if \(X\) is finite dimensional, then as \(\{x \mid \|x\| = 1\}\) is 
+  closed and bounded, it is compact.
+
+  Let \((X, \|\cdot\|)\) be an infinite dimensional normed space and suppose 
+  \(\{e_i\}_{i = 1}^\infty\) is a countable infinite linearly independent subset 
+  of \(X\). Define \(Z_n = \text{span}\{e_i \mid i = 1, \cdots, n\}\), and 
+  for each \(n\), by Riesz's lemma, define \(z_n \in Z_{n + 1}\) such that 
+  \(\|z_n\| = 1\) and \(\|z_n - z_i\| \ge 1 / 2\) for all \(i = 1, \cdots, n\).
+  Thus, we have defined a sequence in \(\{x \mid \|x\| = 1\}\) which does not 
+  contain any convergent subsequence, and hence, \(\{x \mid \|x\| = 1\}\) is not 
+  compact.
+\end{proof}
+
+\newpage
+\section{Linear Operators}
+
+\subsection{Bounded Linear Operators}
+
+\begin{definition}[Bounded Linear Operator]
+  A linear map \(T : X \to Y\) between normed spaces \((X, \|\cdot\|_X)\) and 
+  \((Y, \|\cdot\|_Y)\) is a bounded linear operator if there exists some 
+  \(c \in \mathbb{R}^+\) such that,
+  \[\|Tx\|_Y \le C\|x\|X\]
+  for all \(x \in X\). In this case, one may define the operator norm by,
+  \[\|T\| := \sup_{x \in X; x \neq 0} \frac{\|Tx\|_Y}{\|x\|_X}.\]
+\end{definition}
+
+\begin{proposition}
+  Every linear map from a finite dimensional normed spaces is bounded.
+\end{proposition}
+\begin{proof}
+  Simply bound \(T\) by the maximum of the norm of the basis.
+\end{proof}
+
+\begin{proposition}
+  Let \(X, Y\) be Banach spaces and let \(T : X \to Y\) be a continuous linear map,
+  then for all compact \(\mathcal{K} \subseteq X\), \(T(\mathcal{K}) \subseteq Y\) 
+  is also compact.
+\end{proposition}
+\begin{proof}
+  Follows by recalling that the continuous image of a compact space is compact 
+  (by pull-back of the open-cover).
+\end{proof}
+
+\begin{proposition}
+  If \(T : X \to Y\) is a linear map between normed spaces 
+  \((X, \|\cdot\|_X)\) and \((Y, \|\cdot\|_Y)\), then the following are equivalent,
+  \begin{enumerate}
+    \item \(T\) is continuous;
+    \item \(T\) is Lipschitz continuous;
+    \item \(T\) is bounded;
+    \item \(T\) is continuous at some point \(x_0 \in X\).
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  Clearly \((3) \implies (2) \implies (1) \implies (4)\), so let us first show 
+  \((4) \implies (1))\). If \(T\) is continuous at \(x_0\), then 
+  for all \(\epsilon > 0\), there exists some \(\delta > 0\) such that 
+  for all \(x \in B_\delta(x_0)\), \(\epsilon > \|Tx - Tx_0\|\).
+  Then, for all \(\tilde x \in X\), we have 
+  \[\epsilon > \|Tx - Tx_0\| = 
+    \|Tx + T(\tilde x - x_0) - Tx_0 - T(\tilde x - x_0)\| =
+    \|T(\tilde x + (x - x_0)) - T \tilde x\|.\]
+  Thus, for all \(x \in B_\delta(\tilde x)\), we have 
+  \(x - \tilde x + x_0 \in B_\delta(x_0)\) and hence,
+  \[\epsilon > \|T(\tilde x + (x - \tilde x + x_0 - x_0)) - T \tilde x\| 
+    = \|Tx - T\tilde x\|,\]
+  which implies \(T\) is continuous. 
+
+  Now, it suffices to show that \((1) \implies (3)\). Since \(T\) is continuous 
+  at \(0\), there exists some \(\delta > 0\) such that for all 
+  \(x \in B_\delta(0)\), \(\|Tx\| < 1\). Then for all \(x \in X\), we have 
+  \[\left\|\frac{\delta x}{2\|x\|}\right\| = \frac{\delta}{2} < \delta,\]
+  and so, 
+  \[1 > \left\|T\left\|\frac{\delta x}{2\|x\|}\right\|\right\| = 
+    \frac{\delta}{2\|x\|}\|Tx\|,\]
+  implying \(Tx < 2\|x\| / \delta\) for all \(x\).
+\end{proof}
+
+\begin{definition}
+  We denote the space of linear bounded operators between two normed spaces 
+  \(X, Y\) equipped with the operator norm by \(\mathcal{L}(X, Y)\).
+\end{definition}
+
+\begin{proposition}
+  Let \((X, \|\cdot\|_X)\) be a normed space and \((Y, \|\cdot\|_Y)\) be a 
+  Banach space. Then \(\mathcal{L}(X, Y)\) is also a Banach space.
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+We will now recall the Banach contraction mapping theorem.
+
+\begin{definition}[Contraction]
+  A map \(T : X \to X\) on a metric space \((X, \rho)\) is a contraction if 
+  there exists some \(\alpha\), \(0 < \alpha \le 1\) such that for all 
+  \(x, y \in X\), 
+  \[\rho(Tx, Ty) \le \alpha \rho(x, y).\]
+  \(T\) is a strict contraction if \(a < 1\).
+\end{definition}
+
+\begin{definition}[Fixed Point]
+  A point \(x \in X\) is a fixed point of the map \(T : X \to X\) if \(Tx = x\).
+\end{definition}
+
+\begin{theorem}[Banach Contraction Mapping]
+  If \(X\) is a complete metric space and \(T : X \to X\) is a strict contraction,
+  then \(T\) has a unique fixed point.
+\end{theorem}
+\begin{proof}
+  Exercise/see second year analysis.
+\end{proof}
+
 \end{document}
