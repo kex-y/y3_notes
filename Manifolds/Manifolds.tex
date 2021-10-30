@@ -82,6 +82,8 @@
 \newcommand{\diag}{\mathop{\mathrm{diag}}}
 \newcommand{\Arg}{\mathop{\mathrm{Arg}}}
 \newcommand{\hess}{\mathop{\mathrm{Hess}}}
+% the redefinition for the missing \setminus must be delayed
+\AtBeginDocument{\renewcommand{\setminus}{\mathbin{\backslash}}}
 
 \title{Manifolds}
 \author{Kexing Ying}

@@ -83,6 +83,8 @@
 \newcommand{\diag}{\mathop{\mathrm{diag}}}
 \newcommand{\Arg}{\mathop{\mathrm{Arg}}}
 \newcommand{\hess}{\mathop{\mathrm{Hess}}}
+% the redefinition for the missing \setminus must be delayed
+\AtBeginDocument{\renewcommand{\setminus}{\mathbin{\backslash}}}
 
 \title{Quantum Mechanics I}
 \author{Kexing Ying}
@@ -448,5 +450,25 @@ Then, if \(\{\ket{\phi_n}\}\) is orthonormal, we have
   \sum_n \ket{\phi_n} \bra{\phi_n} \ket{\chi} = 
   (\sum_n \ket{\phi_n} \bra{\phi_n}) \ket{\chi}.\]
 Thus, the operator \(\sum_n \ket{\phi_n} \bra{\phi_n}\) is the identity operator.
+
+\subsection{Principles of Quantum Mechanics}
+
+Quantum mechanics is built upon principles on which all results follow. They 
+are like the axioms in mathematics from which all states can eventually reduce 
+down to them.
+
+The first principle states that, the \textit{state} of a quantum system is 
+described by a non-zero vector in a Hilbert space.
+
+We have already seen a application of this principle in Schrödinger dynamics 
+where the Hilbert space is \(L^2\) and the state is described by the wave 
+function \(\psi \in L^2\).
+
+\begin{definition}[State Space]
+  The state space is a projective Hilbert space, i.e. a Hilbert space 
+  \(\mathcal{H} \setminus \{0\}\) quotiented by the equivalence relation \(\sim\) where 
+  \(x \sim y \iff\) there exists some \(c \in \mathbb{C}\) such that 
+  \(x = c y\).
+\end{definition}
 
 \end{document}
