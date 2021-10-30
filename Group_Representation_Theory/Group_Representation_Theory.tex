@@ -1103,5 +1103,195 @@ Continuing with \(V_1, \cdots, V_m\) as the irreducible representations of
   \(\mathbb{C}[G]_{ad}^G \cong \mathbb{C}^m\).
 \end{proof}
 
+\subsection{Tensor Product and Dual Representations}
+
+We will in the section recall tensor product of vector spaces and extend the 
+notion of tensor products to representations.
+
+\subsubsection{Tensor Product of Vector Spaces}
+
+In essence, similar to direct sums, the tensor product of two vector spaces 
+in some sense combine them into a larger vector space. In particular, 
+while (external) direct sums ``glue'' the vectors of the two spaces, the tensor 
+product combined the coefficients of each vectors of the two spaces pairwise.
+
+\begin{definition}[Free Vector Space]
+  Let \(S\) be a set and \(\mathbb{F}\) be a field. Then the 
+  \(\mathbb{F}\)-free vector space over \(S\) is the set given by 
+  \[\mathbb{F}[S] := \left\{ \sum_{s \in S} a_s s \mid 
+    |\text{supp}(a)| < \infty \right\}.\]
+\end{definition}
+We note that we have already seen this definition in the context of monoid 
+algebras. The free vector space is equipped with the natural notion of 
+addition and scalar multiplication and forms a vector space over \(\mathbb{F}\).
+
+Again, \(s \in S\) corresponds to the elements of the free vector space 
+with coefficients \(a_s = 1\) and \(a_r = 0\) for all \(r \neq s\), and in that 
+sense, \(S\) is a basis of \(\mathbb{F}[S]\). Thus, with this definition, 
+we may consider the free vector space of \(V \times W\). It is clear that 
+\(\mathbb{F}[V \times W]\) has a basis of \(V \times W\), and so 
+\(\mathbb{F}[V \times W]\) is huge in the sense that
+\[\dim \mathbb{F}[V \times W] = |V \times W|.\]
+In some sense, the construction of the free vector space forgets the vector 
+space structure of \(V\) and \(W\) (am I correct in saying it is a forgetful 
+functor?). In particular, we note that for \(v_1, v_2 \in V, w \in W\), 
+\((v_1, w) +_{\mathbb{F}[V \times W]} (v_2, w)\) corresponds to the function 
+which maps \((v_1, w)\) and \((v_2, w)\) to 1 and 0 otherwise, and thus, 
+\((v_1, w) +_{\mathbb{F}[V \times W]} (v_2, w) \neq (v_1 + v_2, w)\). 
+
+This, is however not what we want and so we will quotient it by some subspace.
+
+\begin{definition}[Tensor Product]
+  Let \(V, W\) be vector spaces over the field \(\mathbb{F}\) and define 
+  \(B(V \times W)\) a subspace of \(\mathbb{F}[V \times W]\) by 
+  \[\begin{split}
+    B(V \times W) = \text{span}\{& (v_1 + v_2, w) - (v_1, w) - (v_2, w); \\
+      & (v, w_1 + w_2) - (v, w_1) - (v, w_2); \\
+      & (\lambda v, w) - \lambda(v, w); \\
+      & (v, \lambda w) - \lambda(v, w) \mid 
+      v, v_1, v_2 \in V, w, w_1, w_2 \in W, \lambda \in \mathbb{F}\}.
+  \end{split}\]
+  Then the tensor product \(V \otimes W\) is simply 
+  \[V \otimes W = \mathbb{F}[V \times W] / B(V \times W).\]
+\end{definition}
+
+We denote the image of \((v, w) \in \mathbb{F}[V \times W]\) under the quotient 
+map \(\mathbb{F}[V \times W] \to V \otimes W\) by \(v \otimes w\).
+
+\begin{proposition}
+  For \(V, W\) vector spaces over the field \(\mathbb{F}\),
+  for all \(v, v_1, v_2 \in V, w, w_1, w_2 \in W, \lambda \in \mathbb{F}\), 
+  we have 
+  \begin{itemize}
+    \item \((v_1 + v_2) \otimes w = v_1 \otimes w + v_2 \otimes w\); 
+    \item \(v \otimes (w_1 + w_2) = v \otimes w_1 + v \otimes w_2\); 
+    \item \((\lambda v) \otimes w = \lambda(v \otimes w)\); 
+    \item \(v \otimes (\lambda w) - \lambda(v \otimes w)\).
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  By definition of the quotient.
+\end{proof}
+
+\begin{theorem}[Universal Property]
+  Let \(V, W, Z\) be vector spaces, then there exists a bilinear map 
+  \(F : V \times W \to V \otimes W\) such that for all bilinear maps 
+  \(\alpha : V \times W \to Z\), there exists a unique linear map 
+  \(\tilde \alpha : V \otimes W \to Z\) such that 
+  \(\alpha = \tilde \alpha \circ F\).
+\end{theorem}
+\begin{proof}
+  Let \(\alpha\) be a bilinear map, and we can define \(\bar \alpha\) as the 
+  linear extension of \(\alpha\) such that 
+  \[\bar \alpha : \mathbb{F}[V \times W] \to Z : 
+  \sum_{i = 1}^n a_i (v_i, w_i) \mapsto \sum_{i = 1}^n a_i \alpha(v_i, w_i).\]
+  Since \(\alpha\) is bilinear, we have \(B(V \times W) \subseteq \ker \bar \alpha\).
+  Thus, by the universal property of the quotient, there exists a unique  
+  \(\tilde \alpha : V \otimes W \to Z\) such that 
+  \(\tilde \alpha \circ q = \bar \alpha\). 
+\end{proof}
+
+One might imagine the universal property as the following 
+commutating diagram.
+\[\begin{tikzcd}
+  V \times W \arrow{r}{\alpha} \arrow[swap]{d}{F} & Z \\
+  V \otimes W \arrow[swap]{ur}{\tilde \alpha}&
+  \end{tikzcd}\]
+In paricular, we have the diagram 
+\[\begin{tikzcd}
+  V \times W \arrow[hookrightarrow]{r}{\iota} \arrow[swap]{rd}{\alpha}
+    & \mathbb{F}[V \times W] \arrow{r}{q} \arrow{d}{\bar \alpha} 
+    & V \otimes W \arrow{ld}{\tilde \alpha}\\
+  & Z &
+\end{tikzcd}\]
+and so we may simply \(F = q \circ \iota\) which is bilinear.
+
+Thus, with the universal property, we have obtained a bijection between 
+the set of bilinear maps from \(V \times W \to Z\) and the set of linear 
+maps between \(V \otimes W \to Z\).
+
+\begin{proposition}
+  The universal property determines \(V \otimes W\) uniquely up to isomorphism, 
+  i.e. if \(Z\) is a vector space satisfying the universal property of 
+  \(V \otimes W\), then \(Z \cong V \otimes W\).
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{proposition}
+  Let \((v_i)_{i \in I}\) be a basis of \(V\), and \((w_j)_{j \in J}\) be a basis 
+  of \(W\). Then, \((v_i \otimes w_j)_{i \in I, j \in J}\) is a basis of 
+  \(V \otimes W\).
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{proposition}
+  There is a canonical linear injection 
+  \[V^* \otimes W \to \text{Hom}(V, W),\]
+  and this is an isomorphism if \(V\) is finite dimensional.
+\end{proposition}
+\begin{proof}
+  Define 
+  \[T : V^* \times W \to \text{Hom}(V, W) : (f, w) \mapsto (v \mapsto f(v)w).\]
+  It is easy to see that \(T\) is bilinear and so, by the universal property, 
+  there exists a unique linear map \(\tilde T : V^* \otimes W \to \text{Hom}(V, W)\) 
+  such that \(\tilde T(f \otimes w) = T(f, w)\). Now, if 
+  \(f \otimes w \in \ker \tilde T\), we have either \(f = 0\) or \(w = 0\), and 
+  so \(f \otimes w = 0\). Thus, \(\ker \tilde T = \{0\}\) and hence, it is an 
+  injection.
+
+  In the case that \(V\) is finite dimensional, we have 
+  \[\dim (V^* \otimes W) = \dim V^* \dim W = \dim V \dim W = \dim(\text{Hom}(V, W)),\]
+  and so \(T\) is an isomorphism by a dimensional argument.
+\end{proof}
+
+\begin{corollary}
+  For \(V\) finite dimensional, we have
+  \[V \otimes W \cong V^{**} \otimes W \cong \text{Hom}(V^*, W).\]
+\end{corollary}
+
+\begin{proposition}
+  \(\mathbb{F} \otimes W \cong W\).
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{lemma}\label{tensor_map}
+  Given linear maps \(T_1 : V \to U_1, T_2 : W \to U_2\), we have 
+  \[T_1 \otimes T_2 : V \otimes W \to U_1 \otimes U_2 : 
+    v \otimes w \mapsto T_1(v) \otimes T_2(w),\]
+  is a linear map. Furthermore, if \(T_i, S_i\) for \(i = 1, 2\) 
+  are linear maps on appropriate domains and codomains, 
+  \[(T_1 \otimes T_2) \circ (S_1 \otimes S_2) = 
+    (T_1 \circ S_1) \otimes (T_2 \circ S_2).\]
+\end{lemma}
+\begin{proof}
+  Easy checks using the universal property.
+\end{proof}
+
+\subsubsection{Tensor Product of Representations}
+
+In representation theory, we may also consider the tensor product of 
+representations. In particular, if \((V, \rho_V)\) and \((W, \rho_W)\) are 
+representations, then we define 
+\[(V \otimes W, \rho_{V \otimes W} := g \mapsto \rho_V(g) \otimes \rho_W(g)),\]
+to be the tensor product of the representations. We note that 
+\(\rho_V(g) \otimes \rho_W(g) \in GL(V \otimes W)\) for all 
+\(g\) by lemma \ref{tensor_map} and so the representation is well-defined. 
+
+In the case that \(V = \mathbb{C}\), we have the representation 
+\(\rho_V : G \mapsto GL_1(\mathbb{C}) \cong \mathbb{C}^\times\) is simply a 
+multiplication by some scalar \(\rho \neq 0\). Thus, 
+\(\rho_{\mathbb{C} \otimes W}(g) = \rho \rho_W(g)\), and 
+\[(\mathbb{C} \otimes W, \rho_{\mathbb{C} \otimes W}) \cong (W, \rho \rho_W).\]
+Furthermore, if \(W = \mathbb{C}\) as well, then we have 
+\((\mathbb{C}, \rho \otimes \rho') \cong (\mathbb{C}, \rho\rho')\).  
+
+\textbf{N.B. omitted some exercises which I'm confused about.}
+
 \end{document} 
 
