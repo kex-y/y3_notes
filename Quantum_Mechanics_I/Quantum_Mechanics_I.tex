@@ -471,4 +471,47 @@ function \(\psi \in L^2\).
   \(x = c y\).
 \end{definition}
 
+The second principle states that, a \textit{measurable quantity} is described 
+by a Hermitian operator acting on the Hilbert space. Both the measurable 
+quantity and the operator representing it are refereed to as observables.
+
+Similar to Hamiltonian mechanics, the operators corresponding to position and 
+momentum satisfy some notion of canonical conjugacy. In particular, we have the 
+\[[p, q] = i \hbar \text{Id},\]
+where \(p\) is the position operator and \(q\) the momentum, 
+and \([\cdot, \cdot]\) is the commutator defined as \([A, B] = AB - BA\). 
+In Schrödinger's formulation, we have the position operator is defined as 
+\[q : L^2 \to L^2 : \psi(x) \mapsto x\psi(x).\]
+With this, the momentum operator is fixed (modulo some addition of operators 
+commuting with \(q\)), and we have 
+\[p : L^2 \to L^2 : \psi \mapsto -i \hbar \pdv{\psi}{x}.\]
+
+\begin{definition}[Projection Operator]
+  A linear operator \(P\) is a projection operator if \(P^2 = P\).
+\end{definition}
+
+The third principle (often known as the Born rule) states that, the possible 
+outcomes of a measurement of an observable \(A\) are given by the eigenvalues 
+of the corresponding operator \(A\). If the system is described by the state 
+\(\ket{\psi}\) immediately before the measurement, then the probability of 
+measuring the value \(a_j\) in an \(A\)-measurement is given by 
+\[p(a_j) = \bra{\psi}\hat P_j \ket{\psi},\]
+where \(\hat P_j\) is the projection operator onto \(a_j\)-eigenspace.
+
+In the case that the observable have non-degenerate (i.e. the eigenspaces have 
+dimension 1), discrete eigenvalues \(a_j\) so that 
+\(A\ket{\phi_j} = a_j \ket{\phi_j}\) where \(\ket{\phi_j}\) are normalized, 
+we have, 
+\[p(a_j) = \bra{\psi} \hat P_j \ket{\psi} = 
+  \bra{\psi}\ket{\phi_j}\bra{\phi_j}\ket{\psi} = 
+  |\bra{\phi_j}\ket{\psi}|^2.\]
+So, by noticing \(\bra{\phi_j}\ket{\psi}\) is the coefficients of \(\psi\) 
+in the basis of \(\{\phi_j\}\), we have, if \(\psi = \sum_n \psi_n \ket{\phi_n}\), 
+then \(p(a_j) = |\psi_j|^2\). 
+
+For continuous spectra, the situation is similar, in which we obtain 
+\[\ket{\psi} = \int \dd \alpha \psi(\alpha) \ket{\phi(\alpha)}\]
+and the probability of measuring a value in the interval \(I\) is given by 
+\[p(\alpha \in I) = \int_I |\psi(\alpha)|^2 \dd \alpha.\]
+
 \end{document}
