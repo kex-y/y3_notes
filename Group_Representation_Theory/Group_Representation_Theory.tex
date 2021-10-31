@@ -1225,7 +1225,10 @@ maps between \(V \otimes W \to Z\).
   \(V \otimes W\).
 \end{proposition}
 \begin{proof}
-  Exercise.
+  Exercise (Hint: to show linear independence, consider the bilinear map 
+  \(B_{nk} : V \times W \to \mathbb{F} : 
+  \left(\sum \lambda_i v_i, \sum \mu_j w_j\right) \mapsto \lambda_n \mu_k\) 
+  for all \(n, k\)). 
 \end{proof}
 
 \begin{proposition}
@@ -1292,6 +1295,79 @@ Furthermore, if \(W = \mathbb{C}\) as well, then we have
 \((\mathbb{C}, \rho \otimes \rho') \cong (\mathbb{C}, \rho\rho')\).  
 
 \textbf{N.B. omitted some exercises which I'm confused about.}
+
+\begin{definition}[Dual Representation]
+  Given a representation \((V, \rho_V)\), we define the dual representation 
+  to be the representation \((V^*, \rho_{V^*})\) where \(V^*\) is the dual space 
+  of \(V\) and 
+  \[\rho_{V^*}(g)(\phi) = \phi \circ \rho_V(g)^{-1},\]
+  for all \(\phi \in V^*\), \(g \in G\).
+\end{definition}
+
+We note that the inverse in the definition is required since 
+\[\rho_{V^*}(gh)(\phi) = \rho_{V^*}(g) \circ \rho_{V^*}(h)(\phi) = 
+  \phi \circ \rho_V(h^{-1}) \circ \rho_V(g^{-1}) = 
+  \phi \circ \rho_V(h^{-1}g^{-1}) = \phi \circ \rho_V(gh)^{-1}.\]
+
+In the case we are working with finite dimensional representations, given a 
+basis \(B = \{v_1, \cdots, v_n\}\) of \(V\), we have a 
+dual basis \(D = \{f_1, \cdots, f_n\}\) of \(V^*\) given by 
+\(f_i(v_j) = \delta_{ij}\). Then, the \((j, i)\)-th entry of 
+\([\rho_{V^*}(g)]_D\) is 
+\[\rho_{V^*}(g)(f_i)(v_j) = f_i(\rho_V(g^{-1})(v_j)).\]
+On the other hand, the \((i, j)\)-th entry of \([\rho_V(g^{-1})]_B\) is 
+\(f_i(\rho_V(g^{-1})(v_j))\) and so, 
+\[[\rho_{V^*}(g)]_D = [\rho_V(g^{-1})]_B^T =  ([\rho_V(g)]_B^{-1})^T.\]
+
+A similar relation can be established for the matrix form of the tensor 
+product. Let \(B = \{v_1, \cdots, v_m\}\) be a basis of \(V\) and 
+\(C = \{w_1, \cdots, w_n\}\) be a basis of \(W\). Then, 
+\(D := \{v_i \otimes w_j\}\) form a basis of \(V \otimes W\). Let \(g \in G\) 
+and \(M := [\rho_V(g)]_B\), \(N = [\rho_W(g)]_C\). Then, 
+\[\begin{split}
+  \rho_{V \otimes W}(g)(v_k \otimes w_l) 
+  & = \rho_V(g)(v_k) \otimes \rho_W(g)(w_l) 
+    = \sum_i M_{ik}v_i \otimes \sum_j N_{jl}w_j\\
+  & = \sum_{i, j} M_{ik}v_i \otimes N_{jl}w_j
+    = \sum_{i, j} M_{ik}N_{jl} v_i \otimes w_j.
+\end{split}\]
+Thus, the matrix representation of \(\rho_{V \otimes W}(g)\) is 
+\[[\rho_{V \otimes W}(g)]_{B \otimes C} = [M_{ik}N_{jl}]_{(i, j), (k, l)}.\]
+Note that the rows are indexed by pairs \((i, j) \in I \times J\) and the 
+columns by \((k, l) \in I \times J\). 
+
+This matrix operation is known as the Kronecker product, in particular, the 
+Kronecker product of matrices \([a_{ik}]\) and \([b_{jl}]\) is
+\[[a_{ik}] \otimes [b_{jl}] := [a_{ik}b_{jl}]_{(i, j), (k, l)}.\]
+
+\subsubsection{External Tensor Product}
+
+So far we have seen methods of constructing new representations of \(G\) 
+using existing representations of \(G\) with the tensor product. It turns 
+out this procedure can be applied to smaller groups to obtain representations 
+on ta larger group.
+
+Given \((V, \rho_V), (W, \rho_W)\) representations of \(G\), we note that 
+\(V \otimes W\) actually provides a representation of \(G \times G\) by 
+taking \(\rho_V(g) \otimes \rho_W(h)\) for \((g, h) \in G \times G\). 
+Let us denote this representation by \(\rho_{V \boxtimes W}\).
+
+\begin{definition}[External Tensor Product]
+  Let \((V, \rho_V)\) be a representation of \(G\) and \((W, \rho_W)\) be a 
+  representation of \(H\). Then \((V \otimes W, \rho_{V \boxtimes W})\) is a 
+  representation of \(G \times H\) where 
+  \[\rho_{V \boxtimes W}(g, h) = \rho_V(g) \otimes \rho_W(h).\]
+\end{definition}
+
+\begin{proposition}
+  \((V \otimes W, \rho_{V \boxtimes W})\) is irreducible if and only if 
+  \(V\) and \(W\) are irreducible. Furthermore, if \(G\) and \(H\) are finite, 
+  these are the only irreducible representations of \(G \times H\) up to 
+  isomorphism.
+\end{proposition}
+\begin{proof}
+  Omitted.
+\end{proof}
 
 \end{document} 
 
