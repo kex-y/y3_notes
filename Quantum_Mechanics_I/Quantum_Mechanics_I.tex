@@ -514,4 +514,30 @@ For continuous spectra, the situation is similar, in which we obtain
 and the probability of measuring a value in the interval \(I\) is given by 
 \[p(\alpha \in I) = \int_I |\psi(\alpha)|^2 \dd \alpha.\]
 
+\begin{definition}[Expectation Value]
+  Given an observable \(A\) with eigenvalues \(a_j\) in the state 
+  \(\ket{\psi}\), its expectation value is simply 
+  \[\langle A \rangle := \sum_j a_j p(a_j) = 
+  \frac{\bra{\psi} A \ket{\psi}}{\bra{\psi}\ket{\psi}}.\] 
+\end{definition}
+The two equations given in the definition are indeed equal since, 
+\(p(a_j) = \frac{\bra{\psi}\ket{\phi_j}\bra{\phi_j}\ket{\psi}}{\bra{\psi}\ket{\psi}}\),
+and so,
+\[\langle A \rangle = \sum_j 
+  \frac{a_j\bra{\psi}\ket{\phi_j}\bra{\phi_j}\ket{\psi}}{\bra{\psi}\ket{\psi}}
+  = \frac{\bra{\psi}(\sum_j a_j \ket{\phi_j}\bra{\phi_j})\ket{\psi}}{\bra{\psi}\ket{\psi}}
+  = \frac{\bra{\psi} A \ket{\psi}}{\bra{\psi}\ket{\psi}}\]
+
+The fourth principle (known as the state collapse postulate) states that, 
+if \(\ket{\psi}\) describes a quantum system on which a measurement of an 
+observable \(A\) is performed, then if the measurement yield \(a_j\), the 
+state of system directly after the measurement is given by 
+\[\frac{\hat P_j\ket{\psi}}{\sqrt{\bra{\psi}\hat P_j \ket{\psi}}},\]
+where \(\hat P_j\) is the projection operator onto the \(a_j\)-eigenspace.
+
+Lastly, the fifth principle states that, the time-evolution of a quantum state 
+\(\ket{\psi(t)}\) is governed by the Schrödinger equation 
+\[i \hbar \ket{\dot \psi} = \hat H \ket{\psi},\]
+where \(\hat H\) is the operator corresponding to the total energy of the system.
+
 \end{document}
