@@ -790,4 +790,189 @@ Similarly, \(F\) is a immersion of its Jacobian at any point \(x\) is injective.
   open map.
 \end{proof}
 
+\newpage
+\section{Tangent Spaces}
+
+The tangent space of a surface is a intuitive concept and for a surface 
+in \(\mathbb{R}^n\), we may often define it to be an affine subspace of 
+\(\mathbb{R}^n\) tangent to the surface at a point \(x\). This definition in 
+requires an ambient space and so is not generalizable to manifolds. We will 
+in this section define a new notion of tangent spaces which applies to manifolds.
+
+Let \(U \subseteq \mathbb{R}^n\). Let \(x \in U\), then a curve \(\sigma\) 
+through \(x\) is a smooth function from \((-\epsilon, \epsilon)\) to \(U\) 
+for some \(\epsilon > 0\) and \(\sigma(0) = x\). Then, we define the tangent 
+vector of \(\sigma\) at the point \(x\) to be the Jacobian \(D\sigma\mid_0\).
+
+The space of curves is massive though we really only care about their tangent 
+vectors, and so we introduce an equivalence relation which we will take 
+the quotient by. Let \(\sigma_1, \sigma_2\) are two curves through \(x\), 
+then we say \(\sigma_1 \sim \sigma_2\) if and only if 
+\(D\sigma_1\mid_0 = D\sigma_2 \mid_0\). Then, we define the tangent space of 
+\(U\) at \(x\) to be, 
+\[T_xU := \{\sigma : (-\epsilon, \epsilon) \to U \mid \sigma 
+  \text{ smooth curve through } x\} / \sim.\]
+We have a natural bijection 
+\[\Delta_x : T_xU \to \mathbb{R}^n : [\sigma] \mapsto D\sigma\mid_0.\]
+In particular, for all \(v \in \mathbb{R}^n\), we can define 
+\(\sigma : (-\epsilon, \epsilon) \to U : t \mapsto x + tv\) such that 
+\(D\sigma\mid_0 = v\) and so \(\Delta_x\) is surjective.
+
+This definition can be extended to manifolds easily. 
+
+\begin{definition}[Curves]
+  Let \(X\) be a \(n\)-dimensional manifold and let \(x \in X\). Then a 
+  curve through \(x\) is a smooth function 
+  \[\sigma : (-\epsilon, \epsilon) \to X,\]
+  such that \(\sigma(0) = x\).
+\end{definition}
+
+\begin{definition}
+  Let \(X\) be a \(n\)-dimensional manifold and let \(x \in X\) and 
+  \(\sigma\) be a curve through \(x\). Then, given a chart \((U, f)\) 
+  containing \(x\), we may define \(\tilde \sigma := f \circ \sigma : 
+  (-\epsilon, \epsilon) \to f(U)\), i.e. \(\tilde \sigma\) is a curve through 
+  \(f(x)\). Finally, if \(\sigma_1, \sigma_2\) are curves through \(x\), we 
+  say 
+  \[\sigma_1 \sim \sigma_2 \iff \tilde \sigma_1 \sim \tilde \sigma_2.\]
+\end{definition}
+
+For the above definition to be well-defined, we will need to check it is 
+independent of the choice of the chart. Let \((U_1, f_1), (U_2, f_2)\) be two 
+charts of \(X\) containing \(x\). Then, if 
+\(f_1 \circ \sigma_1 \sim f_1 \circ \sigma_2\), we have 
+\[\begin{split}
+  D(f_2 \circ \sigma_1)\mid_0 & = D(\phi_{12} \circ f_1 \circ \sigma_1)_0 
+    = D(\phi_{12})\mid_{f_1(x)} \circ D(f_1 \circ \sigma_1)_0 \\ 
+  & = D(\phi_{12})\mid_{f_1(x)} \circ D(f_1 \circ \sigma_2)_0 
+    = D(\phi_{12} \circ f_1 \circ \sigma_2)_0 
+    = D(f_2 \circ \sigma_2)\mid_0.
+\end{split}\]
+
+\begin{definition}[Tangent Space]
+  Let \(X\) be a \(n\)-dimensional manifold and let \(x \in X\), then the 
+  tangent space of \(X\) at \(x\) is 
+  \[T_xX := \{\sigma : (-\epsilon, \epsilon) \to X \mid \sigma 
+    \text{ is a curve through } x\} / \sim.\]
+  We call elements of \(T_xX\) tangent vectors.
+\end{definition}
+
+Let \((U, f)\) be a chart of \(X\) containing \(x\). Then, we have a bijection 
+\[T_x X \to T_{f(x)}f(U) : [\sigma] \mapsto [f \circ \sigma].\]
+Now as \(f(U)\) is an open subset of \(\mathbb{R}^n\), there exists a bijection 
+\(\Delta_{f(x)} : T_{f(x)}f(U) \to \mathbb{R}^n\). Composing the two functions, 
+we obtain a bijection 
+\[\Delta_f : T_xX \to \mathbb{R}^n : [\sigma] \mapsto D(f \circ \sigma)\mid_0.\]
+With this function, we may equip the tangent space with a vector space 
+structure. In particular, for all \(\alpha \in \mathbb{R}, v, w \in T_xX\), 
+we define \(\alpha \cdot v := \Delta_f^{-1}(\alpha \cdot \Delta_f(v))\) and 
+\(v + w := \Delta^{-1}_f (\Delta_f(v) + \Delta_f(w)).\)
+
+We note that \(\Delta_f\) depends on the choice of the chart. On the other 
+hand, the vector space structure on \(T_xX\) is independent of the choice of 
+the chart (Hint : \(\Delta_{f_2} = D\phi_{12}\mid_{f_1(0)} \circ \Delta_{f_1}\)).
+
+The tangent space allow us to talk about the Jacobian of a smooth function between 
+to manifolds. 
+
+\begin{definition}[Jacobian of Smooth Functions]
+  Let \(X, Y\) be manifolds and let \(F : X \to Y\) be a smooth function. 
+  We define the Jacobian at \(x \in X\) as 
+  \[DF\mid_x T_xX \to T_{f(x)}Y : [\sigma] \mapsto [F \circ \sigma].\]
+\end{definition}
+
+One may check that \(DF\mid_x\) is well-defined and is a linear map using 
+similar arguments as above (hint: for linearity, show \(DF\mid_x = 
+\Delta_g^{-1} \circ D\tilde F\mid_x \circ \Delta_f\) where 
+\(\tilde F = g \circ F \circ f^{-1}\)). Furthermore, as one might expect, 
+the rank of a smooth function is simply the rank of \(DF\mid_x\).
+
+\subsection{Tangent Space to Submanifolds}
+
+Let \(Z\) is a \(m\)-dimensional submanifold of \(X\), then as we have shown 
+before, the inclusion map \(\iota Z \hookrightarrow X\) is a smooth immersion. 
+Then, each curve in \(Z\) is a curve in \(X\) and so, for all \(z \in Z\), 
+we may define the linear injection 
+\[D\iota\mid_z : T_z Z \hookrightarrow T_z X : [\sigma] \mapsto [\sigma].\]
+In this sense, we can view \(T_z Z\) as a subspace of \(T_z X\), and we can 
+see this explicitly in co-ordinates. Let \((U, f)\) be a chart of \(X\) containing 
+\(z\) such that 
+\[f(U \cap Z) = f(U) \cap \mathbb{R}^m.\]
+Then, by considering for all curves \(\sigma\) in \(Z\) through \(z\), we have 
+\[\Delta_f(\sigma) = f \circ \sigma : (-\epsilon, \epsilon) \to Z \to \mathbb{R}^m,\]
+for sufficiently small \(\epsilon > 0\); and hence, 
+\(\Delta_f(T_z Z) \subseteq \mathbb{R}^m\). Now, as \(\Delta_f\) is linear 
+isomorphism between \(T_z X\) and \(\mathbb{R}^n\), \(\Delta_f(T_z Z)\) must be 
+a subspace of \(\mathbb{R}^n\) of \(m\) dimension, and so 
+\(\Delta_f(T_z Z) = \mathbb{R}^m\).
+
+\begin{lemma}
+  If \(X, Y\) are manifolds of dimension \(n\) and \(m\) respectively, and
+  \(F : X \to Y\) is a smooth function. Then, for all regular points \(x \in X\), 
+  there exists a chart \((U, f)\) of \(X\) containing \(x\) and \((V, g)\) of 
+  \(Y\) containing \(F(x)\) such that, 
+  \[\pi = g \circ F \circ f^{-1} : f(U) \to g(V),\]
+  where \(\pi : \mathbb{R}^n \to \mathbb{R}^m\) is the standard projection.
+\end{lemma}
+\begin{proof}
+  Choose a chart \((W, h)\) at \(x\), and \((V, g)\) at \(F(x)\), then by 
+  the definition of smoothness, we have \(g \circ F \circ h^{-1}\) is smooth. 
+  Now, as \(x\) is a regular point, \(D(g \circ F \circ h^{-1})\mid_{h(x)}\) is a 
+  surjection, and so, by the implicit function theorem, there exists an open set 
+  \(U' \subseteq h(W)\) containing \(h(x)\) and a diffeomorphism 
+  \(f' : U' \to f'(U')\) such that 
+  \[g \circ F \circ h^{-1} \circ f'^{-1} : f'(U') \to g(V),\]
+  is the standard projection. Thus, defining \(U := h^{-1}(U')\) and 
+  \(f := h^{-1} \circ f'^{-1}\), we have found a chart \((U, f)\) of \(X\) 
+  containing \(x\) such that 
+  \[g \circ F \circ f^{-1} : f(U) \to g(V)\]
+  is the restriction of the standard projection.
+\end{proof}
+
+\begin{lemma}
+  Let \(X\) be an \(n\)-dimensional manifold and let \(Y\) be an \(m\)-dimensional 
+  manifold where \(m \le n\). Let \(F : X \to Y\) be a smooth function and let 
+  \(y \in Y\) be a regular value of \(F\). Then, if \(Z = F^{-1}(\{y\})\) and 
+  \(z \in Z\), \(T_z Z\) is the kernel of the linear map 
+  \[DF\mid_z : T_z X \to T_y Y.\]
+\end{lemma}
+\begin{proof}
+  By the above lemma, there exists a chart \((U, f)\) of \(X\) containing 
+  \(z\) and a chart \((V, g)\) of \(Y\) containing \(y = F(z)\) and 
+  (Wlog. by translating) \(g(y) = 0\), such that
+  \(\tilde F = g \circ F \circ f^{-1} : f(U) \to g(V)\) 
+  is the restriction of the standard projection and so,
+  \[DF\mid_z = \Delta_g^{-1} \circ D\tilde F\mid_z \circ \Delta_f = 
+  \Delta_g^{-1} \circ \pi\mid_z \circ \Delta_f,\]
+  where \(\pi\) has the kernel \(\mathbb{R}^{n - m}\). Now, by considering 
+  \[f(Z \cap U) = \tilde F^{-1}(g(y)) = f(U) \cap \pi^{-1}(y),\]
+  as the kernel of \(D\tilde F\) is simply \(T_z Z\) as 
+  \(T_z Z \simeq \mathbb{R}^{n - m}\) and \(D\tilde F \simeq \pi\) using 
+  the chosen chart.
+\end{proof}
+
+Consider the Lie group \(GL_n(\mathbb{R}) \subseteq M_n(\mathbb{R})\). It 
+is not difficult to show that the determinant map 
+\[\det GL_n(\mathbb{R}) \to \mathbb{R} : A \mapsto \det A\]
+is a smooth function. We will show that \(1\) is a regular value of 
+\(\det\) and so the special linear group (note that \(SL_n(\mathbb{R})\) is 
+a subgroup of \(GL_n(\mathbb{R})\))
+\[SL_n(\mathbb{R}) := \{A \in M_n(\mathbb{R}) \mid \det A = 1\}\]
+is a submanifold of \(GL_n(\mathbb{R})\) and so is a Lie group.
+
+Recall that the determinant of the matrix \(A\) is 
+\(\det A = \sum_{j = 1}^n (-1)^{i + j}a_{ij}\det A_{ij}\),
+for any \(i = 1,\cdots, n\),
+where \(a_{ij}\) is the \((i, j)\)-th entry of \(A\) and \(A_{ij}\) is the 
+\((i, j)\)-th minor of \(A\). Thus, 
+\[\pdv{\det}{a_{ij}}\mid_A = (-1)^{i + j} \det A_{ij}\] 
+since the minor 
+\(\det A_{ij}\) is independent of \(a_{ij}\). Hence, it follows that if 
+\(A \in \det^{-1}(1)\) is critical, then \(\det A_{ij} = 0\) for all \(i, j\) 
+which implies \(\det A = 0\), a contradiction! \# Thus, \(SL_n(\mathbb{R})\) is 
+a submanifold of \(GL_n(\mathbb{R})\) of dimension \(n^2 - 1\). With this, 
+we may compute the tangent space of \(SL_n(\mathbb{R})\) at some \(A\) by 
+\[T_A SL_n(\mathbb{R}) = \ker D(\det)\mid_A =
+  \{x \in GL_n(\mathbb{R}) \mid x \cdot [(-1)^{i + j} \det A_{ij}]_{ij} = 0\}.\]
+
 \end{document}
