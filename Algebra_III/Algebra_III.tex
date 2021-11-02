@@ -109,9 +109,9 @@
 }
 \newpage
 
-\section{Fundamental Definitions}
+\section{Rings}
 
-We will in this section recall some fundamental definitions which 
+We will in this section recall some fundamental definitions about rings which 
 we will study throughout the course.
 
 \begin{definition}[Ring]
@@ -760,5 +760,105 @@ induction. A direct corollary of this is that, since \(\mathbb{F}[X]\) is
 a Euclidean domain, it is a PID, and thus, for any irreducible polynomial 
 \(P \in \mathbb{F}[X]\), \(\langle P \rangle\) is a prime ideal, hence maximal, 
 i.e. by definition \(\mathbb{F}[X] / \langle P \rangle\) is a field.
+
+\subsection{Chinese Remainder Theorem}
+
+\begin{definition}[Product ring]
+  Let \(R, S\) be rings. Then \(R \times S\) is the Cartesian product of 
+  \(R\) and \(S\) equipped with the ring structure where addition and 
+  multiplication are defined pairwise.
+\end{definition}
+
+As one might expect, the projection maps from a product ring are ring 
+homomorphisms. On the other hand, the inclusion maps are not ring homomorphisms.
+In particular, the map
+\[i_1 : R \to R \times S : r \mapsto (r, 0), i_2 : S \to R \times S : s \mapsto (0, s),\]
+are not ring homomorphisms as they do not map the multiplicative identity 
+to the multiplicative identity of \(R \times S\).
+
+We see that the product ring operation is associative, i.e. 
+\((R \times S) \times T \cong R \times (S \times T)\) via the isomorphism 
+\(((r, s), t) \mapsto (r, (s, t))\), and we may simply omit the brackets. 
+This argument can be applied analogously to \(n\)-fold products. 
+
+In general, given a collection of rings \(\{R_i\}_{i \in I}\) for some index set 
+\(I\), we may define \(\prod_{i \in I} R_i\)
+to be the set of elements of the form \(\{x_i\}_{i \in I}\) such that 
+\(x_i \in R_i\). Similarly, we may equip \(\prod R_i\) with the ring structure 
+where addition and multiplication are defined pairwise. As before, the projection 
+maps are ring homomorphisms.
+
+This definition of product rings is characterised by the following universal property. 
+
+\begin{proposition}
+  Given a ring \(S\) and a collection of rings \(\{R_i\}_{i \in I}\). If 
+  \(f_i : S \to R_1\) is a ring homomorphism for all \(i \in I\), then there exists 
+  a unique ring homomorphism 
+  \[\prod_{i \in I} f_i : S \to \prod_{i \in I} R_i,\]
+  such that \(f_i = \pi_i \circ (\prod f_i)\) where \(p_i\) is the projection map 
+  from \(\prod R_i\) to \(R_i\).
+\end{proposition}
+\begin{proof}
+  Define \(\prod_{i \in I} f_i(s) := \{f_i(s)\}_{i \in I} \in \prod_{i \in I} R_i\).
+  It is clear that \(\prod_{i \in I} f_i\) is a ring homomorphism and 
+  \((\pi_i \circ (\prod_{i \in I} f_i))(s) = \pi_i(\{f_i(s)\}_{i \in I}) = f_i(s)\).
+
+  Now, if \(g : S\ to \prod_{i \in I} R_i\) is a ring homomorphism such that 
+  \(\pi_i \circ g = f_i\), then \(g(s) = \{f_i(s)\}_{i \in I} = 
+  (\prod_{i \in I} f_i)(s)\). Thus, \(g = \prod_{i \in I} f_i\).
+\end{proof}
+
+The Chinese remainder theorem seeks to solve the question that, if \(I, J\) 
+are ideals of the ring \(R\), if \(a \in R / I\) and \(b \in R / J\), then 
+does there exists some \(c \in R\), \(c + I = a + I\) and \(c + J = b + J\).
+Furthermore, if such an element exists, how unique is it.
+
+Phrased in a more ring theoretic sense, the existence question asks, 
+if \(q_1 : R \to R / I\) and \(q_2 : R \to R / J\) are the quotient maps, 
+is \((a, b)\) in the image of 
+\(q_1 \times q_2 : R \to R / I \times R / J : r \mapsto (q_1(r), q_2(r))\). 
+On the other hand, the uniqueness question asks if there asks whether or not 
+\(q_1 \times q_2\) is injective, and so, it essentially asks what is the 
+kernel of \(q_1 \times q_2\).
+
+It is clear that if \(q_1 \times q_2(s) = 0\) if and only if 
+\(q_1(s) = 0\) and \(q_2(s) = 0\) and so, \(I \cap J = \ker q_1 \times q_2\).
+With this in mind, we see that 
+\[R / I \cap J \hookrightarrow R / I \times R / J\]
+is a injection. Sadly, this injection is not a surjection by simply considering 
+the case where \(I = J\) and \(a \neq b\). 
+
+More generally, given \(I_1, \cdots, I_r\) is a finite collection of ideals, 
+we have 
+\[R / \bigcap_{i = 1}^r I_i \hookrightarrow R / I_1 \times \cdots \times R / I_r,\]
+is an injection.
+
+\begin{definition}[Relatively Prime Ideal]
+  Ideals \(I, J\) are relatively prime ideals of \(R\) if \(I + J = R\).
+\end{definition}
+
+\begin{theorem}[Chinese Remainder Theorem]
+  Let \(\{I_i\}_{i = 1}^r\) be a finite collection of ideals of \(R\) such 
+  that \(\{I_i\}\) is pairwise relatively prime. Then the map  
+  \[R / \bigcap_{i = 1}^r I_i \hookrightarrow R / I_1 \times \cdots \times R / I_r,\]
+  is an isomorphism.
+\end{theorem}
+\begin{proof}
+  It suffices to prove surjectivity. 
+
+  For all \(i, j\), \(i \neq j\), as \(I_i\) and \(I_j\) are pairwise relatively 
+  prime, there exists \(r_i, \in I_i\) and \(r_j, \in I_j\) such that 
+  \(r_i + r_j = 1\). Thus, \(r_i = 1 \mod I_j\) and \(r_j = 1 \mod I_i\). Then, 
+  for each \(j\), let \(f_j = \prod_{k \neq j} r_k\) where \(r_k\) is defined 
+  as above, we have \(f_j = 1 \mod I_j\) since individual \(r_k = 1 \mod I_j\). 
+  On the other hand, for all \(k \neq j\), \(r_k = 0 \mod I_k\), we have 
+  \(f_j = 0 \mod I_k\). Finally, for all 
+  \(s = (s_1, \cdots, s_r) \in R / I_1 \times \cdots \times R / I_r\), choose 
+  \(\tilde s_i\) such that \(q_i(\tilde s_i) = s_i\). Then, setting 
+  \(t = f_1 \tilde s_1 + \cdots + f_r \tilde s_r\), we have 
+  \[q_i(t) = q_i(f_1)q_i(\tilde s_1) + \cdots + q_i(f_r)q_i(\tilde s_r) 
+    = 0 + \cdots + 0 + 1 \cdot s_i + 0 + \cdots + 0 = s_i,\]
+  and so \(t \mapsto s\) under the aforementioned map.
+\end{proof}
 
 \end{document}
