@@ -861,4 +861,170 @@ is an injection.
   and so \(t \mapsto s\) under the aforementioned map.
 \end{proof}
 
+\newpage
+\section{Fields}
+
+\subsection{Field Extensions}
+
+Let \(K\) be a field. As we have seen before, as fields are rings, there exists a 
+unique ring homomorphism from \(f : \mathbb{Z} \to K\). Then the kernel of this map 
+is an ideal of \(\mathbb{Z}\), and in particular, as \(\mathbb{Z} / \ker f\) is a 
+sub-ring of \(K\), it is an integral domain and so, \(\ker f\) is prime. 
+Now, since the prime ideals of \(\mathbb{Z}\) are either the zero ideal or 
+the principal ideal of a prime element, we see there are two cases. 
+In the case that \(\ker f = \{0\}\), we obtain a injection 
+\[\iota : \mathbb{Q} \hookrightarrow K : \frac{a}{b} \mapsto f(a)f(b)^{-1}.\]
+On the other hand if \(\ker f = \langle p \rangle\) for some prime \(p \in \mathbb{Z}\),
+we obtain an injection 
+\[\iota : \mathbb{F}_p := \mathbb{Z} / p\mathbb{Z} \hookrightarrow K.\]
+Similar to rings, we refer fields of the first type to have characteristic zero, 
+while fields of the second type to have characteristic \(p\). We call 
+the domain of \(\iota\) (i.e. \(\mathbb{Q}\) or \(\mathbb{F}_p\)) the prime field 
+of \(K\).
+
+\begin{definition}[Extension]
+  If \(K, L\) are fields such that \(K \subset L\), then we say \(L\) is an 
+  extension of \(K\).
+\end{definition}
+
+We observe that if \(L\) is an extension of \(K\), then \(L\) is a 
+\(K\)-vector space with the natural operations.
+
+\begin{definition}[Finite Extension]
+  Let \(L\) be an extension of \(K\). Then \(L\) is a finite extension of \(K\) 
+  if the \(L\) is a finite dimensional vector space of \(K\). In this case the 
+  degree of the extension \(L / K\), denoted \([L : K]\) is the 
+  dimension of \(L\) as a \(K\)-vector space.
+\end{definition}
+
+\begin{proposition}
+  Let \(M, K, L\) be fields such that \(M \subseteq K \subseteq L\), then 
+  the following are equivalent: 
+  \begin{itemize}
+    \item \(L\) is a finite extension of \(M\);
+    \item \(L\) is a finite extension of \(K\) and \(K\) is a finite extension of 
+      \(M\).
+  \end{itemize}
+  In the case that this holds, then \([L : M] = [L : K][K : M]\).
+\end{proposition}
+\begin{proof}
+  \((\implies)\) Suppose \(L\) is a finite extension of \(M\), and let 
+  \(\{e_1, \cdots, e_r\}\) span \(L\) over \(M\). Then, since \(M \subseteq K\), 
+  \(\{e_1, \cdots, e_r\}\) also spans \(L\) over \(K\), implying 
+  \(L / K\) is finite. On the other hand, as \(K\) is a \(M\)-subspace of 
+  \(L\) which is finite dimensional, \(K\) must also be finite dimensional, 
+  implying \(K / M\) is finite.
+
+  \((\impliedby)\) Let \(\{e_1, \cdots, e_r\}\) be a basis of \(L\) over \(K\),
+  and let \(\{f_1, \cdots, f_s\}\) be a basis of \(K\) over \(M\). Then, 
+  for all \(l \in L\), \(l = \sum \lambda_i e_i\) for some \(\lambda_i \in K\).
+  Furthermore, for all \(i\), \(\lambda_i = \sum \mu_j^i f_j\) for some 
+  \(\mu_j^i \in M\), and so 
+  \[l = \sum_i (\sum_j \mu_j^i f_j) e_i = \sum_{i,j} \mu_j^i f_j e_i,\]
+  implying \(\{f_j e_i\}_{i, j}\) spans \(L\) over \(M\). This is a finite spanning 
+  set and thus \(L / M\) is finite. 
+
+  For the last claim, it suffices to show that \(\{f_j e_i\}_{i, j}\) as defined 
+  above is linearly independent. Suppose 
+  \(\sum_{i, j} \lambda_{i, j} f_j e_i = 0\), then 
+  \(0 = \sum_i (\sum_j \lambda_{i, j} f_j) e_i\) implying 
+  \(\sum_j \lambda_{i, j} f_j = 0\) as \(\{e_i\}\) is linearly independent. 
+  Now as \(\{f_i\}\) is also linearly independent, this implies 
+  \(\lambda_{i, j} = 0\) for all \(i, j\) implying \(\{f_j e_i\}_{i, j}\) 
+  is a basis of \(L\) over \(M\). Thus, 
+  \([L : M] = \dim_M L = |\{f_j e_i\}_{i, j}| = r s = \dim_M K \dim_K L = 
+    [L : K][K : M]\) as required.
+\end{proof}
+
+\subsubsection{One Element Extensions}
+
+\begin{definition}
+  Let \(L\) be a field extension of \(K\) and let \(\alpha \in L\). We denote 
+  \(K(\alpha)\) denote the smallest subfield of \(L\) containing both 
+  \(K\) and \(\alpha\).  
+\end{definition}
+
+In particular, \(K(\alpha)\) consists of all elements of \(L\) expressible as 
+\(P(\alpha) / Q(\alpha)\) for \(P, Q \in K[X]\) and \(Q(\alpha) \neq 0\).
+
+\begin{proposition}
+  Let \(L\) be a field extension of \(K\) and let \(\alpha \in L\). There 
+  exists a unique homomorphism \(\text{ev}_\alpha : K[X] \to L\) such that 
+  \(\text{ev}_\alpha \mid_K = \iota : K \hookrightarrow L\) and 
+  \(\text{ev}_\alpha(X) = \alpha\).
+\end{proposition}
+
+There are two cases for the kernel of \(\text{ev}_\alpha\). In the first case, 
+\(\text{ev}_\alpha\) is injective and so, for all \(P \in K[X] \setminus \{0\}\) 
+\(P(\alpha) \neq 0\). If this is the case, we say \(\alpha\) is a transcendental 
+number. In this case, the map extends to a map 
+\[K(X) \hookrightarrow L : \frac{P(X)}{Q(X)} \mapsto \frac{P(\alpha)}{Q(\alpha)}.\]
+By inspection, the image of this map is \(K(\alpha)\). Hence, this is an 
+isomorphism between \(K(X)\) and \(K(\alpha)\).
+
+In the case the kernel is non-zero, we have the kernel must be prime as the 
+quotient \(K[X] / \ker \text{ev}_\alpha\) is isomorphic to a subring in \(K\) 
+which are integral domains. Thus, there exists a unique monic irreducible polynomial 
+\(P \in K[X]\) generating \(\ker \text{ev}_\alpha\) (recall that 
+\(K[X]\) is a PID as it is a Euclidean domain). We call this polynomial 
+\(P\) the minimal polynomial of \(\alpha\) and we say \(\alpha\) is 
+algebraic over \(K\). In this case, we obtain an injective homomorphism 
+\[K[X] / \langle P(X) \rangle \hookrightarrow L,\]
+with its image being a field containing \(K, \alpha\) in which every element 
+is expressible as a polynomial in \(\alpha\) with coefficients in \(K\). Namely 
+the image is precisely \(K(\alpha) = K[\alpha]\) and we have an isomorphism 
+\(K[X] / \langle P(X) \rangle \simeq K(\alpha)\).
+
+Note that if \(P\) has degree \(d\), any element of \(K[X]\) is expressible as 
+\(P(X)Q(X) + R(X)\) with \(\deg R < d\). So \(1, X, \cdots, X^{d - 1}\) spans 
+\(K[X] / \langle P(X) \rangle\) over \(K\). Furthermore, they are linearly independent 
+since if otherwise, there exists \(\lambda_i \in K\) such that 
+\(\sum_{i = 0}^{d - 1} \lambda_i X_i = 0\) implying 
+\(P \mid \sum_{i = 0}^{d - 1} \lambda_i X_i\), a contradiction. Thus, 
+\(1, X, \cdots, X^{d - 1}\) is a basis of \(K[X] / \langle P(X) \rangle\) 
+over \(K\) and thus, \(1, \alpha, \cdots, \alpha^{d - 1}\) is a basis 
+of \(K(\alpha)\). With this, we conclude \([K(\alpha) : K] = \deg P\) 
+where \(P\) is the minimal polynomial of \(\alpha\).
+
+\begin{proposition}
+  If \(L / K\) is finite and \(\alpha \in L\), then \(\alpha\) is 
+  algebraic over \(K\).
+\end{proposition}
+\begin{proof}
+  Let \(d = [L : K]\) so \(1, \alpha, \cdots, \alpha^d\) is \(d + 1\) elements 
+  in \(L\). Then, they are linearly dependent and there exists \(\lambda_i\)
+  not all of which are zero such that, \(\sum_{i = 0}^{d} \lambda_i \alpha^i = 0\) 
+  implying \(\alpha\) is algebraic.
+\end{proof}
+
+Since \(K(\alpha) \subseteq L\), we have \([K(\alpha) : K]\) divides \([L : K]\).
+
+In the absence of an ambient field, we write \(K(\alpha)\) where \(\alpha\) is
+a root of irreducible \(P \in K[X]\) for the quotient 
+\(K[X] / \langle P(X) \rangle\).
+
+\begin{proposition}
+  Let \(L\) be a field extension of \(K\) and let \(\alpha, \beta \in L\) be 
+  algebraic over \(K\). Then \(\alpha + \beta, \alpha \beta\) and \(\alpha^{-1}\) 
+  (if \(\alpha \neq 0\)) are all algebraic over \(K\).
+\end{proposition}
+\begin{proof}
+  By the above proposition, it suffices to show that \([K(\alpha)](\beta)\) 
+  is finite over \(K\) since \(\alpha + \beta, \alpha \beta, \alpha^{-1} 
+  \in [K(\alpha)](\beta)\). As \(\beta\) is algebraic over \(K\), there exists 
+  some \(P \in K[X]\) such that \(P(\alpha) = 0\). Then, as 
+  \(P \in K[X] \subseteq K(\alpha)[X]\), we have \(\beta\) is algebraic over 
+  \(K(\alpha)\) implying \([K(\alpha)](\beta)\) is finite over \(K(\alpha)\) 
+  and so \(K\) by transitivity.
+\end{proof}
+
+With the above proposition in mind, we will write \(K(\alpha, \beta)\) for 
+\([K(\alpha)](\beta)\).
+
+\begin{corollary}
+  Let \(\overline{\mathbb{Q}} \subseteq \mathbb{C}\) denote the subset of elements of 
+  \(\mathbb{C}\) algebraic over \(\mathbb{Q}\). Then \(\overline{\mathbb{Q}}\) is 
+  a field.
+\end{corollary}
+
 \end{document}
