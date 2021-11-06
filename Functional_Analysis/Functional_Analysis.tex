@@ -920,4 +920,372 @@ We will now recall the Banach contraction mapping theorem.
   Exercise/see second year analysis.
 \end{proof}
 
+\subsection{Dual Space and Dual Operators}
+
+\subsubsection{Dual Space}
+
+\begin{definition}[Dual Space]
+  Given a normed space \((X, \| \cdot \|)\), its dual space is 
+  \(X^* := \mathcal{L}(X, \mathbb{K})\). The elements of the dual spaces are 
+  called continuous functionals on \(X\).
+\end{definition}
+
+\begin{proposition}
+  \((\ell_p)^* = \left\{T : \ell_p : \to \mathbb{K} \mid T(x) = 
+    \sum_i y_i x_i, y \in \ell_q\right\}\) where \(1 / p + 1 / q = 1\) and 
+    \(\mathbb{K} = \mathbb{R}\) or \(\mathbb{C}\).
+\end{proposition}
+\begin{proof}
+  Let \(T(x) = \sum_i y_i x_i\) for some \(y \in \ell_q\), it is clear that 
+  \(T\) is linear. Consider, by Hölder's inequality
+  \[\|T(x)\| = \left|\sum_i y_i x_i\right| \le \|x\|_p \|y\|_q.\]
+  Thus, \(\|T\| \le \|y\|_q < \infty\), implying \(T \in (\ell_p)^*\).
+
+  Now, let \(\phi \in (\ell_p)^*\). 
+  Fixing \(y_n = \phi(e_n)\), it suffices to show 
+  that \((y_n) \in \ell_q\) since it is clear that \(\phi(x) = \sum x_i y_i\) 
+  by linearity. 
+  Setting \(x_i = |y_i|^q / y_i\) for all \(y_i \neq 0\) and \(x_i = 0\) for 
+  \(y_i = 0\), consider that \(\phi(\sum x_i e_i) = \sum x_i y_i = \sum |y_i|^q\). 
+  On the other hand, 
+  \[|\phi(x)| \le \|\phi\| \|x\|_p = \|f\|\left(\sum |x_i|^p\right)^{1 / p} 
+  = \|\phi\| \left(\sum \frac{|y_i|^{qp}}{|y_i|^p}\right)^{1 / p}.\]
+  As \(1 / p + 1 / q = 1\), we have \(qp = p + q\) and so, 
+  \[|\phi(x)| \le  \|\phi\| \left(\sum \frac{|y_i|^{qp}}{|y_i|^p}\right)^{1 / p.}
+  = \|\phi\| \left(\sum |y_i|^q\right)^{1 / p}.\]
+  Thus, 
+  \[\sum |y_i|^q \le \|\phi\| \left(\sum |y_i|^q\right)^{1 / p},\]
+  implying 
+  \[\|y_i\|_q = \left(\sum |y_i|^q\right)^{1 / q} = 
+  \left(\sum |y_i|^q\right)^{1 - 1 / p} = 
+  \frac{\sum |y_i|^q}{\left(\sum |y_i|^q\right)^{1 / p}} 
+  \le \|\phi\| < \infty,\]
+  and \((y_i) \in \ell_q\).
+\end{proof}
+
+\begin{proposition}
+  If \(X\) is a Hilbert space, then for all \(y \in X\), 
+  \[T_y(x) := \langle y, x \rangle\]
+  is a bounded linear functional on \(X\).
+\end{proposition}
+\begin{proof}
+  Follows by the Cauchy-Schwarz inequality.
+\end{proof}
+
+In year two linear algebra we saw that all linear functionals on a finite 
+dimensional space are of the form as above. In fact, this is true for 
+all Hilbert spaces.
+
+\begin{lemma}
+  Let \(X\) be a Hilbert space and \(Y\) a closed subspace of \(X\). Then 
+  \(X = Y \oplus Y^{\perp}\).
+\end{lemma}
+\begin{proof}
+  \(Y\) is complete since it is a closed subspace of a complete space. 
+  As \(Y \cap Y^{\perp} = \{0\}\), it suffices to show that \(Y + Y^{\perp} = X\). 
+  Let \(x \in X\), then as subspaces are convex, by the nearest point property, 
+  there exists some \(y \in Y\) such that \(\|y - x\| = \text{dist}(x, Y)\).
+  Defining \(y' = x - y\), we have \(x = y + y'\) and it remains to show 
+  \(y' \in Y^\perp\). 
+  
+  Suppose otherwise, there exists some \(\tilde y \in Y\) 
+  such that \(\langle \tilde y, y'\rangle > 0\) (we may assume the by simply 
+  multiplying by a scalar). Then, for \(t > 0\), 
+  \[\begin{split}
+    \|(y + t \tilde y) - x\|^2 
+    & = \langle y + t\tilde y - x, y + t\tilde y - x \rangle\\
+    & = \langle y - x, y - x \rangle + \langle t \tilde y, y - x \rangle + 
+        \langle y - x, t \tilde y \rangle + t^2  \langle \tilde y, 
+        \tilde y \rangle\\
+    & = \text{dist}(x, Y)^2 - 2t\langle \tilde y, x\rangle + t^2 \|\tilde y\|^2
+  \end{split},\]
+  were for small enough \(t\), \(2t\langle \tilde y, x\rangle > t^2 \|\tilde y\|^2\) 
+  and so, \(\|(y + t \tilde y) - x\| < \text{dist}(x, Y)\), contradiction! 
+  \textbf{N.B. I am unclear about the last equality!}
+\end{proof}
+
+\begin{theorem}[Riesz Representation Theorem]
+  Let \(X\) be a Hilbert space and \(l \in X^*\). Then there exists a unique 
+  \(z \in X\) such that for all \(x \in X\), \(l(x) = \langle z, x \rangle\).
+\end{theorem}
+\begin{proof}
+  Uniqueness is easy to check since, if 
+  \(\langle z, \cdot\rangle = \langle z', \cdot\rangle\), then 
+  \(\langle z - z', \cdot\rangle = 0\) implying \(z - z' = 0\). 
+
+  If \(l = 0\) then \(z = 0\) suffices so suppose otherwise, i.e. 
+  \(N := \ker l \neq X\). Then, as \(N = l^{-1}(\{0\})\) where 
+  \(\{0\}\) is closed, \(N\) is also closed, and thus, by the above lemma 
+  \(N \oplus N^{\perp} = X\) and so, there exists some \(z_0 \in N^\perp\) 
+  \(z_0 \neq 0\). Define 
+  \[v = l(x)z_0 - l(z_0) x.\]
+  We see that \(l(v) = l(x)l(z_0) - l(z_0)l(x) = 0\) so \(v \in N\), and 
+  hence \(\langle z_0, v \rangle = 0\). Unfolding the definition, we have 
+  \[0 = \langle z_0, v \rangle = \langle z_0, l(x)z_0 - l(z_0) x \rangle 
+      = l(x)\|z_0\|^2 - l(z_0)\langle z_0, x \rangle,\]
+  implying 
+  \[l(x) = \frac{l(z_0)\langle z_0, x \rangle}{\|z_0\|^2} = 
+    \left\langle \frac{l(z_0)}{\|z_0\|^2}z_0, x \right\rangle.\]
+  Hence, picking \(z = (l(z_0) /\|z_0\|^2)z_0\) suffices.
+\end{proof}
+
+With this, is easy to check that the map \(\phi : X \to X^* : 
+v \mapsto \langle \cdot, v \rangle\) is in fact a isometric anti-isomorphism.
+
+Let us now consider the dual space of \(\ell_p\) for \(p \in [1, \infty]\). 
+In the case that \(p = 2\), we know that \(\ell_2\) is a Hibert space, and 
+so the Riesz representation theorem provides an isomorphism 
+\(\ell_2 \cong (\ell_2)^*\). In the case that \(p \in (1, \infty)\), as 
+we have seen every linear functional of \(\ell_p\) is of the form 
+\[T : \ell_p \to \mathbb{K} : x \mapsto \sum_i x_i y_i,\]
+for some \(y \in \ell_q\), \(1 / p + 1 / q = 1\), and thus, by checking 
+linearity, we fine \((\ell_p)^* \cong \ell_q\).
+
+In the case the \(p = 1\), for all \(y \in \ell_\infty\), 
+\(f_y : \ell_1 \to \mathbb{K}\) defined to be \(f_y(x) = \sum_i x_i y_i\) is 
+a continuous linear functional since 
+\[|f_y(x)| = \left| \sum_i x_i y_i \right| \le 
+  \|y\|_\infty \left|\sum_i x_i \right| = \|y\|_\infty\|x\|_1 < \infty.\]
+In particular, this provides an injection 
+\(\ell_\infty \hookrightarrow (\ell_1)^*\). By the same argument, we can 
+show \(\ell_1 \hookrightarrow (\ell_\infty)^*\).
+
+\subsubsection{Dual Operators}
+
+\begin{definition}[Dual Operator]
+  Given a Hilbert space \(X\), and \(L \in \mathcal{L}(X, X)\), we define the 
+  dual operator \(L^* : X^* \to X^*\) by 
+  \[L^* f := f \circ L.\]
+  We equip \(L^*\) with the operator norm 
+  \[\|L^*\| = \sup_{f \neq 0} \frac{\|L^* f\|}{\|f\|}.\]
+\end{definition}
+
+\begin{proposition}
+  \(\|L^*\| = \|L\|\) and the following properties hold,
+  \begin{itemize}
+    \item \((S + T)^* = S^* + T^*\);
+    \item for all \(\alpha \in \mathbb{K}, (\alpha T)^* = \overline{\alpha} T^*\);
+    \item \((T^*)^* = T\);
+    \item \((ST)^* = T^* S^*\). 
+  \end{itemize}
+\end{proposition}
+
+Consider \(X\) a Hilbert space and let \(T \in \mathcal{L}(X, X)\). Then 
+by Riesz representation, for all \(f \in X^*\), there exists some \(z_{T^*f} \in X\) 
+such that \(T^* f(x) = \langle z_{T^*f}, x \rangle\). On the other hand, as 
+\(T^*f(x) = f(Tx)\), by Riesz, there exists some \(z_f\) such that 
+\(T^*f(x) = f(Tx) = \langle z_f, Tx \rangle\). Comparing both equations, we 
+have 
+\[\langle z_{T* f}, x \rangle = \langle z_f, Tx\rangle = 
+  \langle T^\dagger z_f, x\rangle,\]
+where \(T^\dagger\) is the adjoint of \(T\). Thus, \(T^\dagger z_f = z_{T^* f}\).
+
+\begin{definition}[Dual Operator again]
+  If \(X_1, X_2\) are Hilbert spaces and \(T \in \mathcal{L}(X_1, X_2)\), 
+  the dual operator of \(T\) is 
+  \[T^* : X_2^* \to X_1^* : f \mapsto f \circ T.\]
+\end{definition}
+
+By Riesz representation, \(X_i^* \cong X_i\), and we may view \(T^*\) as a 
+linear operator on \(X_2 \to X_1\). In particular, for all \(f \in X_2^*\), 
+\(T^* f \in X_1^*\) so there exists some \(z_{T^* f} \in X_1\) such that 
+\(T^* f(x) = \langle z_{T^* f}, x \rangle\). On the other hand, 
+\(T^* f(x) = f(Tx)\) and so, there exists some \(z_f \in X_2\) such that 
+\(T^* f(x) = \langle z_f, T x\rangle\). So, 
+\[\langle z_f, T x \rangle = \langle z_{T^*f}, x\rangle.\]
+Then, we may define \(T^\dagger : X_2 \to X_1\) such that 
+\(T^\dagger z_f = z_{T^* f}\).
+
+Consider \(\grad : D(\grad) \to L^2\) where 
+\(D(\grad) \subseteq L^2\). Suppose for now that \(D(\grad) = C_0^\infty\), i.e. 
+smooth, compactly supported functions. As demonstrated above, one may find the 
+dual operator \(\grad^*\) of \(\grad\) such that 
+\[\langle g, \grad \phi\rangle = \langle \grad^* g, \phi\rangle\]
+for all \(g \in L^2\), \(\phi \in C_0^\infty\). This operator is known as 
+the weak derivative and we shall treat this topic 
+properly later in this course
+
+\begin{proposition}
+  Given a linear operator \(T \in \mathcal{L}(X_2, X_1)\) 
+  where \(X_1, X_2\) are normed spaces, the map 
+  \[h : X_1 \times X_2 \to \mathbb{K}: 
+    (x, y) \in X_1 \times X_2 \mapsto \langle x, Ty \rangle\] 
+  is a sesquilinear form.
+\end{proposition}
+
+\begin{definition}[Bounded Sesquilinear Form]
+  A sesquilinear form \(h\) on a normed space is bounded if 
+  \[\|h(\cdot, \cdot)\| := \sup_{x, y \neq 0} \frac{|h(x, y)|}{\|x\|\|y\|} < \infty.\]
+\end{definition}
+
+\begin{proposition}
+  Let \(X_1, X_2\) be Hilbert spaces and let \(h\) be a bounded sesquilinear 
+  form. Then \(h\) has the representation 
+  \[h(x, y) = \langle Sx, y \rangle,\]
+  for some \(S \in \mathcal{L}(X_1, X_2)\) such that \(\|S\| = \|h\|\).
+\end{proposition}
+\begin{proof}
+  For all \(x \in X_1\), as \(h(x, \cdot) : X_2 \to \mathbb{K} \in X_2^*\), 
+  by Riesz, there exists some \(z_x\) such that \(h(x, \cdot) = 
+  \langle z_x, \cdot \rangle\). Thus, simply defining 
+  \(S : X_1 \to X_2 : x \mapsto z_x\) suffices after simple checks for linearity.
+
+  Consider 
+  \[\begin{split}
+    \|h\| & = \sup_{x, y \neq 0} \frac{|h(x, y)|}{\|x\|\|y\|} 
+      = \sup_{x, y \neq 0} \frac{|\langle Sx, y \rangle|}{\|x\|\|y\|}
+      \ge \sup_{x \neq 0} \frac{|\langle Sx, Sx \rangle|}{\|x\|\|Sx\|}
+      = \sup_{x \neq 0} \frac{\|Sx\|}{\|x\|} = \|S\|.
+  \end{split}\]
+  On the other hand, 
+  \[\|h\| = \sup_{x, y \neq 0} \frac{|\langle Sx, y \rangle|}{\|x\|\|y\|}
+    \le \sup_{x, y \neq 0} \frac{\|Sx\|\|y\|}{\|x\|\|y\|} = \|S\|,\]
+  where the inequality is due to Cauchy-Schwarz. Thus \(\|h\| = \|S\|\) as 
+  required.
+\end{proof}
+
+\subsection{Tietze-Urysohn and Hahn-Banach}
+
+\begin{lemma}[Urysohn's Lemma]
+  For \(A, B \subseteq X\) closed with \(A \cap B\), then there exists a continuous 
+  function such that \(h\mid A = 1\) and \(h\mid_B = 0\).
+\end{lemma}
+\begin{proof}
+  Consider 
+  \[h(x) := \frac{\text{dist}(x, B)}{\text{dist}(x, A) + \text{dist}(x, B)}.\]
+\end{proof}
+
+\begin{theorem}[Tietze-Urysohn]
+  If \(f : A \to \mathbb{R}\) is a continuous function where \(A\) is a 
+  closed set in a metric space \(X\), then there exists a continuous function 
+  \(\tilde f : X \to \mathbb{R}\) such that \(\tilde f\mid_A = f\) and 
+  \(\|\tilde f\| = \|f\|\). 
+\end{theorem}
+\begin{proof}
+  We may assume \(\|f\| = 1\) and \(0 \le f \le 1\) by scaling the function. 
+
+  Define \(f_0 = f\) and \(f_{n + 1} = f_n - g_n\mid_A\) where \(g_n\) is defined 
+  using Urysohn's Lemma such that 
+  \[g_n(x) = \begin{cases}
+    0, & x \in f_n^{-1}([0, \frac{1}{3}(\frac{2}{3})^n]);\\
+    \frac{1}{3}\left(\frac{2}{3}\right)^n, & x \in 
+      f_n^{-1}([(\frac{2}{3})^n, (\frac{2}{3})^{n + 1}]).
+  \end{cases}\]
+  In some sense, what we are doing taking \(g_{n + 1}\) to approximate 
+  the errors of \(f_n - g_n\mid A\). 
+  
+  By construction, we see that \(0 \le f_n \le (\frac{2}{3})^n\), and 
+  \(\sum^n_{i = 0} g_i = f - f_{n + 1}\), defining \(\tilde f = \sum_i g_i\) 
+  (which exists as \(0 \le g_n \le \frac{1}{3}(\frac{2}{3})^n\), implying 
+  \(\sum^n g_i\) is Cauchy, hence convergent by the completeness of \(C(A)\)), 
+  we have 
+  \[\sum_{i = 0}^n g_i\mid_C - f = - f_{n + 1} \to 0,\]
+  and so \(\tilde f\mid_C = f\) as required.
+\end{proof}
+
+\begin{definition}
+  A functional \(p : X \to \mathbb{R}\) is called sublinear if 
+  \begin{itemize}
+    \item \(p(x + y) \le p(x) + p(y)\);
+    \item for all \(\alpha \ge 0\), \(p(\alpha x) = \alpha p(x)\).
+  \end{itemize}
+\end{definition}
+
+\begin{theorem}[Hahn-Banach]
+  Let \(X\) be a normed space, \(Z\) a proper subspace of \(X\), 
+  \(p : X \to \mathbb{R}\) a sublinear functional and \(f : Z \to \mathbb{R}\) 
+  such that \(f(x) \le p(x)\) for all \(x \in Z\). Then, there exists some 
+  linear functional \(\tilde f : X \to \mathbb{R}\) such that 
+  \[\tilde f\mid_Z = f \text{ and } \tilde f(x) \le p(x)\]
+  for all \(x \in X\).
+\end{theorem}
+\begin{proof}
+  Let us first consider the special case of extending \(f\) by 1-dimension.
+  Let \(v \in X \setminus Z\) and \(W := \text{span}(Z, v)\). Define 
+  \[\tilde f : W \to \mathbb{R} : z + \lambda v \mapsto f(z) + \lambda \alpha\]
+  for some \(\alpha \in \mathbb{R}\). It suffices to show that 
+  \[\tilde f(z + \lambda v) \le p(z + \lambda v).\]
+  In particular, if \(\lambda > 0\), then 
+  \(\alpha \le p\left(\frac{1}{\lambda} z + v\right) - 
+    \tilde f\left(\frac{1}{\lambda}z\right)\),
+  and if \(\lambda < 0\), then 
+  \(\alpha \ge -p\left(\frac{1}{-\lambda}z - v\right) + 
+    \tilde f\left(\frac{1}{-\lambda}z\right)\). Combining the two, we have 
+  for all \(\lambda > 0\), 
+  \[-p\left(\frac{1}{\lambda}z - v\right) + 
+  \tilde f\left(\frac{1}{\lambda}z\right)
+    \le \alpha \le p\left(\frac{1}{\lambda} z + v\right) - 
+  \tilde f\left(\frac{1}{\lambda}z\right),\]
+  and by rescaling, the condition becomes 
+  \[-p\left(z - v\right) + \tilde f\left(z\right)
+    \le \alpha \le p\left( z + v\right) - \tilde f\left(z\right).\]
+  This holds if and only if 
+  \[-p(z_1 - v) + \tilde f(z_1) \le p(z_2 + v) + \tilde f(z_2)\]
+  for all \(z_1, z_2 \in Z\). Indeed, this holds as,
+  \[\begin{split}
+    \tilde f(z_1) + \tilde f(z_2) & = \tilde f(z_1 + z_2) 
+      \le p(z_1 + z_2) = p((z_1 - v) + (z_2 + v)) \le p(z_1 - v) + p(z_2 + v).
+  \end{split}\]
+  With this 1-dimensional extension in mind, the result follows by Zorn's lemma.
+  In particular, given two extensions of \(f\), \((M_1, g_1), (M_2, g_2)\) 
+  where \(Z \subseteq M_1, Z \subseteq M_2\) and \(g_1\mid_Z = g_2\mid_Z = f\), 
+  we define the partial order \(\prec\) such that \((M_1, g_1)\prec (M_2, g_2)\) 
+  if and only if \(M_1 \subseteq M_2\) and \(g_2\mid_{M_1} = g_1\). Then, 
+  for any chain of extensions \((M_\gamma, g_\gamma)_{\gamma \in T}\), define 
+  \(M = \bigcup_{\gamma \in T} M_\gamma\) and 
+  \[G : M \to \mathbb{R} : x \mapsto g_\gamma(x) \text{ if } x \in M_\gamma.\]
+  It is clear that \(G\) is continuous and for all \((M_\gamma, g_\gamma)\), 
+  we have \((M_\gamma, g_\gamma) \prec (M, G)\). Hence, every chain of extensions 
+  has an upperbounds, and thus, by Zorn's lemma, there is an maximal extension 
+  \((M, G)\). Finally, it suffices to show that \(M = X\) which is clear since 
+  if otherwise, we may extend \(G\) with an additional dimension, contradicting 
+  the maximality of \((M, G)\).
+\end{proof}
+
+\begin{corollary}[Existence of tangent functional]
+  Let \(X\) be a normed space and let \(x \in X\), then there exists some 
+  \(l \in X^*\) such that \(\|l\| = 1\) and \(l(x) = \|x\|\).
+\end{corollary}
+\begin{proof}
+  Apply Hahn-Banach to \(f : \mathbb{R} \cdot x \to \mathbb{R} : 
+    \lambda \mapsto \lambda \|x\|\).
+\end{proof}
+
+\begin{corollary}
+  Let \(X\) be a normed space, for all \(x \in X\), 
+  \[\|x\| = \sup \{|l(x)| \mid l \in X^*, \|l\| = 1\}.\]
+\end{corollary}
+\begin{proof}
+  For all \(\|l\| = 1\), we have \(|l(x)| \le \|l\| \|x\| = \|x\|\). 
+  Now, by the previous corollary, \(\|x\|\) is achieved by some 
+  \(l \in X^*, \|l\| = 1\) and so,  
+  \(\|x\| = \sup \{|l(x)| \mid l \in X^*, \|l\| = 1\}\) as required.
+\end{proof}
+
+\begin{theorem}[Banach Limit Theorem]
+  There exists \(L \in (\ell_\infty)^*\) such that 
+  \begin{itemize}
+    \item \(\|L\| = 1\);
+    \item if \(x \in c \subseteq \ell_\infty\), 
+      then \(L(x) = \lim_{n \to \infty} x_n\);
+    \item if \(x \in \ell_\infty\) and \(x_i \ge 0\) for all \(i\), then 
+      \(L(x) \ge 0\);
+    \item if \(x \in \ell_\infty\) and \(x'_n := x_{n + 1}\), then 
+      \(L(x) = L(x')\).
+  \end{itemize}
+\end{theorem}
+
+\begin{theorem}[Müntz-Szäsz]
+  Suppose \(0 < \lambda_1 < \lambda_2 < \cdots\), and let \(X\) be the 
+  closure of the set of linear combinations of \(t^{\lambda_j}\) in 
+  \(\mathcal{C}[0, 1]\). Then 
+  \begin{itemize}
+    \item if \(\sum_j \frac{1}{\lambda_j} = \infty\), 
+      then \(X = \mathcal{C}[0, 1]\);
+    \item if \(\sum_j \frac{1}{\lambda_k} < \infty\), then for 
+      \(\lambda \notin \{\lambda_j\}_{j \in \mathbb{N}}, t^\lambda \notin X\), 
+      and so \(X \subsetneq \mathcal{C}[0, 1]\). 
+  \end{itemize}
+\end{theorem}
+
 \end{document}
