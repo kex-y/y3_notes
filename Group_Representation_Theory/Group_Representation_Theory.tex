@@ -1369,5 +1369,173 @@ Let us denote this representation by \(\rho_{V \boxtimes W}\).
   Omitted.
 \end{proof}
 
+\newpage 
+\section{Character Theory}
+
+Character theory is the study of the traces of finite dimensional representations.
+In particular, character theory study the representations by forgetting the 
+vector space themselves. To support this, we observe that the trace function 
+is invariant under isomorphisms and thus, will play a fundamental role 
+in our definitions. 
+
+\begin{definition}[Character]
+  The character of a representation \((V, \rho : G \to V)\) is 
+  the function \(\chi_\rho : G \to \mathbb{C} : g \mapsto \text{tr}(\rho(g))\). 
+
+  When there is no confusion, we write \(\chi_V\) for \(\chi_{\rho_V}\).
+\end{definition}
+
+We recall to that the trace defined on general finite dimensional vector spaces 
+can be found by making a choice of basis and finding the trace of the specific 
+matrix representation. As the trace is independent of the choice of basis, 
+this definition is well-defined. 
+
+This definition however is inelegant as we were required to make a choice of basis. 
+The choice can be avoided by observing that \(\text{Hom}(V, V) \cong V^* \otimes V\), 
+and there exists a natural map 
+\[V^* \otimes V \to \mathbb{C} : f \otimes v \mapsto f(v).\]
+Then, composing the two maps, one can show that this is indeed the trace function.
+
+\begin{proposition}
+  If \(G\) is a finite group, then given \((V, \rho_V), (W, \rho_W)\) representations 
+  of \(G\), we have \(\chi_{\rho_V} = \chi_{\rho_W}\) if and only if 
+  \((V, \rho_V) \cong (W, \rho_W)\).
+\end{proposition}
+\begin{proof}
+  The backward direction is trivial by choosing a basis while the backwards direction 
+  will be proved later in the course.
+\end{proof}
+
+Thus, classifying characters will also classify representations up to isomorphism.
+
+\begin{proposition}
+  The character of the permutation representation maps \(g\) to the number of 
+  fixed points of \(g\).
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\subsection{Class Function}
+
+\begin{definition}[Class Function]
+  A class function \(f : G \to \mathbb{C}\) is a function such that 
+  \(f(ghg^{-1}) = f(h)\) for all \(g, h \in G\). 
+
+  We denote \(\text{Fun}_{cl}(G, \mathbb{C}) \subseteq \mathbb{C}^G = 
+    G \to \mathbb{C}\) the set of class functions.
+
+  We observe that if we quotient \(G\) by the equivalence relation of conjugacy
+  (note that this quotient is not a group), the class function is a function 
+  satisfying the universal property of this quotient.
+\end{definition}
+
+As remarked in the definition of the free vector space, the set of functions 
+from \(X \to \mathbb{C}\) is closely related to the free vector space 
+\(\mathbb{C}[X]\). In particular, we have the embedding 
+\[\sum a_x x \mapsto (x \mapsto a_x) : \mathbb{C}[X] \to \mathbb{C}^X,\]
+and in the case that \(X\) is finite, this map is an isomorphism.
+
+Recall that given a group action \(G \times X \to X\), we may extend this 
+linearly to become a group representation of \(G\) with 
+\((\mathbb{C}[X], \rho_{\mathbb{C}[X]})\). A similar process can be applied 
+to \(\mathbb{C}^X\) by defining 
+\[g \cdot f \mapsto (x \mapsto f(g^{-1} \cdot x)) : 
+  G \times \mathbb{C}^X \to \mathbb{C}^X.\]
+We note that the inverse is required since for \(g_1, g_2 \in G\), we have 
+\[(g_1 \cdot (g_2 \cdot f))(x) = (g_2 \cdot f)(f(g_1^{-1} \cdot x)) = 
+  f(g_2^{-1} g_1^{-1} \cdot x) = f((g_1 g_2)^{-1} \cdot x) = (g_1 g_2 \cdot f)(x).\]
+In the case that \(X = G\), we again have the 3 representations on \(\mathbb{C}^X\),
+\begin{itemize}
+  \item left regular \((g \cdot_L f)(h) = f(g^{-1} h)\);
+  \item right regular \((g \cdot_R f)(h) = f(hg)\);
+  \item adjoint \((g \cdot_{ad} f)(h) = f(g^{-1} h g)\).
+\end{itemize}
+We will mainly only use the adjoint representation in this section. 
+
+\begin{proposition}
+  \(\text{Fun}_{cl}(G, \mathbb{C}) = (\mathbb{C}^X)^{G_{ad}}\), i.e. the set of 
+  class functions equals to the \(G\)-invariant subspace of \(\mathbb{C}^X\) 
+  with respect toe the adjoint representation.
+\end{proposition}
+\begin{proof}
+  Unfold the definitions.
+\end{proof}
+
+By the property of the trace, it is clear that characters are class functions,
+and thus, we have the chain of subsets 
+\[\{\text{Characters}\} \subseteq \text{Fun}_{cl}(G, \mathbb{C}) = 
+(\mathbb{C}^X)^{G_{ad}} \subseteq \mathbb{C}^X.\]
+In the case that \(G\) is finite, as mentioned before, we have the isomorphism 
+\((\mathbb{C}^X)^{G_{ad}} \cong \mathbb{C}[G]^{G_{ad}}\) where the dimension of 
+the latter is the number of conjugacy classes. Hence the number of irreducible 
+representations equal \(\dim (\mathbb{C}^X)^{G_{ad}}\). Thus, the following 
+proposition is motivated.
+
+\begin{definition}
+  An irreducible character is a character of an irreducible representation.
+\end{definition}
+
+\begin{proposition}
+  The irreducible characters form a basis for the set of class functions. 
+  In fact, we will define an inner product on this space and show that 
+  this basis is orthonormal.
+\end{proposition}
+
+This proposition immediately implies \((V, \rho_V) \not\cong (W, \rho_W)\) 
+implies \(\chi_V \neq \chi_W\) since if otherwise, we have found two character 
+linearly dependent with each other.
+
+\begin{lemma}
+  Let \(T \in GL(V)\) such that \(T^n = \text{id}_V\) for some \(n \ge 1\), 
+  then \(T\) is diagonalisable with eigenvalues being the \(n\)-roots of unity.
+\end{lemma}
+\begin{proof}
+  Follows by considering the minimal polynomial, in particular the primary 
+  decomposition theorem.
+
+  Alternatively using group representation theory, we note that 
+  \(\langle T \rangle\) form a finite cyclic group under composition, and 
+  so the representation \((V, \rho_V)\) on \(\langle T \rangle\) where 
+  \(\rho_V(T) = T\) is decomposable into 1-dimensional subrepresentations. 
+  Hence, \(\rho_V(T) = T\) has an eigenbasis and so is diagonalisable. 
+  Finally, as \(T^n = \text{id}_V\), we have the 
+  eigenvalues being the \(n\)-roots of unity.
+\end{proof}
+
+\begin{proposition}
+  Let \(g \in G\) be an element of finite order and let \((V, \rho_V)\) be a 
+  finite dimensional representation. Then, 
+  \begin{itemize}
+    \item \(\chi_V(g^{-1}) = \overline{\chi_V(g)}\);
+    \item \(|\chi_V(g)| \le \dim V\) with equality if and only if 
+      \(\rho_V(g) = \lambda \text{id}_V\) for some \(\lambda \in \mathbb{C}\);
+    \item \(\chi_V(e) = \dim V\).
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  \(g \in G\) be an element of finite order. Then, if the eigenvalues of 
+  \(\rho_V(g)\) are \(\lambda_1, \cdots, \lambda_n\), 
+  \begin{itemize}
+    \item if the eigenvalues of \(\rho_V(g)\) are \(\lambda_1, \cdots, \lambda_n\), 
+      the eigenvalues of \(\rho_(g^{-1})\) are 
+      \(\lambda_1^{-1}, \cdots, \lambda_n^{-1}\). But, \(g^{|g|} = 1\) and so 
+      \(\lambda_i^{|g|} = 1\) implying \(\lambda_i^{-1} = \overline{\lambda_i}\).
+      Thus, the equality follows as the character is simply the sum of the eigenvalues. 
+    \item by the triangle inequality we have 
+      \[|\chi_V(g)| = |\lambda_1 + \cdots + \lambda_n| \le 
+        |\lambda_1| + \cdots |\lambda_n| = 1 + \cdots + 1 = \dim V.\]
+      The less equal is an equality if and only if all \(\lambda_i\) points in the 
+      same direction on \(\mathbb{C}\), and since \(|\lambda_i| = 1\) for all \(i\), 
+      the eigenvalues must be the same \(\lambda\). Hence 
+      \(\rho_V(g) = \lambda \text{id}_V\).
+    \item clear.
+  \end{itemize}
+\end{proof}
+
+\begin{corollary}
+  \(g \in \ker \rho_V \iff \chi_V(g) = \dim V\).
+\end{corollary}
+
 \end{document} 
 
