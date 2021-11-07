@@ -540,4 +540,73 @@ Lastly, the fifth principle states that, the time-evolution of a quantum state
 \[i \hbar \ket{\dot \psi} = \hat H \ket{\psi},\]
 where \(\hat H\) is the operator corresponding to the total energy of the system.
 
+\subsection{Commutators and Uncertainty}
+
+Given an observable \(A\), the outcome of measurement of \(A\) has a certain 
+spread which is characterised by its variance 
+\[(\Delta A)^2 := \langle (A - \langle A \rangle)^2 \rangle
+  = \langle A^2 \rangle - \langle A \rangle^2.\]
+In quantum mechanics we refer to the standard deviation \(\Delta A\) as the 
+uncertainty of \(A\).
+
+\begin{proposition}
+  Given two Hermitian operators \(A, B\) with \([A, B] \neq 0\), we have 
+  \[\Delta A \Delta B \ge \frac{1}{2} |\langle C \rangle|,\]
+  where \(C := i [A, B]\) (in particular, \(C\) is Hermitian).
+\end{proposition}
+\begin{proof}
+  We may assume \(\langle A \rangle = \langle B \rangle = 0\) without loss 
+  of generality. Let \(\ket{\chi} := (A - i \lambda B) \ket{\phi}\) for some 
+  \(\lambda \in \mathbb{R}\) and \(\ket{\phi}\) a normalized state, we have 
+  \[\begin{split}
+    \bra{\chi}\ket{\chi} & = 
+        \bra{\phi}(A + i \lambda B)(A - i \lambda B)\ket{\phi}
+      = \langle (A + i \lambda B)(A - i \lambda B) \rangle \\
+    & = \langle A^2 + \lambda B + i \lambda(BA -  AB)
+      = \langle A^2 \rangle + \lambda^2 \langle B^2 \rangle - 
+        \lambda \langle C \rangle. 
+  \end{split}\]
+  On the other hand, \(\bra{\chi}\ket{\chi} \ge 0\), and so 
+  \[\langle A^2 \rangle + \lambda^2 \langle B^2 \rangle - 
+  \lambda \langle C \rangle \ge 0,\]
+  for all values \(\lambda \in \mathbb{R}\). Taking the derivative of 
+  \(\bra{\chi}\ket{\chi}\), we find \(\bra{\chi}\ket{\chi}\) is an extreme 
+  at \(\lambda = \langle C \rangle / (2 \langle B^2 \rangle)\), and this is 
+  a global minimum as \(\bra{\chi}\ket{\chi}\), is a monic quadratic polynomial.
+  Thus, 
+  \[\bra{\chi}\ket{\chi} \ge \langle A^2 \rangle + 
+  \frac{\langle C \rangle^2}{4\langle B^2 \rangle^2} \langle B^2 \rangle - 
+  \frac{\langle C \rangle^2}{2\langle B^2 \rangle} = 
+  \langle A^2 \rangle - \frac{\langle C \rangle^2}{4\langle B^2 \rangle} \ge 0,\]
+  implying \(\langle A^2 \rangle \langle B^2 \rangle \ge \langle C \rangle^2 / 4\), 
+  and hence, as \(\Delta A^2 = \langle A^2 \rangle - \langle A \rangle^2 = 
+  \langle A^2 \rangle\) and similarly, \(\Delta B^2 = \langle B^2 \rangle\),
+  we have
+  \[(\Delta A)(\Delta B) \ge \frac{|\langle C \rangle|}{2}.\]
+\end{proof}
+
+\begin{proposition}
+  If \(A, B\) are operators such that \([A, B] = 0\), then they possess a set 
+  of common eigenvectors.
+\end{proposition}
+
+\begin{definition}[Complete Set of Commuting Observables]
+  Given a Hibert space \(\mathcal{H}\), a set of Hermitian operators 
+  \((A_i)_{i \in \mathcal{I}}\) sharing an eigenbasis on \(\mathcal{H}\) 
+  is called a complete set of commuting observables if their eigenvalues 
+  uniquely defines each basis vector up to a phase.
+\end{definition}
+
+\begin{definition}[Parity Operator]
+  A Hermitian operator \(S\) on \(L^2\) is a parity operator if 
+  \(S\phi(x) = \phi(-x)\).
+\end{definition}
+
+We see that if \(\phi\) is an eigenfunction of the parity operator \(S\), then 
+\(S \phi(x) = \phi(-x) = s\phi(x)\). Furthermore, if \(S^2 = 1\), we have 
+\(\phi(x) = S\phi(-x) = S^2 \phi(x) = s^2 \phi(x)\) implying \(s = \pm 1\).
+It is not difficult to show that a Hamiltonian of the form 
+\[H = - \frac{\hbar^2}{2m} \pdv[2]{x} + V\]
+commutes with \(S\) if \(V(x) = V(-x)\).
+
 \end{document}
