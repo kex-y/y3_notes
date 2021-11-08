@@ -870,7 +870,7 @@ we define \(\alpha \cdot v := \Delta_f^{-1}(\alpha \cdot \Delta_f(v))\) and
 
 We note that \(\Delta_f\) depends on the choice of the chart. On the other 
 hand, the vector space structure on \(T_xX\) is independent of the choice of 
-the chart (Hint : \(\Delta_{f_2} = D\phi_{12}\mid_{f_1(0)} \circ \Delta_{f_1}\)).
+the chart (Hint : \(\Delta_{f_2} = D\phi_{21}\mid_{f_1(0)} \circ \Delta_{f_1}\)).
 
 The tangent space allow us to talk about the Jacobian of a smooth function between 
 to manifolds. 
@@ -890,7 +890,7 @@ the rank of a smooth function is simply the rank of \(DF\mid_x\).
 \subsection{Tangent Space to Submanifolds}
 
 Let \(Z\) is a \(m\)-dimensional submanifold of \(X\), then as we have shown 
-before, the inclusion map \(\iota Z \hookrightarrow X\) is a smooth immersion. 
+before, the inclusion map \(\iota : Z \hookrightarrow X\) is a smooth immersion. 
 Then, each curve in \(Z\) is a curve in \(X\) and so, for all \(z \in Z\), 
 we may define the linear injection 
 \[D\iota\mid_z : T_z Z \hookrightarrow T_z X : [\sigma] \mapsto [\sigma].\]
@@ -974,5 +974,168 @@ a submanifold of \(GL_n(\mathbb{R})\) of dimension \(n^2 - 1\). With this,
 we may compute the tangent space of \(SL_n(\mathbb{R})\) at some \(A\) by 
 \[T_A SL_n(\mathbb{R}) = \ker D(\det)\mid_A =
   \{x \in GL_n(\mathbb{R}) \mid x \cdot [(-1)^{i + j} \det A_{ij}]_{ij} = 0\}.\]
+
+\subsection{Vector Fields}
+
+In the case of \(\mathbb{R}^n\), we have a good intuition for what a vector field
+is, i.e. a smooth function from \(U \subseteq \mathbb{R}^n\) open which maps 
+\(x \in U\) to a vector in \(T_x U \simeq \mathbb{R}^n\). In this sense the 
+codomain of a vector field is a union of all tangent spaces. This motivates the 
+following definition.
+
+\begin{definition}
+  The tangent bundle of the open set \(U \subseteq \mathbb{R}^n\) is defined 
+  to be 
+  \[TU := \bigcup_{x \in U} T_x U \simeq U \times \mathbb{R}^n,\]
+  where the homeomorphism follows as \(T_x U \simeq \mathbb{R}^n\) for all 
+  \(x \in U\).
+\end{definition}
+
+As \(TU\) is the product of two \(n\)-dimensional manifolds, if is a manifold 
+of dimension \(2n\).
+
+\begin{definition}
+  A vector field on the open set \(U \subseteq \mathbb{R}^n\) is a smooth 
+  function \(\xi : U \to TU\) such that \(\pi \circ \xi = \text{id}_U\) where 
+  \(\pi : TU \to U\) is the projection map \((x, v) \mapsto x\).
+\end{definition}
+
+Thus, for all \(x \in U\), if \(\xi\) is a vector field of \(U\) then 
+\(\xi(x) = (x, v(x))\) where \(v(x) \in T_x U\).
+
+We may extend this idea to general manifolds.
+
+\begin{definition}[Tangent Bundle]
+  Let \(X\) be a manifold. We define the tangent bundle \(TX\) of \(X\) as 
+  \[TX := \bigcup_{x \in U} T_x X.\]
+  We note that unlike the definition in \(\mathbb{R}^n\), this union is 
+  disjoint as individual tangent vectors lives in different tangent spaces.
+  Furthermore, we may not express the tangent bundle as a product without 
+  choosing a chart. 
+\end{definition}
+
+Similar to the projection map in \(\mathbb{R}^n\), there is induced map 
+from the tangent bundle \(\pi : TX \to X : v \mapsto x\) for all \(v \in T_x X\).
+As \(v\) is uniquely identified by the tangent space it lives in, this function 
+is well-defined.
+
+\begin{proposition}
+  Let \(X\) be a \(n\)-dimensional manifold. Then \(TX\) is a \(2n\)-dimensional 
+  manifold and the projection \(\pi : TX \to X\) is smooth.
+\end{proposition}
+\begin{proof}
+  We will first define a topology on \(TX\) by defining a topology on individual 
+  charts. 
+  
+  Given \((U, f)\) a chart on \(X\), 
+  let \(TU := \pi^{-1}(U) = \bigcup_{x \in U} T_x X\). Recall that, for all 
+  \(x \in U\), we have the linear isomorphism 
+  \(\Delta_f : T_x X \to \mathbb{R}^n\), and thus, we may construct the bijection 
+  \[F_U : TU = \bigcup_{x \in U} T_x X \to f(U) \times \mathbb{R}^n 
+    : v \in T_x X \mapsto (f(x), \Delta_f(v)).\]
+  It is easy to check that this is a bijection. We see that \(F_U\) is 
+  injective as \(f\) is an homeomorphism, and for all 
+  \((f(x), w) \in f(U) \times \mathbb{R}^n\), as 
+  \(\Delta_f : T_x X \to \mathbb{R}^n\) is a linear isomorphism, there exists 
+  some \(v \in T_x X\) such that \(\Delta_f(v) = w\) and so, 
+  \(F_U(v) = (f(x), w)\) as required.
+  With this, \(F_U\) induces a topology on \(TU\) be defining \(W \subseteq TU\) 
+  is open if \(F_U(W)\) is open in \(f(U) \times \mathbb{R}^n\).
+
+  Now, consider an atlas \(\mathcal{A} = \{(U_i, f_i)\}_{i \in \mathcal{I}}\) 
+  on \(X\). Through the above procedure, we may define a topology for 
+  each \(TU_i = \pi^{-1}(U_i)\). Then, as \(\bigcup_{i \in I} TU_i = TX\) 
+  (note that this union is not necessary disjoint as \(U_i\) might not be), 
+  we may define the topology on \(TX\) where a \(W \subseteq TX\) is open if 
+  \(U \cap TU_i\) is open for all \(i \in \mathcal{I}\).
+
+  It is easy to see that this procedure produces a Hausdorff and second 
+  countable topology (exercise). 
+
+  Now to see that \(TX\) is a topological manifold we will need to construct 
+  an atlas on \(TX\). This is clear as for each \(T_x X \in TX\), there exists 
+  some chart \((U, f)\) on \(X\) containing \(x\). Then, by construction 
+  \[F_U : TU \to f(U) \times \mathbb{R}^n \subseteq 
+    \mathbb{R}^n \times \mathbb{R}^n \simeq \mathbb{R}^{2n}\]
+  is a homeomorphism, \((TU, F_U)\) is a valid chart on \(TX\) containing \(x\).
+
+  Finally, to show that \(TX\) is a smooth manifold, it suffices to show 
+  that the transition functions from the above lattice are smooth. But this is 
+  clear since by construction
+  \[(F_{U_i} \circ F_{U_j}^{-1})(x, v) = ((f_{U_i} \circ f_{U_j}^{-1})(x), 
+    (\Delta_{f_i} \circ \Delta_{f_j}^{-1})(v)) = (\phi_{ij}(x), 
+    D \phi_{ij}\mid_{x}(v)).\]
+  Thus, the transition function is smooth as its components are smooth.
+
+  To see that \(\pi : TX \to X\) is a smooth function, let \(w \in TX\) so 
+  there exists some \(i\) such that \(w \in TU_i\), then we will show
+  \[\tilde \pi := f_i \circ \pi \circ F_{U_i}^{-1} : F_{U_i}(TU_i) \to f_i(U_i)\]
+  is smooth at \(F_{U_i}(w)\) with appropriately chosen charts. But since 
+  \(\tilde \pi : f_i(U_i) \times \mathbb{R}^n \to f_i(U_i)\) is simply the 
+  projection function, it is smooth, and hence \(\pi\) is smooth.
+\end{proof}
+
+\begin{proposition}
+  The projection \(\pi : TX \to X\) is a submersion.
+\end{proposition}
+\begin{proof}
+  Define \(\tilde \pi\) as above. But this is simply a projection function from 
+  \(\mathbb{R}^{2n} \to \mathbb{R}^n\) and thus, has rank \(n\).
+\end{proof}
+
+\begin{definition}[Vector Field]
+  Let \(X\) be a manifold. A vector field on \(X\) is a smooth function 
+  \(\xi : X \to TX\) such that \(\pi \circ \xi = \text{id}_X\).
+
+  In particular, we see that \(\xi(x) \in T_x X\) for all \(x \in X\).
+\end{definition}
+
+\begin{lemma}
+  Let \(X\) be a manifold and let \(\xi : X \to TX\) be a function such that 
+  \(\pi \circ \xi = \text{id}_X\). Then \(\xi\) is a vector field if and only 
+  if for every chart \((U, f)\) on \(X\), we have 
+  \[F_U \circ \xi\mid_U \circ f^{-1} : f(U) \to f(U) \times \mathbb{R}^n\]
+  is smooth (where \(F_U\) is the bijection between 
+  \(TU = \bigcup_{x \in U} T_x X\) and \(f(U) \times \mathbb{R}^n\)).
+\end{lemma}
+\begin{proof}
+  By the definition of smooth functions (only need to check 
+  \(\xi(U) \subseteq TU\) so that \((TU, F_U)\) is a chart at \(\xi(x)\)). 
+\end{proof}
+
+\begin{proposition}
+  Let \(X\) be an \(n\)-dimensional manifold and let \(Z \subseteq X\) be a 
+  submanifold of \(X\) with the inclusion map \(\iota : Z \hookrightarrow X\).
+  Then the image of \(Di : TZ \to TX\) is a submanifold of \(TX\). 
+\end{proposition}
+\begin{proof}
+  Denote \(\pi_Z : TZ \to Z\) and \(\pi_X : TX \to X\) for the respective projective 
+  maps. Let \(w \in TZ\) and \(z = \pi_Z(w)\). Since \(Z\) is a submanifold, 
+  there exists a chart \((U, f)\) on \(X\) containing \(z\) such that 
+  \[f(U \cap Z) = f(U) \cap A\]
+  for some affine subspace \(A \subseteq \mathbb{R}^n\). Then, it follows 
+  \[F_U(TU \cap Di(TZ)) = F_U(TU) \cap (A \times A)\]
+  where \(A \times A\) is a affine subspace of \(\mathbb{R}^{2n}\).
+\end{proof}
+
+\begin{lemma}
+  Let \(X\) be a manifold and \(Z\) is a submanifold of \(X\). If \(\xi\) is a 
+  vector field on \(X\) such that \(\xi(z) \in T_z Z\) for all \(z \in Z\), then 
+  \(\xi\mid_Z\) is a vector field on \(Z\).
+\end{lemma}
+\begin{proof}
+  As the inclusion map \(\iota : Z \hookrightarrow X\) is smooth, so is 
+  \(\xi\mid_Z = \xi \circ \iota\). By assumption, \(\xi\mid_Z(z) \in TZ\) for 
+  all \(z \in Z\), and thus the induced morphism \(\xi\mid_Z : Z \to TZ\) 
+  is also smooth. Finally, as \(\pi_Z \circ \xi\mid_Z = \text{id}_X\mid_Z 
+  = \text{id}_Z\), we have \(\xi\mid_Z\) is a vector field on \(Z\).
+\end{proof}
+
+\begin{theorem}[Hairy Ball Theorem]
+  Any vector field on \(S^2\) is zero at some point.
+\end{theorem}
+\begin{proof}
+  Requires algebraic topology or differential topology.
+\end{proof}
 
 \end{document}
