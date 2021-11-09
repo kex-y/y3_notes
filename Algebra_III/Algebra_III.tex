@@ -1027,4 +1027,217 @@ With the above proposition in mind, we will write \(K(\alpha, \beta)\) for
   a field.
 \end{corollary}
 
+We have thus far shown the existence of minimal polynomials via an argument 
+using PIDs. This however, does not indicate how to compute such a minimal 
+polynomial. We will now provide some tools for this purpose.
+
+If \(K\) is a field and \(L\) is an extension of \(K\), we would like to find 
+the minimal polynomial \(\alpha \in L\) over \(K\). The main idea is to find 
+a basis \(L\) over \(K\) and express \(1, \alpha, \alpha^2, \cdots\) in term of 
+this basis resulting in some linear dependence. Let us consider the following 
+example. 
+
+Suppose we would like to find the minimal polynomial of 
+\(\alpha := \sqrt{2} + \sqrt{3}\)
+over \(\mathbb{Q}\). Let \(L = \mathbb{Q}[\sqrt{2}, \sqrt{3}]\) and so we have 
+the tower 
+\[\mathbb{Q} \subseteq \mathbb{Q}[\sqrt{2}] \subseteq L.\]
+It is clear that \(\sqrt{2}\) is a root of the irreducible polynomial 
+\(X^2 - 2\) over \(\mathbb{Q}\) and so \([\mathbb{Q}[\sqrt{2}] : \mathbb{Q}] = 2\).
+Furthermore, \([L : \mathbb{Q}[\sqrt{2}]] = 2\) since \(X^2 - 3\) is irreducible 
+in \(\mathbb{Q}[\sqrt{2}]\). Indeed, if \(X^2 - 3\) is reducible in 
+\(\mathbb{Q}[\sqrt{2}][X]\), then it factor into linear products, namely 
+\(X - \sqrt{3} \in \mathbb{Q}[\sqrt{2}][X]\) and so 
+\(\sqrt{3} \in \mathbb{Q}[\sqrt{2}]\). However, if this were the case, there 
+exists some \(a, b \in \mathbb{Q}\) such that 
+\[a^2 + 2b^2 + 2\sqrt{2}ab = (a + \sqrt{2}b)^2 = 3,\]
+implying \(a^2 + 2b^2 = 3\) and \(2ab = 0\). But, as \(\mathbb{Q}\) 
+is an integral domain, either \(a = 0\) or \(b = 0\), and hence, 
+\(2b^2 = 3\) or \(a^2 = 3\). Clearly, neither is possible and so \(X^2 - 3\) 
+is irreducible in \(\mathbb{Q}[\sqrt{3}]\). Then, as 
+\[[L : \mathbb{Q}] = [L : \mathbb{Q}[\sqrt{2}]][\mathbb{Q}[\sqrt{2} : \mathbb{Q}]],\]
+we have \([L : \mathbb{Q}] = 2 \cdot 2 = 4\). Now, since \(1, \sqrt{2}\)
+form a basis for \(\mathbb{Q}[\sqrt{2}]\) over \(\mathbb{Q}\) and 
+\(1, \sqrt{3}\) for a basis for \(L\) over \(\mathbb{Q}[\sqrt{2}]\), we have 
+\(1, \sqrt{2}, \sqrt{3}, \sqrt{6}\) form a basis of \(L\) over \(\mathbb{Q}\).
+Finally, by considering \(\alpha^0 = 1, \alpha^1 = \sqrt{2} + \sqrt{3}, 
+\alpha^2 = 5 + 2\sqrt{6}, \alpha^3 = 11\sqrt{2} +9\sqrt{3}\) and 
+\(\alpha^4 = 49 + 20\sqrt{6}\), we see \(\alpha^4 = 10\alpha^2 - 1\) and thus, 
+\(X^4 - 10X^2 + 1\) is the minimal polynomial of \(\alpha\).
+
+\subsection{Finite Fields}
+
+Recall that any field contains a \(\mathbb{F}_p\) or \(\mathbb{Q}\) 
+(the latter of which is impossible for finite fields). If \(K\) is a finite 
+field and \(\mathbb{F} \subseteq K\) for some prime \(p\) such that 
+\([K : \mathbb{F}_p] = r < \infty\), then \(|K| = p^r\) since each element of 
+\(K\) is expressed uniquely by \(a_1 e_1 + \cdots a_r e_r\) where 
+\(e_1, \cdots, e_r\) is a basis of \(K\) over \(\mathbb{F}_p\) and 
+\(a_i \in \mathbb{F}_p\). Conversely, we asks whether or not there exists a 
+field with \(p^r\) elements for any prime \(p\), and if it exists, is it 
+unique up to isomorphism.
+
+\begin{definition}[Frobenius Endomorphism]
+  Let \(R\) be a ring of characteristic \(p\) (i.e. the kernel of the unique 
+  ring homomorphism \(\mathbb{Z} \hookrightarrow R\) is \(\langle p \rangle\)). 
+  Then, observing that \((x + y)^p = x^p + y^p\) by the binomial theorem 
+  (all other terms vanishes as their coefficient is divisible by \(p\)), we 
+  see the map 
+  \[Fr_p : R \to R : r  \mapsto r^p\] 
+  is a ring homomorphism and we call it the Frobenius endomorphism.
+\end{definition}
+
+In the case that \(K\) is a field, the Frobenius endomorphism is a 
+ring homomorphism between fields, and thus, as it is not the zero map, it 
+must be surjective. Now, if \(K\) is finite, then an injective map from 
+itself to itself must be bijective, and thus, the Frobenius endomorphism is 
+an isomorphism and we refer it as the Frobenius automorphism.
+
+If \(K\) is finite, \(\text{char}(K) = p\), \(|K| := q = p^r\), then 
+\(K^\times\) has order \(q - 1\). Thus, by Lagrange's theorem, 
+\(\alpha^{q - 1} = 1\) for all \(\alpha \in K^\times\), and so 
+\(\alpha^q = \alpha\) for all \(\alpha \in \mathbb{K}\). Then, 
+\(Fr_p^r(\alpha) = \alpha^{p^r} = \alpha^q = \alpha\). This is in fact the 
+least case where this occurs. Indeed, if \(Fr_p^s(\alpha) = \alpha^{p^s} = \alpha\), 
+for all \(\alpha \in K\), then \(\alpha\) is a root of \(X^{p^s} - X\) for all 
+\(\alpha\). But \(X^{p^s} - X\) can have at most \(p^s\) roots in \(K\), 
+\(p^s \ge p^r\) and so \(s \ge r\).
+
+\begin{proposition}
+  If \(K\) has characteristic \(p\), then 
+  \[K_r := \{x \in K \mid x^{p^r} = x\}\]
+  is a subfield of \(K\). This field is known as the fixed field of \(r\)-th 
+  power of the Frobenius map.
+\end{proposition}
+\begin{proof}
+  Clearly \(0, 1 \in K_r\), and if \(a, b \in K_r\), then 
+  \((a + b)^{p^r} = a^{p^r} + b^{p^r} = a + b\), 
+  \((ab)^{p^r} = a^{p^r}b^{p^r} = ab\) and 
+  \((a^{-1})^{p^r} = (a^{p^r})^{-1} = a^{-1}\).
+\end{proof}
+
+\begin{lemma}
+  Let \(K\) be a field of characteristic \(p\) and \(P(X)\) is an irreducible 
+  factor of \(X^{p^r} - X\), then every element \(\beta\) of 
+  \(K[X] / \langle P(X) \rangle\) satisfies \(\beta^{p^r} - \beta = 0\).
+\end{lemma}
+\begin{proof}
+  Let \(\beta\) be a root of \(P(X)\) so that 
+  \(K(\beta) := K[X] / \langle P(X) \rangle\). It is clear that, 
+  \(K \subseteq K(\beta)_r\) and \(\beta \in K(\beta)_r\). Thus, 
+  \(K(\beta) \subseteq K(\beta)_r\). Hence, \(K(\beta) \subseteq K(\beta)_r\)
+  implying that every element is fixed by the \(r\)-th power of the 
+  Frobenius map.
+\end{proof}
+
+\begin{proposition}
+  There exists a field \(K\) of characteristic \(p\) such that 
+  \begin{itemize}
+    \item \(\alpha^{p^r} = \alpha\) for all \(\alpha \in K\),
+    \item \(X^{p^r} - X\) factors into linear products in \(K[X]\).
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  We will construct a tower of fields inductively. Define 
+  \(K_0 := \mathbb{F}_p\) (it is clear that \(K_0\) satisfy the two properties),
+  and define \(K_{i + 1} := K[X] / \langle P(X) \rangle\) if there exists 
+  some irreducible \(P(X)\) that is a factor of \(X^{p^r} - X\) in \(K_i\), 
+  and if there does not exist such a factor, \(K_i\) is the field \(K\) we are 
+  looking for. This process certainly terminates as \(X^{p^r} - X\) can be 
+  factored into at most \(p^r\) linear factors, and so simply taking 
+  \(K\) to be the last field in our tower of fields suffices.
+\end{proof}
+
+With this proposition in mind, we see that if \(X^{p^r} - X\) factor into 
+distinct linear factors, the field constructed above has \(p^r\) elements. 
+To show this, we will need additional tools.
+
+\begin{definition}[Derivative]
+  For \(K\) a field, \(P(X) \in K[X]\) such that 
+  \(P(X) = a_0 + a_1 X + \cdots + a_n X^n\). Then the derivative of 
+  \(P(X)\) is defined to be 
+  \[P'(X) := a_1 + a_2 X + \cdots + a_n X^{n - 1} \in K[X].\]
+\end{definition}
+
+While this is purely an algebraic definition, the derivative remains to obey 
+some derivative results from analysis, namely \((P(X) + Q(X))' = P'(X) + Q'(X)\) 
+and \((P(X)Q(X))' = P'(X)Q(X) + Q'(X)P(X)\). With this in mind, if 
+\(P(X) = Q(X)^2 R(X)\) in \(K[X]\), we have 
+\[P'(X) = Q(X)^2 P'(X) + 2Q(X)Q'(X)R(X) = Q(X)(Q(X)P'(X) + 2Q'(X)R(X)),\]
+implying \(Q(X)\) divides both \(P(X)\) and \(P'(X)\). Then, if \(P(X)\) 
+and \(P'(X)\) has no common factor in \(K[X]\), then \(P(X)\) has 
+no repeated roots. Thus, in the case that \(P(X) = X^{p^r} - X\) in \(K[X]\), 
+we have \(P'(X) = p^r X^{p^r - 1} - 1 = -1\) implying \(P(X)\) 
+has no repeated roots and hence, \(K\) has \(p^r\) elements.
+
+\begin{corollary}
+  For all \(p\) prime, \(r \ge 1\), there exists a field of \(p^r\) elements.
+\end{corollary}
+
+\subsubsection{Multiplicative Group}
+
+Before showing the field as constructed in the previous section is unique up 
+to isomorphism, we will first study the multiplicative group of a field. 
+This will help in the showing of uniqueness and is also interesting by itself.
+
+Let \(K\) be a field with \(p^r\) elements for some prime \(p\). Then \(K^\times\) 
+is a multiplicative group with \(p^r - 1\) elements. We note that the order 
+of \(\alpha\) divides some \(d\) if and only if \(\alpha\) is a root of 
+\(X^d - 1\). Let \(d \mid p^r - 1\), then 
+\[X^{p^r} - X = X(X^{p^r - 1} - 1) = 
+  X(X^d - 1)(X^{(p - 1)d} + X^{(p - 2)d} + \cdots x^d + 1).\]
+Now, as \(X^{p^r} - X\) factors into distinct linear factors over \(K[X]\), so 
+is \(X^d - 1\) a product of distinct linear factors. Thus, there are exactly 
+\(d\) elements in \(K^\times\) of order dividing \(d\).
+
+For \(n > 0\), denote \(\Phi(n)\) the number of elements of order \(n\) in a 
+a cyclic group of order \(n\).
+
+\begin{lemma}
+  For any \(d\) dividing \(n\), there exists a unique subgroup of 
+  \(\mathbb{Z}/n\mathbb{Z}\) of order \(d\).
+\end{lemma}
+\begin{proof}
+  Clearly the subgroup of \(\mathbb{Z}/n\mathbb{Z}\) generated by 
+  \(n / d\) is a subgroup of order \(d\), so it remains to show uniqueness. 
+  Suppose \(x\) is an element of a subgroup of \(\mathbb{Z}/n\mathbb{Z}\) of 
+  order \(d\), then the order of \(x\) is divides \(d\). Hence, 
+  \(dx = 0\) in \(\mathbb{Z}/n\mathbb{Z}\) implying \(dx\) is divisible by \(n\)
+  and thus, \(x = k (n / d)\) for some \(k\). This means that \(x\) is in the 
+  subgroup generated by \(n / d\) and we are done.
+\end{proof}
+
+\begin{proposition}
+  For any \(n\), \(\sum_{d \mid n} \Phi(d) = n\).
+\end{proposition}
+\begin{proof}
+  We see that the order of elements form an equivalence relation on 
+  \(\mathbb{Z}/n\mathbb{Z}\) and thus, form a partition. Now, as for all 
+  elements \(x\), it has some order \(d\) dividing \(n\), each element belongs 
+  to exactly to one of the equivalence class which contains the elements of 
+  order \(d\), \(d \mid n\). Hence, the sum counts all elements of 
+  \(\mathbb{Z}/n\mathbb{Z}\) which is simply \(n\).
+\end{proof}
+
+\begin{proposition}
+  Let \(A\) be an abelian group of order \(n\) such that for all \(d \mid n\), 
+  there exists exactly \(d\) elements of \(A\) of order dividing \(d\). Then 
+  \(A\) is cyclic.
+\end{proposition}
+\begin{proof}
+  \(A\) is cyclic if and only if there exists an element in \(A\) of order 
+  \(n\) which follows if \(\Phi(d)\) is the number elements of order 
+  \(d\) for all \(d\) as \(\Phi(n) \neq 0\). We will prove this by induction. 
+  For \(d = 1\), \(\Phi(d) = 1\) and the statement holds. Assuming the statement 
+  holds for all \(d' < d\), as the number of elements with order dividing 
+  \(d\) is \(d\), the number of elements of order \(d\) is,
+  \[d - \sum_{\substack{d' \mid d, \\ d' < d}} \Phi(d') = 
+  \sum_{d \mid n} \Phi(d) - \sum_{\substack{d' \mid d, \\ d' < d}} \Phi(d')
+  = \Phi(d).\]
+\end{proof}
+
+\begin{corollary}
+  \(K^\times\) is cyclic for any finite field \(K\).
+\end{corollary}
+
 \end{document}
