@@ -828,7 +828,7 @@ is finite dimensional.
   A linear map \(T : X \to Y\) between normed spaces \((X, \|\cdot\|_X)\) and 
   \((Y, \|\cdot\|_Y)\) is a bounded linear operator if there exists some 
   \(c \in \mathbb{R}^+\) such that,
-  \[\|Tx\|_Y \le C\|x\|X\]
+  \[\|Tx\|_Y \le C\|x\|_X\]
   for all \(x \in X\). In this case, one may define the operator norm by,
   \[\|T\| := \sup_{x \in X; x \neq 0} \frac{\|Tx\|_Y}{\|x\|_X}.\]
 \end{definition}
@@ -1242,6 +1242,10 @@ properly later in this course
   the maximality of \((M, G)\).
 \end{proof}
 
+\subsection{Application of Hahn-Banach}
+
+In this section we will demonstrate some applications of the Hahn-Banach theorem.
+
 \begin{corollary}[Existence of tangent functional]
   Let \(X\) be a normed space and let \(x \in X\), then there exists some 
   \(l \in X^*\) such that \(\|l\| = 1\) and \(l(x) = \|x\|\).
@@ -1287,5 +1291,108 @@ properly later in this course
       and so \(X \subsetneq \mathcal{C}[0, 1]\). 
   \end{itemize}
 \end{theorem}
+
+\begin{proposition}
+  Let \(Y\) be a closed proper subspace of a normed space \(X\). Then, there 
+  exists some \(f \in X^*\) such that \(\|f\| = 1\) and \(f(y) = 0\) for all 
+  \(y \in Y\).
+\end{proposition}
+\begin{proof}
+  Let \(x \in X \setminus Y\). If \(X = \text{span}(\{x\} \cup Y)\), then 
+  the map \(\lambda x + y \mapsto \lambda\) suffices. On the other hand, 
+  defining \(l : \lambda x + y \mapsto \lambda\), with Hahn-Banach, there exists 
+  some \(f \in X^*\) such that \(f\mid_Y = l = 0\) and \(\|f\| = \|l\| = 1\).
+\end{proof}
+
+\begin{proposition}
+  If \(X^*\) is separable, then so is \(X\).
+\end{proposition}
+\begin{proof}
+  Let \(S^* := \{ \phi \in X^* \mid \|\phi\| = 1\}\). Then, as a subset of a 
+  separable space is separable, \(S^*\) is separable by some
+  \(\{\phi_n\} \subseteq S^*\). By definition, for each \(n\), we may define 
+  \(x_n\) such that \(\|x_n\| = 1\) and \(\phi_n(x_n) > 1 / 2\). Now, 
+  let 
+  \[\mathcal{D} := \overline{\text{span}\{x_n \mid n \in \mathbb{N}\}}.\]
+  By definition, it is clear that \(\mathcal{D}\) is dense by considering 
+  the density of \(\mathbb{Q}\) in \(\mathbb{R}\) and thus, it suffices to 
+  show \(\mathcal{D} = X\). 
+
+  Suppose \(\mathcal{D} \neq X\), then by the previous proposition, 
+  there exists a linear functional \(\phi \in S^*\) such that \(\phi(y) = 0\) 
+  for all \(y \in \mathcal{D}\). Now, as \(\{\phi_n\}\) is dense in \(S^*\), 
+  there exists \(n\) such that \(\|\phi - \phi_n\| < 1/2\). Hence,
+  \[\begin{split}
+    |\phi(x_n)| & \ge |\phi_n(x_n)| - |\phi_n(x_n) - \phi(x_n)| 
+      > 1/2 - |(\phi_n - \phi)(x_n)| \\
+    & \ge 1 / 2 - \|\phi - \phi_n\| \|x_n\| > 1 / 2 - 1 / 2 = 0.
+  \end{split}\]
+  But \(x_n \in \mathcal{D}\) implying \(\phi(x_n) = 0\), contradiction!
+\end{proof}
+
+\subsubsection{Stieltjes Integral}
+
+Stieltjes integral is a method of defining integration similar to that 
+of the Riemann integral (one may construct a similar version to the Lebesgue 
+integral as well). In particular, given some function \(\omega\), 
+we replace the individual segments \(x_{i + 1} - x_i\) with 
+\(|\omega(x_{i + 1}) - \omega(x_i)|\).
+
+\begin{definition}[Total Variation of Functions]
+  The total variation of a function \(\omega\) on the interval \([a, b]\) is 
+  \[V(\omega) := \sup_{p \in \mathcal{P}}
+    \sum_{i = 1}^{|p| - 1} |\omega(x_{i + 1}) - \omega(x_i)|,\]
+  where \(\mathcal{P}\) is the set of all partitions on \([a, b]\).
+\end{definition}
+
+In the case that the total variation is finite, we may define the lower 
+Stieltjes sum of the function \(f\) to be 
+\[s_{\omega}(p) := \sum_{i = 1}^{|p| - 1} 
+  f(\underline{x_i})(\omega(x_{i + 1}) - \omega(x_i)),\]
+and the upper sum to be 
+\[S_{\omega}(p) := \sum_{i = 1}^{|p| - 1} 
+  f(\overline{x_i})(\omega(x_{i + 1}) - \omega(x_i)),\]
+where \(p\) is a partition, 
+\(f(\underline{x_i}) = \min_{x \in [x_i, x_{i + 1}]} f(x)\) and
+\(f(\overline{x_i}) = \max_{x \in [x_i, x_{i + 1}]} f(x)\).
+We observe that 
+\(|s_{\omega}|, |S_{\omega}| \le \|f\|_\infty V(\omega)\).
+
+If \(\inf S_{\omega} = \sup s_\omega\) as the size of the segments of 
+the partition tends to zero, then we define the Stieltjes integral of 
+\(f\) with respect to \(\dd \omega\) to be 
+\[\int_a^b f \dd \omega := \inf S_\omega.\]
+In the case that \(\omega\) is differentiable then we see 
+\(\int f \dd\omega = \int f \omega' \dd x\).
+
+\begin{proposition}
+  Let \(l \in \mathcal{C}([a, b])^*\) can be represented as 
+  \[l(f) = l_\omega(f) := \int f \dd \omega,\]
+  for some \(\omega\) with finite total variation and 
+  \(\|l_\omega\| = V(\omega)\).
+\end{proposition}
+\begin{proof}
+  By the Hahn-Banach theorem, as \(\mathcal{C}([a, b]) \subseteq 
+  \mathcal{B}([a, b])\), there exists some \(\tilde l \in \mathcal{B}([a, b])^*\) 
+  such that \(\|l\| = \|\tilde l\|\) and \(\tilde l\mid_{\mathcal{C}(a, b)} = l\).
+  Define \(\omega(t) := \tilde l(\chi_{[a, t]})\) where \(\chi\) is the indicator 
+  function, we see that \(\omega\) has bounded variation as 
+  \[\begin{split}
+    V(\omega) & = \sum |\omega(x_{i + 1} - x_i)| 
+      = \sum |\tilde l(\chi_{[a, t]}(x_{i + 1}) - \chi_{[a, t]}(x_i))|\\
+    & = \sum s_i (\tilde l(\chi_{[a, t]}(x_{i + 1}) - \chi_{[a, t]}(x_i))
+      = \tilde l \sum s_i(\chi_{[a, t]}(x_{i + 1}) - \chi_{[a, t]}(x_i)\\
+    & \le \|\tilde  l\| \left\|\sum s_i(\chi_{[a, t]}(x_{i + 1}) - \chi_{[a, t]}(x_i)\right\|
+      = \|\tilde  l\| \left\|\sum s_i \chi_{[x_i, x_{i+1}]}(x)\right\|
+  \end{split}
+  \]
+  where \(s_i = \text{sign}(\tilde l(\chi_{[a, t]}(x_{i + 1}) - \chi_{[a, t]}(x_i))\).
+  Then, for all \(f \in \mathcal{C}([a, b])\) and a partition \(p\), define 
+  \[g_n = \sum f(x_i) (\chi_{[a, t]}(x_{i + 1}) - \chi_{[a, t]}(x_i)).\]
+  In particular, we note that \(\|g_n - f\|_\infty \to 0\) as \(n \to \infty\) 
+  and thus, 
+  \[l(f) = \tilde l(f) \leftarrow \tilde l(g_n) = 
+  \sum f(x_i) (\chi_{[a, t]}(x_{i + 1}) - \chi_{[a, t]}(x_i)) = \int_a^b f \dd \omega. \]
+\end{proof}
 
 \end{document}
