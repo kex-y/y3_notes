@@ -1518,7 +1518,7 @@ linearly dependent with each other.
   \(\rho_V(g)\) are \(\lambda_1, \cdots, \lambda_n\), 
   \begin{itemize}
     \item if the eigenvalues of \(\rho_V(g)\) are \(\lambda_1, \cdots, \lambda_n\), 
-      the eigenvalues of \(\rho_(g^{-1})\) are 
+      the eigenvalues of \(\rho_V(g^{-1})\) are 
       \(\lambda_1^{-1}, \cdots, \lambda_n^{-1}\). But, \(g^{|g|} = 1\) and so 
       \(\lambda_i^{|g|} = 1\) implying \(\lambda_i^{-1} = \overline{\lambda_i}\).
       Thus, the equality follows as the character is simply the sum of the eigenvalues. 
@@ -1537,5 +1537,31 @@ linearly dependent with each other.
   \(g \in \ker \rho_V \iff \chi_V(g) = \dim V\).
 \end{corollary}
 
-\end{document} 
+We recall that the tensor product and the direct sum interacts in a way 
+similar to a semiring modulo isomorphisms. In particular, the 
+dimension of a vector space is a semiring homomorphism from the space 
+of vector spaces (quotiented by isomorphism) to the natural numbers, i.e. 
+\[\dim : \{\text{f.d. vector spaces}\} / \cong \to \mathbb{N}.\]
+Analogously, the character is a homomorphism between the representations of 
+a group and the complex numbers, i.e. 
+\[\chi : \{\text{representations of } G\} \to \mathbb{C}.\]
 
+\begin{proposition}
+  Let \((V, \rho_V), (W, \rho_W)\) be finite dimensional representations of 
+  \(G\), then 
+  \begin{itemize}
+    \item \(\chi_{V \oplus W} = \chi_V + \chi_W\);
+    \item \(\chi_{V \otimes W} = \chi_V \chi_W\);
+    \item \(\chi_{V^*}(g) = \overline{\chi_V}(g)\);
+    \item \(\chi_{\text{Hom}(V, W)}(g) = \overline{\chi_V}(g) \chi_W(g)\).
+  \end{itemize}
+  where the third and fourth statement requires \(g \in G\) to have finite order.
+  In the case \(g\) does not have finite order, 
+  \(\chi_{V^*}(g) = \chi_V(g)^{-1}\) and 
+  \(\chi_{\text{Hom}(V, W)}(g) = \chi_V(g)^{-1} \chi_W(g)\) still holds.
+\end{proposition}
+\begin{proof}
+  Clear by choosing a basis.
+\end{proof}
+
+\end{document} 
