@@ -975,7 +975,7 @@ we may compute the tangent space of \(SL_n(\mathbb{R})\) at some \(A\) by
 \[T_A SL_n(\mathbb{R}) = \ker D(\det)\mid_A =
   \{x \in GL_n(\mathbb{R}) \mid x \cdot [(-1)^{i + j} \det A_{ij}]_{ij} = 0\}.\]
 
-\subsection{Vector Fields}
+\subsection{Vector Fields and Vector Bundles}
 
 In the case of \(\mathbb{R}^n\), we have a good intuition for what a vector field
 is, i.e. a smooth function from \(U \subseteq \mathbb{R}^n\) open which maps 
@@ -1137,5 +1137,62 @@ is well-defined.
 \begin{proof}
   Requires algebraic topology or differential topology.
 \end{proof}
+
+\subsection{Flows}
+
+\begin{definition}[Flow]
+  Let \(X\) be a manifold. A one-parameter family of diffeomorphisms or 
+  flow on \(X\) is a smooth function 
+  \[F : (-\epsilon, \epsilon) \times X \to X\]
+  for some \(\epsilon > 0\), such that 
+  \begin{itemize}
+    \item for all \(s \in (-\epsilon, \epsilon)\), the function 
+      \[F_s : X \to X : x \mapsto F(s, x)\]
+      is a diffeomorphism,
+    \item \(F_0 = \text{id}\),
+    \item \(F_t \circ F_s = F_{s + t}\) for all \(t, s \in (-\epsilon, \epsilon)\) 
+      and \(s + t \in (-\epsilon, \epsilon)\).
+  \end{itemize}
+\end{definition}
+
+Let \(X\) be a manifold and let \(F : (-\epsilon, \epsilon) \times X \to X\) 
+be a flow on \(X\). Then instead of fixing \(s \in (-\epsilon, \epsilon)\), 
+fixing \(x \in X\), we obtain a smooth function 
+\[\sigma_x : (-\epsilon, \epsilon) \to X : t \mapsto F(t, x).\]
+Straight away, we observe, as \(F_0 = \text{id}\), we have 
+\[\sigma_x(0) = F_0(x) = x,\]
+and so \(\sigma_x\) is a curve through \(x\). By recalling that the tangent 
+space at \(x\) is defined to be the set of equivalent classes of the curves 
+through \(x\), this provides a function 
+\[\xi^F : X \to TX : x \mapsto [\sigma_x].\]
+This is a vector field on \(X\) and is known as the infinitesimal version of 
+the flow \(F\).
+
+\begin{proposition}
+  Let \(X\) be a compact manifold and let \(\xi\) be a vector field on \(X\). 
+  Then for any \(x \in X\), there exists an open subset \(U \subseteq X\) 
+  containing \(x\) and a flow 
+  \[F : (-\epsilon, \epsilon) \times U \to X,\]
+  such that \(\xi\mid_U\) is the infinitesimal version of \(F\), i.e. 
+  \(\xi\mid_U = \xi^F\). That is to say, any vector field is locally a 
+  flow.
+\end{proposition}
+\begin{proof}
+  The proof of this proposition requires results from PDEs.
+\end{proof}
+
+Let \(X\) be an \(n\)-dimensional manifold and let 
+\(F : (-\epsilon, \epsilon) \times X \to X\) be a flow on \(X\). Let 
+\((U, f)\) be a chart on \(X\) such that for all \(s \in (-\epsilon, \epsilon)\),
+we have \(F_s(U) \subseteq U\). Then we may define the smooth function
+\[\tilde F : (-\epsilon, \epsilon) \times f(U) \to f(U) :
+ (t, y) \mapsto (f \circ F_t \circ f^{-1})(y).\]
+Since \(f(U) \subseteq \mathbb{R}^n\), we may write 
+\[\tilde F = (\tilde F_i)_{i = 1}^n, 
+  \tilde F_i : (-\epsilon, \epsilon) \times f(U) \to \mathbb{R}.\]
+Then the infinitesimal version of \(f(U)\) is 
+\(\tilde \xi^F = \pdv{\tilde F}{s}\mid_0\). Thus, 
+\[\xi^F = \Delta_f^{-1} \circ \tilde \xi^F \circ f : U \to TU,\]
+is the corresponding vector field on \(U\).
 
 \end{document}
