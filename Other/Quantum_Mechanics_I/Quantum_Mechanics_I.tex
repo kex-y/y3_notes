@@ -609,4 +609,94 @@ It is not difficult to show that a Hamiltonian of the form
 \[H = - \frac{\hbar^2}{2m} \pdv[2]{x} + V\]
 commutes with \(S\) if \(V(x) = V(-x)\).
 
+\newpage
+\section{Specific Systems}
+
+We have so far looked at the formulation of quantum mechanics in a very 
+abstract way. To actually find a solution with these formulations however, 
+is very hard. In general, most solutions will require numerical approximation,
+but there are some special cases where we can find solutions analytically.
+
+\subsection{Properties of Eigenfunctions}
+
+Consider a quantum particle in a 1-dimension in an external potential. This 
+system is described by the Schrödinger equation 
+\[\left(-\frac{\hbar^2}{2m} \pdv[2]{x} + V(x)\right) \phi_E(x) = E\phi(X).\]
+There are in general two types of solutions to this equation. In particular, 
+if \(\phi_E(x \to \pm \infty) \to\) then the state is a bound state and they 
+have discrete energies. Alternatively, the continuum states which has potiential 
+that does not tend to 0 as \(x \to \pm \infty\). An example we have already seen 
+is the eigenfunctions for the momentum operator \(e^{\pm ikx}\). These 
+solutions are associated with a continuum of energies.
+
+If \(V(x \to \pm) \to \infty\), then the only solution are bound states.
+
+\begin{proposition}
+  The eigenfunctions \(\phi_E(x)\) of a 1-dimensional system can always be 
+  chosen to be real.
+\end{proposition}
+\begin{proof}
+  If \(\phi_E(x)\) is a solution to the Schrödinger equation, then so is 
+  \(\phi_E^*(x)\) and thus, \(\phi_E + \phi_E^*\) is a solution which is 
+  real.
+\end{proof}
+
+\begin{proposition}
+  There are no bound states with energy less than the minimum of \(V(x)\).
+\end{proposition}
+\begin{proof}
+  Rewritting the Schrödinger equation, we have 
+  \[\pdv[2]{\phi_E}{x} = \frac{2m}{\hbar^2}(V(x) - E)\phi_E(x).\]
+  So, if \(E < V_{\min} \le V\), then \(\phi_E''(x) > 0\) for all \(x\).
+  But then \(\phi_E\) is not normalizable and thus, cannot be a state.
+\end{proof}
+
+\begin{proposition}
+  The expectation of the energy is bounded below by the lowest energy eigenvalue.
+\end{proposition}
+\begin{proof}
+  Proven later.
+\end{proof}
+
+\begin{proposition}
+  The bound state eigenvalues are non-degenerate. That is, for every eigenvalue, 
+  there exists one linearly independent eigenvector.
+\end{proposition}
+\begin{proof}
+  Suppose \(\phi_1, \phi_2\) are both solutions corresponding to the eigenvalue 
+  \(E\). Then, we have 
+  \[\begin{cases}
+    \phi_1'' + k^2 \phi_1 = 0,\\
+    \phi_2'' + k^2 \phi_2 = 0,
+  \end{cases}\]
+  where \(k = \sqrt{\frac{2m}{\hbar^2} (E - V(x))}\). Thus, 
+  \(\frac{\phi_1''}{\phi_1} = -k^2 = \frac{\phi_2''}{\phi_2}\), and so, 
+  \[0 = \phi_1'' \phi_2 - \phi_2'' \phi_1 = 
+  \dv{x}((\phi_1' \phi_2) - (\phi_2' \phi_1)).\]
+  Integrating, we obtain \((\phi_1' \phi_2) - (\phi_2' \phi_1) = c\) for 
+  some \(c \in \mathbb{C}\). But, as \(\phi_1, \phi_2\) are bounded states, 
+  taking \(x \to \infty\), we see that \(c = 0\) and so
+  \((\phi_1' \phi_2) - (\phi_2' \phi_1) = 0\). Finally, as this implies 
+  \(\phi_1'/\phi_2 = \phi_2'/\phi_2\), integrating, we have 
+  \(\ln \phi_1 = \ln \phi_2 + C\), and thus, \(\phi_1 \propto \phi_2\).
+\end{proof}
+
+\begin{proposition}
+  Eigenfunctions in an even 1-dimensional potential are either even or 
+  odd functions.
+\end{proposition}
+\begin{proof}
+  See problem sheet.
+\end{proof}
+
+\begin{proposition}
+  The ground state (the eigenfunction with the lowest eigenenergy) does not 
+  have any zeros. Furthermore, the \(n\)-th excited state has \(n\) zeros inside 
+  the potiential.
+\end{proposition}
+
+\subsection{Piecewise Constant Solutions}
+
+
+
 \end{document}
