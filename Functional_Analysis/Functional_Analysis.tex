@@ -1398,4 +1398,197 @@ In the case that \(\omega\) is differentiable then we see
 \newpage
 \section{Uniform Boundedness Principle}
 
+In this section we will prove the uniform boundedness principle, also 
+known as the Banach-Steinhaus theorem. To achieve this we will first prove 
+the Baire's category theorem. We will also provide some application of this 
+principle.
+
+\subsection{Baire's Category Theorem}
+
+\begin{definition}[Baire's Category]
+  Let \((X, \rho)\) be a metric space. Then a subspace \(M \subseteq X\) is 
+  said to be 
+  \begin{itemize}
+    \item nowhere dense if \((\overline{M})^\circ = \varnothing\);
+    \item of the 1\textsuperscript{st} category (or meager) if there exists 
+      a sequence of nowhere dense set \((M_n)_{n \in \mathbb{N}}\) such that
+      \(M = \bigcup_{n \in \mathbb{N}} M_n\);
+    \item of the 2\textsuperscript{nd} category (or nonmeager) if it is 
+      not of the first category.
+  \end{itemize}
+\end{definition}
+
+An example of a meager set is \(\mathbb{Q} \subseteq \mathbb{R}\). Indeed, as 
+\(\mathbb{Q}\) is countable, it is a countable union of singletons, each of 
+which are nowhere dense.
+
+\begin{theorem}[Baire's Category Theorem]
+  If a metric space \(X \neq \varnothing\) is complete, then it is of 
+  the 2\textsuperscript{nd} category. Thus, if \(X \neq \varnothing\) and 
+  \[X = \bigcup_{k = 1}^\infty A_k,\]
+  for some sequence of sets, then at least one \(A_k\) is not nowhere 
+  dense, i.e. contains a non-empty open subset.
+\end{theorem}
+\begin{proof}
+  Suppose otherwise, i.e. \(X = \bigcup A_n\) where \(A_n\) is nowhere dense 
+  for all \(n \in \mathbb{N}\). By definition \(\overline{A_n}\) does not 
+  contain a non-empty open set and so, \(\overline{A_n} \neq X\) (as 
+  \(X\) contains itself which is a non-empty open set) and 
+  \(\overline{A_n}^c \neq \varnothing\) is open. 
+
+  Let \(p_1 \in \overline{A_1}^c\) and let \(\epsilon_1 \in (0, 1/2)\) such 
+  that \(B_{\epsilon_1}(p_1) \subseteq \overline{A_1}^c\). Now, as 
+  \(A_2\) is nowhere dense, \(B_{\epsilon_1}(p_1) \not\subseteq A_2\) and 
+  so \(\overline{A_2}^c \cap B_{\epsilon_1}(p_1)\) is a non-empty open 
+  set. Then, we may choose \(p_2 \in \overline{A_2}^c \cap B_{\epsilon_1}(p_1)\) 
+  and \(\epsilon_2 \in (0, 1/4)\) such that \(B_{\epsilon_2}(p_2) \subseteq 
+  \overline{A_2}^c \cap B_{\epsilon_1}(p_1)\). Repeating this process, we 
+  may find \(p_{n + 1} \in \overline{A_{n + 1}}^c \cap B_{\epsilon_n}(p_n)\) 
+  and \(\epsilon_{n + 1} \in (0, 1/2^{n + 1})\) such that 
+  \[B_{\epsilon_{n + 1}}(p_{n + 1}) \subseteq 
+  \overline{A_{n + 1}}^c \cap B_{\epsilon_n}(p_n).\]
+  It is clear that \((p_n)_{n \in \mathbb{N}}\) is Cauchy as for all 
+  \(n, m \ge N\), \(p_n, p_m \in B_{\epsilon_N}(p_N) \subseteq 
+  B_{1/2^N}(p_N)\) and thus,
+  \[d(p_n, p_m) \le d(p_n, p_N) + d(p_N, p_m) < 
+  \frac{1}{2^N} + \frac{1}{2^N} = \frac{1}{2^{N - 1}} \to 0\]
+  as \(N \to \infty\). Hence, as \(X\) is complete, there exists some 
+  \(p \in X\) such that \(p_n \to p\) as \(n \to \infty\). Now, by the 
+  triangle inequality, for all \(n\), 
+  \[d(x, x_n) \le d(x, x_{n + k}) + d(x_{n + k}, x_n) < 
+  d(x, x_{n + k}) + \frac{1}{2^n},\]
+  and so, taking \(k\to \infty\), \(d(x, x_{n + k}) \to 0\) and so, 
+  \(d(x, x_n) < 1/2^n\) implying \(x \in B_{\epsilon_n}(p_n)\). But then, 
+  \(x \in \bigcap B_{\epsilon_n}(p_n) \subseteq \bigcap \overline{A_n}^c\) 
+  implying \(x \not\in \bigcup A_n\), and hence, \(\bigcup A_n \neq X\).
+\end{proof}
+
+\subsection{Banach-Steinhaus Theorem}
+
+\begin{theorem}[Banach-Steinhaus]
+  Let \((T_n)_{n \in \mathbb{N}}\) be a sequence of bounded linear operators 
+  from a Banach space \(X\) to a normed space \(Y\) such that for all 
+  \(x \in X\), there exists \(c_x \in (0, \infty)\) and 
+  \[\sup_{n \in \mathbb{N}} \|T_n x\| \le c_x.\]
+  Then, there exists some \(c \in (0, \infty)\) such that 
+  \[\sup_{n \in \mathbb{N}} \|T_n\| \le c.\]
+\end{theorem}
+\begin{proof}
+  For \(k \in \mathbb{N}\), define 
+  \[A_k := \{x \in X \mid \|T_n x\| \le k, n \in \mathbb{N}\}.\]
+  It is easy to see that \(A_k\) is closed for each \(k\). Indeed, if 
+  \(x_n \in A_k\) such that \(x_n \to x \in X\), then \(\|T_n x\| \le k\) 
+  for all \(n\) by the continuity of the \(\|T_n(\cdot)\|\). Furthermore, 
+  as \(X = \bigcup A_k\) (as \(T_n\) is pointwise uniformly bounded), 
+  by the Baire's category theorem, there exists some \(k_0 \in \mathbb{N}\),
+  \(x_0 \in X\), \(r > 0\), such that 
+  \[B_r(x_0) \subseteq A_{k_0}.\]
+  Then, for all \(x \in X\setminus\{0\}\), let \(\gamma_x := r / (2\|x\|)\) 
+  and \(z := x_0 + \gamma x\). It is clear that \(z \in B_r(x_0)\) and so, 
+  for all \(n \in \mathbb{N}\),
+  \[k_0 \ge \|T_n z\| = \|T_n (x_0 + \gamma x)\| \ge 
+  |\gamma \|T_n x\| - \|T_n x_0\|| \ge 
+  r \frac{\|T_n x\|}{\|x\|} - \|T_n x_0\|.\]
+  Hence, \(\|T_n x\|/\|x\| \le (k_0 + \|T_n x_0\|)/r\), and since 
+  \(\|T_n x_0\| \le \sup_n \|T_n x_0\| \le c_{x_0}\), we have the bound 
+  \(\|T_n x\|/\|x\| \le (k_0 + c_{x_0})/r\). Thus, \(n\) and \(x\) are 
+  arbitrary, we have 
+  \[\sup_{n \in \mathbb{N}} \|T_n\| \le \frac{1}{r}(k_0 + c_{x_0}).\]
+\end{proof}
+
+\begin{proposition}
+  Let \(X\) be the space of polynomials equipped with the norm 
+  \(\|a_0 + a_1 t + \cdots + a_n t^n\| := \max_{i = 0, \cdots, n} |a_i|\). 
+  Then \(X\) is not complete.
+\end{proposition}
+\begin{proof}
+  Define \(T_n(p(t)) := \sum_{i = 0}^n a_i\) where \(p(t) = \sum_{i = 0}^m a_i t^i\).
+  Clearly, \(T_n\) is linear and for all \(p(t) = \sum_{i = 0}^m a_i t^i\in X\), 
+  \(\|p\| = 1\), \(a_i \le 1\) for all \(i = 1, \cdots, m\) implying 
+  \(\|T_n(p)\| = |\sum^n a_i| \le n + 1\). Now, fixing 
+  \(p(t) = \sum_{i = 0}^m a_i t^i\in X\), 
+  we have \(\|T_n p\| \le \sum_{i = 0}^m |a_i|\),
+  and so, if \(X\) is complete, by the Banach-Steinhaus theorem, 
+  \(\sup_n \|T_n\|\) is bounded. But for all \(n\), we have 
+  \[\|T_n(1 + x + \cdots + x^n)\| = \sum_{i = 0}^n 1 = n + 1,\]
+  where \(\|1 + x + \cdots + x^n\| = 1\), we have \(\|T_n\| \ge n + 1\). 
+  Thus, \(\sup_n \|T_n\| \ge \sup_n (n + 1) = \infty\) implying 
+  \(\sup_n \|T_n\|\) is not bounded and hence, \(X\) is not complete.
+\end{proof}
+
+The Banach-Steinhaus theorem also allows us to show the existence of a 
+continuous function which has Fourier series divergent at a point.
+
+Let \(u \in \mathcal{C}([0, 2\pi], \mathbb{R})\), and recall that it 
+has Fourier coefficients defined by 
+\[a_m := \frac{1}{\pi} \int_0^{2\pi} u(t) \cos(mt) \dd t; \ 
+  b_m := \frac{1}{\pi} \int_0^{2\pi} u(t) \sin(mt) \dd t,\]
+and its Fourier series is defined by 
+\[\mathcal{F}_u := \sum_{m \in \mathbb{N}}(a_m \cos(mt) + b_m\sin(mt)).\]
+Let \(X := \mathcal{C}([0, 2\pi], \mathbb{R})\) and define the sequence of 
+linear operator \(T_n\) on \(X\) such that, for all \(x \in X\),
+\[T_n x := \frac{1}{2}a_0 + \sum_{m = 1}^n a_m = 
+  \frac{1}{\pi}\int_0^{2\pi}x(t)\left(\frac{1}{2} + 
+  \sum_{m = 1}^n \cos(mt)\right) \dd t.\]
+That is \(T_n x\) is the Fourier series at \(t = 0\) resumed only up to 
+the \(n\)-th term. We will find some \(x \in X\) such that \(\|T_n x\|\) 
+is not uniformly bounded, and so, the Fourier series of \(x\) diverges.
+Noting that 
+\[\begin{split}
+  2 \sin\left(\frac{1}{2}t\right) \sum_{m = 1}^n \cos(mt) & = 
+  \sum_{m = 1}^n \left(
+    \sin\left(\left(m + \frac{1}{2}\right)t\right) - 
+    \sin\left(\left(m - \frac{1}{2}\right)t\right)
+  \right)\\
+  & = \sin\left(\left(n + \frac{1}{2}\right)t\right) - 
+    \sin \left(\frac{1}{2}\right),
+\end{split}\]
+as the second sum is telescoping, we have 
+\[1 + 2 \sum_{m = 1}^n \cos(mt) = 
+\frac{\sin\left(\left(n + \frac{1}{2}\right)t\right)}
+{\sin\left(\frac{1}{2}t\right)} =: q_n(t).\]
+Thus, 
+\[T_n x = \frac{1}{2\pi}\int_0^{2\pi} x(t)q_n(t) \dd t.\]
+With this representation in mind, we see that 
+\[\|T_n x\| \le \frac{1}{2\pi} \|x\| \int_0^{2\pi}|q_n(t)| \dd t,\]
+and so, \(\|T_n\| \le \frac{1}{2\pi}\int_0^{2\pi}|q_n(t)| \dd t\).
+On the other hand, write \(y(t) := \text{sign}(q_n(t))\) so that 
+\(|q(t)| = |y(t)q(t)|\). While \(y\) is not continuous, it can be 
+approximated by continuous functions of norm 1 in the sense that for all 
+\(\epsilon > 0\), there exists a continuous function \(x\) of norm 1 such that 
+\[\epsilon > \frac{1}{2\pi}\left|\int_0^{2\pi} (x(t) - y(t))q_n(t) \dd t \right|
+  = \left|T_n x - \frac{1}{2\pi} \int_0^{2\pi} |q_n(t)|\right|.\]
+Thus, as \(\int_0^{2\pi} |q_n(t)| \dd t \to \infty\) as \(n \to \infty\), 
+there must be some \(x \in X\) such that \(\|T_n x\|\) is not uniformly 
+bounded as otherwise, this would contradict Banach-Steinhaus. 
+
+Let us now turn our focus back to \(\ell_p\) spaces. 
+
+\begin{proposition}
+  Let \(p, q \in (1, \infty)\) 
+  such that \(1 / p + 1 / q = 1\) and suppose \((a_n)_{n \in \mathbb{N}}\) 
+  is a sequence of complex numbers such that 
+  \(|\sum a_n x_n | < \infty\) for all \((x_n) \in \ell_p\).
+  Then \((a_n) \in \ell_q\).
+\end{proposition}
+\begin{proof}
+  WLOG. let us assume \((a_n)\) does not have any 0 terms.
+  Let \(f_n(x) := \sum_{i = 0}^n a_i x_i\). It is not difficult to see that 
+  \((f_n)\) are bounded linear and is pairwise uniformly bounded. Now, 
+  by Hölder, we have 
+  \[|f_n(x)| \le \left(\sum_{i = 1}^n |a_i|^q\right)^{1 / q} \|x\|p,\]
+  and so,
+  \(\|f_n\| \le \left(\sum_{i = 1}^n |a_i|^q\right)^{1 / q}\). On the other 
+  hand, this bound is achieved by taking 
+  \[x_i := \begin{cases}
+    \frac{\overline{a_k}|a_i|^{q - 2}}{(\sum_j^n |a_j|^q)^{1 - q / q}}, 
+    \ k = 1,\cdots, n,\\
+    0, \ \text{otherwise}.
+  \end{cases}\]
+  So, \(\left(\sum_{i = 1}^n |a_i|^q\right)^{1 / q} = \|f_n\|\) and by 
+  Banach-Steinhaus, 
+  \[\|a\|_q = \left(\sum_{i = 1}^\infty |a_i|^q\right)^{1 / q} = 
+    \sup_n \|f_n\| < \infty.\]
+\end{proof}
+
 \end{document}
