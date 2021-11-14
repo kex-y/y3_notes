@@ -1564,4 +1564,164 @@ a group and the complex numbers, i.e.
   Clear by choosing a basis.
 \end{proof}
 
+\subsection{Orthogonality of Characters}
+
+Recall the definition of a Hermitian inner product (in particular, we will 
+assume linearity with respect to the first argument) and some elementary 
+results about orthogonality. 
+
+\begin{proposition}
+  A set of orthonormal vectors is linearly independent.
+\end{proposition}
+
+\begin{definition}
+  We define the following inner product 
+  \(\langle \cdot, \cdot \rangle\) on \(\mathbb{C}^G\) such that, 
+  \[\langle f_1, f_2 \rangle = \frac{1}{|G|} \sum_{g \in G} f_1(g) 
+    \overline{f_2(g)}.\]
+\end{definition}
+
+In the case that \(G\) is infinite but has a finite measure \(\mu\) 
+(c.f. Haar measure), then we may define 
+\[\langle f_1, f_2 \rangle := \frac{1}{\mu(G)} \int_G f_1(g) 
+  \overline{f_2(g)} \dd \mu.\]
+The properties of the finite case generalizes provided that \(G\) is compact 
+and the measure is invariant under translation, i.e. 
+\(\mu(X) = \mu(g \cdot X)\) for all \(g \in G, X \subseteq G\) 
+(c.f. Haar's theorem).
+
+\begin{lemma}
+  Let \(T \in \text{End}(U)\) be a linear projection. Then 
+  \(\dim T(U) = \text{tr}(T)\).
+\end{lemma}
+\begin{proof}
+  We have \(U = \ker T \oplus T(U)\), and furthermore, we have 
+  \(T\mid_{\ker T} = 0\) and \(T\mid_{T(U)} = \text{id}\mid_{T(U)}\) and thus, 
+  \(\text{tr}(T) = \text{tr}(T\mid_{\ker T}) + \text{tr}(T\mid_{T(U)}) = 
+    \dim T(U)\).
+\end{proof}
+
+\begin{theorem}
+  Let \((V, \rho_V)\) and \((W, \rho_W)\) be finite dimensional representations 
+  of the finite group \(G\). Then, 
+  \[\langle \chi_V, \chi_W \rangle = \dim \text{Hom}_G(V, W).\]
+\end{theorem}
+\begin{proof}
+  Recall the averaging map 
+  \[\text{avg} : \text{Hom}(V, W) \to \text{Hom}(V, W) : \phi \mapsto 
+    \frac{1}{|G|} \sum_{g \in G} \rho_{\text{Hom}(V, W)} (g)(\phi)\]
+  is a \(G\)-linear projection with the image 
+  \(\text{Hom}(V, W)^G = \text{Hom}_G(V, W)\). Now, by considering 
+  \[\text{tr}(\text{avg}) = \frac{1}{|G|} \sum_{g \in G} \chi_{\text{Hom}(V, W)}(g)
+    = \frac{1}{|G|} \sum_{g \in G} \overline{\chi_V(g)}\chi_W(g) = 
+    \langle \chi_W, \chi_V \rangle,\]
+  since \(\text{Hom}(V, W) \cong V^* \otimes W\), we have 
+  \[\langle \chi_V, \chi_W \rangle = \overline{\langle \chi_W, \chi_V \rangle}  
+    = \overline{\text{tr}(\text{avg})} = \overline{\dim \text{Hom}_G(V, W)}.\]
+  Thus, as \(\dim \text{Hom}_G(V, W) \in \mathbb{N}\), we have 
+  \(\overline{\dim \text{Hom}_G(V, W)} = \dim \text{Hom}_G(V, W)\) and 
+  \[\langle \chi_V, \chi_W \rangle = \dim \text{Hom}_G(V, W).\]
+\end{proof}
+
+\begin{corollary}
+  If \(V, W\) are irreducible, then 
+  \[\langle \chi_V, \chi_W \rangle = \begin{cases} 
+    1, \ V \cong W,\\
+    0, \ V \not\cong W.
+  \end{cases}\]
+\end{corollary}
+\begin{proof}
+  By Schur's lemma.
+\end{proof}
+
+\begin{corollary}
+  If \(V_1, \cdots, V_m\) are irreducible and non-isomorphic representations, 
+  then \(\chi_{V_1}, \cdots, \chi_{V_m}\) are orthonormal.
+\end{corollary}
+
+\begin{corollary}
+  If \(V_1, \cdots, V_m\) are all non-isomorphic irreducible representations of 
+  (the finite group) \(G\) up to isomorphism, their characters form an orthonormal 
+  basis of \(\text{Fun}_{cl}(G, \mathbb{C})\).
+\end{corollary}
+\begin{proof}
+  As all characters are class functions, \(\chi_{V_1}, \cdots, \chi_{V_m}\) 
+  is a linearly independent set of class functions. Now, as the dimension of 
+  \(\text{Fun}_{cl}(G, \mathbb{C})\) is the number of conjugacy classes of 
+  \(G\) which equals the number of irreducible representations up to isomorphism, 
+  \(\chi_{V_1}, \cdots, \chi_{V_m}\) is a basis of 
+  \(\text{Fun}_{cl}(G, \mathbb{C})\) as required.
+\end{proof}
+
+\begin{corollary}
+  \(V \cong W \iff \chi_V = \chi_W\) for \(G\) finite. 
+\end{corollary}
+\begin{proof}
+  It suffices to prove the reverse direction. Suppose \(V \not\cong W\), and 
+  WLOG. assume \(V, W\) are irreducible. Then,  
+  \(\langle \chi_V, \chi_W \rangle \neq 0\) implying \(\chi_V \neq \chi_W\).
+\end{proof}
+
+The inner product also allows us to recover the multiplicities of the 
+irreducible representations. In particular, if \(V = V_1^{r_1} \oplus \cdots \oplus 
+V_m^{r_m}\), then 
+\[\langle \chi_V, \chi_{V_i} \rangle = 
+  \langle r_1\chi_{V_1} + \cdots + r_m \chi_{V_m}, \chi_{V_i} \rangle = r_i.\]
+
+\subsection{Character Table}
+
+We have so far found one set of orthonormal basis of \(\text{Fun}_{cl}(G, \mathbb{C})\)
+which are the characters belonging to the irreducible representations. On the other 
+hand, we notice that there is another orthonormal basis of the class functions 
+defined such that, for each conjugacy class \(C\) of \(G\), we set
+\[\delta_C : G \to \mathbb{C} : g \mapsto 
+  \begin{cases}
+    1, \ g \in C,\\
+    0, \ g \not\in C.
+  \end{cases}\]
+Clearly, \(\{\delta_C\}\) is orthogonal and there are 
+\(\dim \text{Fun}_{cl}(G, \mathbb{C})\) of them, and thus form a basis. Now, 
+to obtain an orthonormal basis, by simply considering 
+\[\langle \delta_C, \delta_C \rangle = 
+  \frac{1}{|G|}\sum_{g \in G} \delta_C(g)^2
+  = \frac{|C|}{|G|},\]
+we see that \(\{\sqrt{|G| / |C|} \delta_C\}\) form an orthonormal basis of 
+\(\text{Fun}_{cl}(G, \mathbb{C})\).
+
+Thus, we have two sets of orthonormal basis of the class functions and we may 
+ask what is the change of basis matrix between the two. In particular, we 
+see that the change of basis matrix has \((i, j)\)-entry 
+\(\sqrt{|C_j| / |G|}\chi_{\rho_i}(g_j)\) where \(g_j\) is any element of 
+\(C_j\). Commonly however, we omit the normalization and so define 
+a matrix \(A\) such that \(A_{ij} = \chi_{\rho_i}(g_j)\) and we refer to this 
+as the character table.
+
+\begin{definition}[Unitary]
+  A unitary matrix \(A\) is a matrix such that \(A^{-1} = \overline{A^T}\).
+\end{definition}
+
+\begin{proposition}
+  \(A\) is unitary if and only if the row of \(A\) are orthonormal if and only 
+  if the column of \(A\) are orthonormal.
+\end{proposition}
+
+\begin{proposition}
+  A change of basis matrix between two orthonormal bases is unitary.
+\end{proposition}
+
+By the orthogonality of the columns of the character table \(A\), we obtain 
+\[\delta_{ij} = \frac{\sqrt{|C_i||C_j|}}{|G|}\sum_{k = 1}^m 
+  \chi_{V_k}(g_i)\chi_{V_k}(g_j),\]
+and so, 
+\[|C_i| = |G| \left(\sum_{k = 1}^m |\chi_{V_k}(g_i)|^2\right)^{-1}.\]
+In the case that \(C_i = \{e\}\) the trivial conjugacy class, we see that 
+this formula provides \(|G| = \sum |\chi_{V_k}(e)|^2 = \sum |\dim V_k|^2\). 
+
+\begin{proposition}
+  \(\sum \dim V_i \chi_{V_i} = |G| \delta_{e}\).
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
 \end{document} 
