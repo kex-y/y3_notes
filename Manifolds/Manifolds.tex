@@ -1195,4 +1195,101 @@ Then the infinitesimal version of \(f(U)\) is
 \[\xi^F = \Delta_f^{-1} \circ \tilde \xi^F \circ f : U \to TU,\]
 is the corresponding vector field on \(U\).
 
+\subsection{Cotangent Space}
+
+\begin{definition}[Cotangent Space]
+  Let \(X\) be a manifold and let \(x \in X\) and define 
+  \[R_x(X) := \{h : X \to \mathbb{R} \mid \text{rk}(h)\mid_x = 0\} \le C^\infty(X),\]
+  where \(C^\infty(X)\) is the space of smooth maps between \(X\) and 
+  \(\mathbb{R}\). Then the cotangent space is the quotient 
+  \[T^*_x(X) = C^\infty(X) / R_x(X).\]
+\end{definition}
+
+The cotangent space can be thought of as the dual space of the tangent space, 
+and hence the notation. As one might expect, the dimension of a cotangent space 
+equals the dimension of the tangent space and hence, the dimension of the 
+manifold. As with before, we will first prove this for \(\mathbb{R}^n\).
+
+\begin{lemma}
+  Let \(U \subseteq \mathbb{R}^n\) be open and let \(x \in U\). Then 
+  \(\dim T^*_x X = n\).
+\end{lemma}
+\begin{proof}
+  Define the map 
+  \[\nabla_x : C^\infty(U) \to \mathbb{R}^n : h \mapsto Dh\mid_x.\]
+  Clearly \(\nabla_x\) is linear and \(\ker \nabla_x = R_x(U)\).
+  Then, by the first isomorphism, we have \(T^*_x U \cong \text{Im}(\nabla_x)\) 
+  and it suffices to show \(\nabla_x\) is surjective. But this is clear as 
+  for all \(v := (v_1, \cdots, v_n) \in \mathbb{R}^n\), defining \(h(w) := v \cdot w\), 
+  we have \(\nabla_x h = v\) and so \(\nabla_x\) is surjective. 
+\end{proof}
+
+Now to extend this idea to general manifolds, we quickly realise we will 
+need to be able to extend a smooth function defined on a subset to the 
+whole space. We will achieve this with the bump function.
+
+Let 
+\[\phi : \mathbb{R} \to \mathbb{R} : x \mapsto 
+  \begin{cases}
+  e^{- 1 / x}, \ x > 0\\
+  0, \ x \le 0.
+\end{cases}\]
+It is not difficult to show that \(\phi\) is smooth and \(\phi^(k)(0) = 0\) 
+for all \(k \ge 0\). Now, define 
+\[\psi(x) := \frac{\phi(x)}{\phi(x) - \phi(1 - x)},\]
+as \(\phi(x) - \phi(1 - x) > 0\) for all \(x \in \mathbb{R}\), we see that 
+\(\psi\) is also a smooth function such that \(\psi(x) = 0\) for \(x \le 0\) 
+and \(\psi(x) = 1\) for \(x \ge 1\). Now, for real numbers \(0 < r < r'\), 
+we define 
+\[\tilde \psi : \mathbb{R}^n \to \mathbb{R} : x \mapsto 
+  \psi\left(\frac{|x| - r'}{r - r'}\right).\]
+One can show that \(\tilde \psi\) is smooth and for \(x \not\in B_{r'}(0)\) 
+\(\tilde \psi(x) = 0\) and for \(x \in B_{r}(1)\), \(\tilde \psi(x) = 1\). 
+This function is known as the bump function for \(\mathbb{R}^n\). 
+
+This idea can be generalized to general manifolds. Let \(X\) be a manifold and 
+let \(x \in X\) and suppose that \((U, f)\) is a chart on \(X\) containing 
+\(x\) such that \(f(x) = 0\). Now, as \(f(U)\) is open, there exists some 
+\(r' > 0\), such that \(\overline{B_{r'}(0)} \subseteq f(U)\). Taking 
+\(0 < r < r'\), we define 
+\[\rho : X \to \mathbb{R} : y \mapsto 
+  \begin{cases}
+    (\tilde \psi \circ f)(y), \ y \in U,\\
+    0, \ y \not\in U.
+  \end{cases}\]
+It is clear that \(\rho\) is smooth and \(\rho(y) = 0\) for all 
+\(y \not\in U\) and \(\rho(y) = 1\) for all \(y \in f^{-1}(B_r(0))\).
+We call this function a bump function with respect to the chart \((U, f)\).
+
+\begin{proposition}
+  Let \(X\) be an \(n\)-dimensional manifold and let \(x \in X\). Then 
+  \(\dim T^*_x X = n\).
+\end{proposition}
+\begin{proof}
+  Let \((U, f)\) be a chart on \(X\) containing \(x\) and \(f(x) = 0\). 
+  Then for all \(h \in C^\infty\), define 
+  \(\tilde h := h \circ f^{-1} : f(U) \to \mathbb{R}\).
+  Then \(h \in R_x(X)\) if and only if the rank of \(\tilde h\) is zero at 
+  \(f(x)\), in particular, \(h \in \ker \nabla_{f, x}\) where 
+  \[\nabla_{f, x} : C^\infty \to \mathbb{R} : h \mapsto D\tilde h\mid_{f(x)}.\]
+  Again, by the first isomorphism theorem, 
+  \(T^*_x X \cong \text{Im}(\nabla_{f, x})\) and again, it suffices to show 
+  \(\nabla_{f, x}\) is surjective. However, this is a bit tricky since 
+  we now require a smooth function on \(C^\infty(X)\) rather than 
+  \(C^\infty(U)\) and so, we will use the bump function.
+
+  For all \(v := (v_1, \cdots, v_n)\), define \(\tilde h(w) := v \cdot w\) so 
+  that \(\nabla_0 \tilde h = v\). Now, define 
+  \[h : X \to \mathbb{R} : y \mapsto \begin{cases}
+    \rho(\tilde h(f(y))), \ y \in U,\\
+    0, \ y \not\in U,
+  \end{cases}\]
+  we see that for some open \(W \subseteq U\), \(x \in W\), 
+  \(\tilde h\mid_W = (h \circ f^{-1})\mid_W\) and so 
+  \[\nabla_{f, x}(h) = D\tilde h\mid_{f(v)} = v,\]
+  and \(\nabla_{f, x}\) is surjective as required.
+\end{proof}
+
+
 \end{document}
+
