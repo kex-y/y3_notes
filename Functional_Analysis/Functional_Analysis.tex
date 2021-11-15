@@ -1591,4 +1591,111 @@ Let us now turn our focus back to \(\ell_p\) spaces.
     \sup_n \|f_n\| < \infty.\]
 \end{proof}
 
+\subsection{Open Mapping Theorem}
+
+\begin{definition}
+  Let \(X, Y\) be metric spaces, then the function \(T : D(T) \subseteq X \to Y\) 
+  is an open mapping if for all \(U \subseteq D(T)\) open, \(T(U)\) is open 
+  in \(Y\).
+\end{definition}
+
+\begin{theorem}[The Open Mapping Theorem]
+  A bounded linear operator \(T : X \to Y\) between Banach spaces \(X, Y\) 
+  is an open mapping if it is surjective.
+\end{theorem}
+\begin{proof}
+  Let \(B^X_r(x), B^Y_r(y)\) denote open balls of radius \(r\) in \(X\) and \(Y\) 
+  respectively and \(B^X_r, B^Y_r\) denote open balls centred at the origin with 
+  radius \(r\). 
+  
+  Since \(T\) is linear, it suffices to show that \(T(B_1^X)\) contains an 
+  open ball containing \(0\) in \(Y\). Indeed, for all open 
+  \(A \subseteq D(T)\), if \(y \in T(A)\), by definition, there exists some 
+  \(x \in A\) such that \(T(x) = y\). Now, as \(A\) is open, there exists some 
+  \(B_r^X(x) \subseteq A\), and so 
+  \(B^X_1 = \frac{1}{r} (B_r^X(x) - x) = \frac{1}{r} (A - x)\). Then, by assumption, 
+  there exists some \(\epsilon > 0\) such that 
+  \[B_\epsilon^Y \subseteq T(B_1^X) = T\left(\frac{1}{r}(A - x)\right) = 
+    \frac{1}{r}(T(A) - T(x)) = \frac{1}{r}(T(A) - y).\]
+  Thus, \(r B_\epsilon^Y + y \subseteq T(A)\). Now, since 
+  \(y \in r B_\epsilon^Y + y \subseteq T(A)\) we have found an open ball 
+  containing \(y\) which is contained in \(T(A)\). Hence, \(T(A)\) is open 
+  and \(T\) is an open mapping.
+
+  We will first show \(T(B^X_{1 / 2}(0))\) contains an open ball \(B^*\) not 
+  necessary centred at the origin. Consider 
+  \[Y = T(X) = T\left(\bigcup_{k = 1}^\infty k B_{1 / 2}(0)\right) 
+    = \bigcup_{k = 1}^\infty k T(B_{1 / 2}(0))
+    = \bigcup_{k = 1}^\infty \overline{k T(B_{1 / 2}(0))}.\]
+  By the Baire category theorem, at least on of the 
+  \(\overline{k T(B_{1 / 2}(0))}\) must contain an open ball, and thus, by 
+  rescaling, we obtain an open ball \(B^* = B_\epsilon(y_0) 
+  \subseteq \overline{T(B_{1 / 2}(0))}\). 
+  
+  Now, as \(y_0 \in B_\epsilon(y_0) \subseteq \overline{T(B_{1 / 2}(0))}\) 
+  and, for all \(y \in B_\epsilon(0) = B_\epsilon(y_0) - y_0\), we have 
+  \(y + y_0 \in B_\epsilon(y_0) \subseteq \overline{T(B_{1 / 2}(0))}\),
+  taking sequences \((u_n), (v_n) \subseteq T(B_{1 / 2}(0))\) such that 
+  \(u_n \to y + y_0\) and \(v_n \to y_0\), there 
+  exists some \((w_n), (z_n) \subseteq B_{1 / 2}(0)\) such that 
+  \(T w_n = u_n \to y + y_0, T z_n = v_n \to y_0\). Then, 
+  by sequential continuity
+  \[T(w_n - z_n) = T w_n - T z_n = u_n - v_n \to y,\]
+  and \(w_n - z_n \in B_1(0)\) as \(\|w_n - z_n\| \le \|w_n\| + \|z_n\| 
+  < 1 / 2 + 1 / 2 = 1\). Hence, \(y \in \overline{T(B_1(0))}\) and thus, 
+  \(B_\epsilon(0) \subseteq \overline{T(B_1(0))}\).
+  
+  Finally, we will show that \(B_{\epsilon / 2}(0) \subseteq T(B_1(0))\). 
+  By linearity, we have 
+  \[V_n := B_{\epsilon / 2^n}(0) \subseteq 2^{-n} \overline{T(B_1(0))} = 
+  \overline{T(B_{1 / 2^n}(0))} =: \overline{T(B_n)}.\]
+  Let \(y \in B_{\epsilon / 2} = V_1\), then \(y \in \overline{T(B_1)}\) 
+  and thus, there exists some \(x_1 \in B_1\) such that \(\|y - Tx_1\| < \epsilon / 4\).
+  This means that \(y - Tx_1 \in V_2 \subseteq \overline{T(B_2)}\) and there 
+  exists some \(x_2 \in B_2\), \(\|y - Tx_1 - Tx_2\| < \epsilon / 8\). 
+  Repeating this process, we find a sequence \((x_n)\) such that \(x_n \in B_n\) 
+  and 
+  \[\left\| y - \sum_{k = 1}^n Tx_k \right\| < \frac{\epsilon}{2^{n + 1}}.\]
+  Considering for \(n > m\), 
+  \[\left\|\sum_{k = 1}^n Tx_k - \sum_{k = 1}^m Tx_k\right\| = 
+    \left\|\sum_{k = m + 1}^n Tx_k\right\| \le 
+    \sum_{k = m + 1}^n \| Tx_k\| \le \sum_{k = m + 1}^\infty \|T x_k\| < 
+    \sum_{k = m + 1}^\infty \frac{1}{2^k} \to 0,\]
+  as \(m \to \infty\), we have \(S_n := \sum_{k = 1}^n T x_k\) is Cauchy, and 
+  thus converges to some \(s \in Y\). As \(\|y - S_n\| < \epsilon / 2^{n + 1}\), 
+  \(\|y - s\| \le \|y - S_n\| + \|S_n - s\| \to 0\) as \(n \to \infty\), 
+  \(\|y - s\| = 0\) and thus, \(y = s\).
+  
+  Now, \(\sum_{k = 1}^n x_k\) converges to some \(x \in X\) as it is 
+  absolutely convergent since \(x_n \in B_n\) implying \(\|x_n\| < 1 / 2^n\) 
+  and so \(\sum \|x_n\| < \sum 1 / 2^n = 1 < \infty\). Thus, by sequential 
+  continuity, we have 
+  \(T(\sum_{k = 1}^n x_k) \to T x\) as \(n \to \infty\) and so, \(Tx = y\).
+  Finally, \(x \in B_1(0)\) since addition is continuous, and so 
+  \[\|x\| = \lim_{n \to \infty} \left\| \sum_{k = 1}^n x_n \right\|
+    \le \lim_{n \to \infty} \sum_{k = 1}^n \|x_n\| < 
+    \lim_{n \to \infty} \sum_{k = 1}^n \frac{1}{2^k} = 1,\]
+  implying \(x \in B_1(0)\) and thus, as \(y = Tx\), \(y \in T(B_1(0))\).
+\end{proof}
+
+With the open mapping theorem, we see that a bijective bounded linear operator 
+is automatically a homeomorphism and \(T^{-1}\) is bounded.
+
+\subsection{Closed Graph Theorem}
+
+\begin{definition}[Closed Linear Operator]
+  Let \(X, Y\) be normed spaces and \(T : D(T) \subseteq X \to Y\) be a linear 
+  operator. The graph of \(T\) is defined to be the set 
+  \[\mathcal{G}(T) := \{(x, Tx) \in X \times Y \mid x \in D(T)\}.\]
+  \(T\) is said to be a closed linear operator if its graph is closed 
+  in the normed space equipped with the norm \(\|(x, y)\| = \|x\|_X + \|y\|_Y\).
+\end{definition}
+
+\begin{proposition}
+  Let \(X, Y\) be normed spaces and \(T : D(T) \subseteq X \to Y\) be a 
+  linear operator. Then \(T\) is a closed linear operator if and only if 
+  for all \((x_n) \subseteq D(T)\), \(x_n \to x\) and \(T x_n \to y\), 
+  we have \(x \in D(T)\) and \(Tx = y\).
+\end{proposition}
+
 \end{document}
