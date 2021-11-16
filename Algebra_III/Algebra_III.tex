@@ -1240,4 +1240,179 @@ a cyclic group of order \(n\).
   \(K^\times\) is cyclic for any finite field \(K\).
 \end{corollary}
 
+\begin{corollary}
+  For all \(r \ge 0\), there exists an irreducible polynomial 
+  \(P(X) \in \mathbb{F}_p[X]\) of degree \(r\).
+\end{corollary}
+\begin{proof}
+  Let \(K\) be a field such that \(|K| = p^r\). As \(K^\times\) is cyclic, 
+  there exists some \(\alpha\) generating \(K^\times\). 
+  Then \(K = \mathbb{F}_p(\alpha)\) 
+  as \(0 \in \mathbb{F}_p(\alpha)\) and \(\alpha^k \in \mathbb{F}_p(\alpha)\) 
+  and so \(K = \mathbb{F}_p(\alpha)\). Thus, as the map 
+  \[f : \mathbb{F}_p[X] \to \mathbb{F}_p(\alpha) = K : X \mapsto \alpha\]
+  is surjective (in particular, \(\alpha^{-1} = \alpha^{p^r - 2}\)), 
+  \[K \cong \frac{\mathbb{F}_p[X]}{\ker f} = 
+    \frac{\mathbb{F}_p[X]}{\langle P(X) \rangle}\]
+  for some irreducible polynomial \(P(X) \in \mathbb{F}_p[X]\). Finally, 
+  as \([K : \mathbb{F}_p] = r\), \(P(X)\) has degree \(r\).
+\end{proof}
+
+\begin{theorem}
+  Any two finite fields of cardinality \(p^r\) are isomorphic.
+\end{theorem}
+\begin{proof}
+  Suppose we take \(P(X) \in \mathbb{F}_p[X]\) to be an irreducible polynomial of 
+  degree \(r \ge 0\) (which exists by the above corollary), then we know that 
+  for \(X + \langle P(X) \rangle \in \mathbb{F}_p[X] / \langle P(X) \rangle\), 
+  \(X^{p^r} - X = 0\), i.e. \(P(X) \mid X^{p^r} - X\). Now, since for any \(K\) a 
+  field of \(p^r\) elements, \(X^{p^r} - X\) factors into linear factors, 
+  \(P(X)\) must also factor into linear factors of which, let us we take a 
+  root \(\alpha\) of \(P(X)\). Thus, as \(P(X)\) is irreducible, \(P(X)\) is 
+  the minimal polynomial of \(\alpha\). Then, the map 
+  \[\frac{\mathbb{F}_p[X]}{\langle P(X) \rangle} \hookrightarrow K\]
+  induced by \(X \mapsto \alpha\) is an isomorphism. Thus, for any 
+  \(K, K'\) of \(p^r\) elements, 
+  \[K \cong \frac{\mathbb{F}_p[X]}{\langle P(X) \rangle} \cong K'.\]
+\end{proof}
+
+As there is only one field of cardinality \(p^r\) up to isomorphism, we will 
+denote the field of cardinality \(p^r\) as \(\mathbb{F}_{p^r}\).
+
+\begin{proposition}
+  Let \(q := p^r\), then \(X^{q^s} - X\) factors over \(\mathbb{F}_q\) as the 
+  product of all irreducible monic polynomials of degree dividing \(s\).
+\end{proposition}
+\begin{proof}
+  Since \(X^{q^s} - X\) and its derivative \(q^s X^{q^s - 1} - 1\) has no common 
+  factors, \(X^{q^s} - X\) contains no repeated factors. Now if \(P(X)\) is a
+  monic irreducible factor of \(X^{q^s} - X\) of degree \(d\), by considering 
+  the extension of \(\mathbb{F}_{q^s}\) over \(\mathbb{F}_q\), we have 
+  \(X^{q^s} - X\) factors over \(\mathbb{F}_{q^s}\) as a product of linear 
+  factors, and thus, as \(P(X) \mid X^{q^s} - X\), it has a root \(\alpha\) 
+  in \(\mathbb{F}_{q^s}\). In particular, we have the injection 
+  \[\mathbb{F}_{q^d} \cong \frac{\mathbb{F}_q[X]}{\langle P(X) \rangle} 
+    = \mathbb{F}_q(\alpha) \hookrightarrow \mathbb{F}_{q^s}.\]
+  Thus, \(\mathbb{F}_{q^d}\) is a subfield of \(\mathbb{F}_{q^s}\), implying 
+  \(q^s\) is a power of \(q^d\), and so \(d \mid s\).
+
+  Finally, if \(P(X)\) is a monic irreducible polynomial of degree \(d \mid s\), 
+  we have \(\mathbb{F}_q[X] / \langle P(X) \rangle \cong \mathbb{F}_{q^d}\). Then 
+  for all roots \(\alpha\) of \(P(X)\), \(\alpha^{q^d} = \alpha\) and so, 
+  as \(d \mid s\), \(\alpha^{q^s} = \alpha\) and so, \(\alpha\) is a root of 
+  \(X^{q^s} - X\) implying \(P(X) \mid X^{q^s} - X\).
+\end{proof}
+
+This proposition allows us to count the number of irreducible polynomial of 
+a specific degree over a finite field.
+
+\newpage
+\section{Modules}
+
+\subsection{Definitions}
+
+\begin{definition}[\(R\)-Module]
+  A \(R\)-module where \(R\) is a ring is a set \(M\) with two operations 
+  \(+ : M \times M \to M\), \(\cdot : R \times M \to M\) and some 
+  \(0_M \in M\) such that 
+  \begin{itemize}
+    \item \((M, +)\) form an abelian group with the identity \(0_M\);
+    \item for all \(m \in M\), \(1_R \cdot m = m\);
+    \item for all \(r, s \in R, m \in M\), \(r \cdot (s \cdot m) = rs \cdot m\);
+    \item for all \(r, s \in R, m \in M\), 
+      \((r + s) \cdot m = r \cdot m + s \cdot m\),;
+    \item for all \(r \in R, m, n \in M\),
+      \(r \cdot (m + n) = r \cdot m + r \cdot n\).
+  \end{itemize}
+\end{definition}
+
+We note that an \(R\)-module over a field is simply a vector space and the 
+theory of modules is the same as the theory of linear algebra.
+
+It is easy to see that a ring is a module over itself with the usual operations, 
+and in fact, if \(I \trianglelefteq R\) is an ideal, the \(I\) is an 
+\(R\)-module with the usual operations inherited from \(R\). This is in contrast 
+with fields which ideals are either the unit ideal or the trivial ideal. In this 
+sense, the only subspace of a field over itself is the zero space or the whole 
+space.
+
+Given rings \(R, S\) and a homomorphism \(f : R \to S\), we may construct a 
+\(R\)-module with \(S\) by defining addition as the addition in \(S\) and 
+multiplication as \(r \cdot s = f(r)s\). By recalling that there is a unique 
+homomorphism between \(\mathbb{Z} \to R\), we see that \(\mathbb{Z}\) forms 
+a \(R\)-module over any ring \(R\).
+
+On the other hand, \(\mathbb{Z}\)-modules corresponds 1 to 1 with the 
+abelian groups. In particular, for any abelian group \(A\), we define the 
+scalar multiplication by \(na = a + \cdots a\), \(n\)-times for all \(a\) 
+in \(A\), and so \(A\) forms a \(\mathbb{Z}\)-module. Conversely, by inspecting 
+the axioms, these must be the only \(\mathbb{Z}\)-modules.
+
+\begin{definition}[\(R\)-Submodule]
+  Let \(M\) be an \(R\)-module. A subset \(N\) of \(M\) is a \(R\)-submodule 
+  if \(0_M \in N\) and \(N\) is closed under addition and scalar 
+  multiplication.
+\end{definition}
+
+By this definition, we see that the ideals of \(R\) are precisely the 
+\(R\)-submodules of \(R\).
+
+\begin{definition}
+  Let \(M\) be an \(R\)-module and suppose \(m_1, \cdots, m_r \in M\). Then 
+  \(\langle m_1, \cdots, m_r \rangle\) is the \(R\)-submodule generated by 
+  \(\{m_1, \cdots, m_r\}\) where  
+  \[\langle m_1, \cdots, m_r \rangle := 
+    \{s_1m_1 + \cdots + s_r m_r \mid s_1, \cdots, s_r \in R\}.\]
+\end{definition}
+
+As one might expect, this is the smallest \(R\)-submodule containing 
+\(m_1, \cdots, m_r \in M\), i.e. the intersection of all \(R\)-submodules 
+containing \(m_1, \cdots, m_r \in M\).
+
+\begin{definition}
+  Let \(M\) be an \(R\)-module and let \(I \trianglelefteq R\) be an ideal of 
+  \(R\). Then, we define 
+  \[IM := \left\{\sum i_j m_j \mid i_j \in I, m_j \in M\right\}.\]
+\end{definition}
+
+\begin{definition}[Quotient Module]
+  Let \(M\) be an \(R\)-module and \(N \le M\) a submodule, then we define 
+  \(m \equiv_N m' \iff m - m' \in N\). It is clear that \(\equiv_N\) is an 
+  equivalence relation, and so, we may define the quotient module 
+  of \(M\) over \(N\) by \(M / \equiv_N\) and we denote this by 
+  \(M / N\). 
+
+  The quotient module form a module by defining 
+  \[(m + N) + (n + N) = (m + n) + N;\ r \cdot (m + N) = (r \cdot m) + N,\]
+  where \(m + N, n + N \in M / N\) and \(r \in R\).
+\end{definition}
+
+\begin{definition}[Direct Sum]
+  Given \(M, N\) \(R\)-modules, the (external) direct sum \(M \oplus N\) is 
+  the Cartesian product of \(M\) and \(N\) equipped with pairwise addition 
+  and the multiplication defined by \(r \cdot (m, n) := (rm, rn)\). It is easy 
+  to check that this is an \(R\)-module.
+\end{definition}
+
+\begin{definition}
+  An element \(m \in M\) is \(R\)-torsion if there exists some 
+  \(r \in R \setminus \{0\}\), \(rm = 0\). We denote the set of \(R\)-torsion 
+  elements of \(M\) by \(M^{\text{tors}}\).
+\end{definition}
+
+It is easy the check that if \(R\) is any integral domain, then the set of 
+\(R\)-torsion elements is a submodule. If we quotient a \(R\)-module \(M\) by 
+\(M^{\text{tors}}\), we obtain a torsion free module.
+
+\begin{definition}
+  Let \(R\) be a ring and \(S\) a multiplicative system of \(R\) and 
+  \(M\) a \(R\)-module, we define 
+  \[S^{-1}M := \left\{\frac{m}{b} \mid m \in M, b \in S\right\} / \sim,\]
+  where \(\sim\) is the equivalence relation defined by 
+  \[\frac{m}{b} \sim \frac{m'}{b'} \iff \exists s \in S, s(b'm - bm') = 0_M.\]
+  \(S^{-1}M\) form a \(S^{-1}R\)-module with the operations 
+  \[\frac{m}{b} + \frac{m'}{b'} := \frac{b'm + bm'}{bb'},\]
+  \[\frac{r}{b} \cdot \frac{m'}{b'} := \frac{r \cdot m'}{bb'}.\]
+\end{definition}
+
 \end{document}
