@@ -1724,4 +1724,100 @@ this formula provides \(|G| = \sum |\chi_{V_k}(e)|^2 = \sum |\dim V_k|^2\).
   Exercise.
 \end{proof}
 
+\subsection{Normal Subgroups, Centre and Automorphisms}
+
+Recall that the kernel of a group homomorphism is a normals subgroup. 
+In particular, as group representations are homomorphisms, a representation 
+automatically provides a normal subgroup. We ask the converse where if 
+we have a normal subgroup, can we construct a group representation.
+
+\begin{proposition}
+  Let \(N \trianglelefteq G\) be a normal subgroup of \(G\). Let 
+  \(V = \mathbb{C}[G / N]\) be the representation attached to the action 
+  \[\rho_V : G \times G / N \to G / N : g \cdot hN \mapsto (gh) N.\]
+  Then \(\ker \rho_V = N\).
+\end{proposition}
+\begin{proof}
+  \(g \in \ker \rho_V \iff ghN = hN, \ \forall h \in G \iff 
+    h^{-1}gh \in N, \ \forall h \in G \iff g \in N\).
+\end{proof}
+
+So all normal subgroup are kernels of representation. 
+
+\begin{proposition}
+  \(\ker \rho_{V \oplus W} =  \ker \rho_V \cap \ker \rho_W\).
+\end{proposition}
+\begin{proof}
+  \(g \in \ker \rho_{V \oplus W} \iff \rho_{V \oplus W}(g) = \text{id}_V \oplus 
+  \text{id}_W \iff \rho_V(g) = \text{id}_V \wedge \rho_W(g) = \text{id}_W 
+  \iff g \in \ker \rho_V \cap \ker \rho_W\).
+\end{proof}
+
+\begin{corollary}
+  For \(|G| < \infty\), every normal subgroup is an intersection of kernels of 
+  irreducible representations.
+\end{corollary}
+\begin{proof}
+  Let \(N \trianglelefteq G\), then \(N = \ker \rho_{\mathbb{C}[G / N]}\). 
+  Then, by Maschke's, we may decompose \(\rho_{\mathbb{C}[G / N]}\) into 
+  irreducible subrepresentations and so, \(N\) is the intersection of the 
+  kernels of these irreducible subrepresentations.
+\end{proof}
+
+Now, recall that if \(|\chi_V(g)| = \dim V\), then 
+\(\rho_V(g) = \lambda \text{id}_V\) we have \(\chi_V(g) = \dim V\) 
+if and only if \(\rho_V(g) = \text{id}\). Thus,
+\(\ker \rho_V = \{g \in G \mid \chi_V(g) = \dim V\}\).
+With this we may classify the normal subgroups of a finite group by 
+constructing the character table and see when \(\chi_V(g) = \dim V\).
+
+Consider \(z \in Z(G)\) (where we denote \(Z(G)\) for the centre of 
+\(G\), then \(\rho_V(z) : V \to V\) is a \(G\)-linear map since 
+for all \(g \in G\), \(\rho_V(z) \circ \rho_V(g) = \rho_V(zg) = \rho_V(gz) = 
+\rho_V(g) \circ \rho_V(z)\). Thus, if \(V\) is irreducible, by Schur's lemma, 
+\(\rho_V(z) = \lambda\text{id}_V\) for some \(\lambda \in \mathbb{C}\).
+Furthermore, we have \(|\chi_V(z)| = \dim V\). The converse turns out to be 
+also true.
+
+\begin{proposition}
+  If \(G\) is finite and \(|\chi_V(z)| = \dim V\) for all irreducible 
+  representations \((V, \rho_V)\), then \(z \in Z(G)\). 
+\end{proposition}
+\begin{proof}
+  If \(|\chi_V(z)| = \dim V\), then \(\rho_V(z) = \lambda\text{id}_V\). Then, 
+  for all \(g \in G\), \(\rho_V(z)\rho_V(g) = \lambda\rho_V(g) = 
+  \rho_V(g)\rho_V(z)\). Thus, by Maschke's, \(\rho_V(zg) = \rho_V(z)\rho_V(g) = 
+  \rho_V(g)\rho_V(z) = \rho_V(gz)\) for all finite dimensional representations 
+  of \(G\). Then, it suffices to find a faithful finite dimensional representation. 
+  In particular, the regular representation are faithful, and so 
+  \(z g = g z\) for all \(g \in G\) and hence, \(z \in Z(G)\).
+\end{proof}
+
+\begin{proposition}
+  The commutator subgroup is the intersection of the kernels of 
+  the 1-dimensional representations, i.e.
+  \[[G, G] = \bigcap_{\dim V = 1} \ker \rho_V.\]
+\end{proposition}
+\begin{proof}
+  Recall that the 1-dimensional representations of \(G\) correspond to the 
+  1-dimensional representations of \(G_{ab}\), so \([G, G] \le \ker \rho_V\)
+  for \(\dim V = 1\). Conversely, by considering that the intersection of 
+  all \(\ker \rho_V\) for \((V, \rho_V)\) 1-dimensional representations of 
+  \(G_{ab}\) must be the intersection of all normal subgroups of \(G_{ab}\), 
+  this intersection must be \(\{e\}\).
+\end{proof}
+
+Recall that if we have a group homomorphism \(\phi : G \to H\), then a 
+representation \((V, \rho_V)\) of \(H\) can be pulled back along \(\phi\) to 
+a representation of \(G\) with \((V, \rho_V \circ \phi)\). One can show that 
+if \(\phi\) is surjective, then \((V, \rho_V)\) is irreducible if and only 
+if \((V, \rho_V \circ \phi)\) is irreducible. So for \(\phi\) surjective, 
+this embeds a character table of \(H\) inside that of \(G\).
+
+Now, if \(\phi : G \simeq H\) is an isomorphism, the character tables 
+of \(G\) and \(H\) are identical up to reordering of rows and columns.
+In particular, an automorphism provides a symmetry for the character table 
+in which \(\chi(g) = (\chi \circ \phi^{-1})(\phi(g))\).
+
+
 \end{document} 
