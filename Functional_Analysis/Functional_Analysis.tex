@@ -1613,9 +1613,9 @@ Let us now turn our focus back to \(\ell_p\) spaces.
   \(A \subseteq D(T)\), if \(y \in T(A)\), by definition, there exists some 
   \(x \in A\) such that \(T(x) = y\). Now, as \(A\) is open, there exists some 
   \(B_r^X(x) \subseteq A\), and so 
-  \(B^X_1 = \frac{1}{r} (B_r^X(x) - x) = \frac{1}{r} (A - x)\). Then, by assumption, 
-  there exists some \(\epsilon > 0\) such that 
-  \[B_\epsilon^Y \subseteq T(B_1^X) = T\left(\frac{1}{r}(A - x)\right) = 
+  \(B^X_1 = \frac{1}{r} (B_r^X(x) - x) \subseteq \frac{1}{r} (A - x)\). 
+  Then, by assumption, there exists some \(\epsilon > 0\) such that 
+  \[B_\epsilon^Y \subseteq T(B_1^X) \subseteq T\left(\frac{1}{r}(A - x)\right) = 
     \frac{1}{r}(T(A) - T(x)) = \frac{1}{r}(T(A) - y).\]
   Thus, \(r B_\epsilon^Y + y \subseteq T(A)\). Now, since 
   \(y \in r B_\epsilon^Y + y \subseteq T(A)\) we have found an open ball 
@@ -1697,5 +1697,148 @@ is automatically a homeomorphism and \(T^{-1}\) is bounded.
   for all \((x_n) \subseteq D(T)\), \(x_n \to x\) and \(T x_n \to y\), 
   we have \(x \in D(T)\) and \(Tx = y\).
 \end{proposition}
+\begin{proof}
+  Suppose \((x_n, Tx_n) \in \mathcal{G}(T)\) such that \((x_n, T_n) \to 
+  (x, y) \in X \times Y\). Then 
+  \[0 \leftarrow \|(x_n, T x_n) - (x, y)\| = \|(x_n - x, T x_n - y)\| 
+    = \|x_n - x\|_X + \|T x_n - y\|_Y,\]  
+  and so, \(x_n \to x\) and \(T x_n \to y\) and thus, \(T x = y\) implying 
+  \((x, y) \in \mathcal{G}(T)\) and \(\mathcal{G}(T)\) is closed.
+
+  Conversely, if \(\mathcal{G}(T)\) is closed, then for all \(x_n \to x\), 
+  \(T x_n \to y\), \((x, y)\) is a limit point of \(\mathcal{G}(T)\). Thus,,
+  as \(\mathcal{G}(T)\) is closed, \((x, y) \in \mathcal{G}(T)\) and so, 
+  \(y = Tx\).
+\end{proof}
+
+\begin{corollary}
+  Let \(X, Y\) be normed spaces and \(T : D(T) \subseteq X \to Y\) be a 
+  continuous linear operator. Then \(T\) is a closed linear operator if 
+  \(D(T)\) is closed.
+\end{corollary}
+\begin{proof}
+  Suppose \(x_n \to x \in X\) and \(T x_n \to y\). As \(D(T)\) is closed, 
+  \(x \in D(T)\), and by sequential continuity, \(T x = y\).
+\end{proof}
+
+\begin{theorem}[Closed Graph Theorem]
+  Let \(X, Y\) be Banach spaces and \(T : D(T) \subseteq X \to Y\) be a closed 
+  linear operator. Then if \(D(T)\) is closed in \(X\), then \(T\) is bounded.
+\end{theorem}
+\begin{proof}
+  We first observe that \(X \times Y\) is complete. Indeed, if 
+  \(((x_n, y_n))_{n \in \mathbb{N}}\) is Cauchy, then so are \((x_n), (y_n)\). 
+  Thus, as both \(X, Y\) are Banach, there exists some \(x \in X, y \in Y\), 
+  \(x_n \to x, y_n \to y\) and so, 
+  \[\|(x_n, y_n) - (x, y)\| = \|x_n - x\| + \|y_n - y\| \to 0.\]
+  Furthermore, since \(\mathcal{G}(T)\) and \(D(T)\) are by assumption closed, 
+  they are also complete as they are closed subspaces of a Banach space.
+
+  Now, define 
+  \[P : \mathcal{G}(T) \to D(T) : (x, Tx) \to x.\]
+  It is clear that \(P\) is linear and is bounded since for all \((x, Tx) \in 
+  \mathcal{G}(T)\), \(\|(x, Tx)\| = 1\), we have 
+  \(1 = \|(x, Tx)\| = \|x\| + \|Tx\| \ge \|x\| = \|P(x, Tx)\|\). Furthermore, 
+  \(P\) is bijective with the inverse \(P^{-1}(x) = (x, Tx)\) which is also 
+  a bounded linear operator (as the inverse of a bounded linear operator is 
+  bounded). But, this implies 
+  \[\|Tx\| \le \|x\| + \|Tx\| = \|(x, Tx)\| = \|P^{-1}(x)\| \le \|P^{-1}\|\|x\|,\]
+  proving \(T\) is bounded.
+\end{proof}
+
+\newpage
+\section{Spectral Theory}
+
+\subsection{Compact Operators}
+
+\begin{definition}
+  Let \(X, Y\) be normed spaces. An operator \(T : X \to Y\) is a compact operator 
+  if for all \(B \subseteq X\) bounded, \(\overline{T(B)}\) is compact.
+\end{definition}
+
+\begin{proposition}
+  Let \(X, Y\) be normed spaces and \(T : X \to Y\) be an operator. Then 
+  \(T\) is compact if and only if for all bounded sequence \((x_n)\) of 
+  \(X\), \((Tx_n)\) has a convergent subsequence.
+\end{proposition}
+\begin{proof}
+  Follows by considering the criterion for relatively compactness in metric 
+  spaces. In particular, given a subset \(B\) of a metric space, 
+  \(\overline{B}\) is compact if and only if all sequences in \(B\) contain a 
+  subsequence which converges in \(\overline{B}\). Indeed, if \((x_n)\) is a 
+  sequence in \(\overline{B}\), then we may construct a sequence \((y_n) 
+  \subseteq B\) such that \(d(x_n, y_n) < 1 / n\). Then, if 
+  \((y_{n_i}) \subseteq (y_n)\) such that \(y_{n_i} \to y \in \overline{B}\), 
+  \[d(x_{n_i}, y) \le d(x_{n_i}, y_{n_i}) + d(y_{n_i}, y) < 
+    \frac{1}{n_i} + d(y_{n_i}, y) \to 0\]
+  as \(i \to \infty\). Thus, \(\overline{B}\) is compact.
+\end{proof}
+
+\begin{proposition}
+  Let \(X, Y\) be normed spaces. Then the set of compact operators from \(X\) 
+  to \(Y\) form an linear space.
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{proposition}
+  A linear operator \(T : X \to Y\) where \(X, Y\) are normed spaces is compact 
+  if \(T\) is bounded and \(\dim T(X) < \infty\) (such operators are known 
+  as finite rank operators). Thus, if \(X\) is 
+  finite-dimensional, every bounded linear operator is compact.
+\end{proposition}
+\begin{proof}
+  Recall that for finite dimensional spaces, closed and bounded implies compactness. 
+  Thus, for all bounded \(B\), as \(T(B)\) is bounded, \(\overline{T(B)}\) is 
+  closed and bounded and hence, \(T\) is compact.
+\end{proof}
+
+\begin{proposition}
+  Let \((T_n)\) be a sequence of compact linear operators from a normed space 
+  \(X\) to a Banach space \(Y\). Then if \(T_n \to T\) with respect to the 
+  operator norm, \(T\) is also compact.
+\end{proposition}
+\begin{proof}
+  Let \((x_n)\) be a bounded sequence in \(X\) by some \(c \in \mathbb{R}^+\). 
+  By assumption, as \(T_1\) is compact, there exists a subsequence 
+  \((x_n^{(1)})\) of \((x_n)\) such that \(T_1 x_n^{(1)}\) converges. Then, 
+  as \(T_2\) is compact, there is a subsequence \((x_n^{(2)})\) of \((x_n^{(1)})\)
+  such that \((T_2x_n^{(2)})\) converges as well. Repeating this process, we 
+  can find \((x_n^{(k)})\) a subsequence of \((x_n^{(l)})\) for all \(l \le k\) 
+  such that \(T_i x_n^{(k)}\) converges for \(i = 1, 2, \cdots, k\). Now, defining 
+  \(y_n := x_n^n\), I claim \((y_n)\) is a subsequence of \((x_n)\) such that 
+  \(T_i y_n\) converges for all \(i \in \mathbb{N}\). Indeed, for all 
+  \(i \in \mathbb{N}\), once \(n \ge i\), the remaining sequence of \((y_n)\) 
+  is contained \((x_n^{(i)})\). Thus, \(T_i y_n\) is eventually contained in 
+  \(T_i x_n^{(i)}\) which converges.
+
+  Now, as \(T_n \to T\), for all \(\epsilon > 0\), there exists \(N\) such that 
+  for all \(n \ge N\), \(\|T_n - T\| < \epsilon / (3c)\). On the other hand, 
+  as \((T_N y_n)\) is convergent, it is Cauchy, and so, there exists 
+  sufficiently large \(M\), such that \(\|T_N y_i - T_N y_j\| < \epsilon / 3\) 
+  for all \(i, j \ge M\). Hence, for all \(i, j \ge M\),
+  \[\|Ty_i - Ty_j\| \le \|Ty_i - T_N y_i\| + \|T_N y_i - T_N y_j\| + 
+    \|T_N y_j - Ty_j\| < \epsilon.\]
+  Therefore \((Ty_n)\) is Cauchy and so, \(T\) is compact.
+\end{proof}
+
+\subsubsection{Hilbert-Schmidt Integral Operator}
+
+\begin{definition}[Hilbert-Schmidt Integral Operator]
+  The Hilbert-Schmidt integral operator \(T : H \to H\) where 
+  \(H := L^2(\mathbb{R}^d)\) is the linear operator 
+  \[Tf : x \mapsto \int_{\mathbb{R}^d} K(x, y) f(y) \dd \lambda(y),\]
+  for some kernel map \(K \in L^2(\mathbb{R}^d \times \mathbb{R}^d)\).
+\end{definition}
+
+The map \(y \mapsto K(x, y)f(y)\) is integrable for all \(x\) since by 
+Fubini, the map \(y \mapsto K(x, y)\) is square integrable for all \(x\) 
+and thus, 
+\[\|K(x, \cdot)f(\cdot)\|_1 = \langle K(x, \cdot), f \rangle^2 \le 
+  \|K(x, \cdot)\|_2 \|f\|_2.\]
+We note that this also implies the operator is bounded with the bound 
+\(\|T\| \le \|K\|_2\).
+
 
 \end{document}
