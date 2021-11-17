@@ -1267,11 +1267,11 @@ We call this function a bump function with respect to the chart \((U, f)\).
 \end{proposition}
 \begin{proof}
   Let \((U, f)\) be a chart on \(X\) containing \(x\) and \(f(x) = 0\). 
-  Then for all \(h \in C^\infty\), define 
+  Then for all \(h \in C^\infty(X)\), define 
   \(\tilde h := h \circ f^{-1} : f(U) \to \mathbb{R}\).
   Then \(h \in R_x(X)\) if and only if the rank of \(\tilde h\) is zero at 
   \(f(x)\), in particular, \(h \in \ker \nabla_{f, x}\) where 
-  \[\nabla_{f, x} : C^\infty \to \mathbb{R} : h \mapsto D\tilde h\mid_{f(x)}.\]
+  \[\nabla_{f, x} : C^\infty(X) \to \mathbb{R} : h \mapsto D\tilde h\mid_{f(x)}.\]
   Again, by the first isomorphism theorem, 
   \(T^*_x X \cong \text{Im}(\nabla_{f, x})\) and again, it suffices to show 
   \(\nabla_{f, x}\) is surjective. However, this is a bit tricky since 
@@ -1290,6 +1290,87 @@ We call this function a bump function with respect to the chart \((U, f)\).
   and \(\nabla_{f, x}\) is surjective as required.
 \end{proof}
 
+For all \(h \in C^\infty(X)\), we denote \(dh\mid_x := [h] \in T^*_x X\).
+
+Suppose \(h \in C^\infty(X)\), \(x \in X\) and \((U, f), (U', f')\) are 
+two charts on \(X\) containing \(x\). Then 
+\(\nabla_f(dh\mid_x) = D\tilde h\mid_{f(x)}\) where 
+\(\tilde h = h \circ f^{-1}\) and \(\nabla_{f'}(dh\mid_x) = 
+D\tilde {h'}\mid_{f'(x)}\) where \(\tilde {h'} = h \cdot f'^{-1}\). Thus, 
+\[\tilde {h'} = \tilde h \circ f \circ f'{-1} = \tilde h \circ \phi^{-1},\]
+where \(\phi\) is the transition map between \(f\) and \(f'\). Then, 
+\[\nabla_{f'}(dh\mid_x) = D(\tilde h \circ \phi^{-1})\mid_{f'(x)} = 
+  D\tilde h\mid_{f(x)} \circ D \phi^{-1}\mid_{f'(x)} 
+  = \nabla_f(dh\mid_x) \circ D\phi^{-1}\mid_{f'(x)}.\]
+
+As mentioned previously, we may think about the cotangent space as the dual 
+of the tangent space. This notion can be made rigorous with the following.
+
+Let \(U \subseteq \mathbb{R}^n\) be an open set at let \(x \in U\). Then for 
+\(v \in T_x U \simeq \mathbb{R}^n\), we may write \(v = (v_1, \cdots, v_n)\) 
+and so, we may define the partial derivative at \(x\) in the direction 
+of \(v\) as the linear map 
+\[\partial_{x, v} : C^\infty(U) \to \mathbb{R} : h \mapsto Dh\mid_x(v).\]
+Then, for all \(h \in R_x(U)\), \(\partial_{x, v}(h) = 0\), and so 
+\(R_x(X) \subseteq \ker \partial_{x, v}\) and the map \(\partial_{x, v}\) induces 
+a injection from \(T^*_x U\) to \(\mathbb{R}\). As \(\partial_{x, v}\) is linear 
+\(\partial_{x, v} \in (T^*_x U)^* =: \text{Hom}(T^*_x U, \mathbb{R})\). Thus, 
+we have a linear map 
+\[T_x U \to (T^*_x U)^* : v \mapsto \partial_{x, v},\]
+and we will show this is an isomorphism. 
+
+Suppose \(v \in T_x X\) such that \(\partial_{x, v} = 0\). Then, taking 
+\(h(y) := v \cdot y\), we have \(0 = \partial_{x, v}(h) = v \cdot v\) implying 
+\(v = 0\) and so, the map is injective. On the other hand, as 
+\(\dim (T^*_x U)^* = \dim T^*_x U = \dim T_x U\), the map is indeed an 
+isomorphism. Thus, in some sense, the tangent space is canonically isomorphic 
+to the dual of the cotangent space. Hence, we have a canonical isomorphism 
+\[(T_x U)^* \simeq ((T^*_x U)^*)^* \simeq T^*_x U.\]
+
+Now, suppose \(X\) is an \(n\)-dimensional manifold and \(x \in X\). Then, 
+for any \(v = [\sigma] \in T_x X\), we define 
+\[\partial_{x, v} : C^\infty(X) \to \mathbb{R} : 
+  h \mapsto \dv{(h \circ \sigma)}{t}\Big\vert_0.\]
+Then given a chart \((U, f)\) on \(X\) containing \(x\), we have a curve 
+\[\tilde \sigma := f \circ \sigma : (-\epsilon, \epsilon) \to f(U) 
+  \subseteq \mathbb{R}^n.\]
+In particular, we may write \(\tilde \sigma = 
+(\tilde \sigma_1, \cdots, \tilde \sigma_n)\). Then, \(h \circ \sigma = \tilde h 
+\circ \tilde \sigma\) where \(\tilde h = h \circ f^{-1} \in C^\infty(f(U))\).
+Thus, we have
+\[\dv{(h \circ \sigma)}{t}\Big\vert_0 = \dv{(\tilde h \circ \tilde \sigma)}{t}\Big\vert_0 
+  = D \tilde h\mid_{f(x)} \circ D\tilde \sigma\mid_0 = 
+  \sum_{i = 1}^n \pdv{\tilde h}{x_i}\Big\vert_{f(x)} \dv{\tilde \sigma_i}{t}\Big\vert_0
+  = \nabla_f(dh\mid_x)^T \cdot \Delta_f([\sigma]).\]
+Now, by considering if \(h \in R_x(X)\) then \(\partial_{x, v}(h) = 
+\dv{(h \circ \sigma)}{t}\big\vert_0 = 0\), we have 
+\(R_x(X) \subseteq \ker \partial_{x, v}\) and so, we obtain a map 
+\[T_x X \to (T^*_x X)^* : v \mapsto \partial_{x, v}.\]
+
+\begin{proposition}
+  Let \(X\) be an \(n\)-dimensional manifold and let \(x \in X\). Then the 
+  map 
+  \[T_x X \to (T^*_x X)^* : v \mapsto \partial_{x, v}\]
+  is an isomorphism of vector spaces.
+\end{proposition}
+\begin{proof}
+  Let \((U, f)\) be a chart on \(X\) containing \(x\) and recall that 
+  \[\Delta_f : T_x \to \mathbb{R}^n, \ \nabla_f : T^*_x X \to \mathbb{R}^n\]
+  and both isomorphisms of vector spaces. Let \(\sigma : (-\epsilon, \epsilon) 
+  \to X\) be a curve through \(x\) and let \(h \in C^\infty(X)\). Then 
+  as we have shown above, defining \(v = [\sigma]\), we have
+  \[\partial_{x, v}(dh\mid_x) = \nabla_f(dh\mid_x)^T \cdot \Delta_f(v).\]
+  In particular, the map 
+  \[ (\nabla_f)^* \circ (v \mapsto \partial_{x, v}) \circ \Delta_f^{-1}:
+    \mathbb{R}^m \to (\mathbb{R}^n)^* : w \mapsto v = [\sigma] \mapsto 
+    \partial_{x, v} \mapsto \tilde \partial_{x, v}\]
+  maps any vector \(w\) to the linear functional \(u \mapsto u \cdot w\). 
+  Thus, similar to the Euclidean case, the map is an isomorphism.
+\end{proof}
+
+With this, a similar conclusion can be made by taking the dual on both 
+sides of the isomorphism, obtaining the canonical isomorphism
+\[(T_x X)^* \simeq ((T^*_x X)^*)^* \simeq T^*_x X.\]
 
 \end{document}
 
