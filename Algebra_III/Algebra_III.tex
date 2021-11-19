@@ -1415,4 +1415,126 @@ It is easy the check that if \(R\) is any integral domain, then the set of
   \[\frac{r}{b} \cdot \frac{m'}{b'} := \frac{r \cdot m'}{bb'}.\]
 \end{definition}
 
+\subsection{Homomorphisms and Free Modules}
+
+\begin{definition}[Module Homomorphism]
+  Let \(R\) be a ring and \(M, N\) be \(R\)-modules. Then a map \(f : M \to N\) 
+  is a \(R\)-module homomorphism if 
+  \begin{itemize}
+    \item for all \(m, m' \in M\), \(f(m + m') = f(m) + f(m')\), and
+    \item for all \(m \in M, r \in R\), \(f(rm) = r f(m)\).
+  \end{itemize}
+  We say \(f\) is an isomorphism if it is also bijective. In this case, 
+  the inverse \(f^{-1}\) is also a module homomorphism.
+\end{definition}
+
+It is clear that in the case that \(R\) is a field, a module homomorphism 
+is simply a linear map.
+
+\begin{proposition}
+  The image of a \(R\)-module homomorphism \(f : M \to N\) is a submodule of 
+  \(N\) and the kernel is a submodule of \(M\). Furthermore, \(\ker f = \{0\}\) 
+  if and only if \(f\) is injective.
+\end{proposition}
+\begin{proof}
+  Clear.
+\end{proof}
+
+\begin{proposition}[Universal Property for Modules]
+  Let \(L, M, N\) be \(R\)-modules with \(N \subseteq M\) and \(f : M \to L\)
+  is a module homomorphism such that \(N \le \ker f\). Then there exists a 
+  unique module homomorphism \(\tilde f : M / N \to L\) such that 
+  \[\tilde f(m + N) = f(m).\]
+\end{proposition}
+In particular, the universal property demonstrates the existence of \(\tilde f\) 
+such that the following diagram commutes.
+\[\begin{tikzcd}
+  M \arrow[r, "f"] \arrow[swap, d, "q"] & N \\
+  M / N \arrow[swap, dashed, ru, "\tilde f"]
+  \end{tikzcd}\]
+\begin{proof}
+  Uniqueness follows by extensionality, so it suffices to show the map is 
+  well defined and is a homomorphism. 
+  
+  \(\tilde f\) is well defined since if \(m + N = m' + N\), then 
+  \(m - m' \in N \le \ker f\) implying \(0 = f(m - m') = f(m) - f(m')\).
+  Thus, \(\tilde f(m + N) = f(m) = \tilde f(m' + N)\) and so the map is 
+  well defined. \(\tilde f\) is clearly a homomorphism and so we are done.
+\end{proof}
+
+We see that \(\ker \tilde f = q(\ker f) = \{m + N \mid m \in \ker f\}\), and thus, 
+in the case that \(N = \ker f\), we have the isomorphism, 
+\[\tilde f : M / \ker f \cong \text{Im}(f).\] 
+
+In contrast to vector spaces in linear algebra where every finite dimensional 
+vector space has a basis. On the other hand, in the case of modules, this 
+is in general not true. Nonetheless, we can make the same definition as a basis.
+
+\begin{definition}[Basis]
+  Let \(M\) be a \(R\)-module, then a set \(B \subseteq M\) is a basis of 
+  \(M\) if 
+  \begin{itemize}
+    \item \(B\) spans \(M\), i.e. every element of \(M\) is of the form 
+      \(r_1 b_1 + \cdots + r_n b_n\) for \(r_i \in R\) and \(b_i \in B\), and
+    \item \(B\) is linearly independent, i.e. if \(b_1, \cdots, b_n\) are 
+      distinct elements of \(B\) such that \(r_1 b_1 + \cdots + r_n b_n = 0\) 
+      for some \(r_1, \cdots, r_n\), then \(r_i = 0\) for all \(i\).
+  \end{itemize}
+\end{definition}
+
+An example of a module which does not have a basis is the module of 
+\(\mathbb{Z} / 3\mathbb{Z}\) over \(\mathbb{Z}\). Indeed, any element of \(m \in M\) 
+satisfy \(3m = 0\) implying any subset of \(\mathbb{Z}\) is not linearly 
+independent.
+
+\begin{definition}[Free Module]
+  An \(R\)-module \(M\) is a free module if it admits a basis \(B\) 
+  and we say \(M\) is a free module of rank \(r\) if \(B\) has cardinality \(r\).
+\end{definition}
+
+Given a set \(S\), we may define a free \(R\)-module over \(S\) by defining 
+\[F_S := \{f : S \to R \mid |\text{supp}(f)| < \infty\},\]
+i.e. the set of functions from \(S\) to \(R\) with finite support. Then, 
+\(F_S\) is a free module with the basis \(S\) (we have here abused the notation 
+by forcing \(S \subseteq F_S\) such that for all \(s \in S\), we define
+\(s = 1_{\{s\}} \in F_S\) where \(1_{\{s\}}\) is taken to be the indicator 
+function). It is clear that \(S\) spans \(F_S\) and if 
+\(\sum r_s s = 0\), then \(0 = (\sum r_s s)(s) = r_s\), and so 
+\(S\) is also linearly independent.
+
+\begin{proposition}
+  Let \(F_1, F_2\) be free \(R\)-modules, then \(F_1 \oplus F_2\) is also free.
+\end{proposition}
+\begin{proof}
+  Not difficult to see that, if \(B_1, B_2\) are bases of \(F_1, F_2\) respectively, 
+  then \(\{(b, 0) \mid b \in B_1\} \cup \{(0, b) \mid b \in B_2\}\) form a 
+  basis of \(B_1 \oplus B_2\).
+\end{proof}
+
+By induction, we see that the finite direct sum of free modules is also free. 
+
+\begin{proposition}[Universal Property for Free Modules]
+  Let \(S\) be a set and \(M\) be an \(R\)-module, then for any 
+  \(\phi : S \to M\), there exists a unique homomorphism 
+  \(f_\phi : F_S \to M\) such that \(f_\phi(s) = s\) for all \(s \in S\).
+\end{proposition}
+
+This is similar to the extension of linear maps where we may define a linear 
+map provided with know where it maps its basis.
+
+\begin{proof}
+  It is clear that \(f_\phi : F_S \to M : \sum r_s s \mapsto \sum r_s \phi(s)\) 
+  satisfy this property. This map is unique follows by the homomorphism 
+  requirement.  
+\end{proof}
+
+\begin{corollary}
+  If \(M, N\) are free \(R\)-modules of the same rank, then they are isomorphic.
+\end{corollary}
+\begin{proof}
+  Let \(B_M, B_N\) be the bases of \(M, N\) respectively. Then, we may take 
+  a bijection \(\phi : B_M \to B_N\) and so the extension of \(\phi\) is 
+  and isomorphism between \(M\) and \(N\).
+\end{proof}
+
 \end{document}
