@@ -1681,6 +1681,16 @@ Let us now turn our focus back to \(\ell_p\) spaces.
 With the open mapping theorem, we see that a bijective bounded linear operator 
 is automatically a homeomorphism and \(T^{-1}\) is bounded.
 
+\begin{theorem}[Bounded Inverse Theorem]
+  Let \(X, Y\) be Banach spaces and suppose \(T : X \to Y\) is a bijective, 
+  bounded linear operator. Then, so is \(T^{-1} : Y \to X\).
+\end{theorem}
+\begin{proof}
+  The inverse of a bijective linear operator is linear and so it suffices to 
+  show boundedness. However, this follows, as boundedness is equivalent to 
+  continuous which follows by the open mapping theorem.
+\end{proof}
+
 \subsection{Closed Graph Theorem}
 
 \begin{definition}[Closed Linear Operator]
@@ -1698,7 +1708,7 @@ is automatically a homeomorphism and \(T^{-1}\) is bounded.
   we have \(x \in D(T)\) and \(Tx = y\).
 \end{proposition}
 \begin{proof}
-  Suppose \((x_n, Tx_n) \in \mathcal{G}(T)\) such that \((x_n, T_n) \to 
+  Suppose \((x_n, Tx_n) \in \mathcal{G}(T)\) such that \((x_n, Tx_n) \to 
   (x, y) \in X \times Y\). Then 
   \[0 \leftarrow \|(x_n, T x_n) - (x, y)\| = \|(x_n - x, T x_n - y)\| 
     = \|x_n - x\|_X + \|T x_n - y\|_Y,\]  
