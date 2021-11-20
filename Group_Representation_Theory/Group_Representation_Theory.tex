@@ -1819,5 +1819,242 @@ of \(G\) and \(H\) are identical up to reordering of rows and columns.
 In particular, an automorphism provides a symmetry for the character table 
 in which \(\chi(g) = (\chi \circ \phi^{-1})(\phi(g))\).
 
+\newpage
+\section{Algebras and Modules}
+
+So far we have looked at representations of groups and in most cases, finite 
+groups. We will now turn our attention to something more general but before 
+doing this, we will motivative this generalization with infinite groups.
+
+Previously, we have seen that the characters of irreducible representations 
+form an orthonormal basis of the class functions for finite groups. In the 
+case of infinite groups this is no longer the case as we no longer have 
+an inner product (provided we are not dealing with Haar measures). Nonetheless, 
+we may still say something about their characters.
+
+\begin{proposition}
+  If \((V_1, \rho_{V_1}), \cdots, (V_m, \rho_{V_m})\) are finite dimensional 
+  non-isomorphic irreducible representations of \(G\), then the their characters 
+  \(\chi_{V_1}, \cdots, \chi_{V_m}\) are linearly independent.
+\end{proposition}
+\begin{proof}
+  Follows from proposition \ref{spans}.
+\end{proof}
+
+Also, we no longer require \(\mathbb{C}\) or an algebraically closed field 
+since we will not be using Maschke's theorem. Nonetheless, we still require 
+finite dimensional as otherwise we cannot even define the trace.
+
+\begin{lemma}
+  Let \((V, \rho)\) be a finite dimensional representation of \(G\). Then, 
+  if \(\rho(G)\) spans \(\text{End}(V)\), then \((V, \rho)\) is irreducible.
+\end{lemma}
+\begin{proof}
+  Suppose \(W \subseteq V\) is a non-trivial subrepresentation and 
+  let \(w \in W \setminus \{0\}\). Then, for all \(v \in V\), take 
+  \(T \in \text{End}(V)\), such that \(T(w) = v\). As \(\rho(G)\) spans 
+  \(\text{End}(V)\), there exists a representation of \(T\) so that, 
+  \[T = a_1 \rho_(g_1) + \cdots + a_m \rho(g_m).\]
+  Thus, \(v = Tw = a_1 \rho(g_1)(w) + \cdots + a_m \rho(g_m)(w)\). But now, 
+  as \(W\) is a subrepresentation of \(V\), \(\rho(g_i)(w) \in W\) for all \(i\), 
+  and hence, by linearity, 
+  \(v = a_1 \rho(g_1)(w) + \cdots + a_m \rho(g_m)(w) \in W\) implying \(W = V\).
+\end{proof}
+
+The converse of the this lemma is also true. 
+
+\begin{proposition}\label{spans}
+  Let \((V, \rho)\) be a irreducible finite dimensional representation, then 
+  \(\rho(G)\) spans \(\text{End}(V)\). Furthermore, if \((V_1, \rho_{V_1}), 
+  \cdots, (V_m, \rho_{V_m})\) are finite dimensional non-isomorphic 
+  irreducible representations, then \(\{(\rho_1(g), \cdots, \rho_m(g)) \mid g \in G\}\) 
+  spans \(\text{End}(V_1) \oplus \cdots \oplus \text{End}(V_m)\).
+\end{proposition}
+
+To understand and to prove these statements will require a more general theory, 
+hence our study of algebras and modules.
+
+\subsection{Definitions}
+
+\begin{definition}[\(\mathbb{C}\)-algebra]
+  The group algebra of a group \(G\) is the free vector space \(\mathbb{C}[G]\) 
+  equipped with the multiplication 
+  \[\left(\sum a_g g\right) \left(\sum b_h h\right) = \sum_{g, h} a_g b_h gh,\]
+  where all but finitely many terms are zero.
+\end{definition}
+
+We observe that a representation can extend linearly to the group algebra. 
+In particular, if \((V, \rho)\) is a representation of \(G\), then we may define
+\[\tilde \rho\left(\sum a_g g\right) := \sum a_g \rho(g) \in \text{End}(V).\]
+Recall that \(\text{End}(V)\) is a noncommutative ring with the multiplication 
+\(\phi \psi := \phi \circ \psi\) and we see that \(\tilde \rho\) is a 
+\(\mathbb{C}\)-linear ring homomorphism. Furthermore, we have 
+\(\tilde \rho \mid_G = \rho\). Thus, we have a bijection between the set of 
+representations of \(G\) on \(V\) and the set of \(\mathbb{C}\)-linear ring 
+homomorphisms from \(\mathbb{C}[G]\) to \(\text{End}(V)\).
+
+\begin{definition}[Algebra]
+  An algebra \(A\) on a field \(F\) is a (not necessary commutative) ring which 
+  is also an \(F\)-vector space satisfying 
+  \[c \cdot (ab) = (c \cdot a)b = a(c \cdot b),\]
+  for all \(c \in F\), \(a, b \in A\).
+\end{definition}
+
+Equivalently, one may define an algebra to be a ring \(A\) equipped with a 
+injective ring homomorphism \(F \hookrightarrow Z(A)\) where \(F\) is a field and 
+\(Z(A) := \{z \in A \mid \forall a \in A, \ az = za\}\), i.e. 
+the \(A\) contains \(F\) in its centre. 
+
+\begin{definition}[Algebra Homomorphism]
+  Given \(A, B\) \(F\)-algebras, a \(F\)-algebra homomorphism is a map 
+  \(\phi : A \to B\) that is a ring homomorphism and \(F\)-linear.
+\end{definition}
+
+If \(A\) is an \(\mathbb{F}\)-algebra, then there is always an algebra 
+homomorphism \(F \to A\) given by \(\lambda \mapsto \lambda \cdot 1_A\).
+
+\begin{definition}[Module]
+  A module over an \(F\)-algebra \(A\) is a pair \((V, \rho)\) where 
+  \(V\) is a \(F\)-vector space and \(\rho : A \to \text{End}(V)\) in an algebra 
+  homomorphism.
+\end{definition}
+
+As demonstrated above, if \((V, \rho)\) is a representation, then \((V, \tilde \rho)\) 
+is a module over \(\mathbb{C}[G]\).
+
+If \(V\) is a \(F\)-vector space, it is easy to see that \(A := \text{End}(V)\) is 
+an \(F\)-algebra, and furthermore, \(A\) is an module over itself by taking 
+\(\rho := \text{id}_A\).
+
+Another famous example is known as the Gelfand-Naimark duality. If 
+\(X\) is a compact Hausdorff topological space, then there is an theorem stating 
+that we have an equivalence between \(X\) and its algebra of continuous 
+functions \(C(X)\). In particular, given a continuous function \(\phi : X \to Y\), we 
+have its pull-back \(\phi^* : C(Y) \to C(X) : f \mapsto f \circ \phi\) in 
+the commutative \(C^*\)-algebras (see the functional analysis course).
+
+Similarly, in algebraic geometry, we study the duality between the varieties, 
+i.e. 
+\[X = \{f_1(x_1, \cdots, x_n) = \cdots = f_m(x_1, \cdots, x_n) = 0 \mid 
+  f_1, \cdots, f_m \in \mathbb{C}[x_1, \cdots, x_n]\} 
+  \subseteq \mathbb{C}^n\]
+and algebras \(\mathcal{O}(X) := \mathbb{C}[x_1, \cdots, x_n] / (f_1, \cdots, f_m)\).
+
+\begin{definition}[Submodule]
+  A submodule of a module \((V, \rho_V)\) over \(A\) is a subspace \(W \le V\) such 
+  that, \(\rho_V(a)(W) \subseteq W\) for all \(a \in A\).
+\end{definition}
+
+\begin{definition}[Module Homomorphism]
+  A module homomorphism between to modules \((V, \rho_V)\) and \((W, \rho_W)\) is 
+  a linear map \(T : V \to W\) such that \(T \circ \rho_V(a) = \rho_W(a) \circ T\) 
+  for all \(a \in A\). We denote \(\text{Hom}_A(V, W)\) for the set of 
+  module homomorphisms between \((V, \rho_V)\) and \((W, \rho_W)\).
+\end{definition}
+
+\begin{definition}[Decomposable]
+  A module \((V, \rho_V)\) is decomposable if there exists proper submodules 
+  \(W_1, W_2\) such that \(V = W_1 \oplus W_2\). We say a module is indecomposable 
+  if it is not decomposable unless \(V = 0\). 
+\end{definition}
+
+\begin{definition}[Reducible]
+  A module \((V, \rho_V)\) is reducible if there exists a non-trivial, proper 
+  submodule \(W\). If \((V, \rho_V)\) is not reducible, then we say it is 
+  simple (or irreducible) unless \(V = 0\).
+\end{definition}
+
+\begin{definition}[Semisimple]
+  A module \((V, \rho_V)\) is semisimple if there exists simple submodules 
+  \(W_1, \cdots, W_m\) such that \(V = W_1 \oplus \cdots \oplus W_m\). 
+\end{definition}
+
+We see that these definition are essentially the same as the ones for 
+representations. Indeed, as justified earlier, a module is simply  
+representations of algebras.
+
+\begin{definition}[Regular Module]
+  Let \(A\) be an algebra, then the regular module over \(A\) is \(A\) over 
+  itself equipped with the algebra homomorphism 
+  \[\rho : A \mapsto \text{End}(A) : a \mapsto a (\cdot).\]
+\end{definition}
+
+We will continue to work with \(\mathbb{C}\) though all following statements also 
+work for any algebraically closed field.
+
+\begin{lemma}[Schur's Lemma]
+  If \(T : V \to W\) is a module homomorphism and \(V\) is simple, then 
+  \(T\) is either 0 or an faithful (in the case that 
+  \(W\) is also simple, then \(T\) is an isomorphism). Furthermore, if 
+  \(V\) is simple and finite dimensional, then 
+  \(\text{End}_A(V) = \mathbb{C} \cdot \text{id}_V\).
+\end{lemma}
+\begin{proof}
+  Same proof as the representation case.
+\end{proof}
+
+\begin{proposition}
+  If \((V, \rho_V)\) is an \(A\)-module and \(\rho_V : A \to \text{End}(V)\) is 
+  surjective, then \((V, \rho_V)\) is simple. Furthermore, if \(V\) is 
+  finite dimensional, then the converse holds.
+\end{proposition}
+
+While similar to the representation case, we may define the external direct sum of 
+two modules, unlike the representation case, we may not define the tensor product 
+as the scalar multiplication operation is linear, not bilinear. Indeed, if we 
+have something called a bi-algebra, then it is possible to define the tensor 
+product.
+
+\subsection{Semisimplicity and Matrix Algebras}
+
+We recall that finite dimensional representations of \(G\) over \(\mathbb{C}\) 
+are semi simple. Thus, by the bijective correspondence, the same is true 
+for finite dimensional modules over the group algebra \(\mathbb{C}[G]\).
+Also recall that we have the isomorphism 
+\(\mathbb{C}[G] \to \bigoplus \text{End}(V_i)\) if \((V_1, \rho_{V_i}), \cdots, 
+(V_m, \rho_{V_m})\) are irreducible up to isomorphism, and in fact, we 
+now see this is also a algebra homomorphism.
+
+\begin{theorem}[Artin-Wedderburn]
+  Given a finite dimensional algebra \(A\), the following are equivalent:
+  \begin{enumerate}
+    \item every finite dimensional \(A\)-module is semisimple;
+    \item \(A\) is isomorphic to a direct sum of matrix algebras, i.e.
+      \(A \cong \bigoplus_{i = 1}^m \text{Mat}_{n_i}(\mathbb{C})\);
+    \item there is a full set of simple left \(A\)-modules \(V_1, \cdots, V_m\) 
+      and an isomorphism \(A \cong \bigoplus_{i = 1}^m \text{End}(V_i)\).
+  \end{enumerate}
+\end{theorem}
+
+We see that both the second and third statement implies the sum of squares formula.
+
+\begin{definition}[Semisimple Algebra]
+  For \(\dim_F A < \infty\), \(A\) is said to be semisimple if 
+  every finite dimensional \(A\)-module is semisimple.
+\end{definition}
+
+\begin{lemma}
+  If \((V, \rho_V)\) is an \(A\)-module, and \(v \in V \setminus \{0\}\), we 
+  define \(\phi_v : A \to V : a \mapsto \rho_V(a)(v)\). Then \(\phi_v\) is a 
+  surjective \(A\)-module homomorphism if \(V\) is simple.
+\end{lemma}
+\begin{proof}
+  \(\phi_V(A) \subseteq V\) is a submodule and so, \(\phi_V(A) = \{0\}\) or 
+  \(\phi_V(A) = V\). This first case is impossible since \(\phi_V(e) = 
+  \rho_V(e)(v) = v \neq 0\).
+\end{proof}
+
+With this in mind, we see that we can find all simple modules from \(A\) by 
+considering \(V \cong A / \ker \phi_v\) by the first isomorphism theorem.
+
+\begin{proposition}
+  Every simple \(A\)-module is isomorphic to \(V\).
+\end{proposition}
+\begin{proof}
+  If \((W, \rho_W)\) is simple and \(w \in W \setminus \{0\}\), then 
+  we have \(W \cong A / \ker \phi_w\). It is clear that \(\ker \phi_w \neq = \{0\}\) 
+  and \(\ker \phi_w \neq A\) and so, \(\ker \phi_w = V\). Applying 
+  \(W = V\), we obtain \(V \cong A / V\) and so \(W \cong A / V \cong V\).
+\end{proof}
 
 \end{document} 
