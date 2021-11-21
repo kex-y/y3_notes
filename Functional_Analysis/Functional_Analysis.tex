@@ -80,9 +80,8 @@
 \newtheorem{proposition}{Proposition}[section]
 \newtheorem{corollary}{Corollary}[section]
 \newtheorem{example}{Example}[section]
-\newcommand{\diag}{\mathop{\mathrm{diag}}}
-\newcommand{\Arg}{\mathop{\mathrm{Arg}}}
 \newcommand{\hess}{\mathop{\mathrm{Hess}}}
+\newcommand{\weak}{\rightharpoonup}
 % the redefinition for the missing \setminus must be delayed
 \AtBeginDocument{\renewcommand{\setminus}{\mathbin{\backslash}}}
 
@@ -1147,8 +1146,8 @@ properly later in this course
 \subsection{Tietze-Urysohn and Hahn-Banach}
 
 \begin{lemma}[Urysohn's Lemma]
-  For \(A, B \subseteq X\) closed with \(A \cap B\), then there exists a continuous 
-  function such that \(h\mid A = 1\) and \(h\mid_B = 0\).
+  For \(A, B \subseteq X\) closed with \(A \cap B = \varnothing\), then there 
+  exists a continuous function such that \(h\mid_A = 1\) and \(h\mid_B = 0\).
 \end{lemma}
 \begin{proof}
   Consider 
@@ -1759,6 +1758,8 @@ is automatically a homeomorphism and \(T^{-1}\) is bounded.
 \newpage
 \section{Spectral Theory}
 
+In this section we will introduce some tools applicable for the study of PDEs.
+
 \subsection{Compact Operators}
 
 \begin{definition}
@@ -1850,5 +1851,164 @@ and thus,
 We note that this also implies the operator is bounded with the bound 
 \(\|T\| \le \|K\|_2\).
 
+\subsection{Weak Convergence}
+
+\begin{definition}[Weak Convergence]
+  A sequence \((x_n)\) in a normed space \(X\) is said to be weakly convergent 
+  if there exists some \(x \in X\) such that for all \(f \in X^*\), 
+  \[\lim_{n \to \infty} f(x_n) \to f(x).\]
+  In this case, we say \((x_n)\) converges weakly to \(x\) and denote it by 
+  \(x_n \weak x\). In contrast to this, if \((x_n)\) converges in the norm
+  sense, then we say \((x_n)\) converges strongly.
+\end{definition}
+
+\begin{proposition}
+  Let \((x_n)\) be a sequence in a normed space \(X\) which converges weakly, 
+  then 
+  \begin{itemize}
+    \item it has a unique weak limit;
+    \item every subsequence of \((x_n)\) converges to the same limit;
+    \item \(\{\|x_n\|, n \in \mathbb{N}\}\) is bounded.
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  If \(x_n \weak x\) and \(x_n \weak y\), then by definition, for all 
+  \(f \in X^*\), \(f(x) \leftarrow f(x_n) \to f(y)\) and so, as limits are 
+  unique in the underlying field, \(f(x) = f(y)\) and so \(f(x - y) = 0\).
+  If \(x \neq y\) then we may define a non-zero linear functional from the 
+  span of \(x - y\) which may be extended to the whole space by Hahn-Banach. 
+  Thus, \(x - y = 0\) and so \(x = y\).
+
+  A subsequence of \(f(x_n)\) converges to \(f(x)\) for all \(f \in X^*\) through 
+  usual convergence and so the claim is as required.
+
+  Since \(f(x_n) \to f(x)\) for all \(f \in X^*\), \(|f(x_n)|\) is bounded by 
+  some \(c_f\). Define \(g_n \in (X^*)^* : f \mapsto f(x_n)\), we have 
+  \(\sup_{n \in \mathbb{N}} \|g_n(f)\| \le c_f\), and so by Banach-Steinhaus, 
+  there exists some \(c\) such that \(\sup_{n \in \mathbb{N}} \|g_n\| \le c\).
+  Now, since \(g_n = \phi(x_n)\) where \(\phi : X \to (X^*)^*\) is the canonical 
+  isometry, we have \(\|g_n| = \|\phi(x_n)\| = \|x_n\|\). Thus, \(\|x_n\|\) is 
+  bounded by \(c\). 
+\end{proof}
+
+\begin{proposition}
+  Let \((x_n)\) be a sequence in the normed space \(X\) and \(x_n \to x\), 
+  then \(x_n \weak x\).
+\end{proposition}
+\begin{proof}
+  Clear by sequential continuity.
+\end{proof}
+
+Weak convergence is a infinite dimensional construct as in the finite dimensional 
+case, weak convergence and convergence in norms is equivalent.
+
+\begin{proposition}
+  Let \((x_n)\) be a sequence in the finite dimensional normed space \(X\) 
+  such that \(x_n \weak x\). Then \(x_n \to x\).
+\end{proposition}
+\begin{proof}
+  Let \(\{e_i\}_{i = 1}^n\) be a basis of \(X\). Recall that every linear map 
+  is continuous in a finite dimensional normed space and so, the linear map 
+  defined by \(f_i(e_j) = \delta_{ij}\) is in \(X^*\). Thus, if we write 
+  \(x_n = \sum_i \lambda_i^n e_i, x = \sum_i \lambda_i e_i\), we have 
+  \[\lambda_i^n = f_i(x_n) \to f_i(x) = \lambda_i.\]
+  Thus, 
+  \[\|x_n - x\| = \left\|\sum_{i = 1}^n (\lambda_i^n - \lambda_i)e_i \right\| 
+  \le \sum_i |\lambda_i^n - \lambda_i| \|e_i\| \to 0.\] 
+\end{proof}
+
+As one would hope, these two notions are not equivalent in the infinite dimensional 
+case. Consider the sequence \(e_i\) in \(\ell_2\) where 
+\(e_i = (\delta_{ij})_{j = 1}^\infty\). By recalling that there is a 
+canonical isomorphism between \((\ell_p)^*\) and \(\ell_q\) for all 
+\(1 / p + 1 / q = 1\), we have \((\ell_2)^* \cong \ell_2\). Thus, for all 
+\(f \in (\ell_2)^*\), \(f(e_i) = \sum_j f_je_i = f_i \to 0\) as \(i \to \infty\).
+Thus, \(e_i \weak 0\). On the other hand, \(e_i\) does not converge to \(0\) since 
+\(\|e_i - 0\| = \|e_i\| = \sqrt{2}\) for all \(i\).
+
+While weak convergence seems uncontrollable, we have a good understanding 
+of it behaviour in some classical spaces and in Hilbert spaces. The next 
+two proposition illustrates this.
+
+\begin{proposition}
+  Let \((x_n)\) be a sequence in \(X = c_0\) or \(\ell_p\) for \(p \in (1, \infty)\).
+  Then, \(x_n \weak x\) if and only if \((x_n)\) is bounded and converges to 
+  \(x\) pointwise, i.e. \(x_n(j) \to x(j)\) for all \(j \in \mathbb{N}\).
+\end{proposition}
+\begin{proof}[Proof of the \(\ell_p\) case]
+  The forward direction is obvious so let us consider the converse. Suppose 
+  \((x_n) \in \ell_p\) is bounded by \(M\) (so that \(\|x_n - x\|_p \le 
+  \|x_n\|_p + \|x\|_p \le 2M\)) and converges point-wise to \(x\). 
+  Then, for all \(f \in (\ell_p)^* \cong \ell_q\), \(\epsilon > 0\), 
+  choose \(N \in \mathbb{N}\) such that 
+  \[\left(\sum_{j = N + 1}^\infty |f_j|^q\right)^{1 / q} < \frac{\epsilon}{2M}.\]
+  Then, for sufficiently large \(n\), we have 
+  \[\left|\sum_{j = 1}^N (x_n(j) - x(j))f_j\right| < \frac{\epsilon}{2}.\]
+  Thus, 
+  \[\begin{split}
+    |f(x_n) - f(x)| & = \left|\sum_{j = 1}^\infty(x_n(j) - x(j))f_j\right|
+      \le \left|\sum_{j \le N}(x_n(j) - x(j))f_j\right| + 
+          \left|\sum_{j > N}(x_n(j) - x(j))f_j\right|\\
+    & < \frac{\epsilon}{2} + \left(\sum_{j > N}(x_n(j) - x(j))^p\right)^{1 / p}
+        \left(\sum_{j > N} |f_j|^q\right)^{1 / q}
+      < \frac{\epsilon}{2} + 2M \frac{\epsilon}{2M} = \epsilon
+  \end{split}\]
+  implying \(x_n \weak x\) as required.
+\end{proof}
+
+\begin{proposition}
+  Let \((x_n)\) be a sequence in a Hilbert space \(\mathcal{H}\) such that 
+  \(x_n \weak x\) and \(\|x_n\| \to \|x\|\), then \(x_n \to x\) in 
+  \(\mathcal{H}\).
+\end{proposition}
+\begin{proof}
+  Consider \(\|x_n - x\|^2 = \|x_n\|^2 + \|x\|^2 - \langle x_n, x \rangle - 
+  \langle x, x_n \rangle\). Defining \(f_x(y) := \langle y, x\rangle\), 
+  we have \(f_x \in \mathcal{H}^*\) and so, \(\langle x_n, x \rangle = 
+  f_x(x_n) \to f_x(x) = \langle x, x\rangle = \|x\|^2\). On the other hand, 
+  \(\langle x, x_n \rangle = \overline{f_x(x_n)} \to \overline{\|x\|^2} = 
+  \|x\|^2\). Thus, 
+  \[\|x_n - x\|^2 = \|x_n\|^2 + \|x\|^2 - \langle x_n, x \rangle - 
+  \langle x, x_n \rangle \to 2\|x\|^2 - 2\|x\|^2 = 0.\]
+\end{proof}
+
+\begin{definition}[Weak Topology]
+  Let \(X\) be a Banach space. The weak topology on \(X\) is the topology with 
+  the base with elements of the form 
+  \[U_{\epsilon_i}^{f_i}(x) := \{y \in X \mid |f_i(y) - f_i(x)| < \epsilon_i\}\]
+  for some \(\epsilon_1, \cdots, \epsilon_n > 0\) and \(f_1, \cdots, f_n \in X^*\).
+\end{definition}
+
+In other words, the weak topology on \(X\) is the coarsest topology on which 
+every linear functional in \(X^*\) remains continuous. 
+
+As one might expect, a sequence converge in the weak topology if and only if 
+it converges weakly.
+
+\begin{proposition}
+  A convex set \(C \subseteq X\) is strongly closed (i.e. closed with respect 
+  to the topology induced by the Norm) if and only if it is weakly closed 
+  (i.e. closed with respect to the weak topology).
+\end{proposition}
+
+\begin{definition}[Weak* Topology]
+  Let \(X\) be a Banach space. The weak* topology is a topology on \(X^*\) 
+  with the base with elements of the form 
+  \[U_{\epsilon_i}^{x_i} := \{g \in X^* \mid |g(x_i) - f(x_i)| < \epsilon_i\}\]
+  for some \(\epsilon_1, \cdots, \epsilon_n > 0\), \(x_1, \cdots, x_n \in X\).
+\end{definition}
+
+One may show that the weak* topology is Hausdorff as pairs of distinct 
+functionals can be separated by elements of \(X\). Also, a sequence of 
+linear functionals which converge in the weak* topology is necessary bounded 
+by the Banach-Steinhaus theorem.
+
+The weak topology is in general not metrizable. On the other hand, one 
+may show that if \(X\) is separable, the the unit ball in \(X^*\) endowed 
+with the topology induced from the weak* topology is metrizable.
+
+\begin{theorem}[Banach-Alaoglu]
+  The unit ball of a dual space is compact in the weak* topology.
+\end{theorem}
 
 \end{document}
