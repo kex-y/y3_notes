@@ -2007,8 +2007,144 @@ The weak topology is in general not metrizable. On the other hand, one
 may show that if \(X\) is separable, the the unit ball in \(X^*\) endowed 
 with the topology induced from the weak* topology is metrizable.
 
+Lastly, we recall that the unit ball is never compact in a infinite dimensional 
+normed space, the following theorem demonstrate that the weak* topology allows 
+us to recover some sense of compactness in normed spaces.
+
 \begin{theorem}[Banach-Alaoglu]
   The unit ball of a dual space is compact in the weak* topology.
+\end{theorem}
+
+\subsection{Compact Sets in Functional Spaces}
+
+\begin{definition}[\(\epsilon\)-cover]
+  An \(\epsilon\)-cover of a metric space for some \(\epsilon > 0\) is a cover 
+  of the space consisting of open sets with diameter at most \(\epsilon\). 
+  A metric space is totally bounded if it admits a finite \(\epsilon\)-cover 
+  for every \(\epsilon > 0\).
+\end{definition}
+
+\begin{lemma}\label{tb}
+  Let \(X\) be a metric space, such that for every \(\epsilon > 0\), there 
+  exists some \(\delta > 0\) and a metric space \(W\), a continuous map 
+  \(\Phi : X \to W\) with \(\Phi(X)\) is totally bounded such that for all 
+  \(x, y \in X\), \(d(\Phi(x), \Phi(y)) < \delta\) implies 
+  \(d(x, y) < \epsilon\). Then \(X\) is totally bounded. 
+\end{lemma}
+\begin{proof}
+  Follows immediately by pulling back the \(\delta\)-covers of \(\Phi(X)\) along 
+  \(\Phi\). 
+\end{proof}
+
+\begin{proposition}
+  A metric space is compact if and only if it is compact and totally bounded.
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{proposition}
+  The subset \(\mathcal{G} \subseteq \ell_p\) where \(1 \le p < \infty\) is 
+  totally bounded if and only if it is point-wise bounded and for every 
+  \(\epsilon > 0\) there exists some \(n\) such that for all \(x \in \mathcal{G}\), 
+  \[\sum_{j > n} |x_j|^p < \epsilon^p.\]
+\end{proposition}
+\begin{proof}
+  Suppose \(\mathcal{G}\) is totally bounded. Then, it is point-wise 
+  bounded since totally boundedness implies boundedness which 
+  in turn implies point-wise boundedness. On the other hand, for all 
+  \(\epsilon > 0\), there exists a finite \(\epsilon / 2\)-cover 
+  \((B_{\epsilon / 2}(x^i))_{i = 1}^n\) of \(\mathcal{G}\). Then, for all 
+  \((y_n^i) \in B_{\epsilon / 2}(x^i)\), by definition 
+  \[\frac{\epsilon}{2} > \|(y_n^i) - x^i\|_p = 
+    \left(\sum_{n = 1}^\infty |y_n^i - x_n^i|^p\right)^{1 / p}.\]
+  Then, taking \(N_i \in \mathbb{N}\) such that \(\sum_{n > N_i} |x_n^i|^p < 
+  \frac{\epsilon^p}{2^p}\), we can define \(\tilde x^i, \tilde y^i \in \ell_p\),
+  \[\tilde x_n^i := 
+  \begin{cases}
+    0, & \ n \le N_i,\\
+    x_n^i, & \ n > N_i.
+  \end{cases} \
+    \tilde y_n^i := 
+  \begin{cases}
+    0, & \ n \le N_i,\\
+    y_n^i, & \ n > N_i.
+  \end{cases}\]
+  So, by Hölder's inequality, 
+  \[\begin{split}
+    \left(\sum_{n > N_i} |y_n^i|^p\right)^{1 / p} & =
+    \|\tilde y^i\|_p \le \|\tilde y^i - x^i\|_p + \|\tilde x^i\| < 
+    \left(\sum_{n > N_i} |y_n^i - x_n^i|^p\right)^{1 / p} + 
+    \left(\sum_{n > N_i} |x_n^i|^p\right)^{1 / p}\\
+    & < \left(\sum_{n = 1}^\infty |y_n^i - x_n^i|^p\right)^{1 / p} + 
+    \frac{\epsilon}{2} < \epsilon.
+  \end{split}\]
+  Thus, \(\sum_{n > N_i} |y_n^i|^p < \epsilon^p\) and hence, taking 
+  \(N := \max_i N_i\) suffices.
+
+  Conversely, for all \(\epsilon > 0\), let \(n \in \mathbb{N}\) 
+  such that for all \(x \in \mathcal{G}\), 
+  \(\sum_{j > n} |x_j|^p < (\epsilon / 4)^p\). Define 
+  \[\Phi : \mathcal{G} \to \mathbb{R}^n : x \mapsto (x_1, \cdots, x_n).\]
+  As \(\mathcal{G}\) is point-wise bounded, \(\Phi(\mathcal{G})\) is totally 
+  bounded. Furthermore, if \(x, y \in \mathcal{G}\) such that
+  \[\|\Phi(x) - \Phi(y)\|_p = 
+    \left(\sum_{i = 1}^n |x_i - y_i|^p\right)^{1 / p} < \frac{\epsilon}{2},\]
+  then 
+  \[\|x - y\|_p \le \|\Phi(x) - \Phi(y)\|_p + 
+  \left(\sum_{i > n} |x_i - y_i|^p\right)^{1 / p} < 
+    \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon\]
+  where the first inequality is due to a similar construction as the forward 
+  direction along with Hölder's inequality. Hence, by lemma \ref{tb}, 
+  \(\mathcal{G}\) is totally bounded.
+\end{proof}
+
+\begin{proposition}
+  Let \(\mathcal{H}\) be a separable Hilbert space and suppose 
+  \(D \subseteq \mathcal{H}\) is bounded and for some orthonormal basis 
+  \(\{e_n\}_{n \in \mathbb{N}}\) of \(\mathcal{H}\), we have, for all 
+  \(\epsilon > 0\), there exists some \(N \in \mathbb{N}\) such that 
+  for all \(f \in D\),
+  \[\sum_{n \ge N} |\langle f, e_n \rangle|^2 < \epsilon^2.\]
+  Then \(D\) is precompact (i.e. \(\overline{D}\) is compact) in \(\mathcal{H}\).
+\end{proposition}
+\begin{proof}
+  See official notes for full proof. 
+  
+  Outline: given a sequence in \(D\), it 
+  suffices to show it has a convergent subsequence in \(\mathcal{H}\). This 
+  follows by projecting the sequence on to \(\{e_1, \cdots, e_n\}\) for 
+  appropriatly choosing \(n\). Then, with Heine-Borel, we obtain a 
+  convergent subsequence in the projection. Pulling back, we obtain a 
+  convergent subsequence in \(\mathcal{H}\).
+\end{proof}
+
+We recall the Arzela-Ascoli theorem in a more general context.
+
+\begin{theorem}[Arzela-Ascoli]
+  Let \(\Omega\) be a compact topological space. Then a subset 
+  \(\mathcal{F} \subseteq \mathcal{C}(\Omega)\) is totally bounded in the 
+  supremum norm if and only if it is point-wise bounded and equicontinuous 
+  (i.e. for all \(x \in \Omega, \epsilon > 0\), there exists a open neighbourhood
+  \(V\) of \(x\) such that, for all \(y \in V\), \(|f(x) - f(y)| < \epsilon\) 
+  for all \(f \in \mathcal{F}\)).
+\end{theorem}
+\begin{proof}
+  Similar to the \(\mathbb{R}^n\) case.
+\end{proof}
+
+\begin{theorem}[Kolmogorov-Riesz]
+  A subset \(\mathcal{F}\) of \(L_p(\mathbb{R}^2)\) where \(1 \le p < \infty\) 
+  is totally bounded if and only if 
+  \begin{itemize}
+    \item \(\mathcal{F}\) is bounded;
+    \item for all \(\epsilon > 0\), there exists some \(R > 0\) such that for 
+      all \(f \in \mathcal{F}\), 
+      \[\int_{|x| > R} |f(x)|^p \lambda(\dd x) < \epsilon^p;\]
+    \item for all \(\epsilon > 0\), there exists some \(\rho > 0\) such that 
+      for all \(f \in \mathcal{F}, y \in \mathbb{R}^n, \|y\| < \rho\), 
+      \[\int_{\mathbb{R}^n} |f(x + y) - f(x)|^p \lambda(\dd x) < \epsilon^p.\]
+  \end{itemize}
 \end{theorem}
 
 \end{document}
