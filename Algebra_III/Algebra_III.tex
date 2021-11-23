@@ -1718,4 +1718,24 @@ though we shall not prove it here.
   for \(k\) sufficiently large, implying \(s = d_{p, k}\).
 \end{proof}
 
+Alternatively, one may formulate the classification by considering the 
+primes which divides \(a_i\). If \(p_1, \cdots, p_t\) are the primes dividing 
+\(a_i\) so that \(a_i = u_i \prod_j p_j^{k_{ij}}\) where \(u_i\) is a unit, 
+the Chinese remainder theorem provides the isomorphisms
+\[R / \langle a_i \rangle \cong \bigoplus_j R / \langle p_j^{k_{ij}} \rangle,\]
+and so, 
+\[M \cong R^s \oplus \bigoplus_{i, j} R / \langle p_j^{k_{ij}} \rangle.\]
+
+Since abelian groups are \(\mathbb{Z}\)-modules and \(\mathbb{Z}\) is an 
+Euclidean domain, we recover the classification of finitely generated 
+abelian groups.
+
+\begin{corollary}
+  Let \(A\) be a finitely generated abelian group. Then there exists integers 
+  \(s, a_1, \cdots, a_t\) where \(a_1, \cdots, a_t > 1\) and 
+  \(a_1 | \cdots | a_t\) such that 
+  \[A \cong \mathbb{Z}^s \oplus \mathbb{Z} / a_1 \mathbb{Z} \oplus \cdots 
+    \oplus \mathbb{Z} / a_t \mathbb{Z}.\]
+\end{corollary}
+
 \end{document}
