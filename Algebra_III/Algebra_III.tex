@@ -1537,7 +1537,7 @@ map provided with know where it maps its basis.
   and isomorphism between \(M\) and \(N\).
 \end{proof}
 
-\subsection{Classification of Modules}
+\subsection{Classification of Finitely Presented Modules}
 
 \begin{definition}[Generating Set]
   A subset \(S\) of a module \(M\) is a generating set if \(\langle S \rangle = M\).
@@ -1591,9 +1591,131 @@ Similarly, we define the elementary row operations.
   \(s_i\) with \(s_i - rs_j\) and rewriting the relations to account for this).
 \end{itemize}
 We see that these elementary operations corresponds to changes of the choice 
-of the generators. It unclear whether or not two presentations on the same 
-module can be transformed into each other with the elementary operations. 
+of the generators, and so, if the presentations of two modules can be 
+transformed into each other with the elementary operations, then the two modules 
+are isomorphic. On the other hand, it unclear whether or not two presentations 
+on the same module can be transformed into each other with the elementary operations. 
 This is true for simple cases such as when \(R\) is a field and so \(M\) 
 is a vector space though it is unlikely to be true in general.
+
+\begin{definition}[Smith Normal Form]
+  Let \(R\) be an Euclidean domain (definition also work for PID though the 
+  proofs will require ED) and \(M\) a matrix with entries in \(R\). Then 
+  \(M\) is in smith normal form (SNF) if the only non-zero entries are the 
+  diagonal entries \(M_{i,i}\), and moreover, for each \(i\), 
+  \(M_{i,i} \mid M_{i+1, i+1}\).
+\end{definition}
+
+Given any matrix over an Euclidean domain, we will always be able to transform 
+it into smith normal form using the elementary operations. In fact, we will 
+provide an constructive algorithm for doing so.
+
+\begin{lemma}
+  Given \(M\) a matrix over an Euclidean domain \(R\). After finitely many 
+  elementary operations, we can ensure \(M\) is in the form 
+  \([M'_{1,1}] \oplus M'\), where \(M'_{1,1}\) divides every entry of \(M'\).
+\end{lemma}
+\begin{proof}
+  Recall that the Euclidean norm \(N : R \to \mathbb{N}\) satisfies for all 
+  \(a, b \in R\), \(b \neq 0\), there exists \(q, r \in R\) such that 
+  \(a = qb + r\) and \(N(r) < N(b)\) or \(r = 0\).
+  \begin{enumerate}
+    \item Using row and column operations, we can move the non-zero entry 
+      of smallest norm to the upper left.
+    \item Subtract multiples of the first row from the remaining row using 
+      the Euclidean norm property so that the first entry of each row is either 
+      zero or has norm less than the upper left entry.
+    \item Do the same with columns, i.e. subtract multiples of the first column 
+      from the remaining so that the first entry of each column is either zero 
+      or has norm less than the upper left entry.
+    \item If there exists a non-zero entry in the first row or the first column 
+      that is not the upper left, repeat from step 1.
+      This process must terminate in finite steps by the well-ordering 
+      principle.
+    \item Now that every entry in the first row or the first column 
+      that is not the upper left is zero, we are done if the upper left entry 
+      divides every other entry.
+    \item If not, let \(m_{11}\) be the upper left entry, and there exists some 
+      \(m_{ij}\) such that \(m_{11} \not\mid m_{ij}\). Add the first row 
+      to the \(i\)-th row (which does not change \(m_{ij}\)). 
+    \item Now that \(m_{11}\) is in the first column, subtract \(r\)-multiples of 
+      the first column from the \(j\)-th column so that \(N(m_{ij} - rm_{11}) < 
+      N(m_{11})\).
+    \item As \(N(m_{ij} - rm_{11}) < N(m_{11})\), \(m_{11}\) is no longer the 
+      entry with smallest norm and so, start from step 1. This process 
+      eventually terminates as the norm of the upper left entry is decreasing.
+  \end{enumerate}
+  Once the algorithm terminates, we see that the resulting matrix is as 
+  required.
+\end{proof}
+
+\begin{proposition}
+  Given \(M\) a matrix over an Euclidean domain \(R\). After finitely many 
+  elementary operations, we can ensure \(M\) is in the Smith normal form.
+\end{proposition}
+\begin{proof}
+  Recursively apply the above algorithm to the resulting \(M'\).
+\end{proof}
+
+In the case where the matrix is a presentation, we see that we may show that 
+two modules are isomorphic by showing they have the same Smith normal form. 
+
+\begin{corollary}
+  Every finitely presented module \(M\) of \(R\) an Euclidean domain is isomorphic 
+  to one of the form 
+  \[M \cong R^s \oplus R / \langle a_1 \rangle \oplus R / \langle a_2 \rangle 
+  \oplus \cdots \oplus R / \langle a_t \rangle\]
+  with \(a_1 | a_2 | \cdots | a_t\) in \(R\), \(a_i \neq 0\).
+
+  We call \(s\) the rank of \(M\) and \(a_1, \cdots, a_n\) are called the 
+  invariant factors of \(M\).
+\end{corollary}
+\begin{proof}
+  The natural presentation of \(R^s \oplus R / \langle a_1 \rangle 
+  \oplus \cdots \oplus R / \langle a_t \rangle\) is already in Smith normal 
+  form, and so, choosing \(a_i\) to be the diagonal entries of the SNF of 
+  \(M\) suffices.
+\end{proof}
+
+The above result is known as the classification of finitely generated modules 
+over Euclidean domain. The statement holds as well for principal ideal domains 
+though we shall not prove it here.
+
+\begin{proposition}
+  If \(M \cong R^s \oplus R / \langle a_1 \rangle 
+  \oplus \cdots \oplus R / \langle a_n \rangle \cong R^t
+  \oplus R / \langle b_1 \rangle
+  \oplus \cdots \oplus R / \langle b_m \rangle\) where 
+  \(a_1 | \cdots | a_n\) and \(b_1 | \cdots | b_n\), then 
+  \(s = t\), \(n = m\) and each \(a_i\) is an associate of \(b_i\).
+\end{proposition}
+\begin{proof}
+  Let \(p \in R\), \(p \neq 0\) be a prime. Then for any \(k \in \mathbb{N}\), 
+  \(p^{k + 1}M \le p^kM \le M\) where \(p^j M\) is the image of 
+  the homomorphism \(M \to M : x \mapsto xp^j\). Then, defining 
+  \[M_{p, k} := p^k M / p^{k + 1} M,\]
+  we have for all \(x \in M_{p, k}\), \(xp = 0\) since for all \(x \in p^k M\), 
+  \(xp \in p^{k + 1}M\). Furthermore, \(M_{p, k}\) is an 
+  \(R / \langle p \rangle\)-module with the multiplication being 
+  \[(r + \langle p \rangle)(p^k m + p^{k + 1}M) = rp^km + p^{k + 1}M.\]
+  But, as \(p\) is prime, \(\langle p \rangle\) is a maximal ideal, and so 
+  \(R / \langle p \rangle\) is a field and \(M_{p, k}\) is a 
+  \(R / \langle p \rangle\)-vector space. Now, by considering 
+  \(M_{p, k} = (R_{p, k})^s \oplus (R / a_1)_{p, k} \oplus \cdots \oplus (R / a_n)_{p, k}\),
+  where the individual summands either contribute 0 or 1 dimension. 
+  We see that the map \(R / p \to R_{p, k} = p^k R / p^{k + 1}R : 
+  r + \langle p \rangle \mapsto p^k r + \langle p^{k + 1} \rangle\) is an 
+  isomorphism and thus, \(\dim R_{p, k} = 1\) and so, \(\dim (R_{p, k})^s = s\).
+  For the other summands \((R / a_i)_{p, k}\), write \(a_i = p^n q\) with 
+  \(p, q\) relatively prime. Then, by CRT, \(R / a_i \cong R / p^n \times R / q\),
+  and so, \(p(R / q) = R / q\) implying \((R / q)_{p, k} = 0\). On the other 
+  hand, \(p^k(R / p^n) = 0\) if \(k \ge n\) and if \(k < n\), 
+  \(p^k(R / p^n) = p^k R / p^n R\) and so, 
+  \[(R / p^n)_{p, k} = \frac{p^k R / p^n R}{p^{k + 1} R / p^n R} \cong 
+  p^k R / p^{k + 1}R \cong R / P.\] 
+  Thus, \(\dim R / a_i\) is 0 if \(k \ge n\) and 1 if \(k < n\).
+  Now, taking \(d_{p, k} = \dim M_{p, k}\), we have \(\dim R / a_i = 0\) 
+  for \(k\) sufficiently large, implying \(s = d_{p, k}\).
+\end{proof}
 
 \end{document}
