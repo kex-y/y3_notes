@@ -975,7 +975,7 @@ we may compute the tangent space of \(SL_n(\mathbb{R})\) at some \(A\) by
 \[T_A SL_n(\mathbb{R}) = \ker D(\det)\mid_A =
   \{x \in GL_n(\mathbb{R}) \mid x \cdot [(-1)^{i + j} \det A_{ij}]_{ij} = 0\}.\]
 
-\subsection{Vector Fields and Vector Bundles}
+\subsection{Vector Fields and Flows}
 
 In the case of \(\mathbb{R}^n\), we have a good intuition for what a vector field
 is, i.e. a smooth function from \(U \subseteq \mathbb{R}^n\) open which maps 
@@ -1137,8 +1137,6 @@ is well-defined.
 \begin{proof}
   Requires algebraic topology or differential topology.
 \end{proof}
-
-\subsection{Flows}
 
 \begin{definition}[Flow]
   Let \(X\) be a manifold. A one-parameter family of diffeomorphisms or 
@@ -1371,6 +1369,175 @@ Now, by considering if \(h \in R_x(X)\) then \(\partial_{x, v}(h) =
 With this, a similar conclusion can be made by taking the dual on both 
 sides of the isomorphism, obtaining the canonical isomorphism
 \[(T_x X)^* \simeq ((T^*_x X)^*)^* \simeq T^*_x X.\]
+
+\subsection{Derivation}
+
+So far, we have defined the cotangent space and showed the existence of an 
+isomorphism between \(T_x X\) and \((T_x^* X)^*\) via \(v \mapsto \partial_{x, v}\).
+We will again treat this topic but this time through an algebraic point of view 
+with derivations.
+
+\begin{definition}[Derivation]
+  Let \(X\) be an \(n\)-dimensional manifold and let \(x \in X\). A derivation 
+  of \(X\) at \(x\) is a linear map \(\mathfrak{d} : C^\infty(X) \to \mathbb{R}\) 
+  such that 
+  \[\mathfrak{d}(h_1 h_2) = h_1(x)\mathfrak{d}(h_2) + h_2(x)\mathfrak{d}(h_1).\]
+  We call this property the Leibniz rule and note the similarity of the statement 
+  with the Leibniz rule (or product rule) from calculus. We denote 
+  \[\text{Der}_x(X) := \{\text{derivations of } X \text{ at } x\}.\]
+\end{definition}
+
+We note that the definition of the Leibniz rule depends on the choice of \(x\) 
+though later, we shall remove this dependence.
+
+\begin{theorem}\label{thm_der}
+  Let \(X\) be a manifold and let \(x \in X\). A linear map \(\mathfrak{d} : 
+  C^\infty \to \mathbb{R}\) is a derivation of \(X\) at \(x\) if and only if 
+  \(\mathfrak{d}(h) = 0\) for all \(h \in R_x(X) = 
+  \{h \in C^\infty \mid \text{rk}(h)\mid_x = 0\}\).
+\end{theorem}
+\begin{proof}[Proof of the reverse direction of theorem \ref{thm_der}]
+  The forward direction requires some further definitions so let us prove the 
+  reverse direction first. 
+
+  Suppose \(\mathfrak{d}\) satisfies \(\mathfrak{d}(h) = 0\) for all 
+  \(h \in R_x(X)\). Let \(h_1, h_2 \in C^\infty(X)\) and define 
+  \[h(y) := h_1(y)h_2(y) - h_1(x)h_2(y) - h_2(x)h_1(y).\]
+  We see that (as the Jacobian satisfies the Leibniz rule), 
+  \[Dh\mid_x = h_1(x)Dh_2\mid_x + h_2(x) Dh_1\mid_x - 
+  h_1(x)Dh_2\mid_x - h_2(x) Dh_1\mid_x = 0\]
+  and so \(h \in R_x(X)\). By assumption, \(\mathfrak{d}(h) = 0\) and by 
+  linearity of \(\mathfrak{d}\), 
+  \[0 = \mathfrak{d}(h) = \mathfrak{d}(h_1h_2) - h_1(x)\mathfrak{d}(h_2) - 
+    h_2(x)\mathfrak{d}(h_1)\]
+  implying 
+  \[\mathfrak{d}(h_1 h_2) = h_1(x)\mathfrak{d}(h_2) + h_2(x)\mathfrak{d}(h_1)\]
+  as required.
+\end{proof}
+
+As with other manifold proofs, we will first consider the statement in 
+\(\mathbb{R}^n\) and then generalize.
+
+\begin{lemma}\label{der_r}
+  Let \(U \subseteq \mathbb{R}^n\) be an open subset and let \(x \in U\) and 
+  \(\mathfrak{d}\) be a derivation as \(x\). Then for all \(h \in R_x(X)\), 
+  \(\mathfrak{d}(h) = 0\).
+\end{lemma}
+\begin{proof}
+  Consider the constant function \(1\). By Leibniz rule, we have 
+  \[\mathfrak{d}(1) = \mathfrak{d}(1 \cdot 1) = \mathfrak{d}(1) + \mathfrak{d}(1) = 
+    2\mathfrak{d}(1)\]
+  implying \(\mathfrak{d}(1) = 0\). Now, since \(\mathfrak{d}\) is linear, 
+  it follows \(\mathfrak{d}(c) = 0\) for all \(c \in \mathbb{R}\). Now, let 
+  \(h \in R_x(U)\), then Taylor's theorem implies 
+  \[h(y) = h(x) + \sum_{i = 1}^n(y_i - x_i)G_i(y),\]
+  for some \(G_i \in C^\infty(X)\). Furthermore, by the choice of \(h\), 
+  \(G_i(x) = 0\) for all \(i = 1, \cdots, n\). Thus, 
+  \[\mathfrak{d}(h) = \mathfrak{d}(h(x)) + 
+    \sum_{i = 1}^n \mathfrak{d}((y_i - x_i)G_i(y))
+    = \sum_{i = 1}^n (x_i - x_i) \mathfrak{d}(G_i(y)) + G_i(x) 
+      \mathfrak{d}(y_i - x_i) = 0\]
+  as required.
+\end{proof}
+
+\begin{lemma}
+  Let \(X\) be a manifold, let \(x \in X\) and \(\mathfrak{d}\) be a derivation 
+  at \(x\). Furthermore, let \(U\) be an open neighbourhood of \(x\) in \(X\), 
+  \(h \in C^\infty(X)\) be a smooth function such that \(h(y) = 0\) for all 
+  \(y \in U\). Then \(\mathfrak{d}(h) = 0\).
+\end{lemma}
+\begin{proof}
+  With the bump function, we showed the existence of a function 
+  \(\rho \in C^\infty(X)\) such that there exist open sets, 
+  \[x \in V \subseteq W \subseteq U\]
+  so, \(\rho\mid_V = 1\) and \(\rho\mid_{X \setminus W} = 0\). Define 
+  \(\psi = 1 - \rho\) so that we have \(\psi \cdot h = h\). Then, by the 
+  Leibniz rule, we have 
+  \[\mathfrak{d}(h) = \mathfrak{d}(\psi \cdot h) = h(x)\mathfrak{d}(\psi) + 
+    \psi(x)\mathfrak{d}(h) = 0\]
+  since \(h(x) = \psi(x) = 0\).
+\end{proof}
+
+\begin{definition}[Germ]
+  Let \(X\) be a manifold and let \(x \in X\). Then denote 
+  \(W \subseteq C^\infty(X)\) the set
+  \[W := \{h \in C^\infty(X) \mid \exists \text{ open } U \subseteq X, x \in U
+    \wedge h\mid_U = 0\}.\]
+  it is not difficult to show that \(W\) is a linear subspace of \(C^\infty(X)\) 
+  and so, we define the germ to be the quotient
+  \[\widehat{C_x^\infty}(X) := C^\infty(X) / W.\]
+  Elements of this space are called germs of smooth functions of \(X\) at 
+  \(x\) and we see that two smooth functionals in \(C^\infty(X)\) are the 
+  same germ if their difference is locally zero around \(x\).
+\end{definition}
+
+We see that the evaluation map \(\text{ev}_x : \widehat{C_x^\infty}(X) \to 
+\mathbb{R} : [h] \mapsto h(x)\) is well-defined. Moreover, the above lemma 
+implies that, for all \(\mathfrak{d} \in \text{Der}_x(X)\), the induced linear map 
+\[\hat{\mathfrak{d}} : \widehat{C_x^\infty}(X) \to \mathbb{R}\]
+is well-defined (since \(W \le \ker \mathfrak{d}\)) and it satisfies the 
+Leibniz rule 
+\[\hat{\mathfrak{d}}([h_1 \cdot h_2]) = h_1(x)\hat{\mathfrak{d}}([h_2]) 
++ h_2(x)\hat{\mathfrak{d}}([h_1]).\]
+
+\begin{lemma}
+  Let \(X\) be a manifold and let \(x \in X\) and \(U \subseteq X\) be an 
+  open subset containing \(x\). Then, we have an linear isomorphism 
+  \[\widehat{C_x^\infty}(X) \tilde \to \widehat{C_x^\infty}(U) : [h] \mapsto [h\mid_U].\]
+\end{lemma}
+\begin{proof}
+  The map is well-defined as the intersection of two open sets is open. 
+  As the map is clearly linear and injective, it remains to show surjectivity.
+  With the bump function, there exists some \(\rho \in C^\infty(X)\) and open 
+  sets 
+  \[x \in V \subseteq W \subseteq U\] 
+  such that \(\rho\mid_V = 1\) and \(\rho\mid_{X \setminus W} = 0\). Then, for 
+  all \([h] \in \widehat{C_x^\infty}(U)\), define 
+  \[\tilde h(x) := \begin{cases}
+    \rho(x)h(x), \ &x \in U,\\
+    0, \ &x \not \in U.
+  \end{cases}\]
+  It is clear that \(\tilde h\) is smooth and, furthermore, 
+  \(\tilde h \mid_U \in [h]\) since \(h - \tilde h\) is zero on \(V\). Thus,
+  \([\tilde h] = [h]\) and the map is surjective as claimed. 
+\end{proof}
+
+\begin{lemma}
+  Let \(X\) be a manifold and let \(x \in X\) and \(U \subseteq X\) be an 
+  open subset containing \(x\). Then, we have a linear isomorphism 
+  \[\text{Der}_x(U) \tilde \to \text{Der}_x(X) : \mathfrak{d}' \mapsto 
+    \mathfrak{d}\]
+  where \(\mathfrak{d}(h) := \mathfrak{d}'(h\mid_U)\).
+\end{lemma}
+\begin{proof}
+  As we have seen, a derivation \(\mathfrak{d}'\) on \(U\) induces a map 
+  \(\hat{\mathfrak{d}}' : \widehat{C_x^\infty}(U) \to \mathbb{R}\) which 
+  satisfy the Leibniz rule. Then, by the above lemma, we have the 
+  isomorphism \(\phi : \widehat{C_x^\infty}(X) \cong \widehat{C_x^\infty}(U)\).
+  Thus, we may define 
+  \[\hat{\mathfrak{d}} := \hat{\mathfrak{d}}' \circ \phi : 
+    \widehat{C_x^\infty}(X) \to \widehat{C_x^\infty}(U) \to \mathbb{R}.\] 
+  Hence, taking \(\mathfrak{d} := \hat{\mathfrak{d}} \circ q\) where \(q\) 
+  is quotient map suffices. These steps can be reversed and thus, this map 
+  is an isomorphism.
+\end{proof}
+
+Finally, we may prove the forward direction of theorem \ref{thm_der}.
+
+\begin{proof}[Proof of the forward direction of theorem \ref{thm_der}]
+  Suppose \(\mathfrak{d} : C^\infty(X) \to \mathbb{R}\) is a derivation at \(x\) 
+  and we will show that \(\mathfrak{d}(h) = 0\) for all \(h \in R_x(X)\). 
+  
+  Let \(h \in R_x(X)\) and suppose \((U, f)\) is a chart on \(X\) containing 
+  \(x\). By the above lemma, there exists some derivation 
+  \(\mathfrak{d}' \in \text{Der}_x(U)\) such that \(\mathfrak{d}(h) = 
+  \mathfrak{d}'(h\mid_U)\). Now, as \(f\) is a homeomorphism between 
+  \(U\) and \(f(U)\), by composing with \(f\), we have the isomorphisms 
+  \[C^\infty(U) \tilde \to C^\infty(f(U)) \text{ and } 
+    \text{Der}_x(U) \tilde \to \text{Der}_{f(x)}(f(U)).\]
+  Then, taking \(\tilde h := h \circ f^{-1}\), we have the rank of \(\tilde h\) 
+  at \(f(x)\) is 0 and thus, by lemma \ref{der_r}, the claim follows.
+\end{proof}
 
 \end{document}
 
