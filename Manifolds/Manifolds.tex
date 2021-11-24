@@ -1539,5 +1539,96 @@ Finally, we may prove the forward direction of theorem \ref{thm_der}.
   at \(f(x)\) is 0 and thus, by lemma \ref{der_r}, the claim follows.
 \end{proof}
 
+With theorem \ref{thm_der}, the canonical isomorphism between 
+\(T_x X\) and \((T_x^* X)^*\) becomes an isomorphism between \(T_x X\) and 
+\(\text{Der}_x(X)\), and thus, this gives another definition of the 
+tangent space of a manifold at a point.
+
+\subsubsection{Derivation and Vector Fields}
+
+Let \(U \subseteq \mathbb{R}^n\) be an open set and let \(\xi : U \to TU\) be 
+a vector field. Since \(TU = U \times \mathbb{R}^n\), \(\xi\) induces a smooth 
+map \(\tilde \xi : U \to \mathbb{R}^n := \pi_2 \circ \xi\). Then, for all 
+\(x \in U\), we have a derivation along the direction \(\tilde \xi(x)\) with 
+\[\partial_{x, \tilde \xi(x)} : C^\infty(U) \to \mathbb{R}.\]
+Thus, for all \(h \in C^\infty(X)\), we have 
+\[\tilde \xi(h) : U \to \mathbb{R} : x \mapsto \partial_{x, \tilde \xi(x)}(h).\]
+If we write \(\tilde \xi\) in coordinates so that \(\tilde \xi(x) = 
+(\tilde \xi_1(x), \cdots, \tilde \xi_n(x))\). Then, 
+\[\tilde \xi(h) = \partial_{x, \tilde \xi(x)}(h) = 
+  \tilde \xi_1 \pdv{h}{x_1} + \cdots + \tilde \xi_n \pdv{h}{x_n}.\]
+For \(h_1, h_2 \in C^\infty(U)\), we see that the Leibniz rule apply, i.e. 
+\[\tilde \xi(h_1, h_2) = h_1 \tilde \xi(h_2) + h_2 \tilde \xi(h_1),\]
+and for this reason, we call \(\xi\) a derivation on \(X\).
+
+Now, let \(\xi : X \to TX\) be a vector field on the \(n\)-dimensional manifold 
+\(X\). Similarly, for any \(x \in X\), we have an element in \(\text{Der}_x(X)\) 
+given by the linear map 
+\[\partial_{x, \xi(x)} : C^\infty(X) \to \mathbb{R}.\]
+Thus, defining \(\xi\) such that for all \(h \in C^\infty(X)\), 
+\[\xi(h) = x \mapsto \partial_{x, \xi(x)}(h).\]
+We will show \(\xi(h)\) is smooth. Let \(x \in X\) and take \((U, f)\) be a chart 
+on \(X\) containing \(x\) and let \(v := \Delta_f(\xi(x))\) and 
+\(h := h \circ f^{-1}\). Then, as we have already show, 
+\[\partial_{x, \xi(x)}(h) = \partial_{f(x), v}(\tilde h) = \nabla_f (dh\mid_x)^T \cdot v.\]
+Then, let \(\tilde \xi\) be the corresponding function from \(f(U)\) to \(\mathbb{R}^n\) 
+corresponding to \(\xi\), i.e. \(\tilde\xi(y) := \Delta_f(\xi\mid_{f^{-1}(y)})\). 
+Then, \(\xi(h) \circ f^{-1} \tilde \xi(\tilde h)\) is smooth on \(f(U)\) since 
+\(f(U)\) is an open subset of \(\mathbb{R}^n\). Thus, \(\xi(h)\) is smooth 
+implying \(\xi(h) \in C^\infty(X)\).
+
+With this, we see that \(\xi\) is a linear mapping from \(C^\infty(X)\) to itself, 
+and so, it is a derivation.
+
+\begin{definition}[Derivation]
+  Let \(X\) be a manifold. A derivation is a linear map 
+  \[\mathfrak{D} : C^\infty(X) \to C^\infty(X)\]
+  which satisfies the Leibniz rule 
+  \[\mathfrak{D}(h_1h_2) = h_1 \mathfrak{D}(h_2) + h_2 \mathfrak{D}(h_1),\]
+  for all \(h_1, h_2 \in C^\infty(X)\).
+
+  We denote the set of all derivations on \(X\) by \(\text{Der}(X)\).
+\end{definition}
+
+We note that our previous definition of the derivation depended on the choice 
+of \(x\) which is definition is independent of that choice.
+
+We have so far seen that a vector field induces a derivation. We shall show 
+the reverse is also true.
+
+\begin{definition}
+  Let \(X\) be an \(n\)-dimensional manifold. Then, any derivation 
+  \(\mathfrak{D}\) on \(X\) defines a vector field on \(X\).
+\end{definition}
+\begin{proof}
+  Let \(x \in X\), we have the linear map 
+  \[\mathfrak{D}\mid_x : C^\infty(X) \to \mathbb{R} : h \mapsto \mathfrak{D}(h)(x).\]
+  The Leibniz rule implies that \(\mathfrak{D}\mid_x \in \text{Der}_x(X)\). 
+  However, we know that \(\text{Der}_x(X) \cong T_xX\) and so, we obtain a 
+  map 
+  \[\xi : X \to TX : x \mapsto \mathfrak{D}\mid_x.\]
+  It remains to show that \(\xi\) is smooth. Let \((U, f)\) be a chart on 
+  \(X\) containing \(x\). Then \(\xi\) induced a map 
+  \[\tilde \xi : f(U) \to f(U) \times \mathbb{R}^n\]
+  where the second component of \(\tilde \xi = \Delta_f \circ \xi \circ f^{-1}\).
+  Write \(\tilde \xi = \sum_{i = 1}^n \tilde \xi_i \pdv{x_i}\) and we will 
+  show \(\xi_i\) is smooth for all \(i = 1, \cdots, n\). Recall that, using 
+  the bump function, there exists a smooth function \(\psi\) and open sets 
+  \[f(x) \in W \subseteq V \subseteq f(U)\]
+  with \(\psi\mid_W = 1\) and \(\psi\mid_{X / V} = 0\). Then, defining 
+  \[\chi(x) := \begin{cases}
+    ((x_i\psi) \circ f)(x), \ & x \in U,\\
+    0, & x \not\in U.
+  \end{cases}\]
+  In particular, \(\tilde \chi_i := \chi_i \circ f^{-1} = x_i\) inside \(W\) and 
+  we have for all \(y \in f^{-1}(W)\), 
+  \[\mathfrak{D}(\chi_i)\mid_y = \sum_{j = 1}^n \tilde \xi_j \mid_{f(y)} 
+    \pdv{\tilde \chi_i}{x_j}\Big\vert_{f(y)} = \tilde \xi_i \mid_{f(y)}.\]
+\end{proof}
+
+\section{Vector Bundle}
+
+
+
 \end{document}
 
