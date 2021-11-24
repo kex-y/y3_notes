@@ -1626,9 +1626,88 @@ the reverse is also true.
     \pdv{\tilde \chi_i}{x_j}\Big\vert_{f(y)} = \tilde \xi_i \mid_{f(y)}.\]
 \end{proof}
 
-\section{Vector Bundle}
+\subsection{Vector Bundle}
 
+Vector bundle is an important tool in both differential geometry and 
+algebraic geometry and is somehow a generalization of the tangent bundles. 
+We will in this small section define the vector bundle and prove some properties 
+about it.
 
+\begin{definition}[Vector Bundle]
+  Let \(X\) be an \(n\)-dimensional manifold. A vector bundle over \(X\) consists 
+  of the data 
+  \begin{itemize}
+    \item a manifold \(E\) of dimension \(n + r\);
+    \item a smooth surjection \(\pi : E \to X\);
+    \item an atlas \(\{(U_i, f_i)\}_{i \in I}\) for \(X\) and an atlas 
+      \(\{(V_i, g_i)\}_{i \in I}\) for \(E\) such that, 
+      \begin{itemize}
+        \item \(V_i = \pi^{-1}(U_i)\) for all \(i \in I\);
+        \item \(g_i(V_i) = f_i(U_i) \times \mathbb{R}^r \subseteq 
+          \mathbb{R}^{n + r}\) for all \(i \in I\);
+        \item \(\text{pr}_1 \circ g_i(v) = f_i(\pi(v))\) for all \(i \in I\) and 
+          \(v \in V_i\);
+        \item for each \(x \in X\), the level set \(E_x := \pi^{-1}(\{x\})\) is 
+          a vector space of dimension \(r\) such that for all \(i \in I\), the map 
+          \(g_i \mid_{E_x} : E_x \to \mathbb{R}\) is an isomorphism.
+      \end{itemize}
+  \end{itemize}
+  The number \(r\) is called the rank of the vector bundle and the vector spaces 
+  \(E_x\) are known as fibres of the vector bundle.
+\end{definition}
+
+\begin{definition}[Section]
+  Let \(X\) be an \(n\)-dimensional manifold and let \(\pi : E \to X\) be a 
+  vector bundle. A section of \(E\) is a smooth morphism \(s : X \to E\) such 
+  that \(\pi \circ s = \text{id}_X\).
+\end{definition}
+
+\begin{definition}
+  Let \(X\) be a manifold and let \(\pi_1 : E_1 \to X, \pi_2 : E_2 \to X\) be 
+  two vector bundles. An isomorphism between \(E_1, E_2\) is a diffeomorphism 
+  \(F : E_1 \to E_2\) such that \(\pi_2 \circ F = \pi_1\) and the induced 
+  function \(F_x : (E_1)_x \to (E_2)_x\) is an isomorphism of vector spaces 
+  for all \(x \in X\).
+\end{definition}
+
+We say a vector bundle \((E, \pi)\) is trivial if it is isomorphic to the 
+trivial vector bundle \(X \times \mathbb{R}^r\) for some \(r > 0\).
+
+\begin{proposition}
+  Two isomorphic vector bundles have the same rank.
+\end{proposition}
+\begin{proof}
+  Clear as a linear isomorphism preserves dimension.
+\end{proof}
+
+\begin{definition}[Line Bundle]
+  A line bundle is a vector bundle of rank 1.
+\end{definition}
+
+\begin{lemma}
+  Let \(X\) be a manifold and let \(\pi : L \to X\) be a line bundle on 
+  \(X\) which admits a section \(s : X \to L\) which is nowhere zero, i.e. 
+  \(s(x) \neq 0 \in L_x\) for all \(x \in X\). Then \(L\) is trivial.
+\end{lemma}
+\begin{proof}
+  Consider the function \(F : X \times \mathbb{R} \to L : (x, v) \mapsto v \cdot s(x)\).
+  It is clear that \(F\) commutes with the projection map \(X \times \mathbb{R} \to X\) 
+  and \(L \to X\) and for \(x \in X\) as \(s(x) \neq 0\), it induces an 
+  isomorphism of vector spaces. 
+
+  We will now show \(F, F^{-1}\) is smooth. Since \(L\) is a vector bundle, 
+  for each \(x \in X\), there exists a chart \((U, f)\) in \(X\) containing 
+  \(x\) and a chart \((V, g)\) on \(Y\) such that \(V = \pi^{-1}(U)\) and 
+  \(g(V) = f(U) \times \mathbb{R}\). Then 
+  \[\tilde s := g \circ s \circ f^{-1} : f(U) \to f(U) \times \mathbb{R} = g(V)\]
+  is smooth (as \(s\) is smooth). Thus, 
+  \[\tilde F := g \circ  \circ (f^{-1}, \text{id}_{\mathbb{R}}) : 
+    f(U) \times \mathbb{R} \to f(U) \times \mathbb{R} : 
+    (y, v) \mapsto (y, v \cdot \text{pr}_2 \circ \tilde s(y)),\]
+  is smooth and hence, it follows \(\tilde F^{-1}\) is smooth and both 
+  \(F, F^{-1}\) are smooth. Hence, \(F\) is an isomorphism of vector bundles 
+  between \(L\) and the trivial vector bundle.
+\end{proof}
 
 \end{document}
 
