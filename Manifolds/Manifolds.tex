@@ -1649,18 +1649,34 @@ about it.
           \(v \in V_i\);
         \item for each \(x \in X\), the level set \(E_x := \pi^{-1}(\{x\})\) is 
           a vector space of dimension \(r\) such that for all \(i \in I\), the map 
-          \(g_i \mid_{E_x} : E_x \to \mathbb{R}\) is an isomorphism.
+          \(g_i \mid_{E_x} : E_x \to \mathbb{R}^r\) is an isomorphism.
       \end{itemize}
   \end{itemize}
   The number \(r\) is called the rank of the vector bundle and the vector spaces 
   \(E_x\) are known as fibres of the vector bundle.
 \end{definition}
 
+We see that in some sense vector bundles embed a manifold inside a larger manifold 
+and for each point in the original manifold, we associate it with a real 
+vector space in the larger manifold. As one might expect, the tangent bundle 
+is a vector bundle and with a similar construction 
+(\(T^*X := \bigcup_{x \in X} T^*_x X\)) we may define the cotangent 
+bundle which is also a vector bundle. Another important vector bundle is the 
+trivial vector bundle \(E := X \times \mathbb{R}^r\) with the map 
+\((x, v) \in X \times \mathbb{R}^r \mapsto x\).
+
 \begin{definition}[Section]
   Let \(X\) be an \(n\)-dimensional manifold and let \(\pi : E \to X\) be a 
   vector bundle. A section of \(E\) is a smooth morphism \(s : X \to E\) such 
   that \(\pi \circ s = \text{id}_X\).
 \end{definition}
+
+A section of the tangent bundle is a vector field. 
+
+By definition, if \((E, \pi : E \to X)\) is a vector bundle of \(X\), for 
+all \(x \in X\), the level set \(\pi^{-1}(\{x\})\) is a vector space, and thus, 
+it makes sense to map \(x \mapsto 0_{\pi^{-1}(\{x\})}\). This is clearly a 
+section and is called the zero section.
 
 \begin{definition}
   Let \(X\) be a manifold and let \(\pi_1 : E_1 \to X, \pi_2 : E_2 \to X\) be 
@@ -1684,11 +1700,11 @@ trivial vector bundle \(X \times \mathbb{R}^r\) for some \(r > 0\).
   A line bundle is a vector bundle of rank 1.
 \end{definition}
 
-\begin{lemma}
+\begin{proposition}
   Let \(X\) be a manifold and let \(\pi : L \to X\) be a line bundle on 
   \(X\) which admits a section \(s : X \to L\) which is nowhere zero, i.e. 
   \(s(x) \neq 0 \in L_x\) for all \(x \in X\). Then \(L\) is trivial.
-\end{lemma}
+\end{proposition}
 \begin{proof}
   Consider the function \(F : X \times \mathbb{R} \to L : (x, v) \mapsto v \cdot s(x)\).
   It is clear that \(F\) commutes with the projection map \(X \times \mathbb{R} \to X\) 
@@ -1707,6 +1723,18 @@ trivial vector bundle \(X \times \mathbb{R}^r\) for some \(r > 0\).
   is smooth and hence, it follows \(\tilde F^{-1}\) is smooth and both 
   \(F, F^{-1}\) are smooth. Hence, \(F\) is an isomorphism of vector bundles 
   between \(L\) and the trivial vector bundle.
+\end{proof}
+
+This proposition can be generalized into the following.
+
+\begin{proposition}
+  Let \(X\) be a manifold and let \(\pi : L \to X\) be a vector bundle of rank 
+  \(r\) which admits sections \(s_1, \cdots, s_r : X \to L\) such that 
+  for all \(x \in X\), \(\{s_1(x), \cdots, s_r(x)\}\) is linearly independent 
+  in \(E_x\) (and so form a basis). Then \(L\) is trivial.
+\end{proposition}
+\begin{proof}
+  See problem sheet.
 \end{proof}
 
 \end{document}
