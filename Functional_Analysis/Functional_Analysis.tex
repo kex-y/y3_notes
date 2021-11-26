@@ -1760,97 +1760,6 @@ is automatically a homeomorphism and \(T^{-1}\) is bounded.
 
 In this section we will introduce some tools applicable for the study of PDEs.
 
-\subsection{Compact Operators}
-
-\begin{definition}
-  Let \(X, Y\) be normed spaces. An operator \(T : X \to Y\) is a compact operator 
-  if for all \(B \subseteq X\) bounded, \(\overline{T(B)}\) is compact.
-\end{definition}
-
-\begin{proposition}
-  Let \(X, Y\) be normed spaces and \(T : X \to Y\) be an operator. Then 
-  \(T\) is compact if and only if for all bounded sequence \((x_n)\) of 
-  \(X\), \((Tx_n)\) has a convergent subsequence.
-\end{proposition}
-\begin{proof}
-  Follows by considering the criterion for relatively compactness in metric 
-  spaces. In particular, given a subset \(B\) of a metric space, 
-  \(\overline{B}\) is compact if and only if all sequences in \(B\) contain a 
-  subsequence which converges in \(\overline{B}\). Indeed, if \((x_n)\) is a 
-  sequence in \(\overline{B}\), then we may construct a sequence \((y_n) 
-  \subseteq B\) such that \(d(x_n, y_n) < 1 / n\). Then, if 
-  \((y_{n_i}) \subseteq (y_n)\) such that \(y_{n_i} \to y \in \overline{B}\), 
-  \[d(x_{n_i}, y) \le d(x_{n_i}, y_{n_i}) + d(y_{n_i}, y) < 
-    \frac{1}{n_i} + d(y_{n_i}, y) \to 0\]
-  as \(i \to \infty\). Thus, \(\overline{B}\) is compact.
-\end{proof}
-
-\begin{proposition}
-  Let \(X, Y\) be normed spaces. Then the set of compact operators from \(X\) 
-  to \(Y\) form an linear space.
-\end{proposition}
-\begin{proof}
-  Exercise.
-\end{proof}
-
-\begin{proposition}
-  A linear operator \(T : X \to Y\) where \(X, Y\) are normed spaces is compact 
-  if \(T\) is bounded and \(\dim T(X) < \infty\) (such operators are known 
-  as finite rank operators). Thus, if \(X\) is 
-  finite-dimensional, every bounded linear operator is compact.
-\end{proposition}
-\begin{proof}
-  Recall that for finite dimensional spaces, closed and bounded implies compactness. 
-  Thus, for all bounded \(B\), as \(T(B)\) is bounded, \(\overline{T(B)}\) is 
-  closed and bounded and hence, \(T\) is compact.
-\end{proof}
-
-\begin{proposition}
-  Let \((T_n)\) be a sequence of compact linear operators from a normed space 
-  \(X\) to a Banach space \(Y\). Then if \(T_n \to T\) with respect to the 
-  operator norm, \(T\) is also compact.
-\end{proposition}
-\begin{proof}
-  Let \((x_n)\) be a bounded sequence in \(X\) by some \(c \in \mathbb{R}^+\). 
-  By assumption, as \(T_1\) is compact, there exists a subsequence 
-  \((x_n^{(1)})\) of \((x_n)\) such that \(T_1 x_n^{(1)}\) converges. Then, 
-  as \(T_2\) is compact, there is a subsequence \((x_n^{(2)})\) of \((x_n^{(1)})\)
-  such that \((T_2x_n^{(2)})\) converges as well. Repeating this process, we 
-  can find \((x_n^{(k)})\) a subsequence of \((x_n^{(l)})\) for all \(l \le k\) 
-  such that \(T_i x_n^{(k)}\) converges for \(i = 1, 2, \cdots, k\). Now, defining 
-  \(y_n := x_n^n\), I claim \((y_n)\) is a subsequence of \((x_n)\) such that 
-  \(T_i y_n\) converges for all \(i \in \mathbb{N}\). Indeed, for all 
-  \(i \in \mathbb{N}\), once \(n \ge i\), the remaining sequence of \((y_n)\) 
-  is contained \((x_n^{(i)})\). Thus, \(T_i y_n\) is eventually contained in 
-  \(T_i x_n^{(i)}\) which converges.
-
-  Now, as \(T_n \to T\), for all \(\epsilon > 0\), there exists \(N\) such that 
-  for all \(n \ge N\), \(\|T_n - T\| < \epsilon / (3c)\). On the other hand, 
-  as \((T_N y_n)\) is convergent, it is Cauchy, and so, there exists 
-  sufficiently large \(M\), such that \(\|T_N y_i - T_N y_j\| < \epsilon / 3\) 
-  for all \(i, j \ge M\). Hence, for all \(i, j \ge M\),
-  \[\|Ty_i - Ty_j\| \le \|Ty_i - T_N y_i\| + \|T_N y_i - T_N y_j\| + 
-    \|T_N y_j - Ty_j\| < \epsilon.\]
-  Therefore \((Ty_n)\) is Cauchy and so, \(T\) is compact.
-\end{proof}
-
-\subsubsection{Hilbert-Schmidt Integral Operator}
-
-\begin{definition}[Hilbert-Schmidt Integral Operator]
-  The Hilbert-Schmidt integral operator \(T : H \to H\) where 
-  \(H := L^2(\mathbb{R}^d)\) is the linear operator 
-  \[Tf : x \mapsto \int_{\mathbb{R}^d} K(x, y) f(y) \dd \lambda(y),\]
-  for some kernel map \(K \in L^2(\mathbb{R}^d \times \mathbb{R}^d)\).
-\end{definition}
-
-The map \(y \mapsto K(x, y)f(y)\) is integrable for all \(x\) since by 
-Fubini, the map \(y \mapsto K(x, y)\) is square integrable for all \(x\) 
-and thus, 
-\[\|K(x, \cdot)f(\cdot)\|_1 = \langle K(x, \cdot), f \rangle^2 \le 
-  \|K(x, \cdot)\|_2 \|f\|_2.\]
-We note that this also implies the operator is bounded with the bound 
-\(\|T\| \le \|K\|_2\).
-
 \subsection{Weak Convergence}
 
 \begin{definition}[Weak Convergence]
@@ -2146,5 +2055,201 @@ We recall the Arzela-Ascoli theorem in a more general context.
       \[\int_{\mathbb{R}^n} |f(x + y) - f(x)|^p \lambda(\dd x) < \epsilon^p.\]
   \end{itemize}
 \end{theorem}
+
+\subsection{Compact Operators}
+
+\begin{definition}
+  Let \(X, Y\) be normed spaces. An operator \(T : X \to Y\) is a compact operator 
+  if for all \(B \subseteq X\) bounded, \(\overline{T(B)}\) is compact.
+\end{definition}
+
+\begin{proposition}
+  Let \(X, Y\) be normed spaces and \(T : X \to Y\) be an operator. Then 
+  \(T\) is compact if and only if for all bounded sequence \((x_n)\) of 
+  \(X\), \((Tx_n)\) has a convergent subsequence.
+\end{proposition}
+\begin{proof}
+  Follows by considering the criterion for relatively compactness in metric 
+  spaces. In particular, given a subset \(B\) of a metric space, 
+  \(\overline{B}\) is compact if and only if all sequences in \(B\) contain a 
+  subsequence which converges in \(\overline{B}\). Indeed, if \((x_n)\) is a 
+  sequence in \(\overline{B}\), then we may construct a sequence \((y_n) 
+  \subseteq B\) such that \(d(x_n, y_n) < 1 / n\). Then, if 
+  \((y_{n_i}) \subseteq (y_n)\) such that \(y_{n_i} \to y \in \overline{B}\), 
+  \[d(x_{n_i}, y) \le d(x_{n_i}, y_{n_i}) + d(y_{n_i}, y) < 
+    \frac{1}{n_i} + d(y_{n_i}, y) \to 0\]
+  as \(i \to \infty\). Thus, \(\overline{B}\) is compact.
+\end{proof}
+
+\begin{proposition}
+  Let \(X, Y\) be normed spaces. Then the set of compact operators from \(X\) 
+  to \(Y\) form an linear space.
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{proposition}
+  A linear operator \(T : X \to Y\) where \(X, Y\) are normed spaces is compact 
+  if \(T\) is bounded and \(\dim T(X) < \infty\) (such operators are known 
+  as finite rank operators). Thus, if \(X\) is 
+  finite-dimensional, every bounded linear operator is compact.
+\end{proposition}
+\begin{proof}
+  Recall that for finite dimensional spaces, closed and bounded implies compactness. 
+  Thus, for all bounded \(B\), as \(T(B)\) is bounded, \(\overline{T(B)}\) is 
+  closed and bounded and hence, \(T\) is compact.
+\end{proof}
+
+\begin{proposition}
+  Let \((T_n)\) be a sequence of compact linear operators from a normed space 
+  \(X\) to a Banach space \(Y\). Then if \(T_n \to T\) with respect to the 
+  operator norm, \(T\) is also compact.
+\end{proposition}
+\begin{proof}
+  Let \((x_n)\) be a bounded sequence in \(X\) by some \(c \in \mathbb{R}^+\). 
+  By assumption, as \(T_1\) is compact, there exists a subsequence 
+  \((x_n^{(1)})\) of \((x_n)\) such that \(T_1 x_n^{(1)}\) converges. Then, 
+  as \(T_2\) is compact, there is a subsequence \((x_n^{(2)})\) of \((x_n^{(1)})\)
+  such that \((T_2x_n^{(2)})\) converges as well. Repeating this process, we 
+  can find \((x_n^{(k)})\) a subsequence of \((x_n^{(l)})\) for all \(l \le k\) 
+  such that \(T_i x_n^{(k)}\) converges for \(i = 1, 2, \cdots, k\). Now, defining 
+  \(y_n := x_n^n\), I claim \((y_n)\) is a subsequence of \((x_n)\) such that 
+  \(T_i y_n\) converges for all \(i \in \mathbb{N}\). Indeed, for all 
+  \(i \in \mathbb{N}\), once \(n \ge i\), the remaining sequence of \((y_n)\) 
+  is contained \((x_n^{(i)})\). Thus, \(T_i y_n\) is eventually contained in 
+  \(T_i x_n^{(i)}\) which converges.
+
+  Now, as \(T_n \to T\), for all \(\epsilon > 0\), there exists \(N\) such that 
+  for all \(n \ge N\), \(\|T_n - T\| < \epsilon / (3c)\). On the other hand, 
+  as \((T_N y_n)\) is convergent, it is Cauchy, and so, there exists 
+  sufficiently large \(M\), such that \(\|T_N y_i - T_N y_j\| < \epsilon / 3\) 
+  for all \(i, j \ge M\). Hence, for all \(i, j \ge M\),
+  \[\|Ty_i - Ty_j\| \le \|Ty_i - T_N y_i\| + \|T_N y_i - T_N y_j\| + 
+    \|T_N y_j - Ty_j\| < \epsilon.\]
+  Therefore \((Ty_n)\) is Cauchy and so, \(T\) is compact.
+\end{proof}
+
+\begin{theorem}
+  Let \(X, Y\) be normed spaces and suppose \(T : X \to Y\) is a compact 
+  operator. Then, if \((x_n) \subseteq X\) is a sequence which converges weakly 
+  to \(x \in X\), \(T x_n\) converges strongly to \(Tx\).
+\end{theorem}
+\begin{proof}
+  We see that \(Tx_n \weak Tx\) since for all \(g \in Y^*\), \(g \circ T\) is 
+  a linear functional of \(X^*\), and so, \(g(Tx_n) \to g(Tx)\) implying 
+  \(Tx_n \weak Tx\). Suppose \(Tx_n\) does not converge to \(Tx\) strongly, 
+  then, there exists some \(\epsilon > 0\) and a subsequence \((x_{n_i})\) of 
+  \((x_n)\) such that for all \(i\), \(\|Tx_{n_i} - Tx\| \ge \epsilon\). 
+  Now, since \((x_{n_i})\) is bounded, and \(T\) is compact, there exists a 
+  subsequence \((x_{n_{i_j}})\) of \((x_{n_i})\) such that \(Tx_{n_{i_j}} \to 
+  y\), for some \(y \in Y\) and so, \(Tx_{n_{i_j}} \weak y\). But 
+  \(Tx_{n_{i_j}} \weak Tx\), so by the uniqueness of the weak limit, 
+  \(y = Tx\). But, this contradicts \(\|Tx_{n_{i_j}} - Tx\| \ge \epsilon\) 
+  for all \(j\). Thus, \(T x_n \to Tx\) strongly.
+\end{proof}
+
+\begin{corollary}
+  If \(T\) is a compact operator on \(X\) and \((x_n)\) is a sequence of 
+  \(X\) which converges weakly to 0. Then \(T x_n\) converges strongly to 0.
+\end{corollary}
+
+\begin{proposition}
+  Let \(X, Y\) be Banach spaces and let \(T : X \to Y\) be a bounded linear 
+  operator. Then \(T\) is compact if and only if \(T^* : Y \to X\) is compact.
+\end{proposition}
+
+\begin{proposition}
+  Let \(\mathcal{H}\) be a separable Hilbert space. Then every compact operator
+  \(T\) on \(\mathcal{H}\) is a strong limit of operators of finite rank.
+\end{proposition}
+\begin{proof}
+  Let \((e_j)\) be an orthonormal basis of \(\mathcal{H}\) and let us define 
+  \[\lambda_n := \sup_{f \perp \{e_j \mid j = 1, \cdots n\}, \|f\| = 1} \|Tf\|.\]
+  It is clear that \((\lambda_n)\) is bounded and decreasing, and so, it converges 
+  to some \(\lambda \ge 0\). By definition, there exists a sequence \((f_n)\), 
+  \(f_n \perp \{e_j \mid j = 1, \cdots n\}\) and \(\|f_n\| = 1\) such that 
+  \(\|Tf_n\| \ge \lambda / 2\) for all \(n\). Then, as \(f_n \weak 0\) since 
+  \(T\) is compact, we have \(Tf_n \weak 0\) and thus, \(\lambda = 0\).
+
+  Thus, defining 
+  \[T^{(n)} := \sum_{j = 1}^n \langle e_j, \cdot \rangle T(e_j),\]
+  we have \(\lambda_n = \|T - T^{(n)}\|\) and so, \(\|T - T^{(n)}\| \to 0\) 
+  as \(n \to \infty\) where \(T^{(n)}\) are finite rank opertors.
+\end{proof}
+
+\begin{theorem}[Fredholm Alternative]
+  If \(A\) is a compact operator on a Hilbert space, then either \(A\Psi = \Psi\) 
+  has a solution of \(\text{id} - A\) is invertible.
+\end{theorem}
+
+\begin{proposition}
+  Let \(D \subseteq \mathbb{C}\) be open and connected. Let \(\Psi : D \to 
+  \mathcal{L}(\mathcal{H})\) be an operator valued function such that 
+  \(\Psi(z)\) is compact for any \(z \in D\). Then, either 
+  \(\text{id} - \Psi(z)\) is not invertible for any \(z \in D\) or 
+  \(\text{id} - \Psi(z)\) is invertible for all \(z \in D \setminus S\) where 
+  \(S\) is any set with no limit points in \(D\).
+\end{proposition}
+
+\subsubsection{Dirichlet Problem}
+
+\begin{definition}[Dirichlet Problem]
+  \(u\) is called a solution of the Dirichlet problem in an open domain if 
+  \(u \in \mathcal{C}^2(D) \cap \mathcal{C}(\overline{D})\) and 
+  \[\begin{cases}
+    (\Delta u)\mid_x = 0, \ & x \in D,\\
+    u(x) = f(x), \ & x \in \partial D,
+  \end{cases}\]
+  where \(\Delta\) is the Laplacian operator and \(f\) is some (say smooth) 
+  function.
+\end{definition}
+
+Define the space 
+\[\tilde{\mathcal{C}}_0^1(\overline{D}) := \{\text{continuously differentiable 
+function on \(\overline{D}\) vanishing on \(\partial D\)}\},\]
+and equip it with the inner product 
+\[\langle u, v \rangle := \int_D \nabla u \nabla v \dd x = 
+  \int_D \sum_k (\partial_{x_k} u)(\partial_{x_k} v) \dd x.\]
+Suppose that \(u \in \mathcal{C}^2(\overline{D})\) is a solution 
+to the Dirichlet problem (DP) where \(f \in C^0(\overline{D})\), then by 
+Stokes' theorem, 
+\[\langle u, v \rangle = \int_D \nabla u \nabla v \dd x = 
+  \int_{\partial D} v \Delta u \dd x = \int_{\partial D} v f \dd x,\]
+for all \(v \in \tilde{\mathcal{C}}_0^1(\overline{D})\). 
+Thus, the above is a necessary condition of \(u\) being a solution of 
+DP. With this, we define the weak solution.
+
+\begin{definition}
+  Let \(u \in H^1_0(D)\) (where \(H^1_0(D)\) is the completion of 
+  \(\tilde{\mathcal{C}}_0^1(\overline{D})\)). We say \(u\) is a weak 
+  solution of DP if 
+  \[\langle u, v\rangle = \int vf \dd x\]
+  for all \(v \in H^1_0(D)\).
+\end{definition}
+
+Given the above formulation, we see that the map \(v \mapsto \int vf \dd x\) 
+is a linear functional from \(H_0^1(D)\) and thus, by the Riesz representation 
+theorem, there exists a unique \(u \in H_0^1(D)\) such that 
+\(\langle u, v \rangle = \int v f \dd x\) for all \(v \in H_0^1(D\). This 
+demonstrates the existence of the weak solution in \(H_0^1(D)\) and provides 
+a good candidate for the solution of DP.
+
+% \subsubsection{Hilbert-Schmidt Integral Operator}
+
+% \begin{definition}[Hilbert-Schmidt Integral Operator]
+%   The Hilbert-Schmidt integral operator \(T : H \to H\) where 
+%   \(H := L^2(\mathbb{R}^d)\) is the linear operator 
+%   \[Tf : x \mapsto \int_{\mathbb{R}^d} K(x, y) f(y) \dd \lambda(y),\]
+%   for some kernel map \(K \in L^2(\mathbb{R}^d \times \mathbb{R}^d)\).
+% \end{definition}
+
+% The map \(y \mapsto K(x, y)f(y)\) is integrable for all \(x\) since by 
+% Fubini, the map \(y \mapsto K(x, y)\) is square integrable for all \(x\) 
+% and thus, 
+% \[\|K(x, \cdot)f(\cdot)\|_1 = \langle K(x, \cdot), f \rangle^2 \le 
+%   \|K(x, \cdot)\|_2 \|f\|_2.\]
+% We note that this also implies the operator is bounded with the bound 
+% \(\|T\| \le \|K\|_2\).
 
 \end{document}
