@@ -2252,4 +2252,125 @@ a good candidate for the solution of DP.
 % We note that this also implies the operator is bounded with the bound 
 % \(\|T\| \le \|K\|_2\).
 
+\subsection{Spectrum of Operators}
+
+\begin{definition}[Resolvent]
+  Let \(X\) be a complex normed space and let \(T : D(T) \subseteq X \to X\) 
+  be a bounded operator. Then, for all \(\lambda \in \mathbb{C}\), denote 
+  \(T_\lambda := T - \lambda \cdot \text{id}_X\). If \(T_\lambda\) has 
+  a inverse then we denote \(R_\lambda(T) := T_\lambda^{-1}\) and we call 
+  it the resolvent of \(T\).
+\end{definition}
+
+We see straight a way the existence of a resolvent for some value \(\lambda\) 
+implies \(\lambda\) is not an eigenvalue of the operator.
+
+\begin{definition}[Regular Value]
+  \(\lambda \in \mathbb{C}\) is a regular value of the operator \(T\) if 
+  the \(\lambda\)-resolvent of \(T\) exists and is bounded and it is defined 
+  on a dense subspace of \(X\).
+\end{definition}
+
+\begin{definition}[Resolvent Set and Spectrum]
+  Given a bounded operator \(T : D(T) \subseteq X \to X\), the \(T\)-resolvent 
+  set is 
+  \[\rho(T) := \{\lambda \in \mathbb{C} \mid \lambda \text{ is a regular value}\}.\]
+  The complement of the resolvent set 
+  \[\sigma(T) := \mathbb{C} \setminus \rho(T)\]
+  is called the spectrum of \(T\). 
+\end{definition}
+
+By observing the definition of the regular value, the spectrum can be decomposed 
+into the following three categories.
+
+\begin{definition}\ 
+  \begin{itemize}
+    \item The discrete spectrum is the set \(\sigma_p(T)\) containing 
+      \(\lambda \in \mathbb{C}\) for which \(R_\lambda(T)\) does not exist.
+      We call \(\lambda \in \sigma_p(T)\) the eigenvalues of \(T\).
+    \item The continuous spectrum is the set \(\sigma_c(T)\) containing 
+      \(\lambda \in \mathbb{C}\) for which \(R_\lambda(T)\) exists and is 
+      defined on a dense subset of \(X\) but is not bounded.
+    \item The residual spectrum is the set \(\sigma_r(T)\) containing 
+      \(\lambda \in \mathbb{C}\) for which \(R_\lambda(T)\) exists but is not 
+      defined on a dense subset of \(X\).
+  \end{itemize}
+\end{definition}
+
+\begin{proposition}
+  \(\rho(T)\) is open and as a result \(\sigma(T)\) is closed.
+\end{proposition}
+\begin{proof}
+  Let \(\lambda \in \rho(T)\) and suppose \(|\lambda_0 - \lambda| < 
+  \|R_{\lambda_0}(T)\|^{-1}\). Then, we see 
+  \[T - \lambda \cdot \text{id}_X = (T - \lambda_0 \cdot \text{id}_X)
+    (\text{id}_X + (\lambda_0 - \lambda)R_{\lambda_0}(T)),\]
+  and since, 
+  \[(\text{id}_X + (\lambda_0 - \lambda)R_{\lambda_0}(T))^{-1} = 
+    \sum_{n = 0}^\infty (\lambda - \lambda_0)^nR_{\lambda_0}^n(T)\]
+  where the right hand side is convergent in operator norm. Thus, 
+  \[(T - \lambda \cdot \text{id}_X)^{-1} = 
+  (\text{id}_X + (\lambda_0 - \lambda)R_{\lambda_0}(T))^{-1} R_{\lambda_0}(T) 
+  = \sum_{n = 0}^\infty (\lambda - \lambda_0)^nR_{\lambda_0}^{n + 1}(T)\] 
+  implying \(\lambda \in \rho(T)\) as required.
+\end{proof}
+
+We recall that in the finite dimensional case over \(\mathbb{C}\), as 
+\(\mathbb{C}\) is algebraically closed, the characteristic polynomial 
+always has a root and thus, every operator has at least 1 eigenvalie. 
+The similar is true for Hilbert spaces.
+
+\begin{lemma}[Neumann Series]
+  If \(A\) is a bounded linear operator such that \(\|A\| < 1\) and 
+  \(\text{id} - A\) is invertible, then 
+  \[(\text{id} - A)^{-1} = \sum_{k = 0}^\infty A^k.\]
+\end{lemma}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{corollary}
+  \(R_\lambda(T) = \sum_{k = 0}^\infty \lambda^{- k - 1} T^k.\)
+\end{corollary}
+
+\begin{lemma}
+  The resolvent \(R_\lambda(T)\) is continuous and analytic with 
+  respect to \(\lambda\).
+\end{lemma}
+\begin{proof}
+  Given \(\lambda, \mu \in \mathbb{C}\), as an exercise, one may show 
+  \(R_\lambda(T) - R_\mu(T) = (\lambda - \mu)R_\lambda(T) R_\mu(T)\).
+  Then 
+  \[\|R_\lambda(T) - R_\mu(T)\| = |\lambda - \mu| \|R_\lambda(T)\|\|R_\mu(T)\| \to 0\]
+  as \(\lambda \to \mu\) and so \(R_\lambda(T)\) is continuous with respect 
+  to \(\lambda\) provided we can find a bound of \(\|R_\lambda(T)\) for \(\lambda\) 
+  in a neighbourhood of \(\mu\). By looking at the previous proof, we see that 
+  for \(|\lambda - \mu|\) sufficiently small,
+  \[(T - \lambda \cdot \text{id})^{-1} = 
+  \sum_{n = 0}^\infty (\lambda - \mu)^nR_{\mu}^{n + 1}(T)\] 
+  and so \(\|R_\lambda(T)\| \to \|R_\mu(T)\|\) as \(\lambda \to \mu\).
+
+  \(R_\lambda(T)\) is analytic since it is holomorphic with respect to 
+  \(\lambda\) by the same argument through dividing both sides with 
+  \(\lambda - \mu\).
+\end{proof}
+
+\begin{theorem}
+  The spectrum of a bounded operator in a Hilbert space is non-empty.
+\end{theorem}
+\begin{proof}
+  Suppose \(A\) is a bounded operator in the Hilbert space \(\mathcal{H}\). 
+  Then \(R_\lambda(A)\) is an analytic and so, the so is the function 
+  \[f : \mathbb{C} \to \mathbb{C} : \lambda \mapsto \langle y, R_\lambda(A)x\rangle,\]
+  analytic on \(\rho(A)\) for all \(x, y \in \mathcal{H}\). Furthermore, by 
+  the Neumann series representation of the resolvent, we see that 
+  \(\lim_{\lambda \to \infty} f(\lambda) = 0\). Then, if 
+  \(\sigma(A) = \varnothing\), 
+  we have \(\rho(A) = \mathbb{C}\) and hence, we have found a bounded analytic 
+  function \(f\) on \(\mathbb{C}\) and thus, by Liouville's theorem, 
+  \(f = 0\). But as \(x, y\) was arbitrary, this implies \(R_\lambda(A) = 0\), 
+  contraction! Hence \(\sigma(A)\) is non-empty.
+\end{proof}
+
+
 \end{document}
