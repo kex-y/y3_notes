@@ -2015,19 +2015,6 @@ Also recall that we have the isomorphism
 (V_m, \rho_{V_m})\) are irreducible up to isomorphism, and in fact, we 
 now see this is also a algebra homomorphism.
 
-\begin{theorem}[Artin-Wedderburn]
-  Given a finite dimensional algebra \(A\), the following are equivalent:
-  \begin{enumerate}
-    \item every finite dimensional \(A\)-module is semisimple;
-    \item \(A\) is isomorphic to a direct sum of matrix algebras, i.e.
-      \(A \cong \bigoplus_{i = 1}^m \text{Mat}_{n_i}(\mathbb{C})\);
-    \item there is a full set of simple left \(A\)-modules \(V_1, \cdots, V_m\) 
-      and an isomorphism \(A \cong \bigoplus_{i = 1}^m \text{End}(V_i)\).
-  \end{enumerate}
-\end{theorem}
-
-We see that both the second and third statement implies the sum of squares formula.
-
 \begin{definition}[Semisimple Algebra]
   For \(\dim_F A < \infty\), \(A\) is said to be semisimple if 
   every finite dimensional \(A\)-module is semisimple.
@@ -2055,6 +2042,111 @@ considering \(V \cong A / \ker \phi_v\) by the first isomorphism theorem.
   we have \(W \cong A / \ker \phi_w\). It is clear that \(\ker \phi_w \neq = \{0\}\) 
   and \(\ker \phi_w \neq A\) and so, \(\ker \phi_w = V\). Applying 
   \(W = V\), we obtain \(V \cong A / V\) and so \(W \cong A / V \cong V\).
+\end{proof}
+
+\begin{proposition}
+  If \(V = V_1 \oplus \cdots \oplus V_m\) where \(V_i\) is simple for all \(i\), 
+  then every submodule \(U \subseteq V\) has a complementary submodule of the 
+  form 
+  \[V_I = \bigoplus_{i \in I}, \text{ for some } I \subseteq \{1, \cdots, m\}.\]
+\end{proposition}
+\begin{proof}
+  Let \(I \subseteq \{1, \cdots, m\}\) be maximal such that \(U \cap V_I = \{0\}\). 
+  Then \(V = U \bigcup V_I\) since if otherwise, for some \(i \in I\), 
+  \(V_i \not\subseteq U \oplus V_I\). But, as \(V_i\) is simple, we have
+  \(V_i \cap U \oplus V_I = \{0\}\) and so \(U \cap (V_i \oplus V_I)\) contradicting 
+  the maximality of \(I\).
+\end{proof}
+
+\begin{corollary}
+  Every submodule and quotient module of a semisimple module is semisimple.
+\end{corollary}
+\begin{proof}
+  Let \(U \subseteq V = \bigcup_i V_i\) be a submodule and suppose it has complement 
+  \(V_I\). Then \(V / U \cong U \oplus V_i / U \cong V_I\) which is semisimple.
+
+  Similarly, the composition of the inclusion map \(\iota : U \to V\) and the 
+  quotient map \(q : V \to V / V_I\) is an isomorphism implying \(U\) is semisimple.
+\end{proof}
+
+\begin{lemma}
+  Let \(V\) be an \(n\)-dimensional module over \(A\), then \(V\) is isomorphic 
+  to a quotient module of \(A^n\).
+\end{lemma}
+\begin{proof}
+  Let \(\{v_1, \cdots, v_n\}\) be a basis of \(V\) and define the surjection 
+  \[\phi : (a_1, \cdots, a_n) \mapsto a_1 v_1 + \cdots a_n v_n = 
+    \rho(a_1)(v_1) + \cdots + \rho(a_n)(v_n).\]
+  Then \(V \cong A^n / \ker \phi\) as required.
+\end{proof}
+
+\begin{proposition}
+  \(A\) is semisimple if and only if \(A\) is semisimple as a 
+  (left regular) module over itself.
+\end{proposition}
+\begin{proof}
+  The forward direction is clear so let us consider the reverse. 
+
+  Suppose \(A\) is a semisimple \(A\)-module and let \(V\) be a finite-dimensional 
+  \(A\)-module. Then, by the above lemma, \(V\) is isomorphic to 
+  some quotient module of \(A^n\) and so, it suffices to show \(A^n\) is 
+  semisimple. But this is clear since \(A^n = A \oplus \cdots \oplus A\) and 
+  the direct sum of semisimple modules is semisimple.
+\end{proof}
+
+\begin{definition}[Opposite Algebra]
+  Given an algebra \(A\), the opposite algebra \(A^{op}\) is the algebra 
+  \(A\) with the reversed multiplication, i.e. \(a \cdot_{op} b = ba\).
+\end{definition}
+
+We note that the same construction can be made for groups but \(G \simeq G^{op}\) 
+by the map \(g \mapsto g^{-1}\).
+
+\begin{lemma}
+  The map \(\text{End}_A A \to A^{op} : \phi \mapsto \phi(1_A)\) is an algebra 
+  isomorphism.
+\end{lemma}
+\begin{proof}
+  The inverse is \(a \mapsto \phi_a\) where \(\phi_a(b) := ba\).
+\end{proof}
+
+\begin{theorem}[Artin-Wedderburn]
+  Given a finite dimensional algebra \(A\), the following are equivalent:
+  \begin{enumerate}
+    \item every finite dimensional \(A\)-module is semisimple, i.e. 
+      \(A\) is semisimple;
+    \item \(A\) is isomorphic to a direct sum of matrix algebras, i.e.
+      \(A \cong \bigoplus_{i = 1}^m \text{Mat}_{n_i}(\mathbb{C})\);
+    \item there is a full set of simple left \(A\)-modules \(V_1, \cdots, V_m\) 
+      and an isomorphism \(A \cong \bigoplus_{i = 1}^m \text{End}(V_i)\).
+  \end{enumerate}
+\end{theorem}
+
+We see that both the second and third statement implies the sum of squares formula.
+
+\begin{proof}
+  It is clear that 2 and 3 are equivalent by simply picking basis. 
+  
+  We will now show 2 implies 1. 
+  Recall that \(A\) is semisimple if and only if \(A\) is semisimple as a 
+  (left regular) \(A\)-module over itself and since 
+  \(A \cong \bigoplus \text{Mat}_{n_i}(\mathbb{C})\), it suffices to show 
+  \(\bigoplus \text{Mat}_{n_i}(\mathbb{C})\) is semisimple over itself. 
+  Recalling that \(\mathbb{C}^{n_i}\) is semisimple 
+  as a \( \text{End}(\mathbb{C}^{n_i})\)-module and
+  and \(\text{Mat}_{n_i}(\mathbb{C}) \cong \mathbb{C}^{n_i} \oplus \cdots \oplus 
+  \mathbb{C^{n_i}}\), we have \(\text{Mat}_{n_i}(\mathbb{C})\) is a semisimple 
+  \(\bigoplus_i \text{Mat}_{n_i}(\mathbb{C})\) implying the result.
+
+  Finally, we will show 1 implies 2. Suppose \(A\) is semisimple and let 
+  write \(A = V_1^{r_1} \oplus \cdots V_n^{r_n}\) where \(V_i\) are 
+  pair-wise nonisomorphic. As we have shown above, \(\text{End}_A A \cong A^{op}\)
+  and so, 
+  \[A^{op} \cong \text{End}_A(V_1^{r_1} \oplus \cdots \oplus V_n^{r_n})
+   \cong \text{Mat}_{r_1}(\mathbb{C}) \oplus \cdots \oplus 
+   \text{Mat}_{r_n}(\mathbb{C}).\]
+  On the other hand, \(\text{Hom}(V_i^{r_i}) \cong \text{Mat}_{r_i}(\mathbb{C})\) 
+  by Schur's lemma, and thus we have 1 implies 2. 
 \end{proof}
 
 \end{document} 
