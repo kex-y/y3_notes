@@ -1717,7 +1717,7 @@ trivial vector bundle \(X \times \mathbb{R}^r\) for some \(r > 0\).
   \(g(V) = f(U) \times \mathbb{R}\). Then 
   \[\tilde s := g \circ s \circ f^{-1} : f(U) \to f(U) \times \mathbb{R} = g(V)\]
   is smooth (as \(s\) is smooth). Thus, 
-  \[\tilde F := g \circ  \circ (f^{-1}, \text{id}_{\mathbb{R}}) : 
+  \[\tilde F := g \circ (f^{-1}, \text{id}_{\mathbb{R}}) : 
     f(U) \times \mathbb{R} \to f(U) \times \mathbb{R} : 
     (y, v) \mapsto (y, v \cdot \text{pr}_2 \circ \tilde s(y)),\]
   is smooth and hence, it follows \(\tilde F^{-1}\) is smooth and both 
@@ -1736,6 +1736,99 @@ This proposition can be generalized into the following.
 \begin{proof}
   See problem sheet.
 \end{proof}
+
+\section{Forms and Integration}
+
+\subsection{1-form}
+
+\begin{definition}
+  Let \(X\) be a manifold. A 1-form on \(X\) is a section of \(T^*X\), i.e. 
+  a smooth function 
+  \[\alpha : X \to T^* X\]
+  such that \(\pi \circ \alpha = \text{id}_X\).
+\end{definition}
+
+Let \(X\) be an \(n\)-dimensional manifold and suppose \(x \in X\) and let 
+\(\alpha\) be a 1-form on \(X\) and \((U, f)\) be a chart on \(X\) containing 
+\(x\). We recall that we have the linear isomorphism 
+\(\nabla_f : T^*_x X \to \mathbb{R}^n\). Thus, we obtain a smooth morphism 
+\[\tilde \alpha : f(U) \to \mathbb{R}^n : y \mapsto \nabla_f(\alpha\mid_{f^{-1}(y)}).\]
+On the other hand, if \((U', f')\) is also a chart on \(X\) containing 
+\(x\), then the corresponding 1-form on \(f'(U')\) \(\tilde \alpha'\) can be 
+written as 
+\[\tilde \alpha'(f'(x)) = \tilde \alpha(f(x)) D\phi^{-1}\mid_{f'(x)}\]
+by recalling \(\nabla_{f'}(dh\mid_x) = \nabla_f(dh\mid_x) D\phi^{-1}\mid_{f'(x)}\)
+where \(h \in C^\infty(X)\) and \(\phi\) is the transition function. 
+
+We will now construct a 1-form \(dh\) on \(X\) from any smooth function 
+\(h \in C^\infty(X)\). Let \(U \subseteq \mathbb{R}^n\) be an open subset and 
+let \(h \in C^\infty(U)\). Then, for any \(x \in U\), we recall 
+\(dh\mid_x \in T^*_x U = C^\infty / R_x(U)\). Since \(T^*_x U \cong \mathbb{R}^n\) 
+canonically, we can write \(dh\mid_x = 
+(\partial_{x_1} h, \cdots, \partial_{x_n} h)\mid_x \in \mathbb{R}^n\).
+Thus, we have a smooth 1-form on \(U\) 
+\[dh : U \to U \times \mathbb{R}^n : x \mapsto (x, dh\mid_x).\]
+This construction provides some 1-forms from the co-ordinate functions 
+\(x_i : U \to \mathbb{R}\) resulting in the 1-forms \(dx_i\) for 
+\(i = 1, \cdots, n\). We note that \(\{dx_i(x)\}\) form a basis of 
+\(T^*_x U\), and so, if \(\alpha\) is a 1-form on \(U\), we may write 
+\(\alpha = \alpha_1 dx_1 + \cdots + \alpha_n dx_n\) where 
+\(\alpha_1, \cdots, \alpha_n\) are smooth functions on \(U\).
+Applying this to \(dh\) for \(h \in C^\infty(U)\), we have 
+\[dh = \pdv{h}{x_1} dx_1 + \cdots + \pdv{h}{x_n} dx_n.\]
+This is known as the exact 1-forms.
+
+Let us now generalize this to manifolds. Let \(X\) be a manifold and let 
+\(h \in C^\infty(X)\). Then for any \(x \in X\), we have 
+\(dh\mid_x \in T^*_x X\), and so, we obtain a function 
+\[dh : X \to T^* X : x \mapsto dh\mid_x.\]
+We will show \(dh\) is smooth. Let \((U, f)\) be a chart on \(X\) containing 
+\(x\). Define \(\tilde h := h \circ f^{-1} \in C^\infty(f(U))\) and if 
+\((V, g)\) is the corresponding chart on \(T^* X\), we have 
+\(d\tilde h = g \circ dh \circ f^{-1}\) which is a smooth 1-form on \(f(U)\).
+Thus, \(dh\) is smooth as required and hence, \(dh\) is a 1-form on \(X\).
+
+Suppose now that \(F : X \to Y\) is a smooth function between manifolds, 
+then the Jacobian of \(F\) defines a map \(DF\mid_x : T_x X \to T_{F(x)} Y\). 
+Recalling that the cotangent space is canonically isomorphic to the dual 
+of the tangent space, the dual map of \(DF\) can be interpreted as a map 
+\[DF^*\mid_x : T^*_{F(x)}Y \to T^*_x X.\]
+Now, let \(h \in C^{\infty}(Y)\), then \(h \circ F \in C^\infty(X)\) and 
+\[DF^*\mid_x(dh\mid_{F(x)}) = d(h \circ F)\mid_x \in T^*_x X.\]
+Hence, glueing these maps together, we obtain a 1-form on \(X\).
+
+\begin{definition}[Pull-back of 1-form on Euclidean Spaces]
+  Let \(U \subseteq \mathbb{R}^n\) and \(V \subseteq \mathbb{R}^k\) be open and 
+  let \(F : U \to V\) be a smooth function. 
+  Then, if \(\alpha\) be a 1-form on \(V\), 
+  \[F^* \alpha : U \to T^* U : x \mapsto DF^*\mid_x(\alpha\mid_{F(x)})\]
+  is a 1-form on \(U\).
+\end{definition}
+
+To show that this is indeed a 1-form on \(X\), we will show it is smooth. 
+Let us first consider a smooth map \(F = (F_1, \cdots, F_k)\) between 
+\(U \subseteq \mathbb{R}^n\) and \(V \subseteq \mathbb{R}^k\) where 
+\(F_i \in C^\infty(U)\). Let \(\alpha\) be a 1-form on \(V\), then 
+\[F^*\alpha : U \to U \times \mathbb{R}^n : z \mapsto (DF\mid_z)^T \alpha\mid_{F(z)}.\]
+\(F^*\alpha\) is clearly smooth, and so \(F^*\alpha\) is a 1-form on \(U\).
+
+It is not difficult to see that \(F^*\) is linear, i.e. for \(\alpha_1, \alpha_2\) 
+1-forms on \(V\) and \(\lambda_1, \lambda_2 \in \mathbb{R}\), then 
+\[F^*(\lambda_1\alpha_1 + \lambda_2\alpha_2) = \lambda_1 F^*\alpha_1 + 
+  \lambda_2 F^*\alpha_2.\] 
+Thus, writing the form \(\alpha\) on \(V\) in terms of the basis representation, 
+\(\alpha = \alpha_1 dy_1 + \cdots + \alpha_k dy_k\), we have 
+\(F^* \alpha = (\alpha_1 \circ F) F^* dy_1 + \cdots + (\alpha_k \circ F) F^* dy_k\).
+Furthermore, for each \(i\), we see 
+\[F^*dy_i = \pdv{F_j}{x_1} dx_1 + \cdots + \pdv{F_j}{x_n} dx_n.\]
+
+\begin{definition}[Pull-back of 1-form]
+  Let \(X\) and \(Y\) be manifolds and \(F : X \to Y\) be a smooth function. 
+  Then, if \(\alpha\) be a 1-form on \(Y\), 
+  \[F^*\alpha : X \to T^* X : x \mapsto DF^* \mid_x (\alpha\mid_{F(x)})\]
+  is a 1-form on \(X\). Moreover, if \(h \in C^\infty(Y)\), then 
+  \(F^*dh = d(h \circ F)\).
+\end{definition}
 
 \end{document}
 
