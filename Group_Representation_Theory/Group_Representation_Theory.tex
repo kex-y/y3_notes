@@ -2149,4 +2149,58 @@ We see that both the second and third statement implies the sum of squares formu
   by Schur's lemma, and thus we have 1 implies 2. 
 \end{proof}
 
+\subsection{Character Theory}
+
+We again visit character theory in the point of view of modules and we will 
+show that, in general algebras, the map \(A \to \text{End}(V)\) is surjective 
+(Artin-Wedderburn tells us that if \(A\) is finite dimensional and semisimple 
+then the map is an isomorphism).
+
+\begin{proposition}
+  Let \(A\) be an algebra and \(V_1, \cdots, V_m\) be non-isomorphic simple 
+  finite-dimensional \(A\)-modules, then the map
+  \[\bigoplus_{i = 1}^m \rho_{V_i} : A \to \bigoplus_{i = 1}^m \text{End}(V_i)\] 
+  is surjective.
+\end{proposition}
+\begin{proof}
+  Let \(B = \bigoplus_i \rho_{V_i}(A) \subseteq \bigoplus_i \text{End}(V_i)\), 
+  then \(B\) is an \(A\)-module under left multiplication, i.e.
+  \[\rho_V(a)(b) = (\rho_{V_1}(a), \cdots, \rho_{V_m}(a))b.\]
+  Then, since \(V_i\) is semisimple, \(\text{End}(V_i) \cong V_i^{\dim V_i}\) 
+  and so, \(B\) is semisimple. Thus, as \(B\) is finite dimensional, it 
+  is a semisimple algebra. Now, by observing that \(V_i\) are simple, non-isomorphic 
+  \(B\)-modules, by Artin-Wedderburn, for \(V_1, \cdots V_m, W_1, \cdots, W_n\)
+  all simple \(B\)-modules, we have 
+  \[B \cong \bigoplus \text{End}(V_i) \oplus \bigoplus \text{End}(W_i).\]
+  But \(B \subseteq \bigoplus \text{End}(V_i)\), and so, by dimensional 
+  argument, we have \(B = \bigoplus \text{End}(V_i)\) and hence, the map is 
+  surjective.
+\end{proof}
+
+\begin{definition}[Character]
+  Given a finite dimensional \(A\)-module \((V, \rho_V)\), we define its 
+  character to be 
+  \[\chi_{\rho_V}(a) := \text{tr}(\rho_V(a)).\]
+\end{definition}
+
+\begin{proposition}
+  Given \(\{V_i\}\) non-isomorphic simple finite-dimensional \(A\)-modules,
+  \(\{\chi_{V_i}\}\) are linearly independent.
+\end{proposition}
+\begin{proof}
+  Suppose \(\lambda_1 \chi_{V_1} + \cdots + \lambda_m \chi_{V_m} = 0\). Then, 
+  by the above proposition, \(A \to \bigoplus \text{End}(V_i)\) is surjective and 
+  so, for all \(j\), there exists some \(a \in A\) such that 
+  \(\text{tr}(\rho_{V_j}(a)) = 1\) and \(\rho_{V_i}(a) = 0\) for all \(i \neq j\).
+  Then, 
+  \[0 = \lambda_1 \chi_{V_1}(a) + \cdots + \lambda_m \chi_{V_m}(a) = \lambda_j\]
+  for each \(j\). Hence \(\{\chi_{V_i}\}\) are linearly independent.
+\end{proof}
+
+\begin{corollary}
+  Let \(G\) be a (not necessary finite) group and \(V_1, \cdots, V_m\) be 
+  non-isomorphic, irreducible representations of \(G\). Then, 
+  \(\chi_{V_1}, \cdots, \chi_{V_m}\) are linearly independent.
+\end{corollary}
+
 \end{document} 
