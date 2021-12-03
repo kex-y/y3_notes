@@ -2317,7 +2317,7 @@ into the following three categories.
 
 We recall that in the finite dimensional case over \(\mathbb{C}\), as 
 \(\mathbb{C}\) is algebraically closed, the characteristic polynomial 
-always has a root and thus, every operator has at least 1 eigenvalie. 
+always has a root and thus, every operator has at least 1 eigenvalue. 
 The similar is true for Hilbert spaces.
 
 \begin{lemma}[Neumann Series]
@@ -2370,6 +2370,102 @@ The similar is true for Hilbert spaces.
   function \(f\) on \(\mathbb{C}\) and thus, by Liouville's theorem, 
   \(f = 0\). But as \(x, y\) was arbitrary, this implies \(R_\lambda(A) = 0\), 
   contraction! Hence \(\sigma(A)\) is non-empty.
+\end{proof}
+
+\begin{proposition}
+  The eigenvectors corresponding to distinct eigenvalues of an operator are 
+  linearly independent.
+\end{proposition}
+\begin{proof}
+  Suppose \(\{u_i\}\) are the eigenvectors of the operator \(T\) corresponding 
+  the distinct eigenvalues \(\{\lambda_i\}\), i.e. \(Tu_i = \lambda_i u_i\) 
+  for all \(i\). Then, if \(\{u_1, \cdots, u_n\}\) is linearly independent and 
+  \(\{u_1, \cdots, u_{n + 1}\}\) is linearly dependent, there exists 
+  \(\beta_i\), \(\beta_{n + 1} \neq 0\) such that, 
+  \[0 = \sum_{i = 1}^{n + 1}\beta_i u_i = \beta_{i + 1}u_{n + 1} + 
+    \sum_{i = 1}^n \beta_i u_i.\]
+  Thus, \(u_{n + 1} = -\frac{1}{\beta_{n + 1}} \sum_{i = 1}^n \beta_i u_i\) and 
+  hence, 
+  \[\left(-\frac{\lambda_{n + 1}}{\beta_{n + 1}} \sum_{i = 1}^n \beta_i u_i\right)=
+  \lambda_{n + 1}u_{n + 1} = Tu_{n + 1} = T 
+  \left(-\frac{1}{\beta_{n + 1}} \sum \beta_i u_i\right) = 
+  -\frac{1}{\beta_{n + 1}}\sum \beta_i \lambda_i u_i.\]
+  So, 
+  \[\sum_{i = 1}^n \frac{\beta_i}{\beta_{n + 1}}(\lambda_i - \lambda_{n + 1})u_i = 0.\]
+  But as \(\{u_i\}\) is linearly independent this implies \(\lambda_i - \lambda_{n + 1} = 0\) 
+  contradicting \(\lambda_i \neq \lambda_{n + 1}\).
+\end{proof}
+
+\begin{proposition}
+  Let \(T\) be a self-adjoint operator in a Hilbert space. Then, the eigenvectors 
+  of \(T\) corresponding to distinct eigenvalues are orthogonal.
+\end{proposition}
+\begin{proof}
+  Let \(u_i, u_j\) be eigenvectors of \(T\) with eigenvalues \(\lambda_i \neq \lambda_j\). 
+  Then, 
+  \[\lambda_i \langle u_i, u_j\rangle = \langle \lambda_i u_i, u_j \rangle 
+  = \langle Tu_i, u_j\rangle = \langle u_i, Tu_j\rangle = \langle u_i, \lambda_j u_j \rangle
+  = \overline{\lambda_j}\langle u_i, u_j\rangle.\]
+  Hence, as the eigenvalues of a self-adjoint operator is real (by considering 
+  \(\lambda \langle u, u \rangle\)), 
+  \(\lambda_i = \overline{\lambda_j}\) implies \(\lambda_i = \lambda_j\) which 
+  contradicts \(\lambda_i \neq \lambda_j\), we have \(\langle u_i, u_j\rangle = 0\).
+\end{proof}
+
+\subsubsection{Compact Operators}
+
+\begin{theorem}[Riesz-Schauder]
+  Let \(X\) be a normed space and let \(T : X \to X\) be a compact operator. Then 
+  \begin{itemize}
+    \item \(\sigma(T)\) is countable;
+    \item 0 can be the only limit point of \(\sigma(T)\);
+    \item the eigenvalues of \(T\) have finite multiplicity, i.e. the eigenspaces 
+      are finite dimensional.
+  \end{itemize}
+\end{theorem}
+\begin{proof}\ 
+  We will first prove that any nonzero element cannot be a limit point of 
+  \(\sigma(T)\). 
+  
+  Suppose otherwise such that there exists a sequence
+  \(\{\lambda_n\}\) of distinct eigenvalues such 
+  that \(|\lambda_i| > \epsilon > 0\) for some \(\epsilon\) and let 
+  \(\{u_i\}\) be their corresponding eigenvectors. Then, denote 
+  \(M_n := \text{span}\{u_1, \cdots, u_n\}\). It is clear that \(M_n\) is 
+  closed as it is finite dimensional, and thus, by Riesz' lemma, for all 
+  \(n\), there exists a \(y_n \in M_n\) such that, \(\|y_n\| = 1\) and 
+  \(\|y_n - x\| \ge 1 / 2\) for all \(x \in M_{n - 1}\).
+
+  It suffices to show that \(\|Ty_n - Ty_m\| \ge \epsilon / 2 > 0\) for all 
+  \(n, m\) since then, \((Ty_n)\) does not have a convergent subsequence, 
+  contradicting the compactness of \(T\). Indeed, for \(n > m\), 
+  \[Ty_n - Ty_m = \lambda_n y_n - (\lambda_n \text{id}_X - T)y_n - Ty_m
+    =: \lambda_n y_n - \tilde x\]
+  where we define \(\tilde x := (\lambda_n \text{id}_X - T)y_n + Ty_m\).
+  Since \(m \le n - 1\), we have \(y_m \in M_m \subseteq M_{n - 1}\) and so, 
+  \(Ty_m \in M_{n - 1}\). By considering 
+  \((T - \lambda_n \text{id}_X)M_n \subseteq M_{n - 1}\), we have
+  \[(\lambda_n\text{id}_X - T)y_n = - (T - \lambda_n\text{id}_X)y_n \in M_{n - 1}.\]
+  Hence, \(\tilde x \in M_{n - 1}\) and \(\|Ty_n - Ty_m\| = \|\lambda_n y_n - \tilde x\| 
+  = |\lambda_n| \|y_n - \tilde x / \lambda_n\| \ge |\lambda_n| / 2 \ge \epsilon / 2\) 
+  as required.
+
+  With this, \(\sigma(T)\) is countable follows by considering the union 
+  \[\sigma(T) = \bigcup_{n \in \mathbb{N}} S_n := \bigcup_{n \in \mathbb{N}} 
+  \left\{\lambda \mid \lambda \in \sigma(T), |\lambda| > \frac{1}{n}\right\}.\]
+  Since the limit point of \(\sigma(T)\) can only by 0, and the set of 
+  eigenvalues are bounded (as compact operators are bounded), 
+  \(S_n\) is finite for each \(n\), and so, the union of \(S_n\) is 
+  countable and hence, so is \(\sigma(T)\).
+
+  Finally, we will show that the eigenspaces are finite dimensional. Let 
+  \(B\) be the closed unit ball in the \(\lambda\)-eigenspace \(E_\lambda\). 
+  Then, if \((x_n)\) is a sequence of \(E_\lambda\), as \(T\) is compact, 
+  \((x_n)\) has a subsequence \((x_{n_k})\) such that \((Tx_{n_k})\) converges.
+  But \(Tx_{n_k} = \lambda x_{n_k}\) and so, \(x_{n_k}\) converges to 
+  some \(x \in B\) and hence \(B\) is compact in \(E_\lambda\). Thus, by recalling 
+  that the closed unit ball is compact if and only if the space is finite dimensional,
+  \(E_\lambda\) is finite dimensional.
 \end{proof}
 
 
