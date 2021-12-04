@@ -2235,23 +2235,6 @@ theorem, there exists a unique \(u \in H_0^1(D)\) such that
 demonstrates the existence of the weak solution in \(H_0^1(D)\) and provides 
 a good candidate for the solution of DP.
 
-% \subsubsection{Hilbert-Schmidt Integral Operator}
-
-% \begin{definition}[Hilbert-Schmidt Integral Operator]
-%   The Hilbert-Schmidt integral operator \(T : H \to H\) where 
-%   \(H := L^2(\mathbb{R}^d)\) is the linear operator 
-%   \[Tf : x \mapsto \int_{\mathbb{R}^d} K(x, y) f(y) \dd \lambda(y),\]
-%   for some kernel map \(K \in L^2(\mathbb{R}^d \times \mathbb{R}^d)\).
-% \end{definition}
-
-% The map \(y \mapsto K(x, y)f(y)\) is integrable for all \(x\) since by 
-% Fubini, the map \(y \mapsto K(x, y)\) is square integrable for all \(x\) 
-% and thus, 
-% \[\|K(x, \cdot)f(\cdot)\|_1 = \langle K(x, \cdot), f \rangle^2 \le 
-%   \|K(x, \cdot)\|_2 \|f\|_2.\]
-% We note that this also implies the operator is bounded with the bound 
-% \(\|T\| \le \|K\|_2\).
-
 \subsection{Spectrum of Operators}
 
 \begin{definition}[Resolvent]
@@ -2468,5 +2451,123 @@ The similar is true for Hilbert spaces.
   \(E_\lambda\) is finite dimensional.
 \end{proof}
 
+\subsubsection{Hilbert-Schmidt Operator}
+
+\begin{definition}[Hilbert-Schmidt Operator]
+  Given a Hilbert space \(\mathcal{H}\), \(T : \mathcal{H} \to \mathcal{H}\) 
+  a linear operator and \(\{e_j\}\) an orthonormal basis of \(\mathcal{H}\), 
+  we define Hilbert-Schmidt norm \(\|\cdot\|_{HS}\) such that 
+  \[\|T\|_{HS} := \left(\sum_j \|Te_j\|^2\right)^{1 / 2}.\]
+  \(T\) is said to be a Hilbert-Schmidt operator if \(\|T\|_{HS} < \infty\).
+\end{definition}
+
+We note that the definition of the Hilbert-Schmidt operator depends on a choice 
+of basis. This is not ideal though we are able to show the definition is in fact 
+independent of this choice.
+
+\begin{proposition}
+  The Hibert-Schmidt norm is independent of the choice of the basis and 
+  \(\|T\|_{HS} = \|T^*\|_{HS}\).
+\end{proposition}
+\begin{proof}
+  Suppose \(\{e_j\}, \{f_i\}\) are two orthonormal basis of \(\mathcal{H}\), 
+  then, for all linear operator \(T\), 
+  \[\sum_i \|Tf_i\|^2 = \sum_i \sum_j |\langle Tf_i, e_j\rangle|^2 = 
+    \sum_j \sum_i |\langle f_i, T^* e_j\rangle|^2 = 
+    \sum_j \|T^* e_j\|^2\]
+  where the first equality is due to Parseval's identity. Hence, 
+  replacing \(f_i\) with \(e_j\) shows \(\|T\|_{HS} = \|T^*\|_{HS}\) and 
+  rewriting using this provides the first result.
+\end{proof}
+
+\begin{definition}[Trace]
+  Given an operator \(T\) on a Hilbert space \(\mathcal{H}\), we define 
+  its trace by 
+  \[\text{tr}(T) := \sum_i \langle e_i, Te_i\rangle\]
+  where \(\{e_j\}\) is an orthonormal basis of \(\mathcal{H}\) 
+  whwhenever the right hand side converges.
+\end{definition}
+
+Similar to before, we will show that this definition 
+
+\begin{proposition}
+  The trace of an operator is independent of the choice of basis and 
+  \(\|T\|_{HS}^2 = \text{tr}(T^*T)\).
+\end{proposition}
+\begin{proof}
+  The second statement is obvious while the first is not. To see this one 
+  will need to consider the polar decomposition. We will omit the proof here.
+\end{proof}
+
+As with other conditions, we would like to consider the space of all 
+Hilbert-Schmidt operators and if we can equip it with an interesting structure. 
+Let \(\mathcal{J}_2\) denote the set of all Hilbert-Schmidt operators. 
+
+\begin{proposition}
+  \(\mathcal{J}_2\) form a linear space with an inner product 
+  \[\langle A, B \rangle_{HS} := \text{tr}(A^* B).\]
+\end{proposition}
+
+\begin{proposition}
+  \(\|T\| \le \|T\|_{HS}\).
+\end{proposition}
+\begin{proof}
+  By Parseval's identity, for all \(x \in \mathcal{H}\) we have
+  \[\begin{split}
+    \|Tx\|^2 & = \sum_j |\langle Tx, e_j\rangle|^2 
+      = \sum_j |\langle x, T^* e_j\rangle|^2 \le \sum_j \|x\|^2 \|T^* e_j\|^2
+      = \|x\|^2 \|T^*\|^2_{HS} = \|x\|^2 \|T\|^2_{HS},
+  \end{split}\]
+  whee the inequality is due to Cauchy-Schwarz.
+\end{proof}
+
+\begin{proposition}
+  \((\mathcal{J}_2, \langle \cdot, \cdot \rangle)\) form a Hilbert space.
+\end{proposition}
+
+\begin{proposition}
+  If \(a_{ij} = \langle e_i, Te_j\rangle\), then 
+  \(\|T\|_{HS}^2 = \sum_{ij} |a_{ij}|^2\).
+\end{proposition}
+
+\begin{theorem}
+  Hilbert-Schmidt operators are compact.
+\end{theorem}
+\begin{proof}
+  Let \(T\) be a Hilbert-Schmidt operator and for each \(n \in \mathbb{N}\), 
+  define 
+  \[T_n : x \mapsto 
+    \sum_{i, j = 1}^n \langle e_i, Te_j\rangle \langle e_j, x\rangle e_i.\]
+  Then, each \(T_n\) has finite dimensional range and thus is compact.
+  Now, by considering 
+  \[\begin{split}
+    \|T_n - T\|^2_{HS} & = \sum_k \left\|\sum_{i, j = 1}^n 
+    \langle e_i, Te_j\rangle \langle e_j, e_k\rangle e_i - Te_k\right\|^2\\
+    & = \sum_k \left\|\sum_{i = 1}^n 
+    \langle e_i, Te_k\rangle e_i - Te_k\right\|^2\\
+    & = \sum_k \left\|\sum_{i = 1}^n 
+    \langle e_i, Te_k\rangle e_i - \sum_i \langle e_i, Te_k\rangle e_i\right\|^2\\
+    & = \sum_k \left\|\sum_{i > n} \langle e_i, Te_k\rangle e_i\right\|^2
+      = \sum_{i > n}\|Te_i\|^2
+  \end{split}\]
+  which tends to 0 as \(n \to \infty\) as \(\sum_i\|Te_i\|^2 < \infty\). Thus, 
+  as the space of compact operators form a closed normed space, \(T \in \mathcal{J}_2\) 
+  is also compact.
+\end{proof}
+
+\begin{definition}[Hilbert-Schmidt Integral Operator]
+  The Hilbert-Schmidt integral operator \(T : H \to H\) where 
+  \(H := L^2(\mathbb{R}^d)\) is the linear operator 
+  \[Tf : x \mapsto \int_{\mathbb{R}^d} K(x, y) f(y) \dd \lambda(y),\]
+  for some kernel map \(K \in L^2(\mathbb{R}^d \times \mathbb{R}^d)\).
+\end{definition}
+
+The map \(y \mapsto K(x, y)f(y)\) is integrable for all \(x\) since by 
+Fubini, the map \(y \mapsto K(x, y)\) is square integrable for all \(x\) 
+and thus, 
+\[\|K(x, \cdot)f(\cdot)\|_1 = \langle K(x, \cdot), f \rangle^2 \le 
+  \|K(x, \cdot)\|_2 \|f\|_2.\]
+We note that this also implies the operator is bounded with the bound 
+\(\|T\| \le \|K\|_2\).
 
 \end{document}
