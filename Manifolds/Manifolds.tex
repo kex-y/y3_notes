@@ -64,6 +64,7 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{tikz}
+\usepackage{tikz-cd}
 \usepackage{physics}
 \usepackage{amsthm}
 \usepackage{mathtools}
@@ -1737,6 +1738,7 @@ This proposition can be generalized into the following.
   See problem sheet.
 \end{proof}
 
+\newpage
 \section{Forms and Integration}
 
 \subsection{1-form}
@@ -1829,6 +1831,349 @@ Furthermore, for each \(i\), we see
   is a 1-form on \(X\). Moreover, if \(h \in C^\infty(Y)\), then 
   \(F^*dh = d(h \circ F)\).
 \end{definition}
+
+\subsection{\(p\)-form}
+
+In order to generalize 1-forms to \(p\)-forms, we will construct an operator 
+called the wedge product. This is a linear algebra construction and is also used 
+else where than manifolds. As a result, the proofs required for 
+all linear algebra constructions and propositions are left as an exercise.
+
+\begin{definition}[Multilinear Map]
+  Let \(V\) be a \(\mathbb{R}\)-vector space and for any integer \(p \ge 0\), 
+  a multilinear map \(\omega : V^p \to \mathbb{R}\) is a function which is 
+  linear with respect to each term (by convention, we denote \(V^0\) as \(\mathbb{R}\)). 
+\end{definition}
+
+\begin{definition}[Signature of Permutation]
+  Given \(\sigma \in S_p\) where \(S_p\) is the \(p\)-permutation group, 
+  we denote the siganature of \(\sigma\) by 
+  \[\epsilon(\sigma) := (-1)^m,\]
+  where \(m\) is the number of transpositions in a decomposition of \(\sigma\).
+
+  We recall that in group theory we refer to this as the sign of a permuation.
+\end{definition}
+
+\begin{definition}[Alternating \(p\)-form]
+  A multilinear map \(\omega : V^p \to \mathbb{R}\) is called an alternating 
+  \(p\)-form if for all \(v_1, \cdots, v_p \in V\) and for all \(\sigma \in S_p\), 
+  we have 
+  \[\omega(v_{\sigma(1)}, \cdots, v_{\sigma(n)}) = \epsilon(\sigma)\omega(v_1, \cdots, v_n).\]
+
+  We denote \(\wedge^p V^*\) the set of all alternating \(p\)-forms. 
+  It is clear that \(\wedge^p V^*\) form a vector space under the natural 
+  operations and we call this the \(p\)-th exterior power of \(V\).
+\end{definition}
+
+We note that for \(p = 1\), \(\wedge V^* = V^* = \text{Hom}(V, \mathbb{R})\) 
+and hence the notation. On the other hand, for \(p = 0\), \(\wedge^0 V^*\) 
+is the set of all linear maps from \(\mathbb{R}\) to \(\mathbb{R}\) which is 
+isomorphic to \(\mathbb{R}\).
+
+\begin{definition}[Exterior Product]
+  Let \(p, q\) be positive integers. Then, we denote 
+  \[S_{p, q} := \{\sigma \in S_{p + q} \mid \sigma(1) < \cdots < \sigma(p), 
+    \sigma(p + 1) < \cdots < \sigma(p + 1)\}.\]
+  Then, given \(\omega_1 \in \wedge^p V^*\) and \(\omega_2 \in \wedge^q V^*\),
+  we define the exterior product \(\omega_1 \wedge \omega_2 \in \wedge^{p + q} V^*\) 
+  by definition, for each \(v_1, \cdots, v_{p + q} \in V\), 
+  \[\omega_1 \wedge \omega_2(v_1, \cdots, v_{p + q}) := 
+    \sum_{\sigma \in S_{p, q}} \epsilon(\sigma) \omega_1(v_{\sigma(1)}, \cdots, v_{\sigma(p)}) 
+    \omega(v_{\sigma(p + 1)}, \cdots, v_{\sigma(p + q)}).\]
+\end{definition}
+
+This definition is not very useful when computing and as we shall see, there 
+is a much more natural characterization of the exterior product which allows us 
+to compute the exterior product more effectively.
+
+\begin{proposition}
+  Let \(\omega_1, \omega_2 \in \wedge^1 V^*\). Then 
+  \[\omega_1 \wedge \omega_2(v, w) = \omega_1(v)\omega_2(w) - \omega_1(w)\omega_2(v).\]
+  More generally, if \(\omega_1, \cdots, \omega_p \in \wedge^1 V^*\), then 
+  \[\omega_1 \wedge \cdots \wedge \omega_p(v_1, \cdots, v_p) = 
+  \det\begin{pmatrix}
+    \omega_1(v_1) & \omega_1(v_2) & \cdots & \omega_1(v_p) \\
+    \omega_2(v_1) & \omega_2(v_2) & \cdots & \omega_2(v_p) \\
+    \vdots & \vdots &  & \vdots \\
+    \omega_p(v_1) & \omega_p(v_2) & \cdots & \omega_p(v_p)
+  \end{pmatrix}\]
+\end{proposition}
+
+\begin{proposition}
+  Let \(\omega_i \in \wedge^{p_i} V^*\) for \(i = 1, \cdots, 3\). Then 
+  \begin{itemize}
+    \item (associativity) \(\omega_1 \wedge (\omega_2 \wedge \omega_3) = 
+      (\omega_1 \wedge \omega_2) \wedge \omega_3\);
+    \item (distributivity) if \(p_2 = p_3\), then 
+      \(\omega_1 \wedge (\omega_2 + \omega_3) = 
+      \omega_1 \wedge \omega_2 + \omega_1 \wedge \omega_3\);
+    \item (super-commutativity) \(\omega_1 \wedge \omega_2 = 
+      (-1)^{p_1p_2} \omega_2 \wedge \omega_1\).
+  \end{itemize}
+\end{proposition}
+
+\begin{definition}[Pull-back of Alternating Form]
+  Let \(\Phi : V \to W\) be a linear map between vector spaces and suppose 
+  \(\omega \in \wedge^p W^*\). Then, the pull-back of \(\omega\) along 
+  \(\Phi\) is the \(p\)-form \(\Phi^*\omega \in \wedge^p V^*\) such that 
+  \[(\Phi^* \omega)(v_1, \cdots, v_p) := \omega(\Phi(v_1), \cdots, \Phi(v_p)).\] 
+\end{definition}
+
+\begin{proposition}
+  Let \(\Phi : V \to W\) and \(\psi : W \to Z\) be linear maps between vector 
+  spaces. Then 
+  \begin{itemize}
+    \item the pull-back \(\Phi^* : \wedge^p W^* \to \wedge^p V^* : \omega \mapsto \Phi^* \omega\) 
+      is linear and preserves the exterior product, i.e. 
+      \[\Phi^*(\omega_1 \wedge \omega_2) = \Phi^*\omega_1 \wedge \Phi^* \omega_2;\]
+    \item \((\Psi \circ \Phi)^* \omega = \Phi^* \Psi^* \omega\);
+    \item if \(V = W\) and \(p = \dim V\), then \(\Phi^* \omega = \det(\Phi) \omega\).
+  \end{itemize}
+\end{proposition}
+
+\begin{proposition}
+  If \(p > n := \dim V\), then \(\wedge^p V^* = 0\). 
+\end{proposition}
+
+\begin{proposition}
+  Let \(v_1, \cdots, v_n \in V\) be a basis and let \(v_1^\vee, \cdots, v_n^\vee\) 
+  be its dual basis. Then, for all \(0 < p \le n\), 
+  \[\{v_{i_1} \wedge \cdots \wedge v_{i_p} \mid i_1 < \cdots < i_p\}\]
+  form a basis of \(\wedge^p V^*\) (so \(\dim \wedge^p V^*\) is \(n\) choose \(p\)). 
+\end{proposition}
+
+Finally, with the above constructions, we may return to the theory of manifolds 
+and we will define the differential forms.
+
+\begin{definition}[\(p\)-th Exterior Bundle]
+  Let \(X\) be an \(n\)-dimensional manifold and let \(x \in X\). We denote 
+  \[\wedge^p T^*_x X := \wedge^p (T_x X)^*.\]
+  Furthermore, we define
+  \[\wedge^p T^* X := \bigcup_{x \in X} \wedge^p T^*_x X.\]
+  We call this the \(p\)-th exterior bundle of \(X\) and with other bundles, 
+  there exists a projection \(\pi : \wedge^p T^* X \to X : 
+    \omega \in \wedge^p T^*_x X \to x\).
+\end{definition}
+We note that for \(p = 1\), \(\wedge^1 T^*_x X = (T_x X)^* = T^*_x X\).
+
+\begin{definition}[Differential \(p\)-form]
+  A differential \(p\)-form on \(X\) is a section of \(\wedge^p T^* X\).
+\end{definition}
+
+We introduce the following notations 
+\[\Omega^p(X) := \{\omega \mid \omega \text{ is a differential \(p\)-form on \(X\)}\},\]
+and 
+\[\Omega^\bullet X := \bigoplus_{p = 0}^n \Omega^p(X).\]
+We note that \(\Omega^0(X) = C^\infty(X)\) and if \(X\) has dimension \(n\), 
+then \(\Omega^p(X) = 0\) for all \(p > n\).
+
+\begin{definition}
+  Given \(\omega_1 \in \Omega^p(X)\) and \(\omega_2 \in \Omega^q(X)\), we 
+  define \(\omega_1 \wedge \omega_2 \in \Omega^{p + q}X\) where 
+  \[\omega_1 \wedge \omega_2 : X \to \wedge^{p + q} T^* X : x \mapsto 
+    \omega_1(x) \wedge \omega_2(x).\]
+  It follows by the definition that associativity, distributivity and 
+  super-commutativity still hold.
+\end{definition}
+
+Again, similar to alternating forms, we may define the pull-back of 
+differential forms.
+
+\begin{definition}[Pull-back of Differential \(p\)-form]
+  Let \(X, Y\) be manifolds and suppose \(F : X \to Y\) is smooth. Then, for 
+  all \(x \in X\), we have the Jacobian of \(F\) at \(x\) is a linear map 
+  \[DF\mid_x : T_x X \to T_{F(x)} Y.\]
+  Thus, we may define 
+  \[F^* : \wedge^p T^*_{F(x)} Y \to \wedge^p T^*_x X\]
+  such that, for all \(\omega \in \wedge^p T^*_{F(x)}Y\) and 
+  \(v_1, \cdots, v_p \in T_x X\),
+  \[F^* \omega(x)(v_1, \cdots, v_p) := 
+    \omega(F(x))(DF\mid_x v_1, \cdots, DF\mid_x v_p).\]
+  Thus, as we may define the pull-back given any \(x \in X\), given a differential 
+  \(p\)-form \(\omega\) on \(Y\), we have a differential \(p\)-form \(F^* \omega\) 
+  on \(X\) given by 
+  \[F^* \omega : X \mapsto \wedge^p T^* X : x \mapsto 
+    F^*\omega(x).\]
+  \end{definition}
+  
+With this in mind, we have define \(F^* : \Omega^p(Y) \to \Omega^p(X)\) 
+where it is not difficult to show \(F^*\) is linear. Moreover, 
+given \(\omega_1 \in \Omega^p(Y)\) and \(\omega_2 \in \Omega^q(Y)\), we 
+have 
+\[F^*(\omega_1 \wedge \omega_2) = F^*(\omega_1) \wedge F^*(\omega_2).\]
+Finally, we see that if \(G : Y \to Z\) is also smooth and \(\omega \in \Omega^p(Z)\), 
+then 
+\[(G \circ F)^*\omega = F^* G^* \omega.\]
+  
+\begin{definition}
+  Let \(U \subseteq \mathbb{R}^n\) be open and let \(x \in U\). Then 
+  \(\left\{\pdv{x_1}, \cdots, \pdv{x_n}\right\}\) is a basis of 
+  \(T_x U\) and we define \(dx_i := \left(\pdv{x_1}\right)^\vee\), i.e. 
+  \(\{dx_i\}\) is the dual basis of \((T_x U)^* \cong T^*_x U\). Then, 
+  a basis of \(\wedge^p T^*_x U\) is given by 
+  \[\{dx_{i_1} \wedge \cdots \wedge dx_{i_p} \mid 1 \le i_1 < \cdots < i_p \le n\},\]
+  and a differential \(p\)-form on \(U\) is locally given by 
+  \[\omega = \sum_{|I| = p} h_I dx_{i_1} \wedge \cdots \wedge dx_{i_p}\]
+  where \(h_I : U \to \mathbb{R}\) is smooth for all \(I = (i_1, \cdots, i_p)\).
+\end{definition}
+
+By recalling that \(dx_i \wedge dx_j = - dx_j \wedge dx_i\) for all 
+\(i, j \in \{1, \cdots, n\}\), we have \(dx_i \wedge dx_i = 0\).
+
+Let \(F : U \to V\) be a smooth function between open sets of \(\mathbb{R}^n\) 
+and suppose \(\omega : X \to \wedge^n T^* X\) is an \(n\)-form on \(V\). Then, 
+locally, we may write \(\omega = hdy_1 \wedge \cdots \wedge hdy_n\) where 
+\(h : U \to \mathbb{R}\) is a smooth function. With this in mind, 
+we have the pull-back of \(\omega\) along \(F\) is given locally by 
+\[F^* \omega(x) = h \circ F(x) \cdot \det DF\mid_x \cdot dx_1 \wedge \cdots \wedge dx_n.\]
+
+\subsection{de Rham Differential}
+
+Recall that given \(U \subseteq \mathbb{R}^n\) is open, and \(h \in C^\infty(U)\), 
+the differential of \(h\) is defined locally as 
+\[dh := \sum_{i = 1}^n \pdv{h}{x_i} dx_i,\]
+i.e. \(dh(\xi) = \xi(h)\) for any vector field \(\xi : U \to TU\).
+Alternatively, we have \(dh = h^* dx\) where \(dx\) is the 
+standard 1-form on \(\mathbb{R}\).
+
+More generally, recall that if \(\omega \in \Omega^p(U)\) is a 
+differential \(p\)-form, it is locally given by 
+\[\omega = \sum_{|I| = p} h_I dx_{i_1} \wedge \cdots \wedge dx_{i_p}.\]
+Then, the differential of \(\omega\) is locally given by 
+\[d\omega = \sum_{|I| = p} dh_I \wedge dx_{i_1} \wedge \cdots \wedge dx_{i_p},\]
+and so, \(d\omega \in \Omega^{p + 1}(U)\) is a differential \(p + 1\)-form.
+This process induces a map \(d : \Omega^p(U) \to \Omega^{p + 1}(U)\) and 
+is called the de Rham differential of \(U\).
+
+For manifolds the idea is similar. Let \(X\) be an \(n\)-dimensional manifold 
+and \(\pi : E \to X\) be a vector bundle of rank \(r\). Then we recall that 
+there exists an atlas \(\{(U_i, f_i)\}_{i \in I}\) for \(X\) and an atlas 
+\(\{(V_i, g_i)\}_{i \in I}\) for \(E\) such that 
+\[V_i = \pi^{-1}(U_i) \text{ and } g_i(V_i) = f_i(U_i) \times \mathbb{R}^r,\]
+for all \(i \in I\). Then, if \(s : X \to E\) is a section, i.e. 
+smooth and \(\pi \circ s = \text{id}_X\), we may define 
+\[\tilde s_i := g_i \circ s \circ f_i^{-1} : f_i(U_i) \to f_i(U_i) \times \mathbb{R}^r\]
+for all \(i \in I\). Furthermore, for any \(i, j \in I\) where \(U_i \cap U_j \neq 
+\varnothing\), we have the transition functions 
+\[\phi_{ij} : f_j(U_i \cap U_j) \to f_i(U_i \cap U_j), \text{ and } 
+  \Phi_{ij} : f_j(U_i \cap U_j) \times \mathbb{R}^r \to 
+    f_i(U_i \cap U_j) \times \mathbb{R}^r.\]
+In particular, the following diagram is commutative,
+\[\begin{tikzcd}
+  f_j(U_i \cap U_j) \arrow{r}{\tilde s_j} 
+    \arrow{d}{\phi_{ij}} & f_j(U_i \cap U_j) \times \mathbb{R}^r 
+    \arrow{d}{\Phi_{ij}} \\
+  f_i(U_i \cap U_j) \arrow{r}{\tilde s_i} & 
+  f_i(U_i \cap U_j) \times \mathbb{R}^r
+\end{tikzcd}\]
+and so \(\Phi_{ij} \circ \tilde s_j = \tilde s_i \circ \phi_{ij}\).
+It is easy to check the reverse is also true, i.e. if there exists smooth
+\(\tilde s_i : f_i(U_i) \to f_i(U_i) \times \mathbb{R}^r\) for all 
+\(i \in I\) such that \(\Phi_{ij} \circ \tilde s_j = \tilde s_i \circ \phi_{ij}\) 
+for all \(i, j \in I\), there exists a unique section \(s\) such that 
+\(\tilde s_i = g_i \circ s \circ f_i^{-1}\) for all \(i \in I\).
+
+With this in mind, we may define the de Rham differential on a manifold. 
+Let \(X\) be an \(n\)-dimensional manifold and let \(\omega \in \Omega^p(X)\) 
+be a \(p\)-form. Let \(\{(U_i, f_i)\}_{i \in I}\) be an atlas on \(X\). 
+Then, for each \(i \in I\), we can define 
+\[\omega_i := (f_i^{-1})^* \omega \in \Omega^p(f_i(U_i)).\]
+As these are \(p\)-forms on subsets of \(\mathbb{R}^n\), if makes sense 
+to take their de Rham differential \(d\omega_i\) to be \(p + 1\)-forms.
+Finally, as it is clear that these \(p + 1\)-forms satisfies the commutative 
+diagram as presented above, there exists a unique section \(d\omega\) 
+such that satisfying the commutative diagram for all charts. We call 
+\(d\omega\) the de Rham differential of \(\omega\) and we denote the 
+de Rham operator by \(d : \Omega^p(X) \to \Omega^{p + 1}(X)\).
+
+With this construction in mind, in particular, we note that this construction 
+is local, to prove properties about the de Rham differential, it suffice to 
+prove them locally. The following three propositions illustrate this.
+
+\begin{proposition}[Leibniz Rule]
+  Given \(\omega_1 \in \Omega_1^p(X)\) and \(\omega_2 \in \Omega_2^q(X)\)
+  we have,
+  \[d(\omega_1 \wedge \omega_2) = d\omega_1 \wedge \omega_2 + (-1)^p \omega_1 
+    \wedge d\omega_2.\]
+\end{proposition}
+\begin{proof}
+  Let \(x \in X\), and take \((U_i, f_i)\) be a chart on \(X\) containing \(x\), 
+  then by construction, \(d\omega(x) = d\omega_i(x) = d(f_i^{-1})^* \omega(f_i(x)) 
+  \in \Omega^p(f_i(U_i))\).
+  Thus, WLOG. we may assume \(X = U \subseteq \mathbb{R}^n\) where \(U\) is open.
+
+  Write \(\omega_1 = h_1 dx_{i_1} \wedge \cdots dx_{i_p}\) and 
+  \(\omega_2 = h_2 dx_{j_1} \wedge \cdots dx_{j_q}\) where \(h_1, h_2 \in C^\infty(U)\) 
+  (we note that we omitted the sum since we see that if the Leibniz rule is 
+  true for one term of the sum, it is true for the sum as the Leibniz rule 
+  is ``linear''). Then, by definition, we have 
+  \[\begin{split}
+    d(\omega_1 \wedge \omega_2) &= d(h_1 h_2 dx_{i_1} \wedge \cdots \wedge dx_{i_p} 
+      \wedge dx_{j_1} \wedge \cdots \wedge dx_{j_q})\\ 
+      & = d(h_1 h_2) \wedge dx_{i_1} \wedge \cdots \wedge dx_{i_p} 
+      \wedge dx_{j_1} \wedge \cdots \wedge dx_{j_q}\\
+      & = (h_2 dh_1 + h_1 dh_2) \wedge dx_{i_1} \wedge \cdots \wedge dx_{i_p}
+      \wedge dx_{j_1} \wedge \cdots \wedge dx_{j_q}\\
+      & = (dh_1 \wedge dx_{i_1} \wedge \cdots \wedge dx_{i_p}) \wedge
+        (h_2 dx_{j_1} \wedge \cdots \wedge dx_{j_q})\\
+        & \hspace{1cm} + 
+        (-1)^p(h_1 \wedge dx_{i_1} \wedge \cdots \wedge dx_{i_p}) \wedge
+        (dh_2 \wedge dx_{j_1} \wedge \cdots \wedge dx_{j_q})\\
+      & = d\omega_1 \wedge \omega_2 + (-1)^p \omega_1 \wedge d\omega_2,
+  \end{split}\]
+  where the second to last equality is due to super-commutativity where 
+  we move \(dh_2\) \(p\)-times to the right. 
+\end{proof}
+
+\begin{proposition}
+  For all \(p \ge 0\), the map \(d \circ d : \Omega^p(X) \to \Omega^{p + 2}(X)\)
+  is the zero map.
+\end{proposition}
+\begin{proof}
+  Again, WLOG. assume \(X = U \subseteq \mathbb{R}^n\) and write 
+  \(\omega = h dx_{i_1} \wedge \cdots dx_{i_p} \in \Omega^p(U)\) where 
+  \(h \in C^\infty(U)\). Then, 
+  \[d(d\omega) = \sum_{k, j = 1}^n \pdv{h}{x_k}{x_j} dx_k \wedge dx_j \wedge 
+    dx_{i_1} \wedge \cdots \wedge dx_{i_p}.\]
+  Now, since \(h \in C^\infty(U)\), we have 
+  \[\pdv{h}{x_k}{x_j}dx_k \wedge dx_j = - \pdv{h}{x_j}{x_k} dx_j dx_k,\]
+  and so, by the symmetry of the sum, 
+  \[d(d\omega) = - d(d\omega)\]
+  implying \(d(d\omega) = 0\). As \(\omega\) was chosen arbitrarily, this implies 
+  \(d \circ d = 0\) as required.
+\end{proof}
+
+\begin{proposition}
+  If \(F : X \to Y\) is a smooth function between manifolds, then for any 
+  \(\omega \in \Omega^p(Y)\), \(F^* d\omega = d(F^*\omega)\).
+\end{proposition}
+\begin{proof}
+  Assuming \(Y = U\) we write \(\omega = h dy_{i_1} \wedge \cdots 
+  \wedge dy_{i_p} \in \Omega^p(U)\) 
+  where \(h \in C^\infty(U)\). Consider 
+  \[F^* \omega = h \circ F (F^* dy_{i_1}) \wedge \cdots \wedge (F^* dy_{i_p}).\]
+  By recalling \(F^* dg = d(g \circ F)\) for all \(g \in C^\infty(Y)\), we have
+  \(d(F^*dy_{i_j}) = d^2(y_{i_j} \circ F) = 0\). Thus, 
+  \[\begin{split}
+    d(F^* \omega) & = d(h \circ F) \wedge (F^* dy_{i_1}) \wedge \cdots 
+    \wedge (F^* dy_{i_p})\\
+    & = F^* dh \wedge (F^* dy_{i_1}) \wedge \cdots \wedge (F^* dy_{i_p}) 
+      = F^* (dh \wedge dy_{i_1} \wedge \cdots \wedge dy_{i_p}) = F^*(d\omega).
+  \end{split}\]
+  by the Leibniz rule where terms containing \(d(F^* dy_{i_j})\) vanishes.
+\end{proof}
+
+\begin{definition}
+  Let \(\omega \in \Omega^p(X)\) be a differential \(p\)-form. Then,
+  \begin{itemize}
+    \item \(\omega\) is said to be closed if \(d\omega = 0\);
+    \item \(\omega\) is said to be exact if there exists some 
+      \(\omega' \in \Omega^{p - 1}(X)\) such that \(d\omega' = \omega\).
+  \end{itemize}
+\end{definition}
+
+It is clear that if \(\omega\) is exact, then \(\omega = d\omega'\) and so, 
+\(d\omega = d^2 \omega' = 0\) and hence, it is closed.
 
 \end{document}
 
