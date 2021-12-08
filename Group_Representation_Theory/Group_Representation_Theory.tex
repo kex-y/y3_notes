@@ -1369,6 +1369,72 @@ Let us denote this representation by \(\rho_{V \boxtimes W}\).
   Omitted.
 \end{proof}
 
+\newpage
+\section{Restriction and Coinduction}
+
+We have already used the following definition though it is useful to introduce 
+a notation for it. 
+
+\begin{definition}[Resetricted Representation]
+  Given a subgroup \(H < G\) and a representation \((V, \rho_V)\) of \(G\), 
+  the restricted representation \(\text{Res}_H^G(V)\) is the representation 
+  of \(H\) defined by \((V, \rho_v \circ i)\) where \(i\) is the inclusion map 
+  from \(H\) to \(G\).
+\end{definition}
+
+As the underlying vector space remains the same, we have 
+\(\dim V = \dim \text{Res}_H^G(V)\).
+
+Conversely, we would like to obtain a representation of \(G\) from a 
+representation of \(H\). This process is known as induction and the resulting 
+representation is called the (co)induced representation.
+
+\begin{definition}[Coinduced Representation]
+  Let \(H < G\) be a subgroup and \((V, \rho_V)\) be a representation of \(H\). 
+  Then, the coinduced representation \(\text{coInd}_H^G(V)\) is defined as 
+  \[\text{coInd}_H^G(V) := \{f : G \to V \mid f(hg) = \rho_V(h)f(g), \ 
+    \forall g \in G, h \in H\},\]
+  with the action of \(G\) given by \((g \cdot \phi)(g') := \phi(g'g)\).
+\end{definition}
+
+We see that \(\text{coInd}_H^G(V)\) are functions from \(G\) to \(V\) which are 
+\(H\)-invariant. Equivalently, the coinduced representation can be defined 
+by \(\text{coInd}_H^G(V) = \text{Hom}_H(\mathbb{C}[G], V)\). Unlike the 
+restricted representation, the coinduced representation does not fix the 
+dimension.
+
+\begin{proposition}
+  Denoting \(H \setminus G\) the set of right cosets of \(H\) in \(G\), the map 
+  \[\Psi : \text{Fun}(H \setminus G, V) \to \text{coInd}_H^G(V) : 
+    \phi \mapsto (hg_i \mapsto \rho_V(h)\phi(Hg_i))\]
+  is a linear isomorphism.
+\end{proposition}
+\begin{proof}
+  Definition check.
+\end{proof}
+
+\begin{corollary}
+  Let \([G : H]\) be the index of the subgroup \(H\), then 
+  \[\dim \text{coInd}_H^G(V) = [G : H]\dim V.\]
+\end{corollary}
+\begin{proof}
+  If \([G : H] = \infty\) then both sides of the equation are infinite. 
+  Suppose that \([G : H] = n < \infty\), then by the above isomorphism, 
+  we have \(\dim \text{coInd}_H^G(V) = \dim \text{Fun}(H \setminus G, V) = 
+  \dim V^n = [G : H] \dim V\).
+\end{proof}
+
+\begin{definition}
+  Let \(X\) be a nonempty set and let \(x \in X\). Then we define 
+  \(V(x) \subseteq \text{Fun}(X, V)\) be the subspace of functions which have 
+  value zero on every element of \(X\) except \(x\). 
+\end{definition}
+
+\begin{proposition}
+  \(V(x) \cong V\), \(\bigoplus_{x \in X} V(x) \subseteq \text{Fun}(X, V)\) which 
+  becomes an equality for \(X\) finite, and \(\text{Fun}(X, V) \cong V^{|X|}\).
+\end{proposition}
+
 \newpage 
 \section{Character Theory}
 
