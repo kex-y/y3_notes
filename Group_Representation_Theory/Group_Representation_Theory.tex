@@ -2149,7 +2149,7 @@ We see that both the second and third statement implies the sum of squares formu
   by Schur's lemma, and thus we have 1 implies 2. 
 \end{proof}
 
-\subsection{Character Theory}
+\subsection{Character Theory and Abstract Traces}
 
 We again visit character theory in the point of view of modules and we will 
 show that, in general algebras, the map \(A \to \text{End}(V)\) is surjective 
@@ -2199,9 +2199,253 @@ then the map is an isomorphism).
 
 \begin{corollary}
   Let \(G\) be a (not necessary finite) group and \(V_1, \cdots, V_m\) be 
-  non-isomorphic, irreducible representations of \(G\). Then, 
+  non-isomorphic, finite dimensional, irreducible representations of \(G\). Then, 
   \(\chi_{V_1}, \cdots, \chi_{V_m}\) are linearly independent.
 \end{corollary}
+
+Recall that given an irreducible, finite dimensional representation 
+\((V, \rho_V)\), the character \(\chi_V\) is a class function by the property 
+of the trace. We would like to generalize this notion for algebras.
+In particular, we note that the character satisfy 
+\[\chi_{\rho_V}(ab) = \text{tr}\rho_V(ab) = \text{tr}(\rho_V(a)\rho_V(b)) = 
+  \text{tr}(\rho_V(b)\rho_V(a)) = \chi_{\rho_V}(ba).\]
+
+\begin{definition}
+  An abstract (or Hochschild) trace is a functional 
+  \[\phi : A \to \mathbb{C}\]
+  such that \(\phi(ab) = \phi(ba)\) for all \(a, b \in A\).
+\end{definition}
+
+Equivalently, we \(\phi(ab - ba) = 0\) for all \(a, b \in A\) which implies 
+\([A, A] \le \ker \phi\) where \([A, A] = \text{span}\{ab - ba \mid a, b \in A\}\).
+\([A, A]\) is known as the additive commutator and is analogues to the 
+group commutator. Thus, by the universal property of the quotient, 
+an abstract trace is uniquely identified by the map 
+\(\tilde \phi : A / [A, A] \to \mathbb{C}\) where \(A / [A, A] \cong HH_0(A)\) 
+where \(HH_0(A)\) is known as the zeroth Hoschild homology.
+
+We note that in the group case, where we defined the class function to be 
+functions \(\phi : G \to \mathbb{C}\) which satisfy \(\phi(hgh^{-1}) = \phi(g)\), 
+an abstract trace is the same as a class function.
+
+\begin{definition}
+  With the above remark in mind, we have 
+  \[\{\text{abstract traces}\} \cong \left(\frac{A}{[A, A]}\right)^*\]
+  where \(*\) denotes the dual, and so, we define \(A_{\text{tr}}^* \subseteq A^*\) 
+  the space of abstract traces. 
+\end{definition}
+
+It is clear that characters are abstract traces. 
+
+Recall that in the group case, by Mascke's theorem, if \(W \le V\) is a 
+subrepresentation, then we have \(\chi_V = \chi_W + \chi_{W^\perp}\) where 
+\(W^\perp\) is the complement of \(W\). We cannot do this in general for 
+algebras though we may do something similar.
+
+Given a submodule \(W \le V\), we can always take its quotient \(V / W\). 
+
+\begin{proposition}
+  For \(W \le V\) a submodule where \(V\) is a finite dimensional module,
+  we have 
+  \[\chi_V = \chi_W + \chi_{V / W}.\]
+\end{proposition}
+\begin{proof}
+  Let \(B\) be a basis of \(W\) and extend \(B \cup C\) to a basis of \(V\). 
+  Then 
+  \[[\rho_V(a)]_{B \cup C} = \begin{pmatrix}
+    [\rho_W(a)]_{B} & \star\\
+    0 & [\rho_{V / W}(a)]_{C + V}
+  \end{pmatrix}.\]
+  Thus, \(\chi_V = \chi_W + \chi_{V / W}\) as required.
+\end{proof}
+
+We note that in this case where the module is non-semisimple (i.e. it contains 
+a submodule without being decomposable) the character no longer uniquely 
+characterizes the module. Indeed, for \(V\) non-semisimple and \(W \le V\) a 
+submodule,
+\[\chi_V = \chi_W + \chi_{V / W} = \chi_{W \oplus V / W},\]
+yet \(V \not\cong W \oplus V / W\).
+
+\begin{corollary}
+  If \((V, \rho_V)\) is \textit{any} finite dimensional module of \(A\), 
+  then \(\chi_V\) is a sum of irreducible characters (characters of simple 
+  module).
+\end{corollary}
+
+\begin{corollary}
+  The irreducible character form a basis for the span of all characters 
+  of finite dimensional modules. In particular, the span of all characters 
+  is a subspace of \(A^*_{\text{tr}}\) though it might not be the whole space.
+\end{corollary}
+
+If \(A\) is commutative, then \([A, A] = 0\) and so, \(A \cong A^* = A^*_{\text{tr}}\).
+In this case, the irreducible characters form a basis for \(A^*_{\text{tr}}\) 
+if and only if \(\dim A\) equals to number of 1-dimensional modules (modulo 
+isomorphisms) (since 1-dimensional modules are simple and hence, their characters 
+are linearly independent). In this case, the surjection 
+\[A \to \bigoplus_{V_i \text{ simple}} \text{End}(V_i)\]
+is a isomorphism. Now, since for 1-dimensional module \(V_i\), 
+\(\text{End}(V_i) \cong \mathbb{C}\), we have 
+\(A \cong \mbox{C}^{\dim A}\).
+
+\begin{proposition}
+  For \(A\) a finite dimensional, semisimple algebra, the irreducible characters 
+  form a basis for \(A^*_{\text{tr}}\). More generally, we have 
+  \begin{itemize}
+    \item \(\dim A^*_{\text{tr}} \ge \# \text{ simple modules}\);
+    \item \(\dim A \ge \sum_{V_i \text{ simple}}(\dim V_i)^2\).
+  \end{itemize}
+  Finally, a finite dimensional \(A\) is semisimple if and only if 
+  \(\dim A = \sum_{V_i \text{ simple}}(\dim V_i)^2\).
+\end{proposition}
+\begin{proof}
+  We already know \(\dim A^*_{\text{tr}} \ge \# \text{ simple modules}\) and 
+  the surjection \(A \to \bigoplus \text{End}(V_i)\) implies 
+  \(\dim A \ge \sum_{V_i \text{ simple}}(\dim V_i)^2\). Furthermore, 
+  we have \(\dim A = \sum_{V_i \text{ simple}}(\dim V_i)^2\), then the map 
+  \(A \to \bigoplus \text{End}(V_i)\) is an isomorphism which occures if 
+  and only if \(A\) is semisimple by Artin-Wedderburn.
+
+  Now, suppose \(A\) is finite dimensional and semisimple, I claim that 
+  \[[\text{End}(V_i), \text{End}(V_i)] = \{T \in \text{End}(V_i) \mid \text{tr}(T) = 0\},\]
+  for all simple \(V_i\). This follows by choosing a basis and considering 
+  the elementary matrices \(E_{ij} = (\delta_{ij})_{ij}\) where we have 
+  \([E_{ij}, E_{kl}] = \delta_{jk}E_{il} - \delta_{il}E_{kj}\). Hence, 
+  any diagonal entries is eliminated implying the trace is zero.
+  Thus, \(\text{End}(V_i)^*_{\text{tr}} = \mathbb{C} \cdot \text{tr}\) implying 
+  \[A^*_{\text{tr}} \cong \left(\bigoplus \text{End}(V_i)\right)^*_{\text{tr}} = 
+    \bigoplus \mathbb{C} \cdot \text{tr}_{V_i},\]
+  where \(\text{tr}_{V_i} = \chi_{V_i}\) implying the character forms a 
+  basis of \(A^*_{\text{tr}}\).
+\end{proof}
+
+\subsection{Centre and Projections}
+
+\begin{definition}[Centre of an Algebra]
+  Given an algebra \(A\), we define its centre to be 
+  \[Z(A) := \{z \in A \mid za = az, \ \forall a \in A\}.\]
+  Alternatively, we may define the map \(\text{ad} : A \to \text{End}_{\mathbb{C}}(A) : a 
+  \mapsto \text{ad}(a)\) where \(\text{ad}(a) : b \mapsto [a, b]\) and then, 
+  \(Z(A) = \ker \text{ad}\).
+\end{definition}
+
+We observe that if \(z \in Z(A)\) and \(V\) is a finite dimensional, simple module, 
+then Schur's lemma implies \(\rho_V(z) = \lambda \cdot \text{id}_V\) for 
+some \(\lambda \in \mathbb{C}\) (as \(\rho_V(z)\) is \(A\)-linear).
+
+\begin{proposition}
+  \(Z(\text{End}(V)) = \mathbb{C} \cdot \text{id}_V\).
+\end{proposition}
+\begin{proof}
+  This follows by taking a basis and observing that the matrices which commutes 
+  with all other matrices are multiples of the identity matrix. 
+
+  Alternatively, we may prove this using representation theory. Recall that 
+  \(V\) is a simple module over \(\text{End}(V)\) with 
+  \(\rho_V = \text{id}_{\text{End}(V)}\). Then, for all \(z \in Z(V)\), 
+  by Schur's lemma, \(\rho_V(z) = \lambda \cdot \text{id}_V\) for some 
+  \(\lambda \in \mathbb{C}\). But \(\rho_V(z) = z\) as \(\rho_V\) is the 
+  identity, and thus, \(z = \lambda \cdot \text{id}_V\) and hence, 
+  \(Z(\text{End}(V)) = \mathbb{C} \cdot \text{id}_V\).
+\end{proof}
+
+\begin{proposition}
+  If \(\phi : A \to B\) is an isomorphism of algebras, then the restriction of 
+  \(\phi\) onto its centre \(\phi\mid_{Z(A)} : Z(A) \to Z(B)\) is also an 
+  isomorphism.
+\end{proposition}
+
+\begin{corollary}
+  The isomorphism \(\Phi : \mathbb{C}[G] \cong \bigoplus_{i = 1}^m \text{End}(V_i)\) 
+  restricts to an isomorphism 
+  \[\Phi\mid_{Z(\mathbb{C}[G])} : Z(\mathbb{C}[G]) \cong \bigoplus_{i = 1}^m 
+    \mathbb{C} \cdot \text{id}_{V_i}.\]
+\end{corollary}
+
+\begin{proposition}
+  Let \(G\) be a group and let \(\mathcal{C}_1, \cdots, \mathcal{C}_m\) be the 
+  conjugacy classes of \(G\), then denoting 
+  \[c_i := \sum_{g \in \mathcal{C}_i} g \in \mathbb{C}[G],\]
+  \(c_1, \cdots, c_m\) form a basis of \(Z(\mathbb{C}[G])\)
+  and thus, \(\dim Z(\mathbb{C}[G]) = m\).
+\end{proposition}
+\begin{proof}
+  Linear independence follows since \(\mathcal{C}_i \cap \mathcal{C}_j = 
+  \varnothing\), and so it suffice to show spanning. Consider for all 
+  \(x = \sum_{g \in G} x_g g \in \mathbb{C}[G]\), I claim that 
+  \(x \in Z(\mathbb{C}[G])\) if and only if \(x_g = x_{hgh^{-1}}\) for all 
+  \(h \in G\). Indeed, if \(x \in Z(\mathbb{C}[G])\), then 
+  \[x = h^{-1}xh = \sum_{g \in G} x_g h^{-1}gh = 
+    \sum_{hgh^{-1} \in G} x_{hgh^{-1}} g = \sum_{g \in G} x_{hgh^{-1}} g.\]
+  Thus, \(x_g = x_{hgh^{-1}}\) for all \(h \in G\). On the other hand, if 
+  \(x_g = x_{hgh^{-1}}\) for all \(h \in G\), then for all 
+  \(y = \sum_{g \in G} y_g g \in \mathbb{C}[G]\), we have 
+  \[\begin{split}
+    xy & = \sum_{g, h \in G} (x_g y_h) \cdot gh = 
+    \sum_{hgh^{-1}, h \in G} (x_{hgh^{-1} y_h}) \cdot (hgh^{-1})h\\ 
+    & = \sum_{hgh^{-1}, h \in G} (x_g y_h) \cdot g h = 
+    \sum_{g, h \in G}(x_g y_h) \cdot g h = yx
+  \end{split}\]
+  implying \(x \in Z(\mathbb{C}[G])\) as required. Hence, it follows 
+  \(c_1, \cdots, c_m\) spans \(Z(\mathbb{C}[G])\).
+\end{proof}
+
+\begin{corollary}
+  Since \(Z(\mathbb{C}[G]) \cong \bigoplus_{i = 1}^m 
+  \mathbb{C} \cdot \text{id}_{V_i}\), taking the dimension on both sides, 
+  we again obtain that the number of conjugacy classes equals the number of 
+  irreducible representations.
+\end{corollary}
+
+In summary, we have the following three equivalent statements:
+\begin{itemize}
+  \item \(a \in \mathbb{C}[G]\) is central,
+  \item \(a = \sum a_g g \in \mathbb{C}[G]\) where \(a_g = a_{hgh^{-1}}\) 
+    for all \(g, h \in G\),
+  \item for all irreducible representations \((V, \rho_V)\), 
+    \(\rho_V(a) = \lambda_a \cdot \text{id}_V\) for some \(\lambda_a \in \mathbb{C}\).
+\end{itemize}
+
+\begin{proposition}
+  If \(A\) is a finite dimensional, semisimple algebra, then we have the isomorphism 
+  \[A^*_{\text{tr}} \to Z(A)^* : \phi \mapsto \phi\mid_{Z(A)}.\]
+\end{proposition}
+\begin{proof}
+  By Artin-Wedderburn, it suffices to show the statement for 
+  \(A = \text{Mat}_n(\mathbb{C})\). Recall that 
+  \((\text{Mat}_n(\mathbb{C}))^*_\text{tr} = \mathbb{C} \cdot \text{tr}\) and 
+  \(Z(\text{Mat}_n(\mathbb{C}))^* = (\mathbb{C} \cdot I_n)^*\) and so, 
+  the map becomes 
+  \[\lambda \cdot \text{tr} \mapsto (\mu I \mapsto n\lambda \mu),\]
+  since \(\text{tr}(\mu I) = n\mu\). This is clearly an isomorphism of 
+  1-dimensional vector spaces and so we have the required isomorphism.
+\end{proof}
+
+Now that we have established the isomorphism 
+\(Z(\mathbb{C}[G]) \cong \bigoplus_{i = 1}^m 
+\mathbb{C} \cdot \text{id}_{V_i}\), we would like to ask the preimage of 
+\(\text{id}_{V_i}\) along this isomorphism. By definition, let us write 
+\(\rho_{V_i}(z) = \lambda_{z, i} \cdot \text{id}_{V_i}\) for all 
+\(z \in Z(\mathbb{C}[G])\). Then, we have \(\chi_{V_i}(z) = \lambda_{z, i} \dim V_i\), 
+and so, 
+\[\lambda_{z, i} = \frac{1}{\dim V_i} \chi_{V_i}(z).\]
+Hence, if \(z\) is such that \(\chi_{V_i}(z) = \dim V_i\) and \(\chi_{V_j}(z) = 0\) 
+for all \(j \neq i\), then we obtain that \(z\) is mapped to \(\text{id}_{V_i}\) 
+along this isomorphism. 
+
+Let us define 
+\[e_{V_i} := \frac{\dim V_i}{|G|} \sum_{g \in G} \overline{\chi_{V_i}(g)}g.\]
+Then, we have 
+\[\chi_{V_j}(e_{V_i}) = \frac{\dim V_i}{|G|} \sum_{g \in G} 
+  \overline{\chi_{V_i}(g)}\chi_{V_j}(g) = \dim V_i \delta_{ij}.\]
+Hence, \(\rho_{V_j}(e_{V_i}) = \delta_{ij} \cdot \text{id}_{V_i}\) is a 
+\(G\)-linear projection with the image being \(V_i\). In particular, 
+we have the isomorphism
+\[(\rho_{V_1}(e_{V_1}), \cdots, \rho_{V_n}(e_{V_n})) : 
+  V \cong V^1 \oplus \cdots \oplus V^n.\]
+We say the this map decomposes \(V\) into isotypic components, i.e. 
+\(V^i\) is the span of all subrepresentations of \(V\) isomorphic to 
+\(V_i\).
 
 \newpage
 \section{Connections to Geometry}
