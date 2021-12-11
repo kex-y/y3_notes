@@ -1999,23 +1999,23 @@ the Hilbert basis theorem.
   homomorphism \(f : R \to S\), then so is \(S\) Noetherian.
 \end{proposition}
 \begin{proof}
-% Let \(I\) be an ideal of \(S\), then \(f^{-1}(I)\) is 
-% an ideal of \(R\) and so is finitely generated, i.e. there exists 
-% \(r_1, \cdots, r_n \in R\) such that \(f^{-1}(I) = \langle r_1, \cdots, r_n\rangle\).
-% Then, as \(f\) is surjective, \(\langle f(r_1), \cdots, f(r_n)\rangle = I\).
-% Indeed, for all \(i \in I\), there exists some \(r \in f^{-1}(I)\) and so, 
-% \(r \in \langle r_1, \cdots, r_n\rangle\) and by linearity, \(i = f(r) 
-% \in \langle f(r_1), \cdots, f(r_n)\rangle\). On the other hand, 
-% for all \(i \in \langle f(r_1), \cdots, f(r_n)\rangle\), we may write 
-% \(i = \sum s_i f(r_i)\) for some \(s_1, \cdots, s_n \in S\). Now as \(f\) is 
-% surjective, for all \(i\) there exists some \(\tilde s_i \in R\) such that 
-% \(f(\tilde s_i) = s_i\) and so, 
-% \[i = \sum_{i = 1}^n s_i f(r_i) = \sum f(\tilde s_i) f(r_i) = 
-%   f\left(\sum \tilde s_i r_i\right)\]
-% where \(\sum \tilde s_i r_i \in \langle r_1, \cdots, r_n\rangle = 
-% f^{-1}(I)\). Thus, \(i = \sum s_i f(r_i) = f(\sum \tilde s_i r_i) \in I\).
-% Hence, \(\langle f(r_1), \cdots, f(r_n)\rangle = I\) and so, 
-% \(I\) is finitely generated implying \(S\) is Noetherian as required.
+Let \(I\) be an ideal of \(S\), then \(f^{-1}(I)\) is 
+an ideal of \(R\) and so is finitely generated, i.e. there exists 
+\(r_1, \cdots, r_n \in R\) such that \(f^{-1}(I) = \langle r_1, \cdots, r_n\rangle\).
+Then, as \(f\) is surjective, \(\langle f(r_1), \cdots, f(r_n)\rangle = I\).
+Indeed, for all \(i \in I\), there exists some \(r \in f^{-1}(I)\) and so, 
+\(r \in \langle r_1, \cdots, r_n\rangle\) and by linearity, \(i = f(r) 
+\in \langle f(r_1), \cdots, f(r_n)\rangle\). On the other hand, 
+for all \(i \in \langle f(r_1), \cdots, f(r_n)\rangle\), we may write 
+\(i = \sum s_i f(r_i)\) for some \(s_1, \cdots, s_n \in S\). Now as \(f\) is 
+surjective, for all \(i\) there exists some \(\tilde s_i \in R\) such that 
+\(f(\tilde s_i) = s_i\) and so, 
+\[i = \sum_{i = 1}^n s_i f(r_i) = \sum f(\tilde s_i) f(r_i) = 
+  f\left(\sum \tilde s_i r_i\right)\]
+where \(\sum \tilde s_i r_i \in \langle r_1, \cdots, r_n\rangle = 
+f^{-1}(I)\). Thus, \(i = \sum s_i f(r_i) = f(\sum \tilde s_i r_i) \in I\).
+Hence, \(\langle f(r_1), \cdots, f(r_n)\rangle = I\) and so, 
+\(I\) is finitely generated implying \(S\) is Noetherian as required.
 \end{proof}
 
 \begin{corollary}
@@ -2032,9 +2032,183 @@ This is a very strong result as most rings we have looked at in this course
 are constructed by quotienting a polynomial ring by an ideal, often 
 which, the original ring is Noetherian. With this in mind, the only ring 
 which is not Noetherian we have seen in this course is the ring 
-\[\mathbb{C}[X^{\mathbb{Q}_\ge0}] := \{\text{Polynomials in 
+\[\mathbb{C}[X^{\mathbb{Q}_{\ge 0}}] := \{\text{Polynomials in 
 \(\mathbb{C}[t^{1 / n}]\) for all \(n \in \mathbb{Z}_{>0}\)}\}.\]
 
+\subsection{Factorization}
+
+Now that we have additional tools, we will revisit the topic of factorizations. 
+In particular, we will study factorization in \(R[X]\) where \(R\) is a UFD.
+The main idea is that, if \(F\) is the field of fraction, we will compare 
+factorizations in \(R[X]\) and factorizations in \(F[X]\). We note that 
+the two cases are not exactly the same. Consider \(\mathbb{Z}\) and its field 
+of fractions \(\mathbb{Q}\). We have 
+\[2X + 6 \in \mathbb{Z}[X] \subseteq \mathbb{Q}[X],\]
+where \(2X + 6 = 2(X + 3)\) which is reducible in \(\mathbb{Z}[X]\). Yet 
+\(2X + 6\) is not reducible in \(\mathbb{Q}[X]\) since 2 is a unit in \(\mathbb{Q}\).
+
+\begin{definition}[Primitive]
+  \(P(X) \in R[X]\) is said to be primitive if its coefficient are relatively 
+  prime (recall this means they have GCD 1). Furthermore, if \(d\) 
+  is the GCD of the coefficients of \(P(X)\), then \(P(X) = d P'(X)\) 
+  where \(P'(X) \in R[X]\) is primitive.
+\end{definition}
+
+\begin{proposition}
+  If \(P(X) \in R[X]\) is primitive and irreducible in \(F[X]\), then 
+  \(P(X)\) is irreducible in \(R[X]\). 
+\end{proposition}
+\begin{proof}
+  Suppose there exists \(Q(X), S(X) \in R[X]\) such that \(P(X) = Q(X)S(X)\). 
+  Then, by the irreducibility of \(P(X)\) in \(F[X]\), WLOG. \(Q(X) = q\) is 
+  a unit in \(F^\times\). Thus, \(Q(X) = q \in R\) and so \(q\) divides every 
+  coefficients of \(P(X)\), implying \(q = 1\) and hence \(P(X)\) is irreducible. 
+\end{proof}
+
+The converse of this proposition turns out also to be true.
+
+\begin{lemma}
+  Let \(P(X) \in F[X]\). Then, there exists some \(a \in F^\times\) such that 
+  \(aP(X) \in R[X]\) and \(aP(X)\) is primitive. Furthermore, if \(a'\) is 
+  another element satisfying these properties, then \(a' = ua\) where 
+  \(u \in R^\times\) is a unit.
+\end{lemma}
+\begin{proof}
+  Clearly, by multiplying the denominators of the coefficients of \(P(X)\), 
+  there exists some \(b \in R\), \(b P(X) \in R[X]\). Then, by our previous 
+  remark, there exists some \(d \in R\) such that \(bP(X) = dP'(X)\) for some 
+  primitive \(P'(X) \in R[X]\). Hence, \(P'(X) = \frac{b}{d}P(X)\) is primitive
+  as required.
+
+  Suppose now \(aP(X), a'P(X) \in R[X]\) are both primitive for 
+  \(a, a' \in F^\times\). Then, there exists some \(b, b' \in R\) such that
+  \(a / a' = b / b'\), and so, \(b'a P(X) = ba'P(X)\). Now, as both 
+  \(aP(X), a'P(X)\) are primitives, \(b, b'\) must be the GCD of the coefficients 
+  of \(b'a P(X), ba'P(X)\) respectively where \(b'a P(X) = ba'P(X)\). 
+  Thus, \(b, b'\) are associates, i.e. there exists some \(u \in R^\times\) 
+  such that \(ub = b'\) and hence \(ua = a'\).
+\end{proof}
+
+\begin{lemma}[Gauss's Lemma]
+  If \(P(X), Q(X) \in R[X]\) are primitive polynomials, then \(P(X)Q(X)\) is 
+  also primitive (recall that we require \(R\) to be a UFD).
+\end{lemma}
+\begin{proof}
+  Suppose otherwise and let \(d\) be the GCD of the coefficients of 
+  \(P(X)Q(X)\). If \(d\) is not a unit, then it is divisible by some 
+  irreducible \(p \in R\). Then \(\langle p \rangle\) is a prime ideal of \(R\). 
+  Denote \(\overline{P(X)}, \overline{Q(X)}\), and \(\overline{P(X)Q(X)}\) 
+  be the reductions of \(P(X)\), \(Q(X)\) and \(P(X)Q(X)\) in 
+  \(R / \langle p \rangle[X]\) respectively. Now, since \(P(X), Q(X)\) are 
+  primitive, they are nonzero in \(R / \langle p \rangle[X]\). On the other 
+  hand, \(\overline{P(X)Q(X)} = 0\) since its coefficients are divisible by 
+  \(p\). But, since \(R / \langle p \rangle\) is a integral domain, 
+  we have \(0 \neq \overline{P(X)} \overline{Q(X)} = \overline{P(X)Q(X)}\), 
+  a contradiction! Thus, \(P(X)Q(X)\) is primitive as required.
+\end{proof}
+
+\begin{corollary}
+  If \(P(X) \in R[X]\) and \(Q(X), S(X) \in F[X]\) such that \(P(X) = Q(X)S(X)\).
+  Then, there exists some \(a \in F^\times\) such that \(aQ(X), a^{-1}S(X)\) are 
+  in \(R[X]\).
+\end{corollary}
+\begin{proof}
+  Choose \(a, b \in F^\times\) such that \(aQ(X), bS(X) \in R[X]\) are primitive.
+  Furthermore, let \(d \in R\) such that \(P(X) = dP'(X)\) for some primitive 
+  \(P'(X) \in R[X]\). Then, 
+  \[(aQ(X))(bS(X)) = abP(X) = abdP'(X)\]
+  is primitive by Gauss's lemma. On the other hand, by construction \(P'(X)\) 
+  is primitive and so, \(abd\) is a unit. Hence, 
+  \[a^{-1}S(X) = (abd)^{-1}(bS(X))d \in R[X]\]
+  completing the proof.
+\end{proof}
+
+\begin{corollary}
+  Let \(P(X) \in R[X]\) be monic and \(Q(X) \in F[X]\) be a monic irreducible 
+  factor of \(P(X)\). Then \(Q(X) \in R[X]\).
+\end{corollary}
+\begin{proof}
+  By the above corollary, there exists some \(a \in F^\times\) such that 
+  \(aQ(X) \in R[X]\) and divides \(P(X)\) in \(R[X]\). Since \(Q(X)\) is monic, 
+  the leading coefficient of \(Q(X)\), the leading coefficient of \(aQ(X)\) 
+  is \(a\) implying \(a \in R\). Furthermore, the leading coefficient of 
+  \(aQ(X)\) must divide the leading coefficient of \(P(X)\) (which is 1), 
+  so \(a \mid 1\) implying \(a \in R^\times\). Hence, \(Q(X) = a^{-1} aQ(X) \in R[X]\).
+\end{proof}
+
+This corollary is directly related to the rational root theorem which states that 
+if \(P(X) \in R[X]\) is monic and \(\alpha \in F\) is a root of \(P(X)\). Then, 
+\(\alpha \in R\) and divides the constant term \(P(0)\).
+
+\begin{proposition}
+  If \(P(X) \in R[X]\) is primitive and irreducible in \(R[X]\), then 
+  \(P(X)\) is irreducible in \(F[X]\).
+\end{proposition}
+\begin{proof}
+  Let \(P(X) = Q(X)S(X)\) for some \(Q(X), S(X) \in F[X]\). Then, there exists 
+  some \(a \in F^\times\) such that \(aQ(X), a^{-1}S(X) \in R[X]\) so that 
+  \(P(X) = aQ(X) a^{-1}S(X)\). If \(\deg Q(X), \deg S(X) > 0\), we have 
+  found a nontrivial factorization of \(P(X)\).
+\end{proof}
+
+In summary, we have classified the irreducible elements in \(R[X]\) with 
+the irreducible elements of \(F[X]\).
+
+\begin{corollary}
+  Let \(P(X) \in R[X]\). Then, if \(\deg P(X) = 0\), then \(P(X)\) is irreducible 
+  in \(R[X]\) if and only if it is irreducible in \(R\). On the other hand, 
+  if \(\deg P(X) > 0\), then \(P(X)\) is irreducible in \(R[X]\) if and only if 
+  \(P(X)\) is primitive and irreducible in \(F[X]\).
+\end{corollary}
+
+\begin{theorem}
+  If \(R\) is a UFD, then \(R[X]\) is also a UFD.
+\end{theorem}
+\begin{proof}
+  We will first prove the existence of factorizations in \(R[X]\). Let 
+  \(P(X) \in R[X]\) and we will induct on \(\deg P(X)\). Clearly, for 
+  \(\deg P(X) = 0\), \(P(X) \in R\) and hence, it is factorizable in \(R\). 
+  
+  In general, write \(P(X) = d P'(X)\) where \(d \in R\) and \(P'(X) \in R[X]\) 
+  is primitive. As \(d\) is factorizable into irreducibles in \(R\), 
+  it suffices to show \(P'(X)\) factors into irreducibles in \(R[X]\).
+  Suppose \(P'(X)\) is not irreducible and so (otherwise we are done), 
+  we may write \(P(X) = Q(X)S(X)\) where neither \(Q(X), S(X)\) have degree 
+  zero since otherwise \(P(X)\) is not primitive. Hence, we are done 
+  by applying the inductive hypothesis on \(Q(X)\) and \(S(X)\).
+
+  In order to show the factorization is unique, it suffices for \(P(X) \in R[X]\) 
+  irreducible, if \(P(X) \mid Q(X)S(X)\) in \(R[X]\), then either 
+  \(P(X) \mid Q(X)\) or \(S(X)\).
+
+  In the case that \(\deg P(X) = 0\), write \(Q(X) = d_1 Q'(X)\) and 
+  \(S(X) = d_2 S'(X)\) where \(d_1, d_2 \in R\) and \(Q'(X), S'(X) \in R[X]\) 
+  are primitives. Then, \(P(X) \mid d_1 d_2 Q'(X) S'(X)\) where \(Q'(X)S'(X)\) 
+  is also primitive by Gauss's lemma. Thus, \(P(X) \mid d_1 d_2\) implying 
+  \(P(X) \mid d_1\) or \(P(X) \mid d_2\), and so, \(P(X) \mid Q(X)\) or 
+  \(P(X) \mid S(X)\) as required.
+
+  In the case that \(\deg P(X) > 0\), we have \(P(X)\) is primitive and 
+  irreducible in \(F[X]\). Then, \(P(X) \mid Q(X)S(X)\) in \(R[X]\), then 
+  \(P(X) \mid Q(X)S(X)\) in \(F[X]\). As we already know, \(F[X]\) is a UFD, 
+  and so \(P(X) \mid Q(X)\) or \(P(X) \mid S(X)\) in \(F[X]\). WLOG. 
+  let \(T(X) \in F[X]\) such that \(Q(X) = T(X)P(X)\). Then, by a consequence 
+  of Gauss's lemma, there exists some \(a \in F^\times\) such that 
+  \(aP(X), a^{-1}T(X) \in R[X]\). As \(P(X)\) is primitive, the GCD of 
+  the coefficients of \(aP(X)\) must be \(a\) and so, \(a \in R\). Thus, 
+  \(T(X) = aa^{-1}T(X) \in R[X]\) and hence \(P(X) \mid Q(X)\) in \(R[X]\) as 
+  required.
+\end{proof}
+
+\begin{corollary}
+  If \(R\) is a UFD, then \(R[X_1, \cdots, X_n]\) is also a UFD by induction on 
+  \(n\).
+\end{corollary}
+
+Unlike the case with Noetherians, the quotient of UFDs is not necessarily a UFD.
+As example of this is \(\mathbb{C}[x, y, z] /\langle xy - z^2 \rangle\) 
+(we see that \(xy = z^2\) and so provides two factorizations of the same 
+polynomial).
 
 
 \end{document}
