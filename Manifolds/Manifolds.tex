@@ -2175,5 +2175,198 @@ prove them locally. The following three propositions illustrate this.
 It is clear that if \(\omega\) is exact, then \(\omega = d\omega'\) and so, 
 \(d\omega = d^2 \omega' = 0\) and hence, it is closed.
 
+\subsection{Integration}
+
+Recall that, for a smooth function \(F : X \to X\) where \(X\) is an \(n\)-dimensional 
+manifold, we may define the pull-back of \(\omega \in \Omega^n(X)\) along \(F\) 
+such that for all \(x \in X\),
+\[F^* \omega(x) = \det(DF\mid_x) \cdot \omega(F(x)).\]
+Now, assume that \(\{U_i, f_i\}\) is a smooth atlas on \(X\) and for \(i, j \in I\), 
+\(\phi_{ij}\) is a transition function from \((U_j, f_j)\) to \((U_i, f_i)\). 
+Then, given an \(n\)-form \(\omega \in \Omega^n(f_i(U_i))\) such that 
+\[\omega = hdy_1 \wedge \cdots \wedge dy_n\]
+for some \(h \in C^\infty(f_i(U_i))\), we may consider its pull-back along 
+\(\phi_{ij}\). In particular, 
+\[\phi^*_{ij} \omega(x) = (h \circ \phi_{ij})(x)\det(D \phi_{ij}\mid_x) 
+  dx_1 \wedge \cdots \wedge dx_n \in \Omega^n(f_j(U_i \cap U_j)).\]
+We note the similarity of this equation to the change of variable formula 
+in multivariable calculus and indeed, this will be our motivation for integration 
+on manifolds.
+
+In the case of \(\mathbb{R}^n\), we have the following proposition.
+
+\begin{proposition}
+  Let \(D \subseteq \mathbb{R}^n\) be compact with border of measure zero. 
+  Then, given \(h : \mathbb{R}^n \to \mathbb{R}\) smooth and 
+  \(\phi : D \to \phi(D) \subseteq \mathbb{R}^n\) an diffeomorphism, we have 
+  \[\int_{\phi(D)} hdy_1 \wedge \cdots \wedge dy_n = 
+    \int_D h \circ \phi |\det d\phi| dx_1 \wedge \cdots \wedge dx_n\]
+\end{proposition}
+
+Given \(\omega \in \Omega^n(D)\), where \(\omega = h dx_1 \wedge \cdots \wedge dx_n\), 
+we define 
+\[\int_D \omega := \int_D h dx_1 \wedge \cdots \wedge dx_n.\]
+
+\begin{corollary}\label{change-of-var}
+  If \(\Phi : V \to U\) is a diffeomorphism such that \(\det D\Phi\mid_x > 0\) 
+  for all \(x \in V\) (equivalently, there exists some \(x \in V\) such that 
+  \(\det D\Phi\mid_x > 0\)). Then, 
+  \[\int_U \omega = \int_V \Phi^* \omega.\] 
+\end{corollary}
+
+Before generalizing the above, let us first consider the notion of 
+orientation.
+
+\begin{definition}[Orientation]
+  Let \(V\) be a vector space over \(\mathbb{R}\) of dimension \(n\) and let 
+  \(B_1 = (v_1, \cdots, v_n)\) and \(B_2 = (w_1, \cdots, w_n)\) be two ordered 
+  basis of \(V\), then \(B_1, B_2\) are said to have the same orientation if 
+  \(\det T > 0\) where \(T : V \to V := v_i \mapsto w_i\) (i.e. \(T\) is the 
+  change of basis matrix from \(B_1\) to \(B_2\)).
+\end{definition}
+
+It is clear that \(\det T \neq 0\) since \(T\) is a linear isomorphism.
+
+\begin{definition}
+  Given \(\omega \in \wedge^n V^*\). Then an orientation of \(\wedge\) of \(V\) 
+  is the set of all ordered basis \((v_1, \cdots, v_n)\) of \(V\) such that
+  \(\omega(v_1, \cdots, v_n) > 0\).
+\end{definition}
+
+\begin{proposition}
+  Given \(B_1 = (v_1, \cdots, v_n)\) and \(B_2 = (w_1, \cdots, w_n)\) ordered 
+  basis of \(V\) with the same orientation, then \(\omega(v_1, \cdots, v_n) > 0\) 
+  if and only if \(\omega(w_1 \cdots w_n) > 0\).
+\end{proposition}
+
+\begin{definition}[Orientation Preserving]
+  Let \(\Phi : V \to W\) be an isomorphism of vector spaces with orientations 
+  \(\wedge_1, \wedge_2\) on \(V\) and \(W\) respectively. Then \(\Phi\) is said 
+  to be orientation preserving if an ordered basis of \(V \in \wedge_1\) induces 
+  an ordered basis of \(W \in \wedge_2\).
+\end{definition}
+
+In the cases that \(V = \mathbb{R}^n\), we define \(\wedge^+\) to be the 
+orientation induced by the standard ordered basis \(e_1, \cdots, e_n\). This 
+is called the positive orientation of \(V\).
+
+We would like to generalize this notion of positive orientation to manifolds. In particular, 
+for each \(x \in X\), we would like to define an orientation \(\wedge_x\) of 
+\(T_x X\) such that it is compatible with the structure of the manifold on \(X\).
+
+In the case \(X = U \subseteq \mathbb{R}^n\), for all \(x \in U\), we have 
+a canonical isomorphism \(T_x U \simeq \mathbb{R}^n\), and so, we define the 
+positive orientation \(\wedge_U^+\) on \(U\) to be the collection of orientations 
+\(\wedge_x^+\) on \(T_x V\) where \(T_x U \simeq \mathbb{R}^n\) induces the 
+positive orientation \(\wedge^+\) on \(\mathbb{R}^n\).
+
+\begin{definition}[Positive Orientation]
+  Let \(X\) be an \(n\)-dimensional manifold and let \((U, f)\) be a chart. 
+  The positive orientation \(\wedge^+\) on \((U, f)\) is the collection of 
+  orientations on \(T_x X\) for all \(x \in U\) such that, considering the 
+  positive orientation on \(f(U)\), the isomorphism 
+  \[Df\mid_x : T_x U \to T_{f(x)}(f(U))\]
+  is orientation preserving.
+\end{definition}
+
+\begin{definition}[Orientable]
+  A manifold \(X\) is called orientable if there exists an atlas \(\{(U_i, f_i)\}\) 
+  of positively oriented charts, such that for \(x \in U_i \cap U_j\), the 
+  orientation induced by \((U_i, f_i)\) coincides with the orientation induced 
+  by \((U_j, f_j)\).
+\end{definition}
+
+Alternatively, we see that \(X\) is orientable if and only if all the transition 
+functions have differential with positive determinant.
+
+\begin{definition}[Orientation Preserving]
+  A smooth function \(F : X \to Y\) between oriented manifolds is said to be 
+  orientation preserving if for all \(x \in X\), the linear map 
+  \[DF\mid_x : T_x X \to T_{F(x)}Y\]
+  is orientation preserving with respect to the orientations induced on 
+  \(T_x X\) and \(T_{F(x)}Y\) respectively.
+\end{definition}
+
+With these definitions, we may finally consider integration on manifolds.
+
+Let \(X\) be a manifold. Then for any \(p \ge 0\), we denote \(\Omega^p_c\) the 
+set of differential \(p\)-forms with compact support.
+
+\begin{definition}
+  Let \(\omega \in \Omega^n_c(X)\) and let \(\text{supp}(\omega) \subseteq U\) 
+  where \((U, f)\) is a positively oriented chart of \(X\). Then, 
+  \[(f^{-1})^* \omega \in \Omega_c^n(f(U))\]
+  and 
+  \[\int_x \omega := \int_{f(U)}(f^{-1})^* \omega.\]
+\end{definition}
+
+We see that this definition is well-defined, i.e. is independent of the chart 
+\((U, f)\). Indeed, if \((V, g)\) is another positively oriented chart containing 
+\(\text{supp}(\omega)\), then 
+\[\begin{split}
+  \int_{g(U \cap V)}(g^{-1})^* \omega & = \int_{f(U \cap V)} (g \circ f^{-1})^*(g^{-1})^* \omega \\
+  & = \int_{f(U \cap V)} (f^{-1})^* g^* (g^{-1})^* \omega = \int_{f(U \cap V)} (f^{-1})^* \omega,
+\end{split}\]
+where the second equality is due to corollary~\ref{change-of-var}.
+
+With this definition in mind, in some sense, we will partition the support of a 
+form into parts contained in charts and then define the integral of a form over 
+a manifold by glueing these parts together.
+
+\begin{definition}[Partition of Unity]
+  Let \(X\) be a manifold and let \(\mathcal{U} = \{U_i\}\) be a open cover of 
+  \(X\). A partition of unity with respect to \(\mathcal{U}\) is a collection of 
+  smooth functions \(h_i : X \to [0, 1]\) such that 
+  \begin{itemize}
+    \item \(\text{supp}(h_i) \subseteq U_i\) for all \(i\);
+    \item \(\sum_i h_i(x) = 1\) for all \(x \in X\);
+    \item for all \(x \in X\), there exists an open neighbourhood \(V\) of \(x\) 
+      such that \(\text{supp}(h_i) \cap V \neq 0\) for finitely many \(i\).
+  \end{itemize}
+  With the third property in mind, we see that the sum in the second property is 
+  well-defined as all but finitely many \(h_i(x)\) are zero.
+\end{definition}
+
+\begin{proposition}
+  If \(X\) is a manifold, then any open cover of \(X\) induces a partition of 
+  unity.
+\end{proposition}
+\begin{proof}
+  Omitted. (The idea is to use bump function which are scaled appropriately).
+\end{proof}
+
+\subsubsection{Volume Form}
+
+\begin{proposition}
+  Let \(X\) be a manifold of dimension \(n\). \(X\) is orientable if and only if there 
+  exists a non-vanishing \(n\)-form \(\omega \in \Omega^n(X)\). 
+  In this case, \(\omega\) is called a volume form.
+\end{proposition}
+\begin{proof}
+  Suppose \(\omega \in \Omega^n(X)\) is non-vanishing and let \(\{(U_i, f_i)\}\) 
+  be any atlas on \(X\). Then, for each \(i\), there exists some 
+  \(g_i \in C^\infty(f_i(U_i))\) such that 
+  \[(f_i^{-1})^* \omega = g_i dx_1 \wedge \cdots \wedge dx_n.\]
+  Since \(\omega\) is non-vanishing, it follows that \(g_i\) is either positive 
+  and negative on \(f_i(U_i)\) and so, by possibly replacing \(f_i\) by the 
+  composition \(t \circ f_i\) where 
+  \[t : \mathbb{R}^n \to \mathbb{R}^n : 
+    (x_1, x_2, \cdots, x_n) \mapsto (-x_1, x_2, \cdots, x_n)\]
+  we may assume \(g_i\) is positive for all \(i\) (after the replacement).
+  Thus, for \(i, j\), if \(x \in U_i \cap U_j\), we see \((U_i, f_i), (U_j, f_j)\) 
+  define the same orientation on \(x\) implying \(X\) is orientable.
+
+  On the other hand, if \(X\) is orientable then, we may choose \(\{U_i, f_i\}\) 
+  an atlas of positively oriented charts. Let \(h_i : X \to [0, 1]\) be a partition 
+  of unity with respect to this atlas and define 
+  \[\omega_i = f^*(dx_1 \wedge \cdots \wedge dx_n).\]
+  Then, taking \(\tilde \omega_i\) to be the \(n\)-form defined by \(\omega_i\) 
+  inside \(U_i\) and zero otherwise, we define \(\omega := \sum_i h_i \tilde \omega_i\).
+  Then, for each \(x \in X\) and any positively oriented basis \(v_1, \cdots, v_p\), 
+  we have that \(\omega(x)(v_1, \cdots, v_p) > 0\). Thus, \(\omega\) is a volume 
+  form on \(X\). 
+\end{proof}
+
+
 \end{document}
 
