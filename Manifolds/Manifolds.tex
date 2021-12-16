@@ -2268,6 +2268,11 @@ positive orientation \(\wedge^+\) on \(\mathbb{R}^n\).
   \[Df\mid_x : T_x U \to T_{f(x)}(f(U))\]
   is orientation preserving.
 \end{definition}
+In other words, \(X\) is oriented if given an \(n\)-form, there exists an atlas 
+\(\{U_i, f_i\}\), such that for all positively oriented basis 
+\([\sigma_1], \cdots, [\sigma_n]\) of \(T_x X\), where \(x \in U_i\), we have 
+\([f_i \circ \sigma_j] \in T_{f(x)}(f(U))\) is positively oriented in 
+\(T_{f(x)}(f(U))\).
 
 \begin{definition}[Orientable]
   A manifold \(X\) is called orientable if there exists an atlas \(\{(U_i, f_i)\}\) 
@@ -2297,7 +2302,7 @@ set of differential \(p\)-forms with compact support.
   where \((U, f)\) is a positively oriented chart of \(X\). Then, 
   \[(f^{-1})^* \omega \in \Omega_c^n(f(U))\]
   and 
-  \[\int_x \omega := \int_{f(U)}(f^{-1})^* \omega.\]
+  \[\int_X \omega := \int_{f(U)}(f^{-1})^* \omega.\]
 \end{definition}
 
 We see that this definition is well-defined, i.e. is independent of the chart 
@@ -2343,7 +2348,11 @@ a manifold by glueing these parts together.
   In this case, \(\omega\) is called a volume form.
 \end{proposition}
 \begin{proof}
-  Suppose \(\omega \in \Omega^n(X)\) is non-vanishing and let \(\{(U_i, f_i)\}\) 
+  Suppose \(\omega \in \Omega^n(X)\) is non-vanishing, then, we would like to find 
+  an atlas \(\{(U_i, f_i)\}\) of \(X\), such that the positive orientation on 
+  \(T_x X\) induced by \(\omega\) is preserved by \(f_i\) if \(x \in U_i\).
+  
+  Let \(\{(U_i, f_i)\}\) 
   be any atlas on \(X\). Then, for each \(i\), there exists some 
   \(g_i \in C^\infty(f_i(U_i))\) such that 
   \[(f_i^{-1})^* \omega = g_i dx_1 \wedge \cdots \wedge dx_n.\]
@@ -2366,6 +2375,259 @@ a manifold by glueing these parts together.
   we have that \(\omega(x)(v_1, \cdots, v_p) > 0\). Thus, \(\omega\) is a volume 
   form on \(X\). 
 \end{proof}
+
+With this proposition in mind, an alternative definition of orientation can be 
+introduced. In particular, this definition might be more popular in literatures. 
+
+With the above proposition, we have showed that \(X\) being orientable is 
+equivalent to the existence of a non-vanishing \(n\)-form. While this is the 
+case, two non-vanishing \(n\)-forms do not necessary induce the same orientation. 
+Indeed, it is clear that if \(\omega \in \Omega^n(X)\), \(-\omega\) induces 
+a different orientation on \(X\) as bases of positive orientation on \(T_x X\) 
+with respect to \(\omega\) will have negative orientation on \(-\omega\). Thus,
+it makes sense to define an equivalence relation characterizing this property.
+
+\begin{definition}
+  Given \(\omega, \eta \in \Omega^n(X)\) are non-vanishing, we say 
+  \(\omega \sim \eta\) if and only if \(\omega(x)\) and \(\eta(x)\) induces 
+  the same orientation on \(T_x X\) for all \(x \in X\). 
+\end{definition}
+
+One may show that there exists a non-vanishing \(f \in C^\infty(X)\) such that 
+\(\omega = f\eta\). Since both \(\omega\) and \(\eta\) are non-vanishing, it 
+follows \(f\) must be positive or negative everywhere. Thus, it is clear that 
+\(\omega\) and \(\eta\) induces the same orientation if and only if \(f\) is 
+positive everywhere. 
+
+\begin{definition}
+  An orientation on \(X\) is an equivalence class of the equivalence relation 
+  \(\sim\).
+\end{definition}
+
+It follows that if a non-vanishing \(n\)-form exists on \(X\), then there 
+are two choices of orientation on \(X\) while if such a form does not exist, 
+we may not choose an orientation. 
+
+Moving back to our original definition, let us generalize the definition of an 
+integral to the case where \(\omega \in \Omega^n(X)\) which does not necessarily 
+have support contained within a chart.
+
+\begin{definition}
+  Let \(X\) be an oriented manifold and suppose \(\omega \in \Omega^n_c(X)\) and 
+  \(\{(U_i, f_i)\}\) be an atlas on \(X\) with positively oriented smooth charts. 
+  Then, given \(h_i : X \to [0, 1]\) a partition of unity with respect to the 
+  atlas, we define the integral of \(\omega\) over \(X\) to be 
+  \[\int_X := \sum_{i \in I} \int_X h_i \omega.\]
+  Thus, for each \(i\), the support of \(h_i\omega\) is contained in \(U_i\) 
+  and in particular, 
+  \[\int_X \omega := \sum_i \int_X h_i \omega = \sum_i \int_{f_i(U_i)} (f_i^{-1})^* h_i \omega.\]
+\end{definition}
+
+\begin{proposition}
+  The integral \(\int_X \omega\) is independent on the choice of the atlas 
+  \(\{U_i, f_i\}\) and the choice of the partition of unity \(h_i\).
+\end{proposition}
+\begin{proof}
+  We have already shown that \(\int_{U_i} h_i\omega\) is independent on the 
+  choice of the chart and so, it suffices to show that the definition is 
+  independent of the choice of the partition of unity.
+
+  Let \(\{(U_i, f_i)\}\) and \(\{(V_j, g_j)\}\) be atlases on \(X\) with 
+  positively oriented charts and suppose \(h_i, \bar h_j : X \to [0, 1]\) are 
+  partitions of unity with respect to these atlases. Then, we have 
+  \[\sum_i h_i = \sum_j \bar h_j = 1,\]
+  and so 
+  \[\int_X h_i \omega = \int_X \left(\sum_j \bar h_j\right) h_i \omega = 
+  \sum_j \int_X \bar h_j h_i \omega.\]
+  Thus, 
+  \[\sum_i \int_X h_i \omega = \sum_{i, j}\int_X \bar h_j h_i \omega = 
+  \sum_j \int_X \bar h_j \left(\sum_i h_i\right)\omega = \sum_j \int_X \bar h_j \omega.\]
+\end{proof}
+
+\begin{proposition}
+  Let \(X, Y\) be oriented manifolds of dimension \(n\) and let 
+  \(\omega, \eta \in \Omega^n_c(X)\). Then, 
+  \begin{itemize}
+    \item \(\int_X (a\omega + b\eta) = a\int_X \omega + b\int_X \eta\) for all 
+      \(a, b \in \mathbb{R}\);
+    \item if \(\bar X\) is the manifold \(X\) with the opposite orientation, then 
+      \(\int_{\bar X} \omega = -\int_X \omega\);
+    \item if \(\omega\) is a volume form, then \(\int_X \omega > 0\);
+    \item if \(F : Y \to X\) be an orientation preserving diffeomorphism, then 
+      \(\int_X \omega = \int_Y F^* \omega\).
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  The first two properties follows directly by the definition and properties of 
+  the Riemann integral and so we will prove the third and fourth property. 
+
+  Let \(\omega\) be a volume form and let \(\{(U_i, f_i)\}\) be an atlas of 
+  oriented charts with the partition of unity \(h_i\). Then, for each \(i\), 
+  we may write 
+  \[(f_i^{-1})^* \omega = g_i dx_1 \wedge \cdots \wedge dx_n\]
+  locally for some \(g_i \in C^\infty(f_i(U_i))\) with \(g_i > 0\). 
+  Then, 
+  \[\int_X \omega = \sum_i \int_{f_i(U_i)} (f_i^{-1})^* h_i \omega = 
+    \sum_i \int_{f_i(U_i)} h_i g_i dx_1 \wedge \cdots \wedge dx_n > 0\]
+  as we are summing over non-negative terms at least one of which is positive. 
+
+  Let \(F : Y \to X\) be an orientation preserving diffeomorphism. Then, we may 
+  assume that the support of \(\omega\) is contained in a unique positively oriented 
+  chart \((U, f)\). Then, by assumption, \((F^{-1}(U), f \circ F)\) is also a 
+  positively oriented chart which contains the support of \(F^* \omega\). Then, 
+  \[\int_U \omega = \int_{F^{-1}(U)} F^* \omega,\]
+  and thus, taking the sum over all charts, it follows 
+  \[\int_X \omega = \int_Y F^* \omega.\] 
+\end{proof}
+
+\subsection{Stokes' Theorem}
+
+Let us denote 
+\[\mathbb{R}^n_+ := \{(x_1, \cdots, x_n) \in \mathbb{R}^n \mid x_n \ge 0\},\]
+and it boundary
+\[\partial \mathbb{R}^n = \{(x_1, \cdots, x_n) \in \mathbb{R}^n \mid x_n = 0\}.\]
+
+\begin{definition}[Manifolds With Boundary]
+  A manifold with boundary of dimension \(n\) is a Hausdorff and second countable 
+  topological space \(X\) with an atlas \(\{(U_i, f_i)\}\) such that the functions 
+  \(f_u : U_i \to \mathbb{R}^n_+\) is a homeomorphism for all \(i\), and furthermore,  
+  for all \(i, j\), the induced morphism 
+  \[f_i \circ f_j^{-i} : f_j(U_i \cap U_j) \to f_i(U_i \cap U_j)\]
+  is smooth.
+\end{definition}
+
+\begin{definition}
+  The boundary \(\partial X\) of a manifold with boundary \(X\) is the set 
+  \[\partial X := \{x \in X \mid f_i(x) \in \partial \mathbb{R}^n_+\}.\]
+  One may check that this definition is independent of the choice of \(i\).
+
+  We also define the interior of \(X\) to be \(\text{int}(X) = X \setminus \partial X\).
+\end{definition}
+
+It is clear that if \(X\) is a manifold with boundary, then the boundary 
+\(\partial X\) is closed in \(X\). Thus, if \(X\) is compact, then so is 
+\(\partial X\). Furthermore, if \(X\) is a manifold with boundary of dimension 
+\(n\), then \(\text{int}(X)\) is a manifold of dimension \(n\). 
+
+We note that these definitions are different from the topological definitions 
+as manifolds are defined intrinsically.
+
+Many definitions from ordinary manifolds transfer directly to manifolds with 
+boundaries. In particular, notions such as the tangent space, tensor fields, 
+orientability, differential forms, partition of unity and many more are defined 
+exactly the same. 
+
+In the case that \(X\) is an oriented manifold, then so is \(\partial X\) is 
+also oriented. Similarly, for each point in the interior of \(\mathbb{R}^n_+\), 
+the volume form \(dx_1 \wedge \cdots \wedge dx_n\) defines a positive 
+orientation which as a convention, induces the positive volume form on \(\partial X\) 
+given by \((-1)^n dx_1 \wedge \cdots \wedge dx_{n - 1}\).
+
+\begin{theorem}[Stokes' Theorem]
+  Let \(X\) be a smooth oriented manifold with boundary of dimension \(n\). 
+  Then for all \(\omega \in \Omega^{n - 1}_c(X)\), 
+  \[\int_X d\omega = \int_{\partial X}\omega.\]  
+\end{theorem}
+\begin{proof}
+  Let \(\{(U_i, f_i)\}\) be an atlas on \(X\) of positively oriented charts and 
+  let \(h_i\) be a partition of unity with respect to the atlas. Then, 
+  \[\int_X d\omega = \sum_{i \in I}\int_X d(h_i \omega) 
+    = \sum_i \int_{f_i(U_i)} (f_i^{-1})^* d(h_i \omega).\]
+  Recall that \((f_i^{-1})^* d(h_i\omega) = d(f_i^{-1})^* h_i\omega\), and so, 
+  denoting \(\tilde h_i := h_i \circ f_i^{-1}\), we have 
+  \((f_i^{-1})^* h_i \omega \in \Omega^{n-1}(\mathbb{R}^n_+)\) have local 
+  coordinates on \(f_i(U_i)\) 
+  \[\sum_j^n \tilde h_i \omega_j dx_1 \wedge \cdots \wedge \widehat{dx_j} \wedge 
+    \cdots \wedge dx_n,\]
+  where \(\omega_j \in C^\infty(f_i(U_i))\) and \(\widehat{dx_j}\) means we omit 
+  the component \(dx_j\). Taking the de Rham differential, we obtain 
+  \[\begin{split}
+    d\left(\sum_j^n \tilde h_i \omega_j dx_1 \wedge \cdots \wedge \widehat{dx_j} \wedge 
+  \cdots \wedge dx_n\right) 
+  & = \sum_j^n \pdv{\tilde h_i \omega_j}{x_j} dx_j \wedge
+  dx_1 \wedge \cdots \wedge \widehat{dx_j} \wedge 
+  \cdots \wedge dx_n\\
+  & = \left(\sum_j^n (-1)^{j - 1}\pdv{\tilde h_i \omega_j}{x_j}\right)
+  dx_1 \wedge \cdots \wedge dx_n.
+  \end{split}\]
+  Thus, we have 
+  \[\int_X d\omega = \sum_i \int_{-\infty}^\infty \cdots \int_{-\infty}^\infty \int_0^\infty 
+  \sum_j^n (-1)^{j - 1}\pdv{\tilde h_i \omega_j}{x_j}\ dx_1 \cdots dx_n\]
+  where the \(i\)-th integral of the first \((n - 1)\) integrals corresponds to 
+  the integration over \(dx_i\) for \(i = 1, \cdots, n - 1\) and the last 
+  integral corresponds to the integration over \(dx_n\) (since we are integrating 
+  over \(\mathbb{R}^n_+\)). 
+
+  Then, by the fundamental theorem of calculus, as \(\omega\) is compactly supported, 
+  all integrands at infinity vanishes and thus, the only term remaining the integral 
+  at the boundary. Thus, 
+  \[\int_X d\omega = \sum_i \int_{-\infty}^\infty \cdots \int_{-\infty}^\infty 
+  (-1)^n \tilde h_i(x_1, \cdots, x_{n - 1}, 0) \omega_n dx_1 \wedge \cdots \wedge dx_{n - 1} 
+  = \int_{\partial X} \omega\]
+  as required.
+\end{proof}
+
+Stokes' theorem is a powerful tool and we will demonstrate some direct consequences.
+
+\begin{corollary}[Integration by Parts]
+  Let \(X\) be a manifold with boundary of dimension \(n\) and let \(p \ge 0\). 
+  Then, given \(\omega \in \Omega^p_c(X)\) and \(\eta \in \Omega_c^{n - p - 1}(X)\), 
+  we have 
+  \[\int_{\partial X} \omega \wedge \eta = \int_X d\omega \wedge \eta + 
+    (-1)^p \int_X \omega \wedge d\eta.\]
+\end{corollary}
+\begin{proof}
+  Follows by applying the Leibniz rule on Stokes' theorem.
+\end{proof}
+
+\begin{corollary}[Brouwer's Fixed Point Theorem]
+  Let \(D := \{x \in \mathbb{R}^n \mid |x| \le 1\}\) be the closed disc and let 
+  \(f : D \to D\) be smooth. Then \(f\) admits a fixed point, i.e. there exists 
+  some \(x \in D\) such that \(f(x) = x\).
+\end{corollary}
+\begin{proof}
+  Suppose that for all \(x \in D\), \(f(x) \neq x\). Then the ray beginning at 
+  \(f(x)\) passing through \(x\) is well-defined. Now, defining \(g(x)\) to be 
+  the point this ray meets with the boundary of \(D\), we have \(g : D \to \partial D\) 
+  is a smooth function such that \(g(x) = x\) for all \(x \in \partial D\). 
+  Then, as \(\partial D\) is the \(n - 1\)-dimensional sphere, it is orientable 
+  and hence admits a volume form \(\omega\in \Omega^{n-1}(\partial D)\). Thus, 
+  \[0 < \int_{\partial D} \omega = \int_{\partial D} g^* \omega = 
+  \int_D d(g^* \omega) = \int_D g^* d\omega\]
+  by Stokes' theorem. But \(d\omega\) is an \(n\)-form on the 
+  \(n - 1\)-dimensional manifold \(\partial D\), and thus is zero, implying 
+  \(\int_D g^* d\omega = 0\), contradiction!
+\end{proof}
+
+\begin{corollary}
+  Let \(\omega \in \Omega^n_c(X)\) be an exact form on an oriented manifold 
+  \(X\) of dimension \(n\) without boundary, then \(\int_X \omega = 0\).
+
+  Similarly, if \(X\) is an oriented manifold with boundary of dimension \(n\), 
+  and \(\omega \in \Omega^{n - 1}_c(X)\) is closed, then \(\int_{\partial X} \omega = 0\).
+\end{corollary}
+\begin{proof}
+  Both claims follows directly by Stokes' theorem.
+\end{proof}
+
+Let \(X\) be an oriented manifold of dimension \(n\) and let \(Z \subseteq X\) 
+be an oriented submanifold of dimension \(k\). Then, if 
+\(\omega \in \Omega^k_c(X)\), we define the integral of \(\omega\) on \(Z\) to be 
+\[\int_Z \omega := \int_Z i^* \omega\]
+where \(i : Z \to X\) is the inclusion map. As \(i^* \omega\) is then a 
+\(k\)-form on \(Z\), the integral makes sense. We denote \(i^* \omega\) by 
+\(\omega\mid_Z\).
+
+\begin{corollary}
+  Let \(X\) be an oriented manifold of dimension \(n\) and let \(Z\) be a 
+  compact oriented submanifold without boundary of \(X\) of dimension \(k\). 
+  Then, given \(\omega \in \Omega_c^k(X)\) such that \(\int_Z \omega \neq 0\), 
+  \begin{itemize}
+    \item \(\omega\) is not exact on \(X\) and \(\omega\mid_Z\) is not exact on \(Z\);
+    \item \(Z\) is not the boundary of a compact oriented submanifold \(Y \subseteq X\) 
+     of dimension \(k + 1\).
+  \end{itemize}
+\end{corollary}
 
 
 \end{document}
