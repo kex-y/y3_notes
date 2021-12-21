@@ -1071,7 +1071,7 @@ Recall that any field contains a \(\mathbb{F}_p\) or \(\mathbb{Q}\)
 (the latter of which is impossible for finite fields). If \(K\) is a finite 
 field and \(\mathbb{F} \subseteq K\) for some prime \(p\) such that 
 \([K : \mathbb{F}_p] = r < \infty\), then \(|K| = p^r\) since each element of 
-\(K\) is expressed uniquely by \(a_1 e_1 + \cdots a_r e_r\) where 
+\(K\) is expressed uniquely by \(a_1 e_1 + \cdots + a_r e_r\) where 
 \(e_1, \cdots, e_r\) is a basis of \(K\) over \(\mathbb{F}_p\) and 
 \(a_i \in \mathbb{F}_p\). Conversely, we asks whether or not there exists a 
 field with \(p^r\) elements for any prime \(p\), and if it exists, is it 
@@ -2210,5 +2210,89 @@ As example of this is \(\mathbb{C}[x, y, z] /\langle xy - z^2 \rangle\)
 (we see that \(xy = z^2\) and so provides two factorizations of the same 
 polynomial).
 
+So far we have studied factorizations of polynomial over a ring by considering 
+it factorization on the field of fraction. However, we have yet to fully understand 
+factorizations of polynomials over a field. 
+
+In the case that the polynomial has degree between 2 and 3, we have an easy 
+criterion to determine whether a polynomial is irreducible. In particular, 
+\(P(X) \in K[X]\) for \(K\) a field is irreducible if and only if \(P(X)\) has 
+no roots in \(K\). This fails for higher degrees. Nonetheless, for finite fields, 
+there is an algorithmic method to determining whether or not a polynomial is 
+irreducible.
+
+We recall that \(X^{q^d} - X \in \mathbb{F}_q[X]\) is the product of the 
+irreducible monic polynomials over \(\mathbb{F}_q\) of degree dividing \(d\). 
+
+\begin{corollary}
+  \(P(X) \in \mathbb{F}_q[X]\) of degree \(d\) is irreducible if and only if 
+  \(\gcd(P(X), X^{q^r} - X) = 1\) for all \(r < d\).
+\end{corollary}
+\begin{proof}
+  Clearly, if the \(\gcd\) is not 1, then \(P(X)\) is not irreducible. On the other 
+  hand, if \(Q(X) \mid P(X)\) and \(\deg Q(X) = r\), then \(Q(X) \mid X^{q^r} - X\) 
+  and so \(\gcd(P(X), X^{q^r} - X) \neq 1\).
+\end{proof}
+
+In the case that \(K = \mathbb{Q}\) the question becomes much harder and in general 
+we do not have a complete method of determining whether or not a polynomial 
+is irreducible over \(\mathbb{Q}\). Nonetheless, we have some tricks. 
+
+In the case that \(P(X) \in \mathbb{Z}[X] \subseteq \mathbb{Q}[X]\) if \(P(X)\) is 
+monic, then it is primitive, and so, \(P(X)\) is irreducible over \(\mathbb{Q}\) 
+if and only if it is irreducible over \(\mathbb{Z}\).
+
+In the more general case where \(P(X) = \sum_{n = 0}^d a_n X^n \in K[X]\) is monic
+(where \(K\) is the field of fractions of \(R\)), we observer that 
+\[P_r(X) := r^d P\left(\frac{X}{r}\right) = \sum_{n = 0}^d r^d a_n\left(\frac{X}{r}\right)^n 
+  = \sum_{n = 0}^d r^{d - n} a_n X^n,\]
+which is also monic. Thus, if \(r\) is divisible by all denominators in \(P\), then 
+\(P_r(X)\) lies in \(R[X]\). Furthermore, by observing that if \(P(X) = Q(X)S(X)\), 
+we have \(P_R(X) = Q_r(X)S_r(X)\). Hence, \(P(X)\) is irreducible if and only if \(P_r(X)\) 
+is irreducible. So, in order to determine whether or not \(P(X)\) is irreducible, 
+it suffices to show \(P_r(X)\) is irreducible.
+
+\begin{proposition}
+  Let \(R\) be an integral domain and let \(P(X) \in R[X]\) be a monic polynomial 
+  and \(p \subseteq R\) be a prime ideal. Then
+  \(P(X)\) is irreducible if \(\overline{P(X)} \in R/p [X]\) is irreducible.
+\end{proposition}
+\begin{proof}
+  Suppose \(P(X) = Q(X)S(X)\) with \(Q, S\) not units. Then, since \(P\) is monic,
+  so are both \(Q\) and \(S\) monic and so, \(\deg Q, \deg S < \deg P\). Thus, 
+  \(\overline{P(X)} = \overline{Q(X)} \overline{S(X)}\) with \(\deg \overline{Q(X)}, 
+  \deg \overline{S(X)} < \deg \overline{P(X)}\) implying \(\overline{P(X)}\) is 
+  reducible.
+\end{proof}
+
+In summary, we may determine the irreducibility of a polynomial over a field 
+of fractions by first reducing it to a polynomial over the underlying ring and then, 
+determining its irreducibility by taking the quotient over a prime ideal. 
+However, this method is not always applicable. In particular, there exist 
+irreducible polynomials in \(\mathbb{Z}[X]\) that are reducible over 
+\(\mathbb{F}_p\) for all \(p\) (e.g. \(X^4 + 1\)).
+
+\begin{proposition}[Eisenstein's Criterion]
+  Let \(P(X) = \sum_{n = 0}^d a_n X^n \in R[X]\) be monic where \(R\) is an 
+  integral domain. Then, if there exists a prime ideal \(p \subseteq R\) such that 
+  \(a_i \in p\) for all \(0 \le i < d\) and \(a_0 \not\in p^2\), 
+  \(P(X)\) is irreducible.
+\end{proposition}
+\begin{proof}
+  Suppose \(P(X) = Q(X)S(X)\) with \(Q, S\) monic in \(R[X]\) with positive 
+  degree. Then, taking the modulo of \(p\), we have 
+  \(X^d = \overline{Q(X)} \overline{S(X)}\). 
+
+  We note that as \(R\) is not necessarily a UFD, we may not directly conclude 
+  \(\overline{Q(X)} = X^{\deg Q}\) and \(\overline{S(X)} = X^{\deg S}\) though 
+  nonetheless, this is true. Indeed, if otherwise, we may take 
+  \(aX^r\) and \(bX^s\) be the lowest nonzero terms of \(\overline{Q(X)}\) and 
+  \(\overline{S(X)}\) respectively. WLOG. we may assume \(r < \deg Q\), then 
+  \(abX^{r + s}\) is a nonzero term of lowest degree in \(\overline{P(X)} = X^d\). 
+  But this implies \(ab = 0\) in \(R / p\) which cannot happen as \(p\) is prime. 
+
+  Finally, \(Q(0), S(0) \in p\) and so \(a_0 = P(0) = Q(0) S(0) \in p^2\) which is a 
+  contradiction.
+\end{proof}
 
 \end{document}
