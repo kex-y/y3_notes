@@ -2295,4 +2295,125 @@ irreducible polynomials in \(\mathbb{Z}[X]\) that are reducible over
   contradiction.
 \end{proof}
 
+\newpage
+\section{Introduction to Category Theory}
+
+\begin{definition}[Category]
+  A category \(C\) is a collection of objects \(\text{Ob}(C)\) of \(C\) and 
+  for each \(X, Y \in \text{Ob}(C)\), a collection of morphisms 
+  \(\text{Hom}_C(X, Y)\) from \(X\) to \(Y\) such that,
+  \begin{itemize}
+    \item for \(X, Y, Z \in \text{Ob}(C)\), 
+    there exists a composition rule 
+    \[\text{Hom}_C(X, Y) \times \text{Hom}_C(Y, Z) \to \text{Hom}_C(X, Z) : 
+      (f, g) \mapsto g \circ f,\]
+    \item for each \(X \in \text{Ob}(C)\), there exists an element 
+    \(\text{Id}_X \in \text{Hom}_C(X, Y)\), 
+    \item for all \(X, Y, Z, W \in \text{Ob}(C)\), 
+    \(f \in \text{Hom}_C(X, Y), g \in \text{Hom}_C(Y, Z), h \in \text{Hom}_C(Z, W)\),
+    we have \((h \circ g) \circ f = h \circ (g \circ f)\),
+    \item for all \(X, Y \in \text{Ob}(C)\), \(f \in \text{Hom}_C(X, Y)\), 
+    \(f \circ \text{Id}_X = \text{Id}_X \circ f = f\).
+  \end{itemize}
+\end{definition}
+
+We note that we use the word collection rather than set since we can also 
+construct the category of sets. So, if we simply consider sets then we will 
+introduce Russell-like paradoxes. In proper set theory, the definition is phrased 
+in terms of ``classes'' though we shall avoid their use here.
+
+An example of a category is the category of groups. Indeed, \(\text{Grp}\) is a 
+category where \(\text{Ob}(\text{Grp}) = \{\text{Groups}\}\) and 
+\(\text{Mor}(\text{Grp}) = \{\text{Group homomorphisms}\}\). Similarly, we have 
+the category of rings, topological spaces, sets, \(R\)-modules, and so on. 
+
+We can also talk about subcategories. An example of this is the category of 
+finitely generated modules is a subcategory of modules and the category of 
+abelian groups is a subcategory of groups.
+
+\begin{definition}[Isomorphism]
+  Let \(C\) be a category and let \(X, Y \in \text{Ob}(C)\) and 
+  \(f \in \text{Hom}_C(X, Y)\), then \(f\) is said to be an isomorphism if 
+  there exists \(g \in \text{Hom}_C(Y, X)\) such that \(g \circ f = \text{Id}_X\) 
+  and \(f \circ g \in \text{Id}_Y\).
+\end{definition}
+
+\begin{definition}[Covariant Functor]
+  Let \(C, D\) be categories. Then a covariant function \(F : C \to D\) is 
+  collection of data 
+  \begin{itemize}
+    \item for each \(X \in \text{Ob}(C)\), we obtain \(F(X) \in \text{Ob}(D)\),
+    \item for each \(X, Y \in \text{Ob}(C)\) and \(f \in \text{Hom}_C(X, Y)\), we obtain 
+      \(F(f) \in \text{Hom}_D(F(X), F(Y))\) such that \(F(\text{Id}_X) = \text{Id}_{F(X)}\) 
+      and \(F(f \circ g) = F(f) \circ F(g)\).
+  \end{itemize}
+\end{definition}
+
+\begin{definition}[Contravariant Functor]
+  Let \(C, D\) be categories. Then a contravariant function \(F : C \to D\) is 
+  collection of data 
+  \begin{itemize}
+    \item for each \(X \in \text{Ob}(C)\), we obtain \(F(X) \in \text{Ob}(D)\),
+    \item for each \(X, Y \in \text{Ob}(C)\) and \(f \in \text{Hom}_C(X, Y)\), we obtain 
+      \(F(f) \in \text{Hom}_D(F(Y), F(X))\) such that \(F(\text{Id}_X) = \text{Id}_{F(X)}\) 
+      and \(F(f \circ g) = F(g) \circ F(f)\).
+  \end{itemize}
+\end{definition}
+
+A class of very useful functions which we have used in this course are the forgetful 
+functors. These are functors which ``forgets'' parts of the structure of the 
+category. For example, we have the natural forgetful function from the 
+category of rings to the category of abelian groups by forgetting the multiplication 
+operator. 
+
+\begin{definition}[Natural Transformation]
+  Let \(C, D\) be categories and \(F, G : C \to D\) are functors. A natural 
+  transformation \(\iota\) from \(F\) to \(G\) is a collection of morphisms  
+  \(\iota_X \in \text{Hom}_D(F(X), G(X))\) for each \(X \in \text{Ob}(C)\) such that 
+  for all \(X, X' \in \text{Ob}(C)\) and \(f \in \text{Hom}_C(X, X')\) the following 
+  diagram commutes,
+  \[\begin{tikzcd}
+    F(X) \arrow[r, "\iota_X"] \arrow[swap, d, "F(f)"] & G(X) \arrow[swap, d, "G(f)"] \\
+    F(X') \arrow[r, "\iota_{X'}"] & G(X')
+    \end{tikzcd}\]
+  i.e. \(G(f) \circ \iota_X = \iota_{X'} \circ F(f)\).
+\end{definition}
+
+We observe that we may compose natural transformations and furthermore, for 
+each category, we can define the identity natural transformation. With this 
+in mind, given two categories \(C, D\), we may define the category of 
+functors from \(C\) to \(D\) \(\text{Fun}(C, D)\) by taking the morphisms 
+to be the natural transformations from \(C\) to \(D\). 
+
+\begin{definition}[Natural Equivalence]
+  A natural transformation \(\iota : F \to G\) is a natural equivalence if it 
+  is an isomorphism in \(\text{Fun}(C, D)\), i.e. \(\iota_X\) is an isomorphism 
+  for all \(X \in \text{Ob}(C)\).
+\end{definition}
+
+\begin{definition}
+  Let \(C, D\) be categories and \(F : C \to D\) be a functor. We say \(F\) is an 
+  equivalence of categories if there exists a functor \(G : D \to C\) and 
+  natural equivalences \(FG \sim \text{Id}_D\) and \(GF \sim \text{Id}_C\).
+\end{definition}
+
+\begin{definition}[Adjoint Functors]
+  Let \(C, D\) be categories and \(F : C \to D\), \(G : D \to C\) be functors.
+  Then \((F, G)\) is an adjoint pair if for all \(X \in \text{Ob}(C), Y \in \text{Ob}(D)\), 
+  there exists \(\iota_{X, Y} : \text{Hom}_C(X, G(Y)) \simeq \text{Hom}_D(F(X), Y)\) 
+  such that, for all \(f : X \to X'\) and \(g : Y \to Y'\), the diagrams  
+  \[\begin{tikzcd}
+    \text{Hom}_C(X', G(Y)) \arrow[<->, r, "\iota_{X', Y}"] 
+      \arrow[swap, d, "\circ f"] & \text{Hom}_D(F(X'), Y) \arrow[swap, d, "\circ F(f)"] \\
+      \text{Hom}_C(X, G(Y)) \arrow[<->, r, "\iota_{X, Y}"] & \text{Hom}_D(F(X), Y)
+  \end{tikzcd}\] 
+  and
+  \[\begin{tikzcd}
+    \text{Hom}_C(X, G(Y)) \arrow[<->, r, "\iota_{X, Y}"] 
+      \arrow[swap, d, "G(g) \circ"] & \text{Hom}_D(F(X), Y) \arrow[swap, d, "g \circ"] \\
+      \text{Hom}_C(X, G(Y')) \arrow[<->, r, "\iota_{X, Y'}"] & \text{Hom}_D(F(X), Y')
+  \end{tikzcd}\] 
+  commutes.
+\end{definition}
+
 \end{document}
