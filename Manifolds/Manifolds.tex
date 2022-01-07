@@ -2629,6 +2629,41 @@ where \(i : Z \to X\) is the inclusion map. As \(i^* \omega\) is then a
   \end{itemize}
 \end{corollary}
 
+\newpage
+\section{Frobenius Theorem}
+
+\begin{definition}[Subbundle]
+  Given a manifold \(X\) and a vector bundle \(\pi : E \to X\) of rank \(r\), a 
+  subbundle of \(E\) of rank \(s\) is a submanifold \(D\) of \(E\) such that 
+  \begin{itemize}
+    \item for all \(x \in X\), \(D_x := D \cap \pi^{-1}(\{x\})\) is a vector 
+      supspace of \(E_x = \pi^{-1}(\{x\})\);
+    \item the induced function \(\pi\mid_D : D \to X\) is a vector bundle on 
+      \(D\) of rank \(s\) which is compatible with the vector space structure 
+      on \(\pi\mid_D^{-1}(\{x\}) = D_x\) for all \(x \in X\).
+  \end{itemize}
+  If the vector bundle in question is the tangent bundle, then a subbundle of the 
+  tangent bundle is called a distribution on \(X\).
+\end{definition}
+
+\begin{lemma}
+  Let \(X\) be a \(n\)-dimensional manifold and for each \(x \in X\), let \(D_x \subseteq T_x X\) 
+  be a subspace of fixed dimension \(k\). Then 
+  \[D := \bigcup_{x \in M}D_x \subseteq TX\]
+  is a distribution if and only if for each \(x \in X\), there exists a neighbourhood 
+  \(U\) of \(x\) and vector fields \(V_1, \cdots, V_k : U \to TX\) such that 
+  \(V_1(x), \cdots, V_k(x)\) is a basis for \(D_x\) for each \(x \in X\).
+\end{lemma}
+
+\begin{definition}[Integral Manifold]
+  Let \(D\) be a distribution on \(X\) and let \(Y\) be a submanifold of \(X\). Then,
+  \(Y\) is an integral manifold of \(D\) if \(T_x Y = D_x\) for all \(x \in Y\).
+\end{definition}
+
+\begin{definition}[Integrable]
+  A distribution \(D\) on \(X\) is integrable if for any \(x \in X\), there exists 
+  an integral submanifold \(Y \subseteq X\) such that \(x \in Y\).
+\end{definition}
 
 \end{document}
 

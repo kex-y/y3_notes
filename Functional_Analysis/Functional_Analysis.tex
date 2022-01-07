@@ -1946,7 +1946,7 @@ us to recover some sense of compactness in normed spaces.
 \end{proof}
 
 \begin{proposition}
-  A metric space is compact if and only if it is compact and totally bounded.
+  A metric space is compact if and only if it is complete and totally bounded.
 \end{proposition}
 \begin{proof}
   Exercise.
@@ -2033,7 +2033,8 @@ We recall the Arzela-Ascoli theorem in a more general context.
 \begin{theorem}[Arzela-Ascoli]
   Let \(\Omega\) be a compact topological space. Then a subset 
   \(\mathcal{F} \subseteq \mathcal{C}(\Omega)\) is totally bounded in the 
-  supremum norm if and only if it is point-wise bounded and equicontinuous 
+  supremum norm if and only if for all \(f \in \mathcal{F}\), \(f\) is bounded, 
+  and \(\mathcal{F}\) is equicontinuous 
   (i.e. for all \(x \in \Omega, \epsilon > 0\), there exists a open neighbourhood
   \(V\) of \(x\) such that, for all \(y \in V\), \(|f(x) - f(y)| < \epsilon\) 
   for all \(f \in \mathcal{F}\)).
@@ -2041,6 +2042,8 @@ We recall the Arzela-Ascoli theorem in a more general context.
 \begin{proof}
   Similar to the \(\mathbb{R}^n\) case.
 \end{proof}
+
+\textbf{NB: In many context totally boundedness is replaced by uniform boundedness.}
 
 \begin{theorem}[Kolmogorov-Riesz]
   A subset \(\mathcal{F}\) of \(L_p(\mathbb{R}^2)\) where \(1 \le p < \infty\) 
@@ -2569,5 +2572,64 @@ and thus,
   \|K(x, \cdot)\|_2 \|f\|_2.\]
 We note that this also implies the operator is bounded with the bound 
 \(\|T\| \le \|K\|_2\).
+
+\newpage
+\section{Weak Derivative}
+
+In light of the tools we have developed, we will now revisit the weak derivative. 
+Recall that, motivated by the integration by parts formula, we have the following 
+definition.
+
+\begin{definition}[Weak Derivative]
+  A function \(f \in L^1_{loc}(\mathbb{R}^n)\) (integrable on compact subsets of 
+  \(\mathbb{R}^n\)) is weakly differentiable if for all 
+  \(\phi \in \mathcal{D}(\mathbb{R}^n) := \mathcal{C}^\infty_c(\mathbb{R}^n)\)
+  (smooth functions on \(\mathbb{R}^n\) with compact support), 
+  there exists some \(g \in L^1_{loc}(\mathbb{R}^n)\) such that 
+  \[\int f \partial^\alpha_i \phi \dd\lambda = (-1)^\alpha \int g \phi \dd \lambda\]
+  where \(\partial_i\) denotes the partial derivative in the direction of \(x_i\).
+
+  In this case, we call \(g\) the weak derivative of \(f\) in the direction \(x_i\) 
+  and we denote it by \(\partial_i f\).
+\end{definition}
+
+Denoting \(\partial^\alpha = \prod_{i = 1}^n \partial_i^{\alpha_i}\) where \(\alpha\) 
+is an \(n\)-tuple with the convention \(\partial_i^0 = \text{id}\), we define 
+the following analogous definition.
+
+\begin{definition}
+  A function \(f \in L^1_{loc}(\mathbb{R}^n)\) is \(\alpha\)-weakly differentiable 
+  if for all \(\phi \in \mathcal{D}(\mathbb{R}^n)\) there exists some 
+  \(g \in L^1_{loc}(\mathbb{R}^n)\) such that 
+  \[\int f \partial^\alpha \phi \dd \lambda = (-1)^{|\alpha|} \int g_\alpha \phi \dd \lambda\]
+  where \(g_\alpha\) is called the weak derivative of order \(|\alpha|\) of \(f\) 
+  and is denoted by \(\partial^\alpha f\).
+\end{definition}
+
+\begin{lemma}
+  Let \((f_n) \subseteq L^1_{loc}(\mathbb{R}^n)\) be a sequence of \(\alpha\)-weakly 
+  differentiable functions and \(f_n \to f\) and \(\partial^\alpha f_n \to g\) in \(L^1\). 
+  Then, \(f\) is \(\alpha\)-weakly differentiable and \(g = \partial^\alpha f\).
+\end{lemma}
+\begin{proof}
+  By definition, for all \(\phi \in \mathcal{D}(\mathbb{R}^n)\), 
+  \[\int f_n \partial^\alpha \phi \dd \lambda = (-1)^{|\alpha|} \int (\partial^\alpha f_n)\phi \dd \lambda.\]
+  Then, as \(f_n \to f\) in \(L^1\), 
+  \[\left|\int(f_n - f) \partial^\alpha \phi \dd \lambda\right| \le \|\partial^\alpha \phi\|_\infty
+  \int|f_n - f| \dd \lambda \to 0.\] 
+  On the other hand as \(\partial^\alpha f_n \to g\) in \(L^1\),
+  \[\left|\int (\partial^\alpha f_n - g)\phi \dd \lambda\right| \le 
+    \|\phi\|_\infty\int |\partial^\alpha f_n - g| \dd \lambda \to 0.\]
+  Thus, we obtain 
+  \[\begin{split}
+    \left|\int f\partial^\alpha \phi - (-1)^{|\alpha|} g\phi \dd \lambda\right| & \le 
+    \left|\int (f - f_n) \partial^\alpha \phi \dd \lambda \right| + 
+    \left|\int f_n \partial^\alpha \phi - (-1)^{|\alpha|} g \phi \dd \lambda\right| \\
+    & = \left|\int (f - f_n) \partial^\alpha \phi \dd \lambda \right| + 
+    \left|\int (\partial^\alpha f_n - g)\phi \dd \lambda\right| \to 0.
+  \end{split}\]
+  Hence \(\int f\partial^\alpha \phi \dd \lambda = (-1)^{|\alpha|} \int g\phi \dd \lambda\) 
+  implying \(g = \partial^\alpha f\) as required.
+\end{proof}
 
 \end{document}
