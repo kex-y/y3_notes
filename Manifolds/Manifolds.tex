@@ -2268,11 +2268,6 @@ positive orientation \(\wedge^+\) on \(\mathbb{R}^n\).
   \[Df\mid_x : T_x U \to T_{f(x)}(f(U))\]
   is orientation preserving.
 \end{definition}
-In other words, \(X\) is oriented if given an \(n\)-form, there exists an atlas 
-\(\{U_i, f_i\}\), such that for all positively oriented basis 
-\([\sigma_1], \cdots, [\sigma_n]\) of \(T_x X\), where \(x \in U_i\), we have 
-\([f_i \circ \sigma_j] \in T_{f(x)}(f(U))\) is positively oriented in 
-\(T_{f(x)}(f(U))\).
 
 \begin{definition}[Orientable]
   A manifold \(X\) is called orientable if there exists an atlas \(\{(U_i, f_i)\}\) 
@@ -2312,7 +2307,7 @@ We see that this definition is well-defined, i.e. is independent of the chart
   \int_{g(U \cap V)}(g^{-1})^* \omega & = \int_{f(U \cap V)} (g \circ f^{-1})^*(g^{-1})^* \omega \\
   & = \int_{f(U \cap V)} (f^{-1})^* g^* (g^{-1})^* \omega = \int_{f(U \cap V)} (f^{-1})^* \omega,
 \end{split}\]
-where the second equality is due to corollary~\ref{change-of-var}.
+where the first equality is due to corollary~\ref{change-of-var}.
 
 With this definition in mind, in some sense, we will partition the support of a 
 form into parts contained in charts and then define the integral of a form over 
