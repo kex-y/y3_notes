@@ -86,6 +86,25 @@
 % the redefinition for the missing \setminus must be delayed
 \AtBeginDocument{\renewcommand{\setminus}{\mathbin{\backslash}}}
 
+% `calc` is necessary to draw curved arrows.
+\usetikzlibrary{calc}
+% `pathmorphing` is necessary to draw squiggly arrows.
+\usetikzlibrary{decorations.pathmorphing}
+\tikzset{curve/.style={settings={#1},to path={(\tikztostart)
+    .. controls ($(\tikztostart)!\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
+    and ($(\tikztostart)!1-\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
+    .. (\tikztotarget)\tikztonodes}},
+    settings/.code={\tikzset{quiver/.cd,#1}
+        \def\pv##1{\pgfkeysvalueof{/tikz/quiver/##1}}},
+    quiver/.cd,pos/.initial=0.35,height/.initial=0}
+
+% TikZ arrowhead/tail styles.
+\tikzset{tail reversed/.code={\pgfsetarrowsstart{tikzcd to}}}
+\tikzset{2tail/.code={\pgfsetarrowsstart{Implies[reversed]}}}
+\tikzset{2tail reversed/.code={\pgfsetarrowsstart{Implies}}}
+% TikZ arrow styles.
+\tikzset{no body/.style={/tikz/dash pattern=on 0 off 1mm}}
+
 \title{Manifolds}
 \author{Kexing Ying}
 \date{July 24, 2021}
@@ -2025,7 +2044,9 @@ and suppose \(\omega : X \to \wedge^n T^* X\) is an \(n\)-form on \(V\). Then,
 locally, we may write \(\omega = hdy_1 \wedge \cdots \wedge hdy_n\) where 
 \(h : U \to \mathbb{R}\) is a smooth function. With this in mind, 
 we have the pull-back of \(\omega\) along \(F\) is given locally by 
-\[F^* \omega(x) = h \circ F(x) \cdot \det DF\mid_x \cdot dx_1 \wedge \cdots \wedge dx_n.\]
+\begin{equation}\label{pull-back-eq}
+  F^* \omega(x) = h \circ F(x) \cdot \det DF\mid_x \cdot dx_1 \wedge \cdots \wedge dx_n.
+\end{equation}
 
 \subsection{de Rham Differential}
 
@@ -2343,12 +2364,8 @@ a manifold by glueing these parts together.
   In this case, \(\omega\) is called a volume form.
 \end{proposition}
 \begin{proof}
-  Suppose \(\omega \in \Omega^n(X)\) is non-vanishing, then, we would like to find 
-  an atlas \(\{(U_i, f_i)\}\) of \(X\), such that the positive orientation on 
-  \(T_x X\) induced by \(\omega\) is preserved by \(f_i\) if \(x \in U_i\).
-  
-  Let \(\{(U_i, f_i)\}\) 
-  be any atlas on \(X\). Then, for each \(i\), there exists some 
+  Suppose \(\omega \in \Omega^n(X)\) is non-vanishing and let \(\{(U_i, f_i)\}\) 
+  be an atlas covering \(X\). Then, for each \(i\), there exists some 
   \(g_i \in C^\infty(f_i(U_i))\) such that 
   \[(f_i^{-1})^* \omega = g_i dx_1 \wedge \cdots \wedge dx_n.\]
   Since \(\omega\) is non-vanishing, it follows that \(g_i\) is either positive 
@@ -2357,10 +2374,46 @@ a manifold by glueing these parts together.
   \[t : \mathbb{R}^n \to \mathbb{R}^n : 
     (x_1, x_2, \cdots, x_n) \mapsto (-x_1, x_2, \cdots, x_n)\]
   we may assume \(g_i\) is positive for all \(i\) (after the replacement).
-  Thus, for \(i, j\), if \(x \in U_i \cap U_j\), we see \((U_i, f_i), (U_j, f_j)\) 
-  define the same orientation on \(x\) implying \(X\) is orientable.
+  Then, for \(i, j\), \(x \in U_i \cap U_j =: U\), it suffices to show \(D\phi_{ij} > 0\) 
+  (since \(D\phi_{ij} > 0\) implies \(\phi_{ij}\) is orientation preserving and 
+  hence, the orientation induced by \(f_i\) and \(f_j\) are compatible on \(U\)).
+  By recalling equation \ref{pull-back-eq}, we have 
+  \[\begin{split}
+    (\phi_{ij})^* (g_i dx_1 \wedge \cdots \wedge dx_n) & = 
+    g_i \circ \phi_{ij} \det D\phi_{ij} \cdot dy_1 \wedge \cdots \wedge dy_n\\
+    & = g_i \circ f_i \circ f_j^{-1} \det D\phi_{ij} \cdot dy_1 \wedge \cdots \wedge dy_n 
+    \end{split}\]
+  where \(\{dx_1, \cdots, dx_n\}\) is the standard 1-forms of 
+  \(\wedge^n T_{f_i(x)}^* \tilde U\) and \(\{dx_1, \cdots, dx_n\}\) the 
+  standard 1-forms of \(\wedge^n T_{f_j(x)}^* \tilde U\). In particular, the 
+  following diagram commutes. 
+  \[\begin{tikzcd}
+    {f_j(U)} && {\wedge^n T_{f_j(x)}^* \tilde U} \\
+    {(x \in U)} && {\wedge^n T_x^* U} \\
+    {f_i(U)} && {\wedge^n T_{f_i(x)}^* \tilde U}
+    \arrow["{f_i}"', from=2-1, to=3-1]
+    \arrow["{f_j}", from=2-1, to=1-1]
+    \arrow["{\phi_{ij}}"', curve={height=30pt}, from=1-1, to=3-1]
+    \arrow["{(\phi_{ij})^*}"', curve={height=30pt}, from=3-3, to=1-3]
+    \arrow["{(f_j^{-1})^*}", from=2-3, to=1-3]
+    \arrow["{(f_i^{-1})^*}"', from=2-3, to=3-3]
+    \arrow["{g_j dy_1 \wedge \cdots \wedge dy_n}", from=1-1, to=1-3]
+    \arrow["{\omega\mid_U}", from=2-1, to=2-3]
+    \arrow["{g_i dx_1 \wedge \cdots \wedge dx_n}"', from=3-1, to=3-3]
+  \end{tikzcd}\]
+  Thus, we have 
+  \[\begin{split}
+    g_j dy_1 \wedge \cdots \wedge dy_n & = (f_j^{-1})^* \omega
+      = (\phi_{ij})^* (f_i^{-1})^* \omega\\
+    & = (\phi_{ij})^* (g_i dx_1 \wedge \cdots \wedge dx_n)\\
+    & = g_i \circ f_i \circ f_j^{-1} \det D\phi_{ij} \cdot dy_1 \wedge \cdots \wedge dy_n.
+  \end{split}\]
+  Hence, \(g_j = g_i \circ f_i \circ f_j^{-1} \det D\phi_{ij}\) implying, 
+  \(\det D\phi_{ij} g_i \circ f_i = g_j \circ f_j\). Now, since both 
+  \(g_i \circ f_i(x), g_j \circ f_j(x) > 0\) by construction, we conclude that 
+  \(\det D\phi_{ij} > 0\) and hence, \(X\) is orientable as required.
 
-  On the other hand, if \(X\) is orientable then, we may choose \(\{U_i, f_i\}\) 
+  On the other hand, if \(X\) is orientable then, we may choose \(\{(U_i, f_i)\}\) 
   an atlas of positively oriented charts. Let \(h_i : X \to [0, 1]\) be a partition 
   of unity with respect to this atlas and define 
   \[\omega_i = f^*(dx_1 \wedge \cdots \wedge dx_n).\]
