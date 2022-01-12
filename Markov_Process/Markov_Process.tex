@@ -1,0 +1,286 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}\pagecolor[RGB]{28,30,38} \color[RGB]{213,216,218}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Markov Process},
+  pdfauthor={Kexing Ying},
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=red,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin = 1.5in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{esint}
+\usepackage[ruled,vlined]{algorithm2e}
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition*}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem*{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{example}{Example}[section]
+\newcommand{\diag}{\mathop{\mathrm{diag}}}
+\newcommand{\Arg}{\mathop{\mathrm{Arg}}}
+\newcommand{\hess}{\mathop{\mathrm{Hess}}}
+
+\title{Markov Process}
+\author{Kexing Ying}
+
+\begin{document}
+\maketitle
+
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\newpage
+
+\section{Introduction and Review}
+
+We will in this course assume the following notation:
+\begin{itemize}
+  \item \((\Omega, \mathcal{F}, \mathbb{P})\) is a probability space;
+  \item \(\mathcal{X}\) is a Polish space, i.e. a separable, completely 
+    metrizable, topological space;
+  \item \(\mathcal{B}(\mathcal{X})\) is the Borel \(\sigma\)-algebra of \(\mathcal{X}\).
+\end{itemize}
+
+\begin{definition}[Stochastic Process]
+  A stochastic process \((x_n)_{n \in I}\) is a collection of random variables. 
+  In the case that \(I = \mathbb{N}\) or \(\mathbb{Z}\), we say that the 
+  stochastic process is discrete time. On the other hand if \(I = \mathbb{R}_{\ge 0}\) 
+  or \([0, 1] \subseteq \mathbb{R}\), then we say the process is continuous time.  
+\end{definition}
+
+We recall some definitions from elementary probability theory. 
+
+\begin{definition}[Random Variable]
+  A random variable \(x : \Omega \to \mathcal{X}\) is simply a measurable function.
+\end{definition}
+
+\begin{definition}[Probability Distribution]
+  Given a random variable \(x : \Omega \to \mathcal{X}\), the probability 
+  distribution of \(x\), denoted by \(\mathcal{L}(x)\) is the push-forward 
+  measure of \(\mathbb{P}\) along \(x\), i.e. 
+  \[\mathcal{L}(x) = x_* \mathbb{P} : A \in \mathcal{F} \mapsto \mathbb{P}(x^{-1}(A)).\]
+\end{definition}
+
+\begin{definition}[Independence]
+  Given random variables \(x_1, \cdots, x_n\), we say \(x_1, \cdots, x_n\) are 
+  independent if 
+  \[\mathcal{L}((x_1, \cdots, x_n)) = \bigotimes_{i = 1}^n \mathcal{L}(x_i),\]
+  where \(\otimes\) denotes the product measure.
+\end{definition}
+
+As the name suggests, we will in this course mostly focus on a class of stochastic 
+processes known as Markov processes. These are processes in which given information 
+about the process at the present time, its future is independent from its 
+history. In particular, if \((x_n)\) is a Markov process, given its value at 
+\(x_k\), the value of \(x_j\) is independent of the values of \(x_i\) for all 
+\(i < k < j\).
+
+\begin{definition}[Invariant Probability Measure]
+  A probability measure \(\pi\) is said to be an invariant probability measure 
+  or an invariant distribution of a Markov process \((x_n)_{n \in I}\) if for all 
+  \(n \in I\), we have \(\pi = \mathcal{L}(x_n)\).
+\end{definition}
+
+A Markov chain started from an invariant distribution does is called a 
+stationary Markov process as its distribution do not evolve and we say that the 
+chain is in equilibrium.
+
+In this course we will study the behaviour of the distribution of Markov processes. 
+In particular, we ask
+\begin{itemize}
+  \item does there exists an invariant measure? If so, is it unique?
+  \item how does the distribution evolve over time?
+  \item does \(\mathcal{L}(x_n)\) converge as \(n \to \infty\) 
+    (convergence in distribution)?
+\end{itemize}
+
+\newpage
+\section{Markov Property}
+
+Let us now consider the Markov property in a more formal context.
+
+\subsection{Filtration and Simple Markov Property}
+
+In formation and filtration is an important notion not only for Markov processes 
+but for stochastic processes in general. 
+
+In formally, the information of a random 
+variable \(x\) is the collection of all possible events, i.e. the sigma algebra 
+generated by \(x\), 
+\[\sigma(x) = \sigma(\{x^{-1}(A) \mid A \in \mathcal{B}(\mathcal{X})\}).\]
+In the case of a stochastic process \((x_n)\), the information on the process up 
+to time \(n\) is the \(\sigma\)-algebra generated by \(x_0, \cdots, x_n\), 
+i.e. \(\sigma(x_0, \cdots, x_n)\).
+
+With this in mind, we see that the notion of possible events evolving in time 
+is naturally described by a sequence of increasing \(\sigma\)-algebras. 
+We call such a sequence a filtration.
+
+\begin{definition}[Filtration]
+  A filtration is a sequence \((\mathcal{F}_n)\) of 
+  increasing sub-\(\sigma\)-algebras of \(\mathcal{F}\). 
+\end{definition}
+
+\begin{definition}[Adapted]
+  A stochastic process \((x_n)\) is adapted to the filtration \((\mathcal{F}_n)\) if 
+  for all \(n\), \(x_n\) is \(\mathcal{F}_n\)-measurable.
+\end{definition}
+
+\begin{definition}[Natural Filtration]
+  Given a stochastic process \((x_n)\), the natural filtration \((\mathcal{F}^x_n)\) 
+  for \((x_n)\) is 
+  \[\mathcal{F}^x_n := \sigma(x_0 ,\cdots, x_n).\]
+  We note that by definition, a stochastic process is always adapted to its natural 
+  filtration.
+\end{definition}
+
+Recalling the definition of conditional expectation, we introduce the following 
+notations. 
+
+\begin{definition}[Conditional Probability]
+  Given a \(\sigma\)-algebra \(\mathcal{G} \subseteq \mathcal{F}\) and a random 
+  variable \(x\), we define the conditional probability of \(x\) with respect 
+  to \(\mathcal{G}\) to be 
+  \[\mathbb{P}(x \in A \mid \mathcal{G}) := \mathbb{E}(\mathbf{1}_A(X) \mid \mathcal{G}),\]
+  for all \(A \in \mathcal{B}(\mathcal{X})\) where \(\mathbf{1}_A\) is the indicator 
+  function of \(A\). 
+
+  Furthermore, given random variables \(x_0, \cdots, x_n\), we denote 
+  \[\mathbb{P}(x \in A \mid x_0, \cdots, x_n) := \mathbb{P}(x \in A \mid \sigma(x_0, \cdots, x_n)).\]
+\end{definition}
+
+\begin{definition}[Simple Markov Property]
+  A stochastic process \((x_n)\) with state space \(\mathcal{X}\) is said to have the 
+  simple Markov property if for any \(A \in \mathcal{B}(\mathcal{X})\) 
+  and \(n \ge 0\), we have 
+  \[\mathbb{P}(x_{n + 1} \in A \mid x_0, \cdots, x_n) = \mathbb{P}(x_{n + 1} \in A \mid x_n),\]
+  almost surely.
+
+  Unfolding the notation, the simple Markov property states that 
+  \[\mathbb{E}(\mathbf{1}_A(x_{n + 1}) \mid \mathcal{F}^x_n) = 
+    \mathbb{E}(\mathbf{1}_A(x_{n + 1}) \mid \sigma(x_n)).\]
+
+  We call a stochastic process which has the simple Markov property a Markov 
+  process and we call \(\mathcal{L}(x_0)\) the initial distribution. Furthermore, 
+  if the Markov process is discrete, we call it a Markov chain. 
+\end{definition}
+
+The definition of the simple Markov property can be generalized to continuous 
+stochastic processes by taking the property to be 
+\(\mathbb{E}(\mathbf{1}_A(x_t) \mid \mathcal{F}^x_s) = 
+\mathbb{E}(\mathbf{1}_A(x_t) \mid \sigma(x_s))\) for all \(s \le t\).
+
+In the case that \(\mathcal{X} = \mathbb{N}\), the simple Markov property is 
+equivalent to the statement that 
+\[\mathbb{P}(x_{n + 1} = j \mid x_0 = i_0, \cdots, x_n = i_n) = 
+  \mathbb{P}(x_{n + 1} = j \mid x_n = i_n),\]
+almost surely for every \(n\) where \(i_0, \cdots, i_n \in \mathcal{X} = \mathbb{N}\)
+\[\mathbb{P}(x_0 = i_0, \cdots, x_n = i_n) > 0.\]
+
+\begin{lemma}
+  Let \(\mathcal{G} \subseteq \mathcal{F}\), \(X : \Omega \to \mathcal{X}, 
+  Y : \Omega \to \mathcal{Y}\) be random variables such that \(X\) is 
+  \(\mathcal{G}\)-measurable, \(Y\) is independent of \(\mathcal{G}\). 
+  Then, if \(\phi : \mathcal{X} \times \mathcal{Y} \to \mathbb{R}\) is measurable 
+  such that \(\phi(X, Y) \in L^1\), we have 
+  \[\mathbb{E}(\phi(X, Y) \mid \mathcal{G})(\omega) = \mathbb{E}_Y(\phi(X(\omega), Y))\]
+  almost surely. 
+\end{lemma}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{proposition}
+  Let \(\xi_1, \xi_2, \cdots\) be a sequence of independent random variables with 
+  state space \(\mathcal{Y}\) and is independent with respect to 
+  \(x_0 : \Omega \to \mathcal{X}\). Then, if \(F : \mathcal{X} \times \mathcal{Y} \to \mathcal{X}\) 
+  is a measurable function, we may define the stochastic process 
+  \[x_{n + 1} = F(x_n, \xi_{n + 1}).\]
+  \((x_n)\) is a Markov process. 
+\end{proposition}
+\begin{proof}
+  Let \(A \in \mathcal{B}(\mathcal{X})\). Then, 
+  \[\begin{split}
+    \mathbb{E}(\mathbf{1}_A(x_{n + 1}) \mid x_0, \cdots, x_n) 
+    & = \mathbb{E}(\mathbf{1}_A(F(x_n, \xi_{n + 1}) \mid x_0, \cdots, x_n) \\
+    & = \omega \mapsto \mathbb{E}(\mathbf{1}_A(F(x_n(\omega), \xi_{n + 1})),
+  \end{split}\]
+  where the second equality follows by the above lemma (setting \(\phi = \mathbf{1}_A \circ F\) 
+  and observing that \(x_n\) is \(\sigma(x_0, \cdots, x_n)\)-measurable and 
+  \(\xi_{n + 1}\) is independent of \(\sigma(x_0, \cdots, x_n)\)). Similarly, 
+  \[\begin{split}
+    \mathbb{E}(\mathbf{1}_A(x_{n + 1}) \mid x_n) 
+    & = \mathbb{E}(\mathbf{1}_A(F(x_n, \xi_{n + 1}) \mid x_n) \\
+    & = \omega \mapsto \mathbb{E}(\mathbf{1}_A(F(x_n(\omega), \xi_{n + 1})),
+  \end{split}\]
+  we have \(\mathbb{E}(\mathbf{1}_A(x_{n + 1}) \mid \mathcal{F}^x_n) = 
+  \mathbb{E}(\mathbf{1}_A(x_{n + 1}) \mid \sigma(x_n))\) as required.
+\end{proof}
+
+\end{document}
