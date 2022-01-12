@@ -127,6 +127,21 @@ We recall some definitions from elementary probability theory.
   \[\mathcal{L}(x) = x_* \mathbb{P} : A \in \mathcal{F} \mapsto \mathbb{P}(x^{-1}(A)).\]
 \end{definition}
 
+\begin{proposition}
+  Let \(x : \Omega \to \mathcal{X}\) be a random variable where \(\mathcal{X}\) 
+  is countable, then
+  \[\mathcal{L}(x) = \sum_{i \in X} \mathbb{P}(x = i) \delta_i := 
+    \sum_{i \in X} x_* \mathbb{P}(\{i\}) \delta_i\]
+  where \(\delta_i\) is the Dirac measure concentrated at \(i\).
+\end{proposition}
+\begin{proof}
+  Let \(A \subseteq X\), then 
+  \[\mathcal{L}(x)(A) = \sum_{i \in A} \mathcal{L}(x)(\{i\}) = 
+    \sum_{i \in X} \mathcal{L}(x)(\{i\})\delta_i(A) = 
+    \sum_{i \in X} x_* \mathbb{P}(\{i\}) \delta_i(A),\]
+  as required.
+\end{proof}
+
 \begin{definition}[Independence]
   Given random variables \(x_1, \cdots, x_n\), we say \(x_1, \cdots, x_n\) are 
   independent if 
