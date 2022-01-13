@@ -1,0 +1,163 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}\pagecolor[RGB]{28,30,38} \color[RGB]{213,216,218}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Algebraic Topology},
+  pdfauthor={Kexing Ying},
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=red,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin = 1.5in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{esint}
+\usepackage[ruled,vlined]{algorithm2e}
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition*}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem*{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{example}{Example}[section]
+\newcommand{\diag}{\mathop{\mathrm{diag}}}
+\newcommand{\Arg}{\mathop{\mathrm{Arg}}}
+\newcommand{\hess}{\mathop{\mathrm{Hess}}}
+
+\title{Algebraic Topology}
+\author{Kexing Ying}
+
+\begin{document}
+\maketitle
+
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\newpage
+
+\section{Introduction}
+
+Let us introduce/recall some basic definitions which will be used throughout this 
+course. 
+
+\begin{definition}[Path]
+  A path in a topological space \(X\) is a continuous map \(\gamma : [0, 1] \subseteq \mathbb{R} \to X\).
+  In the case that \(\gamma(0) = \gamma(1)\), we call \(\gamma\) a loop/closed path.
+\end{definition}
+
+\begin{definition}[Homotopy]
+  Given two paths \(\gamma_0, \gamma_1 : [0, 1] \to X\) with the same end points 
+  (i.e. \(\gamma_0(0) = \gamma_1(0)\) and \(\gamma_0(1) = \gamma_1(1)\) are 
+  said to be homotopic with fixed endpoints if there exists a continuous map 
+  \[H : [0, 1] \times [0, 1] \to X\]
+  such that 
+  \begin{itemize}
+    \item \(H(t, 0) = \gamma_0(t)\) for all \(t \in [0, 1]\);
+    \item \(H(t, 1) = \gamma_1(t)\) for all \(t \in [0, 1]\);
+    \item for all \(u \in [0, 1]\), 
+    \(H(0, u) = \gamma_0(0) = \gamma_1(0)\) and \(H(1, u) = \gamma_0(1) = \gamma_1(1)\).
+  \end{itemize}
+\end{definition}
+
+Thus, graphically, two paths are homotopic if you can continuously deform a path 
+into the other without moving the starting and ending points (see second year 
+complex analysis for more details).
+
+\begin{definition}[Free Homotopy]
+  The loops \(\gamma_0, \gamma_1\) in \(X\) is said to be freely homotopic if 
+  there exists a continuous \(H : [0, 1] \times [0, 1] \to X\) such that 
+  \begin{itemize}
+    \item \(H(t, 0) = \gamma_0(t)\) for all \(t \in [0, 1]\);
+    \item \(H(t, 1) = \gamma_1(t)\) for all \(t \in [0, 1]\);
+    \item for all \(u \in [0, 1]\), \(H(0, u) = H(1, u)\).
+  \end{itemize}
+\end{definition}
+
+\begin{definition}[Simply Connected]
+  \(X\) is said to be simply connected if any loop in \(X\) is freely homotopic 
+  to a constant loop. 
+\end{definition}
+
+Thus, informally, in a simply connected space, any loop can be contracted into 
+a single point.
+
+\begin{proposition}
+  \(S^2\) is simply connected.
+\end{proposition}
+
+Simply connectedness is a important notion and relates to many difficult problems 
+in geometry. 
+
+\begin{theorem}
+  \(S^2\) and \(\mathbb{R}^2\) are, up to homeomorphism, the only two simply-connected 
+  2-dimensional manifolds.
+\end{theorem}
+
+\begin{theorem}[Poincaré Conjecture]
+  The only compact, simply connected 3-dimensional manifold is the sphere \(S^3\) 
+  (up to homeomorphism).
+\end{theorem}
+
+\end{document}
