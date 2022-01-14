@@ -1,0 +1,254 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}\pagecolor[RGB]{28,30,38} \color[RGB]{213,216,218}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Probability Theory},
+  pdfauthor={Kexing Ying},
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=red,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin = 1.5in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{esint}
+\usepackage[ruled,vlined]{algorithm2e}
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition*}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem*{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{example}{Example}[section]
+\newcommand{\diag}{\mathop{\mathrm{diag}}}
+\newcommand{\Arg}{\mathop{\mathrm{Arg}}}
+\newcommand{\hess}{\mathop{\mathrm{Hess}}}
+
+\title{Probability Theory}
+\author{Kexing Ying}
+
+\begin{document}
+\maketitle
+
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\newpage
+
+\section{Review of Measure Theory}
+
+Modern probability theory is based on measure theory and we will in this section 
+recall some notions from measure theory.
+
+\begin{definition}[Algebra]
+  Given a set \(\Omega\), a set of subsets \(\mathcal{A}\) of \(\Omega\) is an 
+  algebra if \(\Omega \in \mathcal{A}\) and \(\mathcal{A}\) is closed under 
+  finite union and complements.
+
+  It follows straight away that an algebra is also closed under finite intersections.
+\end{definition}
+
+\begin{definition}[Finitely Additive Measure]
+  A function \(\mu : \mathcal{A} \to [0, \infty]\) where \(\mathcal{A}\) is an algebra, 
+  is a finitely additive measure if for any disjoint sets \(A, B \in \mathcal{A}\),
+  \[\mu(A \cup B) = \mu(A) + \mu(B).\]
+\end{definition}
+
+\begin{definition}[\(\sigma\)-Algebra]
+  A \(\sigma\)-algebra \(\mathcal{F}\) is an algebra that is closed under countable 
+  unions.
+
+  Similarly, it follows that \(\mathcal{F}\) is closed under countable intersections.
+\end{definition}
+
+\begin{definition}[Measure]
+  A function \(\mu : \mathcal{F} \to [0, \infty]\) where \(\mathcal{F}\) is a 
+  \(\sigma\)-algebra, is a \(\sigma\)-additive measure (or simply measure)
+  if given a sequence of pairwise disjoint sets \(A_1, A_2, \dots\) of \(\mathcal{F}\), 
+  we have 
+  \[\mu\left(\bigcup_{i = 1}^\infty A_i\right) = \sum_{i = 1}^\infty \mu(A_n).\]
+  We call a measure a probability measure if \(\mu(\Omega) = 1\).
+\end{definition}
+
+\begin{definition}[\(\sigma\)-Finite Measure]
+  A measure \(\mu\) is said to be \(\sigma\)-finite if there exists a sequence of 
+  pairwise disjoint sets \(A_1, A_2, \dots\) of \(\mathcal{F}\), such that 
+  \(\bigcup_{i = 1}^\infty A_i = \Omega\) and for all \(i\), \(\mu(A_i) < \infty\).
+\end{definition}
+
+\begin{definition}[Probability Space]
+  A probability space is the triple \((\Omega, \mathcal{F}, \mathbb{P})\) consisting 
+  of a set \(\Omega\), a \(\sigma\)-algebra \(\mathcal{F}\) on \(\Omega\) and 
+  \(\mathbb{P}\) a probability measure on \(\mathcal{F}\).
+
+  We call elements of \(\mathcal{F}\) (i.e. a \(\mathcal{F}\)-measurable set) an event.
+\end{definition}
+
+\begin{proposition}[Continuity of Measures]
+  Let \((A_n)_{n \in \mathbb{N}} \subseteq \mathcal{F}\), then 
+  \begin{itemize}
+    \item (continuity from below) if \((A_n)\) is increasing, then 
+      \[\mathbb{P}\left(\bigcup_{n = 1}^\infty A_n\right) = \lim_{n \to \infty} \mathbb{P}(A_n).\]
+    \item (continuity from above) if \((A_n)\) is decreasing, then 
+      \[\mathbb{P}\left(\bigcap_{n = 1}^\infty A_n\right) = \lim_{n \to \infty} \mathbb{P}(A_n).\]
+  \end{itemize}
+  We recall the the finiteness of the measure is vital for continuity from below 
+  while continuity from above is also valid for general measures.
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{proposition}
+  A finitely additive probability measure on the \(\sigma\)-algebra \(\mathcal{F}\) 
+  is a probability measure if and only if it is continuous at 0.
+\end{proposition}
+\begin{proof}
+  The forward direction follows from above so we will prove the reverse. 
+  Suppose \(\mu\) is finitely additive and for any decreasing \((A_n) \subseteq \mathcal{F}\)
+  with \(\bigcap A_n = \varnothing\), we have \(\lim_{n \to \infty} \mu(A_n) = 0\).
+  Then, \(\mu\) is continuous from below, and so for any sequence of disjoint 
+  sets \((B_n)\), we have \((C_n) := (\bigcup_{i = 1}^n B_i)\) is a sequence of increasing 
+  sets and thus, 
+  \[\mathbb{P}\left(\bigcup_{i = 1}^\infty B_i \right) 
+    = \mathbb{P}\left(\bigcup_{i = 1}^\infty C_i \right) 
+    = \lim_{n \to \infty} \mathbb{P}(C_n)
+    = \lim_{n \to \infty} \mathbb{P}\left(\bigcup_{i = 1}^n B_i \right)
+    = \lim_{n \to \infty} \sum_{i = 1}^n \mathbb{P}(B_i)\]
+  implying \(\mu\) is \(\sigma\)-additive and so, \(\mu\) is a measure.
+\end{proof}
+
+\begin{proposition}
+  Given a collection \(\{\mathcal{F}_i\}_{i \in I}\) \(\sigma\)-algebras of \(\Omega\),  
+  \(\bigcap_{i \in I} \mathcal{F}_i\) is also a \(\sigma\)-algebra on \(\Omega\).
+\end{proposition}
+
+\begin{definition}[\(\sigma\)-Algebra Generated By Sets]
+  Given a collection of subsets \(S\) of \(\Omega\), the \(\sigma\)-algebra generated 
+  by \(S\) is 
+  \[\sigma(S) := \bigcap \{\mathcal{F} \text{ a }\sigma\text{-algebra} \mid S \subseteq \mathcal{F}\}.\]
+\end{definition}
+
+\begin{definition}[Borel \(\sigma\)-Algebra]
+  Given a topological space \((X, \mathcal{T})\), the Borel \(\sigma\)-algebra 
+  on \(X\) is \(\mathcal{B}(X) := \sigma(\mathcal{T})\).
+\end{definition}
+
+\begin{definition}[Product \(\sigma\)-Algebra]
+  Given measurable spaces \((\Omega_1, \mathcal{F}_1), (\Omega_2, \mathcal{F}_2)\), 
+  the product \(\sigma\)-algebra on \(\Omega_1 \times \Omega_2\) is 
+  \[\mathcal{F}_1 \otimes \mathcal{F}_2 := 
+    \sigma(\mathcal{F}_1 \times \mathcal{F}_2) = 
+    \sigma(\{A_1 \times A_2 \mid A_1 \in \mathcal{F}_1, A_2 \in \mathcal{F}_2\}).\]
+\end{definition}
+
+\begin{definition}[Cylindrical \(\sigma\)-Algebra]
+  A set \(C \subseteq \mathbb{R}^\infty\) is said to be cylindrical if is of the 
+  form 
+  \[C = \{x \in \mathbb{R}^\infty \mid (x_1, \cdots, x_n) \in C_n\}\]
+  where \(C_n \in \mathcal{B}(\mathbb{R}^n)\). The set of cylindrical sets 
+  \(\mathcal{B}(\mathbb{R}^\infty)\) form 
+  a \(\sigma\)-algebra on \(\mathbb{R}^\infty\) and is called the cylindrical 
+  \(\sigma\)-algebra.
+\end{definition}
+
+Recall that a nondecreasing function \(g\) on \(\mathbb{R}\) is continuous 
+up to possibly countably many discontinuities of the first kind. Furthermore, 
+the derivative \(g'\) exists \(\lambda\)-a.e. (where \(\lambda\) is the Lebesgue 
+measure on \(\mathbb{R}\).
+
+\begin{proposition}
+  Let \((\mathbb{R}, \mathcal{B}(\mathbb{R}), \mathbb{P})\) be a probability space. 
+  Defining \(F(x) := \mathbb{P}(-\infty, x]\), we have 
+  \begin{itemize}
+    \item \(F\) is nondecreasing;
+    \item \(\lim_{x \to -\infty} F(x) = 0\) and \(\lim_{x \to \infty}F(x) = 1\);
+    \item \(F\) is continuous on the right.
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  Clear by the monotonicity, continuity of measures (from above).
+\end{proof}
+
+\begin{definition}[Distribution Function]
+  Any function \(F : \mathbb{R} \to [0, 1]\) satisfying the above three properties 
+  is said to be a distribution function on \(\mathbb{R}\).
+\end{definition}
+
+It is clear that any probability measure induces a distribution. On the other hand 
+the converse is also true.
+
+\begin{proposition}
+  Given a distribution function \(F\), there exists a unique probability measure 
+  \(\mathbb{P}\) on \((\mathbb{R}, \mathcal{B}(\mathbb{R}))\)
+  such that \(F(x) = \mathbb{P}(-\infty, x]\) for all \(x \in \mathbb{R}\).
+\end{proposition}
+\begin{proof}
+  Use Caratheodory extension theorem on the algebra \(\{(-\infty, x] \mid x \in \mathbb{R}\}\) 
+  mapping \((-\infty, x] \mapsto F(x)\). The uniqueness of the probability measure 
+  follows by the uniqueness of the Caratheodory extension.
+\end{proof}
+
+\end{document}
