@@ -83,6 +83,8 @@
 \newcommand{\diag}{\mathop{\mathrm{diag}}}
 \newcommand{\Arg}{\mathop{\mathrm{Arg}}}
 \newcommand{\hess}{\mathop{\mathrm{Hess}}}
+% the redefinition for the missing \setminus must be delayed
+\AtBeginDocument{\renewcommand{\setminus}{\mathbin{\backslash}}}
 
 \title{Probability Theory}
 \author{Kexing Ying}
@@ -214,6 +216,26 @@ recall some notions from measure theory.
   \(\sigma\)-algebra.
 \end{definition}
 
+\begin{definition}[Consistent]
+  The sequence of measures \(\mathbb{P}_n\) on \((\mathbb{R}^n, \mathcal{B}(\mathbb{R}^n))\)
+  is said to be consistent if for all \(n \in \mathbb{N}\), 
+  \(\mathbb{P}_{n + 1}(B_n \times \mathbb{R}) = \mathbb{P}_n(B_n)\) 
+  for all \(B_n \in \mathcal{B}(\mathbb{R}^n)\).
+\end{definition}
+
+\begin{theorem}[Kolmogorov]
+  Given any consistent sequence of measures \(\mathbb{P}_n\), there exists a unique 
+  probability measure \(\mathbb{P}\) on \((\mathbb{R}^\infty, \mathcal{B}(\mathbb{R}^\infty))\) 
+  such that, 
+  \[\mathbb{P}(\{x \in \mathbb{R}^\infty \mid (x_1, \cdots, x_n) \in \mathcal{B}_n\}) = 
+    \mathbb{P}_n(B_n)\]
+  for all \(n \ge 1\), \(B_n \in \mathcal{B}(\mathbb{R}^n)\).
+\end{theorem}
+\begin{proof}
+  Simply define the inner measure on the generating sets as claimed and use 
+  the Caratheodory extension (which provides both existence and uniqueness).
+\end{proof}
+
 Recall that a nondecreasing function \(g\) on \(\mathbb{R}\) is continuous 
 up to possibly countably many discontinuities of the first kind. Furthermore, 
 the derivative \(g'\) exists \(\lambda\)-a.e. (where \(\lambda\) is the Lebesgue 
@@ -249,6 +271,337 @@ the converse is also true.
   Use Caratheodory extension theorem on the algebra \(\{(-\infty, x] \mid x \in \mathbb{R}\}\) 
   mapping \((-\infty, x] \mapsto F(x)\). The uniqueness of the probability measure 
   follows by the uniqueness of the Caratheodory extension.
+\end{proof}
+
+\begin{definition}[Null-set]
+  Given a measure \(\mu\), a set \(S \subseteq \Omega\) is a null-set if there 
+  exists some measurable set \(N \subseteq \Omega\) with measure 0 such that \(S \subseteq N\).
+\end{definition}
+
+\begin{definition}[Complete Measure]
+  A measure \(\mu\) is complete if every \(\mu\)-null set is measurable.
+\end{definition}
+
+If a measure on the \(\sigma\)-algebra \(\Sigma\) is not complete, we may complete 
+the \(\sigma\)-algebra by extending \(\Sigma\) to 
+\[\overline{\Sigma} := \sigma(\Sigma \cup \{N \mid N \text{ is a null-set}\}).\]
+Clearly, the null-sets will have measure 0. 
+
+We note that the probability space \((\mathbb{R}, \mathcal{B}(\mathbb{R}), \mathbb{P})\) 
+is not complete as there exists subsets of a Borel null-set which are not Borel. 
+With this in mind, we denote the completion of \(\mathcal{B}(\mathbb{R})\) by 
+\(\mathcal{M}(\mathbb{R})\) and we say \(\mathbb{P}\) is the Lebesgue-Stieltjes 
+measure.
+
+Recall, that in elementary probability theory, we considered three types of 
+distributions, namely discrete, absolutely continuous and singular continuous.
+Let us now consider them again in a formal measure theoretic setting. 
+
+\begin{itemize}
+  \item (Discrete) A random variable \(X : \Omega \to \mathbb{R}\) is said to 
+    have discrete distribution if there exists some countable (including finite) 
+    set \(A \subseteq \mathbb{R}\), such that for all \(E \in \mathcal{B}(\mathbb{R})\), 
+    the push-forward measure satisfies 
+    \[X_*\mathbb{P}(E) = \sum_{x \in A} p(x) \delta_x(E)\]
+    where \(p(x) = X_*\mathbb{P}(\{x\})\) and \(\delta_x\) is the 
+    Dirac measure at \(x\).
+
+    We note that a distribution function \(F\) corresponds to a discrete random variable 
+    if and only if for all \(x_0 \in \mathbb{R}\), 
+    \[F(x_0) = \sum_{x \in A \cap \{\le x_0\}} p(x).\]
+    It is clear that \(\sum_A p(x) = 1\) since \(\sum_A p(x) = X_*\mathbb{P}(\mathbb{R}) = 1\).
+  \item (Absolutely continuous) A random variable \(X : \Omega \to \mathbb{R}\) is 
+    said to be absolutely continuous if \(X_* \mathbb{P} = f \lambda\) for 
+    some Lebesgue integrable function \(f\) and \(\lambda\) denotes Lebesgue measure.
+    Thus, the distribution function corresponding to \(X\) satisfies 
+    \[F(x) = \int_{(-\infty, x]} f \dd \lambda.\]
+    In particular, recalling the Radon-Nikodym theorem, we have \(X\) is absolutely 
+    continuous if and only if \(X_*\mathbb{P} \ll \lambda\) (hence the name ``absolutely continuous'').
+\end{itemize}
+
+Before introducing the last type of distribution, let us consider the following 
+definition.
+
+\begin{definition}[Concentrated]
+  A measure \(\mu\) on the measurable space \(X\) is said to be concentrated on a 
+  measurable set \(A\) if \(\mu(E) = 0\) for all \(E \subseteq X \setminus A\).
+\end{definition}
+
+\begin{itemize}
+  \item (Singular continuous) A random variable \(X : \Omega \to \mathbb{R}\) is 
+  singular continuous if its distribution function \(F\) is continuous and 
+  \(X_* \mathbb{P}\) is concentrated on a set \(A\) of Lebesgue measure 0 for 
+  which \(F'(x) = 0\) for all \(x \in A\) almost everywhere. 
+
+  We note that, since \(\lambda(A) = 0\), \(X_* \mathbb{P} \perp \lambda\) by 
+  the set \(A\) (hence the name ``singular''). Moreover, by continuity, 
+  \(X_* \mathbb{P}(\{x\}) = 0\) for all \(x \in \mathbb{R}\) in contrast to the 
+  discrete measure.
+\end{itemize}
+
+Analogous to the Lebesgue decomposition of measures, we may decompose any distribution 
+function in to a discrete, absolutely continuous and singular continuous distribution.
+
+\begin{theorem}[Hahn Decomposition for Distributions]
+  Given a distribution function \(F\), there exists \(a_1 + a_2 + a_3 = 1\) 
+  and \(F_{\text{disc}}, F_{\text{ac}}, F_{\text{sc}}\) discrete, absolutely 
+  continuous and singular continuous distribution functions respectively, such that 
+  \[F = a_1 F_{\text{disc}} + a_2 F_{\text{ac}} + a_3 F_{\text{sc}}.\]
+\end{theorem}
+\begin{proof}
+  Recalling the refinement of the Lebesgue decomposition where we may decompose 
+  a measure \(\mu\) with 
+  \[\mu = \mu_d + \mu_a + \mu_s\]
+  where \(\mu_d\) is a discrete measure, \(\mu_a \ll \lambda\) and \(\mu_s\) is 
+  singular continuous (i.e. mutually singular with respect to the Lebesgue measure 
+  and \(\mu_s\{x\}\) for all \(x\)). Thus, by simply taking the the decomposition 
+  of the measure corresponding to \(F\) (i.e. \(X_*\mathbb{P}\)), we obtain the 
+  required decomposition after normalization.
+\end{proof}
+
+\subsection{Random Variables}
+
+We will continue to let \((\Omega, \mathcal{F}, \mathbb{P})\) be a probability space. 
+
+\begin{definition}[Random Variable]
+  A function \(\xi : \Omega \to \mathbb{R}\) is said to be a random variable if 
+  it is \(\mathcal{F}\)-measurable (i.e. for any \(B \in \mathcal{B}(\mathbb{R})\), 
+  we have \(\xi^{-1}(B) \in \mathcal{F}\)).  
+\end{definition}
+
+While we have already introduced the notion of a distribution within the previous 
+section, we will present it here again for organization.
+
+\begin{definition}[Distribution of a Random Variable]
+  Given a random variable \(\xi\), the distribution of \(\xi\) is the push-forward 
+  measure of \(\mathbb{P}\) along \(\xi\). Furthermore, the distribution function 
+  corresponding to \(\xi\) is 
+  \[F(x) := X_* \mathbb{P}(- \infty, x].\]
+\end{definition}
+
+\begin{definition}
+  Given a random variable \(\xi\), we define \(\mathcal{F}_\xi \subseteq \mathcal{F}\) 
+  to be the \(\sigma\)-algebra 
+  \[\mathcal{F}_\xi := \{\xi^{-1}(B) \mid B \in \mathcal{B}(\mathbb{R})\}.\]
+  This is the least \(\sigma\)-algebra for which \(\xi\) is measurable.
+\end{definition}
+
+We will recall some standard results about measurable functions. All proofs are 
+left as exercises and can be found in the second year measure theory notes.
+
+\begin{lemma}
+  If \(\mathcal{B}(\mathbb{R}) = \sigma(\mathcal{D})\) for a collection of sets 
+  \(\mathcal{D}\), \(\xi\) is a random variable if \(\xi^{-1}(D) \in \mathcal{F}\) 
+  for all \(D \in \mathcal{D}\).
+\end{lemma}
+
+\begin{lemma}
+  Given random variables \(f, g\) and \(c \in \mathbb{R}\), 
+  \(f + g, f - g, c \cdot f, |f|, fg\), \(\max(f, g)\), and \(\min(f, g)\) are all random variables.
+  Furthermore, if \(g(x) \neq 0\) for all \(x\), then \(f / g\) is also a random variable. 
+\end{lemma}
+
+\begin{lemma}
+  If \((f_n)\) is a sequence of random variables, then 
+  \[\sup_n f_n, \inf_n f_n, \lim_n f_n\]
+  are random variables if they exist.
+\end{lemma}
+
+\begin{lemma}
+  If \(\xi\) is a random variable and \(f : \mathbb{R} \to \mathbb{R}\) is continuous, 
+  then \(f(\xi)\) is a random variable.
+\end{lemma}
+
+\begin{definition}[Simple Function]
+  A random variable \(\xi\) is simple if there exists a partition of \(\Omega\), 
+  \(D_1, \cdots, D_n\) such that 
+  \[\xi(\omega) = \sum_{i = 1}^n x_i 1_{D_i}(\omega)\]
+  for some \(x_1, \cdots, x_n\) for all \(\omega \in \Omega\).
+\end{definition}
+
+\begin{lemma}
+  For any non-negative random variable \(\xi\), there exists a sequence of 
+  nondecreasing simple random variables \((\xi_n)\) such that for all \(\omega \in \Omega\),
+  \[\xi_n(\omega) \uparrow \xi(\omega).\]
+\end{lemma}
+
+\begin{definition}[Random Vector]
+  A function \(\xi : \Omega \to \mathbb{R}^n\) is a random vector if it is 
+  measurable. Again, we define its distribution to be its push-forward measure.
+\end{definition}
+
+\begin{lemma}
+  \(\xi : \Omega \to \mathbb{R}^n\) is a random vector if and only if 
+  \(\xi_i := \text{pr}_i \circ \xi\) is a random variable for all \(i = 1, \cdots, n\)
+  (where \(\text{pr}_i : \mathbb{R}^n \to \mathbb{R}\) is the \(i\)-th projection function).
+\end{lemma}
+
+\begin{definition}[Independent Random Variables]
+  Two random variables \(\xi, \eta : \Omega \to \mathbb{R}\) are said to be 
+  independent if 
+  \[(\xi, \eta)_* \mathbb{P} = \xi_* \mathbb{P} \otimes \eta_* \mathbb{P}.\]
+  Since, to check that two measures are equal, it suffices to check equality on 
+  generating sets, \(\xi, \eta\) are independent if for all \(A, B \in \mathcal{B}(\mathbb{R})\),
+  \[\mathbb{P}(\xi \in A, \eta \in B) = \mathbb{P}(\xi \in A) \mathbb{P}(\eta \in B).\]
+\end{definition}
+
+Let us quickly recall the construction of the Lebesgue integral. 
+\begin{enumerate}
+  \item Define the Lebesgue integral for simple functions.
+  \item Define the Lebesgue integral for non-negative functions by taking the limit 
+    of the Lebesgue integral of the monotone sequence of simple functions which converge 
+    to the said function.
+  \item Define the Lebesgue integral for general real-valued functions \(f\) by 
+    taking \(\int f = \int f^+ - \int f^-\) if \(\int |f| < \infty\).
+\end{enumerate}
+
+\begin{definition}[Expectation]
+  Given a random variable \(\xi : \Omega \to \mathbb{R}\), the expectation of \(\xi\) 
+  is simply
+  \[\mathbb{E}(\xi) := \int \xi \dd \mathbb{P}\]
+  if it exists. Furthermore, we say \(\xi\) is integrable if \(\mathbb{E}(|\xi|) < \infty\). 
+\end{definition}
+
+\begin{proposition}
+  Let \(\xi, \eta\) be integrable random variables and let \(c \in \mathbb{R}\), 
+  then 
+  \begin{itemize}
+    \item \(\mathbb{E}(c) = c\);
+    \item \(\mathbb{E}(\xi + \eta) = \mathbb{E}(\xi) + \mathbb{E}(\eta)\);
+    \item \(\xi \le \eta\) a.e. implies \(\mathbb{E}(\xi) \le \mathbb{E}(\eta)\); 
+    \item \(\xi = \eta\) a.e. implies \(\mathbb{E}(\xi) = \mathbb{E}(\eta)\); 
+    \item \(\xi \ge 0\) a.e. and \(\mathbb{E}(\xi) = 0\) implies \(\xi = 0\) a.e.
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  Follows directly from the properties of the Lebesgue integral.
+\end{proof}
+
+Let us recall some convergence theorems for the Lebesgue integral.
+
+\begin{theorem}[Dominated Convergence Theorem]
+  Let \((\xi_n)\) be a sequence of random variables such that \(\xi_n \to \xi\) 
+  almost everywhere. If there exists some integrable \(\eta\) such that 
+  \(|\xi_n| \le \eta\) for all \(n\), then, \(\xi\) is integrable and 
+  \[\lim_{n \to \infty} \mathbb{E}(\xi_n) = \mathbb{E}(\xi).\]
+\end{theorem}
+
+\begin{theorem}[Monotone Convergence Theorem]
+  Let \((\xi_n)\) be a sequence of non-negative increasing random variables. Then, 
+  \[\lim_{n \to \infty} \mathbb{E}(\xi_n) = \mathbb{E} \lim_{n \to \infty} \xi_n.\]
+  We note that the right hand side limit always exists since for all \(\omega \in \Omega\),
+  \(\xi_n(\omega)\) is increasing any bounded by \(\infty\).
+\end{theorem}
+
+We remark that the monotone convergence theorem applies if there exists some 
+random variable \(\eta\) such that \(\mathbb{E}(\eta) > -\infty\) such that 
+\(\eta \le \xi_n\) for all \(n\) by considering \(\xi_n - \eta\).
+
+\begin{corollary}
+  If \((\eta_n)\) is a sequence of non-negative random variables, then 
+  \[\sum_{i = 1}^\infty \mathbb{E}(\eta_i) = \mathbb{E}\left(\sum_{i = 1}^\infty \eta_i\right).\]
+\end{corollary}
+
+\begin{corollary}[Fatou's lemma]
+  Let \(\xi_n\) be a sequence of non-negative random variables. Then, 
+  \[\mathbb{E}(\liminf_{n} \xi_n) \le \liminf_n \mathbb{E} \xi_n.\]
+\end{corollary}
+\begin{proof}
+  Apply the monotone convergence theorem to \(\lambda_n := \inf_{k > n} \xi_k\).
+\end{proof}
+
+Again, the non-negative condition can be replaced by the existence of some random 
+variable \(\eta\) such that \(\mathbb{E}(\eta) > -\infty\) and \(\eta \le \xi_n\)
+for all \(n\). On the other hand, if \(\mathbb{E}(\eta) < \infty\) and \(\xi_n \le \eta\),
+the theorem holds with limit supremum instead. 
+
+We note that in all above theorems, the statement still holds by replacing \(\Omega\) 
+with any measurable set by restricting the measure onto that set.
+
+\begin{theorem}[Change of Variables]
+  Given a random variable \(\xi\), a measurable function \(g : \mathbb{R} \to \mathbb{R}\) 
+  and a measurable set \(A\), we have 
+  \[\int_A g \dd \xi_* \mathbb{P} = \int_{\xi^{-1}(A)} g \circ \xi \dd \mathbb{P},\]
+  where both integrals either exist or not exist simultaneously.
+\end{theorem}
+\begin{proof}
+  Apply usual method where one first prove the statement for indicator functions. 
+  Then, it follows that it holds for simple functions by the linearity of the 
+  integral. Finally, for any non-negative measurable function, we take a sequence 
+  of monotonically increasing simple functions, and apply the monotone convergence 
+  theorem. For arbitrary functions, the result follows by taking \(f = f^+ - f^-\).
+\end{proof}
+
+\begin{corollary}[Law of the Unconscious Statistician]
+  Given a random variable \(\xi\) and a measurable function \(g : \mathbb{R} \to \mathbb{R}\),
+  \[\mathbb{E}(g(\xi)) = \int_{\mathbb{R}} g \dd \xi_* \mathbb{P}.\]
+\end{corollary}
+
+\begin{corollary}
+  Let \(g : \mathbb{R} \to \mathbb{R}\) be measurable, then, if 
+  \(\xi\) be a discrete random variable, 
+  \[\mathbb{E}(g(\xi)) = \sum_{x \in A}g(x) p(x).\]
+  On the other hand, if \(\xi\) is absolutely continuous, i.e. there exists 
+  some \(f\) such that \(f\lambda = \xi_* \mathbb{P}\), then 
+  \[\mathbb{E}(g(\xi)) = \int_{\mathbb{R}}g(x)f(x) \lambda(\dd x).\]
+\end{corollary}
+\begin{proof}
+  In the discrete case, we have 
+  \[\mathbb{E}(g(\xi)) = \int g \dd \left(\sum_{x \in A}p(x) \delta_x\right) = 
+    \sum_{x \in A} p(x) \int g \dd \delta_x.\]
+  By considering \(\int g \dd \delta_x = \int_{\{x\}} g \dd \delta_x + 
+  \int_{\mathbb{R} \setminus \{x\}} g \dd \delta_x = \delta_x(\{x\})g(x) + 0 = g(x)\).
+  We have 
+  \[\mathbb{E}(g(\xi)) = \sum_{x \in A}g(x) p(x),\]
+  as required.
+
+  On the other hand, if \(f\lambda = \xi_* \mathbb{P}\), we have
+  \[\mathbb{E}(g(\xi)) = \int_{\mathbb{R}} g \dd (f \lambda) = \int_{\mathbb{R}} g(x)f(x) \lambda(\dd x)\]
+  as required.
+\end{proof}
+
+\begin{theorem}[Fubini's Theorem]
+  Let \((E_1, \Sigma_1, \mu_1), (E_2, \Sigma_2, \mu_2)\) be \(\sigma\)-finite 
+  measure spaces. Then, for any \(\Sigma_1 \otimes \Sigma_2\)-measurable 
+  functions \(g : E_1 \times E_2 \to \mathbb{R}\), \(g(\cdot, y_0)\) is 
+  \(\Sigma_1\)-measurable for all \(y_0 \in E_2\), and \(g(x_0, \cdot)\) is 
+  \(\Sigma_2\)-measurable for all \(x_0 \in E_1\). Furthermore, 
+  \(\int_{E_1} g \dd \mu_1, \int_{E_2} g \dd \mu_2\) are \(\Sigma_2\) and \(\Sigma_1\)-measurable 
+  respectively. Finally, if \(\int |g| \dd \mu_1 \otimes \mu_2 < \infty\),
+  then, 
+  \[\int g \dd \mu_1 \otimes \mu_2 = \int \left(\int g(x, y) \mu_2(\dd y)\right) \mu_1(\dd x) 
+   = \int \left(\int g(x, y) \mu_1(\dd x)\right) \mu_2(\dd y).\]
+\end{theorem}
+
+\begin{lemma}[Jensen's Inequality]
+  Let \(\xi\) be an integrable random variable and let \(g : \mathbb{R} \to \mathbb{R}\)
+  be a measurable, convex function, then,
+  \[g(\mathbb{E} \xi) \le \mathbb{E}g(\xi).\]
+\end{lemma}
+\begin{proof}
+  Recall that the function \(g\) is convex if for all \(x_0 \in \mathbb{R}\), there 
+  exists some \(\lambda\) such that \(g(x) \ge g(x_0) + (x - x_0) \lambda\)
+  (graphically, \(\lambda\) is the slope (more accurately, a subderivative) of 
+  \(g\) at \(x_0\) and so, the inequality is saying that the graph lies above the 
+  tangent line). 
+
+  Setting \(x = \xi\) and \(x_0 = \mathbb{E}\xi\). Then, the above inequality becomes 
+  \[g(\xi) \ge g(\mathbb{E}\xi) - (\xi - \mathbb{E}\xi)\lambda.\]
+  Thus, applying the expectation to both sides results in the required inequality 
+  by the linearity of the integral.
+\end{proof}
+
+\begin{corollary}[Lyapunov's Inequality]
+  Let \(\xi\) be a random variable and let \(0 < s < t\) be real numbers, then 
+  \[\mathbb{E}(|\xi|^s)^{1 / s} \le \mathbb{E}(|\xi|^t)^{1 / t}.\]
+\end{corollary}
+\begin{proof}
+  Use Jensen's inequality with \(g(x) = |x|^{t / s}\). 
+
+  Alternatively, setting \(\eta = |\xi|^s\), by Hölder's inequality, we have 
+  \[\|\xi^s\|_1 =  \|\eta\|_1 \le \|\eta\|_{t / s} = \|\xi\|^s_t.\]
+  Thus, taking both sides to the power of \(1 / s\), we obtain 
+  \(\|\xi\|_s = (\|\xi^s\|_1)^{1 / s} \le (\|\xi\|^s_t)^{1 / s} = \|\xi\|_t\) as required.
 \end{proof}
 
 \end{document}
