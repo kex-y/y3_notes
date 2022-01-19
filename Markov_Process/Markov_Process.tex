@@ -534,4 +534,120 @@ For this reason, we call \(K\) the covariance operator.
   are Gaussian.
 \end{definition}
 
+\subsection{Kolmogorov's Extension Theorem}
+
+Let \((x_n)\) be a stochastic process with state space \(\mathcal{X}\). 
+Denote 
+\[\mathcal{X}^{\mathbb{N}_0} := \prod_{i = 0}^\infty \mathcal{X} = 
+  \{(a_0, a_1, \cdots) \mid a_i \in \mathcal{X}\}.\]
+We may consider \((x_n)\) as a map from \(\Omega \to \mathcal{X}^{\mathbb{N}_0}\) by 
+defining 
+\[(x_n) : \Omega \to \mathcal{X}^{\mathbb{N}_0} : \omega \mapsto (x_n(\omega))_{n = 0}^\infty.\]
+We would like \((x_n)\) to be measurable as a map from \(\Omega \to \mathcal{X}^{\mathbb{N}_0}\) 
+and so, let us first equip \(\mathcal{X}^{\mathbb{N}_0}\) with a \(\sigma\)-algebra.
+
+\begin{definition}
+  Given \(\mathcal{X}_i\) complete separable metric spaces for \(i \in \Lambda\), 
+  define the projection maps 
+  \[\pi_m : \prod_{i \in \Lambda} \mathcal{X}_i \to \mathcal{X}_m : (a_i)_{i \in \Lambda} \mapsto a_m.\]
+  Then, we define 
+  \(\bigotimes_{i \in \Lambda} \mathcal{B}(\mathcal{X}_i) = 
+    \sigma(\pi_i \mid i \in \Lambda).\)
+
+  We note that this definition can be easily extended to arbitrary measurable 
+  spaces.
+\end{definition}
+
+\begin{proposition}
+  If \((x_n)\) is a stochastic process, then as a map from \(\Omega \to \mathcal{X}^{\mathbb{N}_0}\),
+  \((x_n)\) is \(\bigotimes_{n} \mathcal{B}(\mathcal{X})\)-measurable.
+\end{proposition}
+
+With this in mind, we can push forward the probability measure along a stochastic 
+process, inducing a measure on \(\mathcal{X}^{\mathbb{N}_0}\). In particular, 
+we have the measure space \((\mathcal{X}^{\mathbb{N}_0}, 
+\bigoplus_n \mathcal{B}(\mathcal{X}), (x_n)_* \mathbb{P})\).
+
+On the other hand, if we only consider the first \(n\)-components of the 
+process \((x_i)\), by the same argument, \((x_i)_{i = 1}^n\) forms a measurable 
+map from \(\Omega \to \mathcal{X}^{n}\). Then, in this case, we call the 
+push-forward measure \(\mathcal{L}((x_i)_{i = 1}^n) = {(x_i)_{i = 1}^n}_* \mathbb{P}\) 
+the joint distribution. These are known as the finite dimensional 
+distributions of \((x_n)\).
+
+\begin{definition}
+  Let \((\mu_n)_{n = 1}^\infty\) be a sequence of probability measures on 
+  \(\mathcal{X}^n\) (i.e. \(\mu_n\) is aprobability measures on \(\mathcal{X}^n\)). 
+  Then \((\mu_n)_{n = 0}^\infty\) is said to satisfy Kolmogorov's consistency 
+  condition of 
+  \[\mu_{n + 1}(A_1 \times \cdots A_n \times \mathcal{X}) = 
+    \mu_n(A_1 \times \cdots \times A_n)\]
+  for all \(n \ge 0\), \(A_i \in \mathcal{B}(\mathcal{X})\).
+\end{definition}
+
+\begin{theorem}[Kolmogorov's Extension Theorem]
+  Let \((\mu_n)_{n = 1}^\infty\) be a sequence of probability measures which are 
+  consistent. Then, there exists a unique probability measure \(\mu\) on 
+  \(\mathcal{X}^{\mathbb{N}_0}\) such that for any \(n\), 
+  \(A \in \bigotimes_{i = 1}^n \mathcal{B}(\mathcal{X})\), 
+  \[\mu(A \times \mathcal{X}^{\mathbb{N}_0}) = \mu_n(A).\]
+  In other words, if we denote \(\text{pr}_n\) the map 
+  \[\text{pr}_n : \mathcal{X}^{\mathbb{N}_0} \to \mathcal{X}^n : 
+    (a_i)_{i = 1}^\infty \mapsto (a_i)_{i = 1}^n,\]
+  \(\mu\) is the unique measure which satisfies 
+  \[(\text{pr}_n)_* \mu = \mu_n.\]
+\end{theorem}
+
+\begin{corollary}
+  The finite dimensional distributions of a stochastic process \((x_n)\) determines 
+  uniquely the probability distribution of the process on \(\mathcal{X}^{\mathbb{N}_0}\).
+\end{corollary}
+
+\begin{corollary}
+  Given any consistent family of probability measures \((\mu_n)\), there exists a 
+  stochastic process with \((\mu_n)\) as its finite dimensional distributions.
+\end{corollary}
+\begin{proof}
+  Kolmogorov's extension theorem implies that there exists a compatible measure 
+  \(\mu\) on \(\mathcal{X}^{\mathbb{N}_0}\). Thus, it suffices to find 
+  a \(\mathcal{X}^{\mathbb{N}_0}\)-valued random variable with distribution 
+  \(\mu\). We will describe a trivial method for this purpose below.
+\end{proof}
+
+Let \(\mu\) be a probability measure on \(\mathcal{X}\). Then, setting 
+\(\Omega = \mathcal{X}, \mathcal{F} = \mathcal{B}(\mathcal{X})\) and \(\mathbb{P} = \mu\),
+it is clear that the push-forward of \(\mathbb{P}\) along the identity map 
+provides \(\mu\). Thus, the identity is a random variable with the distribution 
+\(\mu\).
+
+Thus, in the case of the corollary above, we set \(\Omega = \mathcal{X}^{\mathbb{N}_0}\),
+\(\mathcal{F} = \bigotimes\mathcal{B}(\mathcal{X})\), and \(\mathbb{P} = \mu\). 
+We call this probability space the canonical probability space and call the 
+resulting process \((\pi_n)\) the canonical process.
+
+\begin{definition}[Shift Operator]
+  For \(n \in \mathbb{N}\), we define the \(n\)-th shift operator by 
+  \[\theta_n : \mathcal{X}^{\mathbb{N}_0} \to \mathcal{X}^{\mathbb{N}_0} : 
+    (a_0, a_1, \cdots) \mapsto (a_n, a_{n + 1}, \cdots).\]
+  For connivance, we will denote the above property by \(\theta_n(a.) = (a_{n +}.)\). 
+\end{definition}
+
+\begin{definition}[Stationary Process]
+  A stochastic process \((x.)\) is stationary if for any \(n\), 
+  \[\mathcal{L}(\theta_n x.) = \mathcal{L}(x.).\]
+\end{definition}
+
+Straight away, by Kolmogorov's extension, we see that an equivalent definition 
+for the stationary process is that the finite dimensional distributions 
+of \((\theta_n x.)\) are the same as the finite dimensional distributions of \((x.)\).
+
+In general, a process \((x_n)\) is stationary if 
+\[\mathcal{L}(x_n, \cdots, x_{n + m}) = \mathcal{L}(x_0, \cdots, x_m)\]
+for all \(n, m \ge 0\). In the case that \((x_n)\) is a Gaussian process, 
+as \(\mathcal{L}(x_{i_1} \cdots x_{i_n})\) is determined by 
+\((\mathbb{E}x_{i_1}, \cdots, \mathbb{E}x_{i_n})\) and \(\text{Cov}(x_{i_k}, x_{i_l})\),
+it is stationary if 
+\[\mathbb{E}x_n = \mathbb{E}x_0\]
+for all \(n\) and the covariances are shift invariant.
+
 \end{document}
