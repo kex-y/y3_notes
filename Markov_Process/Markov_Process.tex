@@ -298,4 +298,240 @@ almost surely for every \(n\) where \(i_0, \cdots, i_n \in \mathcal{X} = \mathbb
   \mathbb{E}(\mathbf{1}_A(x_{n + 1}) \mid \sigma(x_n))\) as required.
 \end{proof}
 
+\subsection{Markov Property}
+
+So far we have looked at the simple Markov property in which we have taken the 
+filtration to be the natural filtration of the process. However, in the case 
+that we are looking at multiple processes, we would like to consider a larger 
+filtration such that each process is adapted. This motivates the general definition 
+for the Markov property.
+
+\begin{definition}
+  Let \((\mathcal{F}_t)_{t \in I}\) be a filtration indexed by the set \(I\) on 
+  the measurable space \((\Omega, \mathcal{F})\). A stochastic process \((x_t)_{t \in I}\) 
+  on \(\mathcal{X}\) is a Markov process with respect to \(\mathcal{F}_t\) if it 
+  is adapted to \(\mathcal{F}_t\) and 
+  \[\mathbb{P}(x_t \in A \mid \mathcal{F}_s) = \mathbb{P}(x_t \in A \mid x_s)\]
+  almost surely for all \(s, t \in I\), \(t > s\) and \(A \in \mathcal{B}(\mathcal{X})\).
+
+  Again, unfolding the notation, the above statement says 
+  \[\mathbb{E}(\mathbf{1}_A(x_t) \mid \mathcal{F}_s) = \mathbb{E}(\mathbf{1}_A(x_t) \mid \sigma(x_s))\]
+  almost surely.
+\end{definition}
+
+\begin{proposition}
+  If \((x_t)\) is a Markov process with respect to the filtration \((\mathcal{F}_t)\), 
+  then it is also a Markov process with respect to its natural filtration \((\mathcal{F}_t^x)\).
+\end{proposition}
+\begin{proof}
+  Recalling that \(\mathcal{F}_t^x \subseteq \mathcal{F}_t\) for all \(t\),
+  by the tower property of the conditional expectation, we have 
+  \[\begin{split}
+    \mathbb{P}(x_{t + s} \in A \mid \mathcal{F}_s^x) & = 
+    \mathbb{E}(\mathbf{1}_A(x_{t + s}) \mid \mathcal{F}_s^x) \\
+    & = \mathbb{E}(\mathbb{E}(\mathbf{1}_A(x_{t + s}) \mid \mathcal{F}_s) \mid \mathcal{F}_s^x)\\
+    & = \mathbb{E}(\mathbb{E}(\mathbf{1}_A(x_{t + s}) \mid \sigma(x_s)) \mid \mathcal{F}_s^x),
+  \end{split}\]  
+  where the equalities denotes equal a.e. Thus, as \(\mathbb{E}(\mathbf{1}_A(x_{t + s}) \mid \sigma(x_s))\) 
+  is \(\sigma(x_s)\)-measurable, and thus \(\mathcal{F}_s^x\)-measurable (since 
+  \(\sigma(x_s) \subseteq \sigma(x_r \mid r \le s) = \mathcal{F}_s^x)\)), we have 
+  \[\mathbb{E}(\mathbb{E}(\mathbf{1}_A(x_{t + s}) \mid \sigma(x_s)) \mid \mathcal{F}_s^x) = 
+  \mathbb{E}(\mathbf{1}_A(x_{t + s}) \mid \sigma(x_s))\]
+  implying that the Markov property is satisfied.
+\end{proof}
+
+\begin{theorem}
+  If \((x_t)\) is a Markov process with respect to the filtration \((\mathcal{F}_t)\), 
+  then 
+  \[\mathbb{E}(f(x_t) \mid \mathcal{F}_s) = \mathbb{E}(f(x_t) \mid \sigma(x_s))\]
+  almost surely for any \(f : \mathcal{X} \to \mathbb{R}\) bounded and measurable. 
+  In particular, this property is equivalent to the Markov property by choosing 
+  \(f = \mathbf{1}_A\) for all \(A \in \mathcal{B}(\mathcal{X})\).
+\end{theorem}
+\begin{proof}
+  By linearity, the property holds for simple functions. Furthermore, by the 
+  conditional monotone convergence theorem, the property holds for any non-negative 
+  bounded measurable functions. Finally, for arbitrary bounded measurable functions 
+  \(f\), the result follows by taking \(f = f^+ - f^-\) and applying the non-negative 
+  case.
+\end{proof}
+
+\begin{proposition}
+  Let \(C \in \mathcal{F}_s\) and suppose \(\mathcal{B}(\mathcal{X}) = 
+  \sigma(\mathcal{D})\) where 
+  \(\mathcal{D}\) is a \(\pi\)-system (i.e. non-empty and closed under finite intersections), 
+  then, if 
+  \[\mathbb{E}(\mathbf{1}_A(x_{t + s}) \mathbf{1}_C) = 
+    \mathbb{E}(\mathbb{P}(x_{t + s} \in A \mid x_s) \mathbf{1}_C)\] 
+  holds for any \(A \in \mathcal{D}\), it holds for any \(A \in \mathcal{B}(\mathcal{X})\).
+\end{proposition}
+\begin{proof}
+  Let \(\mathcal{A}\) be the set of Borel sets which the equation holds. Then, 
+  by definition \(\mathcal{D} \subseteq \mathcal{A}\) and so, it suffices to show 
+  \(\mathcal{A}\) is a \(\lambda\)-system (i.e. \(\mathcal{A}\) contains \(\mathcal{X}\), 
+  closed under complements and closed under countable unions of increasing sets). 
+  Indeed, Dynkin's \(\pi - \lambda\) theorem states that if \(\mathcal{D}\) is 
+  a \(\pi\)-system, \(\mathcal{A}\) is a \(\lambda\)-system and 
+  \(\mathcal{D} \subseteq \mathcal{A}\), then \(\sigma(\mathcal{D}) \subseteq \mathcal{A}\).
+
+  Clearly \(\mathcal{X} \in \mathcal{A}\) since 
+  \[\mathbb{E}(\mathbf{1}_{\mathcal{X}}(x_{t + s}) \mathbf{1}_C) = 
+    \mathbb{E}(\mathbf{1}_C) = 
+    \mathbb{E}(\mathbb{P}(x_{t + s} \in \mathcal{X} \mid x_s) \mathbf{1}_C).\]
+  Suppose now \(A \in \mathcal{A}\). Then, the property holds as 
+  \(\mathbf{1}_{A^c} = 1 - \mathbf{1}_A\) and so, the result follows by linearity.
+  Finally, if \((A_n) \subseteq \mathcal{A}\) is increasing. Then by the 
+  monotone convergence theorem for conditional expectations, it follows that 
+  \(\bigcup A_n \in \mathcal{A}\) and hence, \(\mathcal{A}\) is a \(\lambda\)-system 
+  as required.
+\end{proof}
+
+\begin{proposition}
+  Suppose \(\mathbb{E}(f(x_{n + 1}) \mid x_0, \cdots, x_n) = \mathbb{E}(f(x_{n + 1}) \mid x_n)\)
+  for any bounded measurable \(f\). Then, if we have a sequence 
+  \[0 \le t_1 < t_2 < \cdots < t_{m - 1} < t_m = n - 1,\]
+  where \(n > 1, t_i \in \mathbb{N}\), for any bounded measurable functions \(f, h\), 
+  we have 
+  \[\mathbb{E}(f(x_{n + 1})h(x_n) \mid x_{t_1}, \cdots, x_{t_m}) = 
+    \mathbb{E}(f(x_{n + 1})h(x_n) \mid x_{n - 1}).\]
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+As we will often use the bounded measurable functions, let us denote the set 
+of bounded measurable functions \(f : \mathcal{X} \to \mathbb{R}\) by 
+\(\mathcal{B}_b(\mathcal{X})\).
+
+\begin{lemma}
+  Let \(X, Y \in L_1\) and \(\mathcal{G} \subseteq \mathcal{F}\). Then, if \(X\) 
+  is \(\mathcal{G}\)-measurable and \(XY \in L_1\), we have
+  \[\mathbb{E}(XY \mid \mathcal{G}) = X\mathbb{E}(Y \mid \mathcal{G}).\]
+  We call this property ``taking out what is known''.
+\end{lemma}
+\begin{proof}
+  See problem sheet 1.
+\end{proof}
+
+\begin{theorem}
+  Given a stochastic process \((x_n)\) and indices \(l < m < n\), TFAE.
+  \begin{itemize}
+    \item For any \(f \in \mathcal{B}_b(\mathcal{X})\), 
+      \[\mathbb{E}(f(x_n) \mid x_l, x_m) = \mathbb{E}(f(x_n) \mid x_m).\]
+    \item For any \(g \in \mathcal{B}_b(\mathcal{X})\), 
+      \[\mathbb{E}(g(x_l) \mid x_m, x_n) = \mathbb{E}(g(x_l) \mid x_m).\]
+    \item For any \(f, g \in \mathcal{B}_b(\mathcal{X})\), 
+      \[\mathbb{E}(f(x_n)g(x_l) \mid x_m) = \mathbb{E}(f(x_n) \mid x_m) \mathbb{E}(g(x_l) \mid x_m).\]
+      That is to say, given now, the past is independent of the future.
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  Suppose the first statement holds, we will prove the third property. 
+  Let \(f, g \in \mathcal{B}_b(\mathcal{X})\), then by the tower law and the above lemma, 
+  we have 
+  \[\begin{split}
+    \mathbb{E}(f(x_n)g(x_l) \mid x_m) & = \mathbb{E}(\mathbb{E}(f(x_n)g(x_l) \mid x_m, x_l) \mid x_m)\\
+    & = \mathbb{E}(g(x_l) \mathbb{E}(f(x_n) \mid x_m, x_l) \mid x_m)\\
+    & = \mathbb{E}(g(x_l) \mathbb{E}(f(x_n) \mid x_m) \mid x_m)\\
+    & = \mathbb{E}(f(x_n) \mid x_m)\mathbb{E}(g(x_l) \mid x_m)
+  \end{split}\]
+  which is exactly the third property.
+
+  On the other hand, if the third property holds, for any \(g, h \in \mathcal{B}_b(\mathcal{X})\), 
+  we have 
+  \[\begin{split}
+    \mathbb{E}(f(x_n)h(x_m)g(x_l)) & = \mathbb{E}(\mathbb{E}(f(x_n)g(x_l) \mid x_m)) h(x_m))\\
+    & = \mathbb{E}(\mathbb{E}(f(x_n) \mid x_m)) \mathbb{E}(g(x_l) \mid x_m) h(x_m))\\
+    & = \mathbb{E}(\mathbb{E}(\mathbb{E}(f(x_n) \mid x_m)g(x_l)h(x_m) \mid x_m))\\
+    & = \mathbb{E}(\mathbb{E}(f(x_n) \mid x_m)g(x_l)h(x_m))
+  \end{split}\]
+  where the last equality is due to the law of total expectation. Now, by considering 
+  this equality implies that, for all \(A = A_1 \cap A_2\) where 
+  \(A_1 \in \sigma(x_l), A_2 \in \sigma(x_m)\), by choosing \(g = \mathbf{1}_{x_l^{-1}(A_1)}\) 
+  and \(h = \mathbf{1}_{x_m^{-1}(A_2)}\), we have
+  \[\int_A f(x_n) \dd \mathbb{P} = \int_A \mathbb{E}(f(x_n) \mid x_m) \dd \mathbb{P},\]
+  and so, \(\mathbb{E}(f(x_n) \mid x_m) = \mathbb{E}(f(x_n) \mid x_l, x_m)\) almost 
+  surely. Hence, the first and third property are equivalent. Similarly, one 
+  can should that the second property is equivalent to the third property and 
+  hence the equivalence.
+\end{proof}
+
+\begin{proposition}
+  A stochastic process \((x_n)\) is a Markov process if and only if one of the following 
+  conditions holds:
+  \begin{itemize}
+    \item for any \(f_i \in \mathcal{B}_b(\mathcal{X})\),
+    \[\mathbb{E}\left(\prod_{i = 1}^n f_i(x_i)\right) = \mathbb{E}\left(\prod_{i = 1}^{n - 1} f_i(x_i) 
+      \mathbb{E}(f_n(x_n) \mid x_{n - 1})\right).\]
+    \item for any \(A_i \in \mathcal{B}(\mathcal{X})\), 
+    \[\mathbb{P}(x_0 \in A_0, \cdots, x_n \in A_n) = 
+      \int_{\bigcap_{i = 0}^{n - 1}\{x_i \in A_i\}} \mathbb{P}(x_n \in A_n \mid x_{n - 1}) \dd \mathbb{P}.\]
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  We note that by choosing \(f_i = \mathbf{1}_{A_i}\), the first condition implies 
+  the second. On the other hand, the reverse implication follows by the standard routine 
+  of proving it for simple function and using monotone convergence. Thus, it 
+  suffices to establish an equivalence between the first condition 
+  and the Markov property. This is left as an exercise.
+\end{proof}
+
+\subsection{Gaussian Measure and Gaussian Process}
+
+As one of the most important distributions in probability theory, let us in this 
+short section introduce the Gaussian measure which we will again encounter later 
+on with this course.
+
+\begin{definition}[Gaussian Measure]
+  A measure \(\mu\) on \(\mathbb{R}^n\) is Gaussian if there exists a non-negative 
+  definite symmetric matrix \(K\) and \(m \in \mathbb{R}^n\) such that the Fourier 
+  transform of \(\mu\) is
+  \[\int_{\mathbb{R}^n} e^{i\langle\lambda, x\rangle} \mu(\dd x) = 
+    e^{i \langle \lambda, m \rangle - \frac{1}{2} \langle K \lambda, \lambda \rangle}\]
+  for any \(\lambda \in \mathbb{R}^n\). We call the matrix \(K\) the covariance 
+  of \(\mu\) and \(m\) its mean.
+
+  We remark that if \(X\) is a random variable with distribution \(\mu\), then 
+  the Fourier transform of \(\mu\) is simply the characteristic function of 
+  \(X\), \(\mathbb{E}(e^{i\langle\lambda, X\rangle})\).
+\end{definition}
+
+\begin{proposition}
+  If \(\mu\) is a Gaussian measure with covariance \(K\) and mean \(m\) 
+  is absolutely continuous with respect to the Lebesgue measure if and only if 
+  \(K\) is non-degenerate. In this case, for all \(A \in \mathcal{B}(\mathbb{R}^n)\),
+  \[\mu(A) = \int_A \frac{1}{\sqrt{(2\pi)^n \det K}} 
+    e^{-\frac{1}{2}\langle K^{-1}(x - m), x - m \rangle} \lambda(\dd x).\]
+\end{proposition}
+
+We observe that if \(X\) is a random variable with Gaussian distribution \(\mu\), 
+then as one might expect, \(\mathbb{E}(X) = m\) and 
+\[\text{Cov}(X_i, X_j) := \mathbb{E}(X_i - m_i)(X_j - m_j) = K_{ij}.\]
+For this reason, we call \(K\) the covariance operator.
+
+\begin{theorem}
+  If \(X\) is a Gaussian random variable (i.e. its distribution is Gaussian) 
+  on \(\mathbb{R}^d\) with covariance \(K\). Then, if \(A : \mathbb{R}^d \to \mathbb{R}^m\) 
+  is a linear transformation, then \(AX\) is Gaussian with covariance \(AKA^T\) 
+  and mean \(Am\).
+\end{theorem}
+\begin{proof}
+  Follows since,
+  \[\mathbb{E}e^{i \langle \lambda, AX \rangle} = \mathbb{E}e^{i \langle A^T\lambda, X\rangle}
+    = e^{i \langle A^T \lambda, m \rangle - \frac{1}{2}\langle KA^T \lambda, A^T \lambda\rangle}
+    = e^{i \langle \lambda, Am \rangle - \frac{1}{2}\langle AKA^T \lambda, \lambda\rangle}.\]
+\end{proof}
+
+\begin{proposition}
+  Linear combinations of independent Gaussian random variables are also Gaussian.
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{definition}[Gaussian Process]
+  A stochastic process is Gaussian if its finite dimensional distributions 
+  are Gaussian.
+\end{definition}
+
 \end{document}
