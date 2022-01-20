@@ -650,4 +650,161 @@ it is stationary if
 \[\mathbb{E}x_n = \mathbb{E}x_0\]
 for all \(n\) and the covariances are shift invariant.
 
+\subsection{Transition Probability}
+
+Given a Markov process \((x_n)\) on the state space \(\mathcal{X}\), for 
+\(A \in \mathcal{B}(\mathcal{X})\), the function \(\mathbb{P}(x_{n + 1} \in A \mid x_n)\) 
+is a Borel function of \(x_n\). This function might depend on \(A\), 
+\(n\) and \(n - 1\). Suppose the case that this function does not depend on time 
+(i.e. time homogeneous), that is there exists some function \(\phi(x, A)\) such that 
+\[\mathbb{P}(x_{n + 1} \in A \mid x_n) = \phi(x_n, A)\]
+almost surely. Fixing \(x\), under some regularities, its not difficult to show that 
+\(\phi(x, \cdot)\) form a probability measure. We shall assume this.
+
+\begin{definition}
+  The set \(P := \{P(x, A) \mid x \in \mathcal{X}, A \in \mathcal{B}(\mathcal{X})\}\)
+  is said to be a family of transition probabilities if
+  \begin{itemize}
+    \item for all \(x \in \mathcal{X}\), \(P(x, \cdot)\) is a probability 
+      measure;
+    \item for any \(A \in \mathcal{B}(\mathcal{X})\), \(P(\cdot, A)\) is Borel 
+      measurable.
+  \end{itemize} 
+\end{definition}
+
+As an example, consider the Markov chain \((x_n)\) on \(\mathcal{X}\) where 
+\(x_{n + 1} := F(x_n, \xi_{n + 1})\) for \(x_0, \xi_1, \xi_2, \cdots\)
+independent with \((\xi_i : \Omega \to \mathcal{Y}) \sim \mu\) for all \(i\). 
+Then, for all \(\omega \in \Omega\), we have (recall that we denote the event 
+\(x_n^{-1}(\{\omega\})\) by \(x_n = \omega\)
+\[\begin{split}
+  \mathbb{P}(x_{n + 1} \in A \mid x_n = \omega) & = \mathbb{P}(F(x_n(\omega), \xi_{n + 1}) \in A)\\
+  & = \int_{\mathcal{Y}} \mathbf{1}_A(F(x_n(\omega), \xi_{n + 1})) \dd \mathbb{P}\\
+  & = \int_{\mathcal{Y}} \mathbf{1}_A(F(x_n(\omega), y)) \mu(\dd y).
+\end{split}\]
+Hence, defining 
+\[P(x, A) := \int_{\mathcal{Y}} \mathbf{1}_A(F(x, y)) \mu(\dd y),\]
+\(\{P(x, A)\}\) are the transition probabilities and 
+\[\mathbb{P}(x_{n + 1} \in A \mid x_n = \omega) = P(x_n(\omega), A).\]
+
+We remark that, in the case that the state space is countable, by \(\sigma\)-additivity,
+it is sufficient to work with transitional probabilities of singletons. In particular, 
+the transitional probability is simply determined by 
+\[P(i, j) = P(i, \{j\}), i, j \in \mathcal{X}.\]
+
+\begin{proposition}
+  Let \((x_n)\) be a Markov chain such that there exists a transition 
+  probability \(P\) for which 
+  \[\mathbb{P}(x_{n + 1} \in A \mid x_n) = P(x_n, A)\]
+  for all \(A \in \mathcal{B}(\mathcal{X})\). Then, for all \(f \in \mathcal{B}_b(\mathcal{X})\),
+  \[\mathbb{E}(f(x_{n + 1}) \mid x_n) = \int_{\mathcal{X}} f(y) P(x_n, \dd y).\]
+\end{proposition}
+\begin{proof}
+  Choosing \(f = \mathbf{1}_A\), we see that the property is true for simple functions 
+  and so, the results can be extended to all functions by the monotone convergence theorem.
+\end{proof}
+
+\begin{proposition}
+  Let \((x_n)\) as defined above, for all \(f \in \mathcal{B}_b(\mathcal{X})\), 
+  we have 
+  \[\mathbb{P}(x_{n + 2} \in A \mid x_n) = \int_{\mathcal{X}}P(y, A)P(x_n, \dd y).\]
+  Thus, we define the two-step transition probability by 
+  \[P^2(x, A) = \int_{\mathcal{X}} P(y, A) P(x, \dd y),\]
+  such that \(\mathbb{P}(x_{n + 2} \in A \mid x_n) = P^2(x_n, A)\) almost surely.
+\end{proposition}
+\begin{proof}
+  By the tower law, we have 
+  \[\begin{split}
+    \mathbb{P}(x_{n + 2} \in A \mid x_n) & = \mathbb{E}(\mathbb{E}(\mathbf{1}_A(x_{n + 2}) \mid x_{n + 1}, x_n) \mid x_n)\\
+    & = \mathbb{E}(\mathbb{E}(\mathbf{1}_A(x_{n + 2}) \mid x_{n + 1}) \mid x_n)\\
+    & = \mathbb{E}(P(x_{n + 1}, A) \mid x_n)\\
+    & = \int_{\mathcal{X}}P(y, A)P(x_n, \dd y),
+  \end{split}\]
+  where the last equality follows by the above proposition.
+\end{proof}
+
+The above process can be extended to \(k\)-steps by induction. In particular, 
+for all \(k \in \mathbb{N}\), we have 
+\[\mathbb{P}(x_{n + (k + 1)} \in A) \mid x_n) = 
+  \int_{\mathcal{X}} P^i(y, A) P^j(x_n, \dd y)\]
+for any \(i, j \in \mathbb{N}, i + j = k\). This is known as the Chapman-Kolmogorov 
+equation.
+
+\begin{definition}
+  A family 
+  \[\{P^n(x, \cdot) \mid x\in \mathcal{X}, n \in \mathbb{N}_0\}\]
+  is said to be a transition function if 
+  \begin{itemize}
+    \item \(P^n(x, \cdot)\) is a transition probability for any \(x, n\);
+    \item \(P^0(x, \cdot) = \delta_x\) for any \(x\);
+    \item (Chapman-Kolmogorov) for all \(n, m \ge 0, x \in \mathcal{X}, A \in \mathcal{B}(\mathcal{B})\),
+    \[P^{n + m}(x, A) = \int_{\mathcal{X}} P^n(y, A) P^m(x, \dd y).\]
+  \end{itemize}
+\end{definition}
+
+\begin{proposition}
+  The Chapman-Kolmogorov equation is satisfied if and only if for all 
+  \(f \in \mathcal{B}_b(\mathcal{X}), n, m \ge 0, x \in \mathcal{X}, A \in \mathcal{B}(\mathcal{B})\), 
+  \[\int_{\mathcal{X}}f(y)P^{n + m}(x, \dd y) = 
+  \int_{\mathcal{X}}\left(\int_{\mathcal{X}} f(z) P^n(y, \dd z)\right) P^m(x, \dd y).\]
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+As alluded to above, the \(k\)-step transitional probabilities can be constructed from a 
+1-step transitional probabilities. In particular, given the 1-step transitional 
+probability \(P\),
+\begin{enumerate}
+  \item set \(P^0(x, \cdot) = \delta_x\);
+  \item set \(P^1(x, \cdot) = P(x, \cdot)\);
+  \item for all \(n > 1\), \(x \in \mathcal{X}\), for all \(A \in \mathcal{B}(\mathcal{X})\), set 
+    \[P^{n + 1}(x, A) := \int_{\mathcal{X}} P(y, A) P^n(x, \dd y).\]
+\end{enumerate}
+It remains to show that this construction satisfies the Chapman-Kolmogorov equation.
+Indeed, by induction, suppose that the Chapman-Kolmogorov equation is satisfied for 
+all \(k \le n + m\), then 
+\[\begin{split}
+  P^{n + m + 1}(x, A) & = \int_{\mathcal{X}}P(z, A)P^{n + m}(x, \dd z) \\
+  & = \int_{\mathcal{X}}\left(\int_{\mathcal{X}} P(z, A) P^j(y, \dd y)\right) P^{n + m - j}(x, \dd y)\\
+  & = \int_{\mathcal{X}}P^{j + 1}(y, A)P^{n + m - j}(x, \dd y)
+\end{split}\]
+for all \(j = 0, 1, \cdots\), where the second and third equality follows by the 
+inductive hypothesis and Fubini's theorem.
+
+\begin{definition}
+  A transition probability \(P\) is said to  be the transitional probability of 
+  the Markov chain \((x_n)\) if 
+  \[\mathbb{P}(x_{n + 1} \in A \mid x_n) = P(x_n, A)\]
+  almost surely for all \(A \in \mathcal{B}(\mathcal{X})\) and any \(n \ge 0\).
+
+  If a Markov chain has a transitional probability \(P\), then we say the Markov 
+  chain is time homogeneous.
+\end{definition}
+
+From this point forward, unless otherwise stated, we will assume our Markov chains 
+to be time homogeneous.
+
+Consider again the case where the state space is countable \(\mathcal{X} = \mathbb{N}\). 
+As mentioned previously, the transition probability on \(\mathcal{X}\) is then 
+determined by \(p_{ij} = P(i, \{j\})\). As \(P(i, \cdot)\) is a probability 
+measure by definition, 
+\[1 = P(i, \mathcal{X}) = \sum_{j \in \mathcal{X}} p_{ij}.\]
+In the case that \(\mathcal{X}\) is finite, these \(p_{ij}\) can be represented 
+as a matrix, motivating the definition of a stochastic matrix.
+
+\begin{definition}[Stochastic Matrix]
+  A matrix \(p = (p_{ij})\) with \(p_{ij} \ge 0\) is said to be a stochastic 
+  matrix if \(\sum_{j \in \mathcal{X}} p_{ij} = 1\).
+\end{definition}
+
+In the discrete case, our construction of the transition probability from 
+the 1-step transition probability is straightforward. In particular, we obtain
+\[P^{n + 1}(i, A) = \int_{\mathcal{X}} P(y, A) P^n(i, \dd y) = \sum_{k \in \mathcal{X}} P(k, A) P^n(i, k).\]
+Thus, if we write \(P(i, \{j\}) = p_{ij}\), then
+\[P^2(i, \{j\}) = \sum_{k \in \mathcal{X}} p_{ik}p_{kj} = ((p_{kl})_{k,l \in \mathcal{X}}^2)_{ij},\]
+where the last term denotes matrix multiplication. Thus, by induction, we obtain that 
+\[P^n(i, \{j\}) = \sum_{k_1 \in \mathcal{X}} \cdots \sum_{k_{n - 1} \in \mathcal{X}}
+  p_{ik_1} p_{k_1k_2} \cdots p_{k_{n-1}j} = ((p_{kl})_{k,l \in \mathcal{X}}^n)_{ij}.\]
+
 \end{document}
