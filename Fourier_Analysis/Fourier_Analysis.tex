@@ -413,7 +413,7 @@ with a point which has measure 0.
     %Below the red parabola is defined
     \addplot [
         domain=-pi:pi, 
-        samples=100, 
+        samples=500, 
         color=red,
     ]
     {sin(deg((3 / 2) * x)) / sin(deg(x / 2))};
@@ -421,14 +421,14 @@ with a point which has measure 0.
     %Here the blue parabola is defined
     \addplot [
         domain=-pi:pi, 
-        samples=100, 
+        samples=500, 
         color=yellow,
     ]
     {sin(deg((9 / 2) * x)) / sin(deg(x / 2))};    
     \addlegendentry{\(n = 4\)}
     \addplot [
         domain=-pi:pi, 
-        samples=100, 
+        samples=500, 
         color=green,
     ]
     {sin(deg((17 / 2) * x)) / sin(deg(x / 2))};    
