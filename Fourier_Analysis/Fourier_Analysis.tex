@@ -69,6 +69,10 @@
 \usepackage{mathtools}
 \usepackage{esint}
 \usepackage[ruled,vlined]{algorithm2e}
+
+\usepackage{pgfplots}
+\pgfplotsset{width=8cm,compat=1.9}
+
 \theoremstyle{definition}
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition*}{Definition}
@@ -97,11 +101,13 @@
 }
 \newpage
 
-\section{Orthonormal Systems}
+\section{Orthonormal System}
 
 We will in this section recall some results about orthonormal systems in Euclidean 
 spaces\footnote{In this course, we shall call real inner product spaces Euclidean 
 spaces.} and generalize them to complex spaces. 
+
+\subsection{Euclidean Space}
 
 \begin{definition}
   A system of nonzero vectors \(\{X_\alpha\} \subseteq R\) where \(R\) is an 
@@ -298,5 +304,243 @@ Let us recall the following result from functional analysis.
   clearly linear (as the inner products are linear with respect to the left 
   component), we have the isomorphism between \(H\) and \(\ell_2\).
 \end{proof}
+
+\subsection{Complex Inner Product Space}
+
+We will in the course take the complex inner product to be anti-linear in the 
+second component. As promised earlier, most definitions can be generalized 
+from the real case to the complex directly.
+
+\begin{definition}[Fourier Coefficients]
+  Let \(R\) be a complex inner product space. Then, for an orthonormal system 
+  \((\phi_n)\) and \(f \in R\), we define its Fourier coefficients to be 
+  \(c_k := \langle f, \phi_k\rangle\) for all \(k = 1, \cdots, n\). Similarly,
+  we define the Fourier series of \(f\) to be the formal series 
+  \(\sum_{k = 1}^\infty c_k \phi_k\).
+\end{definition}
+
+Going through the same argument as the real case, we obtain the complex version 
+of Bessel's inequality.
+
+\begin{proposition}[Bessel's Inequality]
+  Given an orthonormal system \((\phi_n)\) and \(f \in R\), we have 
+  \[\sum_{k = 1}^\infty |c_k|^2 \le \|f\|^2.\]
+\end{proposition}
+
+Going through all proved theorems for real spaces, we find they also hold for 
+complex spaces (with trivial modifications).
+
+\newpage
+\section{Trigonometric Series}
+
+We will consider the space \(L_2[-\pi, \pi]\) (the space of square-integrable functions 
+from \([-\pi, \pi]\) quotiented by the a.e.-equal equivalence relation equipped with 
+the inner product \(\langle f, g\rangle := \int_{[-\pi, \pi]} fg \dd\lambda\)), and the 
+trigonometric system 
+\[\{\mathbf{1}, \cos(n x), \sin(n x) \mid n = 1, 2, \cdots\}.\]
+It is not difficult to see that this system is orthogonal, but in fact, it is 
+also complete. Indeed, completeness follows by the Weierstrass approximation theorem 
+for trigonometric polynomials (we will discuss this later / recall the Stone-Weierstrass 
+theorem and observe that the trigonometric system seperates points).
+
+Nonetheless, this system is not orthonormal, and thus, we normalise the system 
+such that the system becomes 
+\[\left\{\frac{1}{\sqrt{2\pi}}\mathbf{1}, \frac{1}{\sqrt{\pi}}\cos(n x), \frac{1}{\sqrt{\pi}}\sin(n x) \mid n = 1, 2, \cdots\right\}.\]
+Hence, the Fourier series of an element \(f \in L_2[-\pi, \pi]\) becomes the 
+famous formula
+\[\frac{a_0}{2} + \sum_{k = 1}^\infty (a_k \cos kx + b_k \sin k x),\]
+where 
+\[a_k := \frac{1}{\pi}\int_{[-\pi, \pi]} f(x) \cos(k x) \lambda(\dd x),
+  b_k := \frac{1}{\pi}\int_{[-\pi, \pi]} f(x) \sin(k x) \lambda(\dd x).\]
+By recalling the above theory, the \(n\)-th partial sum of this series provides the best 
+(in \(L_2\) metric) approximation of \(f\) among all trigonometric polynomials 
+of degree \(n\). Hence, as the trigonometric system is complete, Parseval's 
+identity holds, and so, 
+\[\|f - S_n\|_2 \to 0, \text{ as } n \to \infty.\]
+By observing that \(e^{ix} = \cos x + i\sin x\), we may rewrite the Fourier series 
+can be written in the complex form. In particular, \(L_2[-\pi, \pi]\) has the 
+orthogonal system \(\{e^{inx} \mid n \in \mathbb{Z}\}\) and the Fourier series 
+of \(f \in L_2[-\pi, \pi]\) is given by 
+\[\sum_{n = -\infty}^\infty c_n e^{inx}, \text{ where }
+  c_n = \frac{1}{2\pi} \int_{[-\pi, \pi]} f(x)e^{-inx}\lambda(\dd x).\]
+\begin{itemize}
+  \item Since a function on \([-\pi, \pi]\) can be extended to \(\mathbb{R}\) by periodicity, 
+    we can, instead of functions on \([-\pi, \pi]\) consider periodic functions with 
+    period \(2\pi\) on \(\mathbb{R}\).
+  \item Since \(\cos nx, \sin nx\) are bounded functions, the integrals defining 
+    the trigonometric Fourier coefficients exists for any function in \(L_1[-\pi, \pi]\), 
+    i.e. if \(f \in L_1[-\pi, \pi]\), then 
+    \[\int f \cos(nx), \int f\sin(nx) < \int |f| < \infty.\]
+  \item \(L_2[-\pi, \pi] \subseteq L_1[-\pi, \pi]\) by Hölder's inequality and thus,
+    with the above remark in mind, the definition of Fourier series is also well-defined 
+    for any integrable functions (though convergence is much opaque in this case).
+\end{itemize}
+While the Fourier series of \(f\) converges to \(f\) in \(L_2\) though it 
+is not clear that the Fourier series converges point-wise to \(f\) 
+(it might be interesting to recall that convergence in \(L_p\) implies convergence 
+in measure and the existence of a subsequence which converges almost everywhere).  
+
+Consider the partial sum of the Fourier series of \(f \in L_2[-\pi, \pi]\),
+\[\begin{split}
+  S_n(x) & = \frac{a_0}{2} + \sum_{k = 1}^n (a_k \cos kx + b_k \sin kx)\\
+  & = \frac{1}{\pi}{\int_{[-\pi, \pi]} f(t)}\left(\frac{1}{2} + \sum_{k = 1}^n 
+    (\cos kx \cos kt + \sin kx \sin kt)\right)\lambda(\dd t)\\
+  & = \frac{1}{\pi}{\int_{[-\pi, \pi]} f(t)}\left(\frac{1}{2} + \sum_{k = 1}^n 
+  \cos k(t - x)\right)\lambda(\dd t).
+\end{split}\]
+By noting the identity
+\[\frac{1}{2} + \sum_{k = 1}^n \cos ku = \frac{\sin \frac{2n + 1}{2}u}{2\sin \frac{u}{2}},\]
+we obtain 
+\[S_n(x) = \frac{1}{\pi}{\int_{[-\pi, \pi]} f(t)} 
+  \frac{\sin \frac{2n + 1}{2}(t - x)}{2\sin \frac{t - x}{2}} \lambda(\dd t).\]
+Finally, by noting the periodicity of \(f\), by change of variable \(z = t - x\),
+we obtain 
+\[S_n(x) = \int_{[-\pi, \pi]} f(x + z) D_n(z) \lambda(\dd z), \text{ where }
+  D_n(z) := \frac{1}{2\pi} \frac{\sin \frac{2n + 1}{2}z}{\sin \frac{z}{2}}\]
+and \(D_n\) is known as the Dirichlet kernel. We remark that the Dirichlet kernel 
+\(D_n(z)\) tends to \(\frac{2n + 1}{2\pi}\) as \(z \to 0\) and rapidly osculates 
+for large \(n\) though this does not impact our calculation as we are dealing 
+with a point which has measure 0. 
+
+\begin{center}
+  \begin{tikzpicture}
+    \begin{axis}[
+        legend style={fill=black,draw=white},
+        axis lines = left,
+        xlabel = \(z\),
+        ylabel = {\(D_n(z)\)},
+    ]
+    %Below the red parabola is defined
+    \addplot [
+        domain=-pi:pi, 
+        samples=100, 
+        color=red,
+    ]
+    {sin(deg((3 / 2) * x)) / sin(deg(x / 2))};
+    \addlegendentry{\(n = 1\)}
+    %Here the blue parabola is defined
+    \addplot [
+        domain=-pi:pi, 
+        samples=100, 
+        color=yellow,
+    ]
+    {sin(deg((9 / 2) * x)) / sin(deg(x / 2))};    
+    \addlegendentry{\(n = 4\)}
+    \addplot [
+        domain=-pi:pi, 
+        samples=100, 
+        color=green,
+    ]
+    {sin(deg((17 / 2) * x)) / sin(deg(x / 2))};    
+    \addlegendentry{\(n = 8\)}
+  \end{axis}
+  \end{tikzpicture}
+\end{center}
+
+By observing the graph of the Dirichlet kernel, in some heuristic sense, we note that 
+\(D_n(z) \to \delta(z)\) for some function where \(\delta\) is 0 at all points but 
+\(z = 0\) while \(\int_{[-\epsilon, \epsilon]} \delta \dd \lambda = 1\) for all 
+\(\epsilon > 0\). Such an function cannot exist, however it motivates the second 
+part of the course - the theory of distributions.
+
+\subsection{Conditions for Point-wise Convergence}
+
+We observe that \(\|D_n\|_1 = 1\) and so we may write 
+\[S_n(x) - f(x) = \int_{[-\pi, \pi]} (f(x + z) - f(x)) D_n(z) \lambda(\dd z).\]
+Clearly, \(S_n(x) \to f(x)\) as \(n \to \infty\) if and only if the right hand side
+of the above tends to 0. 
+
+\begin{lemma}[Riemann-Lebesgue]
+  If \(\phi \in L_1[a, b]\) for some \(a < b\), then both
+  \[\int_{[a, b]} \phi(x)\sin (\gamma x) \lambda(\dd x), 
+    \int_{[a, b]} \phi(x)\cos (\gamma x) \lambda(\dd x)\]
+  tends to 0 as \(\gamma \to \infty\).
+\end{lemma}
+\begin{proof}
+  We will prove the statement for the \(\sin\) case. We observe that if 
+  \(\phi\) is continuously differentiable, by integration by parts, we have 
+  \[\int_{[a, b]} \phi(x)\sin (\gamma x) \lambda(\dd x) = 
+    \left[-\phi(x)\frac{\cos\gamma x}{\gamma}\right]^b_a + 
+    \int_{[a, b]} \phi'(x) \frac{\cos \gamma x}{\gamma} \lambda(\dd x),\]
+  which tends to 0 as \(\gamma \to \infty\) (we note that \(\phi'\) is continuous 
+  on a compact set, and hence bounded above). Now, in the general case, we observe 
+  that continuously differentiable functions are everywhere dense in \(L_1[a, b]\), 
+  and so, for every \(\epsilon > 0\), there exists some continuously differentiable 
+  \(\phi_\epsilon(x)\), such that 
+  \[\int_{[a, b]} |\phi - \phi_\epsilon| \dd \lambda = \|\phi - \phi_\epsilon\|_1 < \frac{\epsilon}{2}.\]
+  Hence, 
+  \[\begin{split}
+    \left|\int_{[a, b]} \phi(x) \sin(\gamma x) \lambda(\dd x)\right| 
+    & \le \left|\int_{[a, b]} (\phi(x) - \phi_\epsilon(x)) \sin(\gamma x) \lambda(\dd x)\right| 
+      + \left| \int_{[a, b]} \phi_\epsilon(x) \sin(\gamma x) \lambda(\dd x)\right|\\
+    & \le \|\phi - \phi_\epsilon\|_1 + \left| \int_{[a, b]} \phi_\epsilon(x) \sin(\gamma x) \lambda(\dd x)\right|\\
+    & < \frac{\epsilon}{2} + 
+    \left| \int_{[a, b]} \phi_\epsilon(x) \sin(\gamma x) \lambda(\dd x)\right|.
+  \end{split}\]
+  Since \(\phi_\epsilon\) is continuously differentiable, the last term tends to 
+  0 as \(\gamma \to \infty\) implying it is less than \(\epsilon / 2\) for sufficiently 
+  large \(\gamma\). Thus, we have established the required limit. 
+\end{proof}
+
+\begin{corollary}
+  If \(f \in L_1[-\pi, \pi]\), then, its Fourier coefficients \(a_k, b_k \to 0\) 
+  as \(k \to \infty\).
+\end{corollary}
+
+With the above in mind, we will now provide a sufficient condition for convergence of 
+Fourier series at a point \(x\).
+
+\begin{theorem}
+  If \(f \in L_1[-\pi, \pi]\) and for any \(x \in [-\pi, \pi]\), \(\delta > 0\), 
+  \[\int_{[-\delta, \delta]} \left|\frac{f(x + t) - f(t)}{t}\right| \lambda(\dd t) < \infty\]
+  exists (this is called Dini's condition), then \(S_n(x) \to f(x)\) as \(n \to \infty\).
+\end{theorem}
+\begin{proof}
+  We observe
+  \[\begin{split}
+    S_n(x) - f(x) & = \int_{[-\pi, \pi]} (f(x + z) - f(x)) D_n(z) \lambda(\dd z)\\
+    & = \frac{1}{2\pi}\int_{[-\pi, \pi]} \frac{f(x + z) - f(x)}{z} 
+      \frac{z}{\sin \frac{z}{2}} \sin \left(\frac{2 n + 1}{2}z\right)\lambda(\dd z).\\
+  \end{split}\]
+  Then, if Dini's condition is satisfied, as \(\sin \frac{z}{2}\) is bounded on 
+  \([-\pi, \pi]\), we have 
+  \[\frac{f(x + z) - f(x)}{z} \frac{z}{\sin \frac{z}{2}} \in L_1[-\pi, \pi]\]
+  and hence, by the Riemann-Lebesgue lemma, \(S_n(x) - f(x) \to 0\) as 
+  \(n \to \infty\).
+\end{proof}
+
+We observe an trivial sufficient condition for which Dini's condition holds. 
+In particular, the Dini condition holds if \(f\) is continuous at \(x\) and its derivative at 
+\(x\) exists (or the limit of the derivative exists from the right and the left).
+
+Suppose on the other hand that \(f\) has a discontinuity of the first kind at 
+\(x\) (i.e. both the limit from the left and the right exists at \(x\)). Then, 
+the argument in the proof remains to hold if we replace the Dini condition by 
+\[\int_{[-\delta, 0] } \left|\frac{f(x + t) - f(t)}{t}\right| \lambda(\dd t) < \infty
+\text{ and } 
+\int_{[0, \delta] } \left|\frac{f(x + t) - f(t)}{t}\right| \lambda(\dd t) < \infty.\]
+Then, denoting \(f(x + 0), f(x - 0)\) the limit of \(f\) at \(x\) from the right and the 
+left respectively, we have
+\[\begin{split}
+  &S_n(x) - \frac{f(x + 0) + f(x - 0)}{2} =\\ 
+  &\int_{[-\pi, 0]} (f(x + z) - f(x - 0)) D_n(z) \lambda(\dd z)
+ + \int_{[0, \pi]} (f(x + z) - f(x + 0)) D_n(z) \lambda(\dd z)
+ \end{split}\]
+Hence, the \(S_n(x)\) converges to the average of the limit \(f\) at \(x\) from 
+the left and from the right.
+
+Let us summarise the above in the following statement.
+
+\begin{proposition}
+  If \(f\) is a bounded function of period \(2\pi\) with only 
+  discontinuities of the first kind, and also possesses at each point left and right 
+  derivatives, Then, its Fourier series converges everywhere and its sum equals 
+  \(f(x)\) at points of continuity and equals 
+  \[\frac{f(x + 0) + f(x - 0)}{2}\]
+  at points of discontinuity.
+\end{proposition}
+
+We remark there exists continuous functions whose Fourier series diverge at some 
+points. More curiously, there exists \(L_1\) functions which diverge at all points.
 
 \end{document}
