@@ -160,4 +160,178 @@ in geometry.
   (up to homeomorphism).
 \end{theorem}
 
+\subsection{The Torus}
+
+An important example in algebraic topology is the torus. We will now provide a 
+proof that the torus is not simply connected.
+
+\begin{definition}[Torus]
+  The 2-torus \(T^2\) is the product topological space \(S^1 \times S^1\).
+\end{definition}
+
+We will now provide an alternative method of constructing the torus.
+Define the homeomorphisms
+\[T_1 : \mathbb{R}^2 \to \mathbb{R}^2 : (x_1, x_2) \mapsto (x_1 + 1, x_2); 
+  T_2 : \mathbb{R}^2 \to \mathbb{R}^2 : (x_1, x_2) \mapsto (x_1, x_2 + 1).\]
+It is clear that \(T_1\) and \(T_2\) commutes and the map 
+\[\psi : \mathbb{Z}^2 \to \text{Homeo}(\mathbb{R}^2) : (n, m) \mapsto T_1^n \circ T_2^m\]
+is a group homomorphism. As this map is injective, we have in some sense embedded 
+\(\mathbb{Z}\) inside of \(\text{Homeo}(\mathbb{R}^2)\). Now, defining the equivalence 
+relation on \(\mathbb{R}^2\) by 
+\[(x_1, x_2) \sim (y_1, y_2) \iff \exists (n, m) \in \mathbb{Z}^2, \psi(n, m)(x_1, x_2) = (y_1, y_2),\]
+or equivalently, there exists \((n, m) \in \mathbb{Z}^2\) such that \((x_1 + n, x_2 + m) = (y_1, y_2)\), 
+we define the quotient topology \(X := \mathbb{R}^2 / \sim\). 
+
+\begin{lemma}
+  Let \(X\) and \(Y\) be topological spaces and \(\sim\) be an equivalence relation 
+  on \(X\). Then, if \(p : X \to X / \sim : x \mapsto [x]_{\sim}\) is the quotient map, 
+  any map \(f : X / \sim \to Y\) is continuous if and only if \(f \circ p\) is 
+  continuous.
+\end{lemma}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+We see that the above lemma together with the universal property for quotients provides 
+the universal property for topological spaces. Namely, if \(f : X \to Y\) is a continuous 
+map and for all \(x \sim y \in X\), \(f(x) = f(y)\), then the unique map \(\tilde f\) 
+obtained such that \(\tilde f \circ p = f\) is continuous.
+
+\begin{lemma}
+  Let \(X\) be a compact space and \(Y\) Hausdorff. Then, any continuous bijective 
+  map \(f : X \to Y\) is a homeomorphism.
+\end{lemma}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{proposition}
+  \(X\) is homeomorphic to the torus \(T^2\).
+\end{proposition}
+\begin{proof}
+  Define the map \(\pi : \mathbb{R}^2 \to S^1 \times S^1\) such that 
+  \(\pi(x, y) = (e^{2 \pi i x}, e^{2 \pi i y})\) for all \((x, y) \in \mathbb{R}^2\).
+  We observe that \(\pi(x, y) = \pi(u, v)\) if and only if \((x, y) \sim (u, v)\),
+  and so, by the universal property for topological spaces, we obtain the unique 
+  continuous map defined by 
+  \[\tilde \pi : X \to S^1 \times S^1 : [(x, y)] \mapsto \pi(x, y).\]
+  This map is clearly bijective and continuous by the universal property, and 
+  thus, by the above lemma, it suffices to show \(X\) is compact. But, this 
+  is clear since the \(p([0, 1]^2) = \mathbb{R}^2 / \sim\) and the continuous 
+  image of a compact set is compact.
+\end{proof}
+
+While the map \(\pi\) as described above is not injective, it is locally so (exercise).
+Thus, given a path on the torus, we may think of lifting it to \(\mathbb{R}^2\) by 
+lifting the paths piecewise via. the local homeomorphisms induced by \(\pi\). 
+
+\begin{lemma}[Pasting Lemma]
+  Let \(X, Y\) be both open subsets of a topological space and let \(B\) be another topological space, 
+  then \(f : X \cup Y \to B\) is continuous if and only if \(f \mid_A\) and \(f\mid_B\) are continuous.
+\end{lemma}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{corollary}
+  If \(f_1 : X \to B, f_2 Y \to B\) are continuous and agree on \(X \cap Y\), then 
+  the map 
+  \[f : X \cup Y \to B : x \mapsto \begin{cases}
+    f_1(x) & \text{if } x \in X \\
+    f_2(x) & \text{otherwise }
+  \end{cases}\]
+  is continuous.
+\end{corollary}
+
+\begin{proposition}[Lifting of Paths]
+  For any \(\gamma : [0, 1] \to T^2\) a path, \(\tilde x \in \mathbb{R}^2\) such that 
+  \(\pi(\tilde x) =: x = \gamma(0)\), there exists a unique path 
+  \(\tilde \gamma : [0, 1] \to \mathbb{R}^2\) such that \(\gamma = \pi \circ \tilde \gamma\) 
+  and \(\tilde \gamma(0) = \tilde x\).
+\end{proposition}
+\begin{proof}
+  As \(\pi\) restricts to local homeomorphisms, we obtain an open cover of the path. 
+  Invoking compactness, we obtain a finite subcover for which we may lift the path 
+  locally such that the paths are compatible on intersections. With this, we 
+  obtain the required path by the pasting lemma.
+
+  For uniqueness, we observe that if \(\pi \circ \tilde \gamma_1 = \pi \circ \tilde \gamma_2\),
+  then, for all \(t, \pi(\tilde \gamma_1(t)) = \pi(\tilde \gamma_2(t))\) and hence, 
+  \(\tilde \gamma_1(t) \sim \tilde \gamma_2(t)\). Thus, the map 
+  \[\delta := \tilde \gamma_1 - \tilde \gamma_2\]
+  must take value in \(\mathbb{Z}^2\), and so, is a constant as continuous maps are 
+  constant on connected components. Now, as \(\tilde \gamma_1(0) = \tilde x = \tilde \gamma_2(0)\) 
+  and so, \(\delta = 0\) and \(\tilde \gamma_1 = \tilde \gamma_2\).
+\end{proof}
+
+\begin{proposition}[Free Homotopy Classes of Loops on \(T^2\)]
+  Given a loop \(\gamma : [0, 1] \to T^2\) and its lift onto \(\mathbb{R}^2\) 
+  the number 
+  \[\rho(\gamma) := \tilde \gamma(1) - \tilde \gamma(0) \in \mathbb{Z}^2\]
+  is well-defined and for all \(\gamma_1\) freely homotopic to \(\gamma_2\),
+  \(\rho(\gamma_1) = \rho(\gamma_2)\).
+\end{proposition}
+\begin{proof}
+  Since for a loop, \(\gamma(0) = \gamma(1)\), 
+  \(\tilde \gamma(0) - \tilde \gamma(1) \in \mathbb{Z}^2\) is well-defined 
+  since two lifts differ only by a constant.
+
+  Suppose now \(\gamma_1, \gamma_2\) are two freely homotopic loops on the torus, 
+  i.e. there exists some continuous map \(H : [0, 1] \times [0, 1] \to T^2\) 
+  such that 
+  \[H(0, \cdot) = \gamma_0; H(1, \cdot) = \gamma_1\]
+  and for all \(u \in [0, 1]\), the map \(t \mapsto H(u, t)\) is closed. Let 
+  \(\tilde x_0 \in \pi^{-1}(\gamma_0(0))\) and consider the map 
+  \[\delta : [0, 1] \to T^2 : t \mapsto H(t, 0),\]
+  (i.e. the path of base points of the free homotopy) let \(\tilde \delta\) to 
+  be the lift of \(\delta\) starting at \(\tilde x_0\). Now, define 
+  \(\tilde \gamma_t\) to be the lift of \(u \mapsto H(t, u) =: \gamma_t\) based at \(\tilde \delta(t)\), 
+  I claim, \(\tilde H : [0, 1]^2 \to \mathbb{R}^2 : (t, u) \mapsto \tilde \gamma_t(u)\) 
+  is a free homotopy from \(\tilde \gamma_0\) to \(\tilde \gamma_1\). Thus, 
+  as \(t \mapsto \rho(\gamma_t) = \tilde \gamma_t(1) - \tilde \gamma_t(0)\) is continuous 
+  and take value in \(\mathbb{Z}^2\), it must be a constant, concluding the proof.
+\end{proof}
+
+Suppose now we denote \(P := \{\text{loops on }T^2\}\) and \(\sim\) the freely homotopic 
+equivalence relation on \(P\), we have the following proposition.
+
+\begin{proposition}
+  The map \(\rho : L := P / \sim \to \mathbb{Z}^2 : [\gamma] \mapsto \rho(\gamma)\)
+  is a bijection.
+\end{proposition}
+\begin{proof}
+  Surjectivity follows by considering the loop \(\gamma : t \mapsto \pi(tu, tm)\) for all 
+  \((n, m) \in \mathbb{Z}^2\). Then, \(\rho(\gamma) = (n, m)\) and hence the map 
+  is surjective.
+
+  Suppose on the other hand \(\gamma_0, \gamma_1\) are loops on the torus such that 
+  \(\rho(\gamma_0) = \rho(\gamma_1)\), injectivity follows by showing the loops are 
+  freely homotopic. Let \(\tilde \gamma_0\) and \(\tilde \gamma_1\) be lifts of 
+  \(\gamma_0\) and \(\gamma_1\) respectively. Then, define the homotopy from 
+  \(\gamma_0\) to \(\gamma_1\) by
+  \[\tilde H(t, u) := (1 - t)\tilde \gamma_0(u) + t \tilde \gamma_1,\]
+  and define \(H = \pi \circ \tilde H\). For all \(t\), \(H(t, \cdot)\) is a 
+  closed path since 
+  \[\tilde H(t, 1) - \tilde H(t, 0) = (1 - t)(\tilde \gamma_0(1) - \tilde \gamma_0(0))
+    + t(\tilde \gamma_1(1) - \tilde \gamma_1(0)) = (1 - t)\rho(\gamma_0) + t(\rho(\gamma_1)).\]
+  By assumption, we have \(\rho(\gamma_0) = \rho(\gamma_1)\) and so, 
+  \[\tilde H(t, 1) - \tilde H(t, 0) = \rho(\gamma_0) \in \mathbb{Z}^2\]
+  implying that the loop is closed. Hence, \(H\) is a free homotopy between 
+  \(\gamma_1\) and \(\gamma_2\) as required.
+\end{proof}
+
+\begin{theorem}
+  The torus \(T^2\) is not simply connected.
+\end{theorem}
+\begin{proof}
+  If the loop \(\gamma\) on the torus is freely homotopic to the constant path, 
+  \(\rho(\gamma) = \rho(c) = 0\). But we have provided examples where this is not the case, 
+  and hence, not all loops are freely homotopic to a constant path.
+\end{proof}
+
+This procedure for proving a space is not simply connected will is common. In particular, 
+we will provide a proposition for situations where we have a space \(X\), a simply 
+connected space \(\tilde X\) and a group \(\Gamma\) 
+characterising the lack of simply connectedness of \(X\).
+
 \end{document}
