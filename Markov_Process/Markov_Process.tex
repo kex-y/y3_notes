@@ -785,6 +785,101 @@ inductive hypothesis and Fubini's theorem.
 From this point forward, unless otherwise stated, we will assume our Markov chains 
 to be time homogeneous.
 
+\begin{theorem}
+  Let \((x_n)\) be a Markov process with transition probability \(P\). Then 
+  \begin{itemize}
+    \item \(\mathbb{P}(x_{n + m} \in A \mid x_m) = P^n(x_m, A)\) almost surely for any 
+      \(n, m \ge 0, A \in \mathcal{B}(\mathcal{X})\);
+    \item if \(\mathcal{L}(x_0) = \mu\), then 
+      \[\mathbb{P}(x_n \in A) = \int_{\mathcal{X}} P^n(x, A) \mu(\dd x).\] 
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  The first property follows by induction. Indeed, if
+  for some \(k \in \mathbb{N}\), \(\mathbb{P}(x_{k + m} \in A \mid x_m) = P^k(x_m, A)\), 
+  for any \(m\), then 
+  \[\begin{split}
+    \mathbb{P}(x_{k + 1 + m} \in A \mid x_m) 
+    & = \mathbb{E}(\mathbb{P}(x_{k + 1 + m} \in A \mid \mathcal{F}_{k + m}) \mid x_m) \\
+    & = \mathbb{E}(P(x_{m + k}, A) \mid x_m) \\
+    & = \int_{\mathcal{X}}P(z, A) P^k(x_m \dd z) = P^{k + 1}(x_m, A)
+  \end{split}\]
+  where the second to last equality follows as \(\mathbb{E}(f(x_{k + m}) \mid x_m) = 
+  \int f(z) P^k(x_m, \dd z)\).
+
+  The second property follows as 
+  \[\begin{split}
+    \mathbb{P}(x_n \in A) = \mathbb{E}(\mathbb{P}(x_n \in A \mid x_0)) 
+    = \mathbb{E}(P^n(x_0, A)) = \int_{\mathcal{X}}P^n(y, A) \mu(\dd y)
+  \end{split}\]
+  as required.
+\end{proof}
+
+\begin{theorem}[Einstein's Relation]
+  If \((x_n)\) is a Markov chain with transition probability \(P\) and initial 
+  distribution \(\mu\), then, its finite dimensional distributions are 
+  \[\mathbb{P}(x_0 \in A_0, \cdots, x_n \in A_n) = 
+    \int_{A_0} \cdots \int_{A_{n - 1}} P(y_{n - 1}, A_n) P(y_{n - 2}, \dd y_{n - 1}) \cdots P(y_0, \dd y_1) \mu(\dd y_0).\]
+\end{theorem}
+
+We remark that the above definition provides a sequence of consistent measures.
+Namely, if we define 
+\[\mu(A_0 \times \cdots \times A_n) := 
+  \int_{A_0} \cdots \int_{A_{n - 1}} P(y_{n - 1}, A_n) P(y_{n - 2}, \dd y_{n - 1}) \cdots P(y_0, \dd y_1) \mu(\dd y_0),\]
+the sequence of measures \((\mu_n)\) is consistent.
+\begin{proof}
+  For \(A_0, A_1 \in \mathcal{B}(\mathcal{X})\), we observe 
+  \[\begin{split}
+    \mathbb{P}(x_0 \in A_0, x_1 \in A_1) 
+    & = \mathbb{E}(\mathbb{E}(\mathbf{1}_{A_0}(x_0) \mathbf{1}_{A_1}(x_1) \mid x_0)) \\
+    & = \mathbb{E}(\mathbf{1}_{A_0}(x_0)\mathbb{E}(\mathbf{1}_{A_1}(x_1) \mid x_0)) \\
+    & = \mathbb{E}(\mathbf{1}_{A_0}(x_0) P(x_0, A_1))\\
+    & = \int_{A_0} P(y_0, A_1) \mu(\dd y_0).
+  \end{split}\]
+  Hence, by induction, the relation follows.
+\end{proof}
+
+\begin{theorem}
+  If \((x_n)\) is a process satisfying Einstein's relation, then it is a 
+  Markov chain with transition probability \(P\).
+\end{theorem}
+\begin{proof}
+  Einstein's relation can be extended to all bounded measurable functions through 
+  the usual process with the monotone convergence theorem and thus, we have 
+  for any \(f_i \in \mathcal{B}_b(\mathcal{X})\), 
+  \[\begin{split}
+    \mathbb{E}\left(\prod_{i = 0}^n f_i(x_i)\right) 
+    & = \int \cdots \int \prod_{i = 0}^n f_i(y_i) P(y_{n - 1}, \dd y_{n}) \cdots P(y_0, \dd y_1) \mu(\dd y_0).
+  \end{split}\]
+  By Fubini's theorem, the above becomes
+  \[\begin{split}
+    \cdots & = \int f_n(y_n)P(y_{n - 1}, \dd y_n)
+      \int \cdots \int \prod_{i = 0}^{n - 1} f_i(y_i) \prod_{i = 1}^{n - 1} P(y_i, \dd y_{i + 1}) \mu(\dd y_0)\\
+    & = \mathbb{E}(f_n(x_n) \mid x_{n - 1} = y_{n - 1}) 
+      \int \cdots \int \prod_{i = 0}^{n - 1}f_i(y_i) \prod_{i = 1}^{n - 1} P(y_i \dd y_{i + 1}) \mu(\dd y_0)\\
+    & = \mathbb{E}\left(\mathbb{E}(f_n(x_n) \mid x_{n - 1}) \prod_{i = 0}^{n - 1}f_i(x_i)\right)
+  \end{split}\]
+  which is equivalent to the Markov property.
+\end{proof}
+
+\begin{theorem}[Existence of Markov Chain]
+  Given a family of transition probabilities on \(P\) on \(\mathcal{X}\) and any 
+  probability measure \(\mu_0\) on \(\mathcal{X}\), there exists a unique (in distribution) 
+  Markov process \(x\) with transition probability \(P\) and initial distribution 
+  \(\mu_0\). 
+\end{theorem}
+\begin{proof}
+  Define \(\mu_n\) on \(\mathcal{X}^{n + 1}\) such that 
+  \[\mu_n(A_0 \times A_n) := \int_{A_0} \cdots \int_{A_{n - 1}} 
+  P(y_{n - 1}, A_n) P(y_{n - 2}, \dd y_{n - 1}) \cdots P(y_1, \dd y_0) \mu_0(\dd y_0).\]
+  It is routine to check that this sequence of measures is well-defined and consistent, and 
+  thus, by the Kolmogorov extension theorem, there exists a unique \(P_\mu\) on \(\mathcal{X}^\infty\) 
+  such that \(P_\mu\) projects to \(\mu_n\) on \(\mathcal{X}^{n + 1}\). Thus, 
+  taking \((\pi_n)\) to be the canonical process on the canonical space 
+  \((\mathcal{X}^\infty, \otimes \mathcal{B}(\mathcal{X}), P_\mu)\), we have 
+  found a Markov process which satisfies the condition.
+\end{proof}
+
 Consider again the case where the state space is countable \(\mathcal{X} = \mathbb{N}\). 
 As mentioned previously, the transition probability on \(\mathcal{X}\) is then 
 determined by \(p_{ij} = P(i, \{j\})\). As \(P(i, \cdot)\) is a probability 
@@ -806,5 +901,54 @@ Thus, if we write \(P(i, \{j\}) = p_{ij}\), then
 where the last term denotes matrix multiplication. Thus, by induction, we obtain that 
 \[P^n(i, \{j\}) = \sum_{k_1 \in \mathcal{X}} \cdots \sum_{k_{n - 1} \in \mathcal{X}}
   p_{ik_1} p_{k_1k_2} \cdots p_{k_{n-1}j} = ((p_{kl})_{k,l \in \mathcal{X}}^n)_{ij}.\]
+
+\subsection{Transition Operator}
+
+In the case of the transition probability \(P\) of a Markov chain \((x_n)\), we have the 
+relation 
+\[\mathbb{P}(x_{n + 1} \in A) = \int_{\mathcal{X}} P(y, A) \mu_n(\dd y)\]
+where \(\mu_n = \mathcal{L}(x_n)\). Thus, in some sense, the transitional probability 
+the an operator on measures changing the distribution to the next time step. 
+This motivates the following definition.
+
+\begin{definition}[Transition Operator]
+  The transition operator \(T^*\) given the transition probability \(P\) on the 
+  set of probability measures on \(\mathcal{X}\) is defined to be 
+  \[T^* \mu(A) := \int_{\mathcal{X}} P(y, A) \mu(\dd y)\]
+  for all \(A \in \mathcal{B}(\mathcal{X})\).
+\end{definition}
+
+With this definition, we obtain that, given a Markov process \((x_n)\) with the 
+transition probability \(P\), we have \((T^*)^n(\mathcal{L}(x_m)) = \mathcal{L}(x_{n + m})\).  
+
+\begin{definition}[Dual Transition Operator]
+  The dual transition operator \(T_*\) given the transition probability \(P\) is 
+  defined to be an operator acting on \(\mathcal{B}_b(\mathcal{X})\) such that 
+  \[T_* f(x) = \int_{\mathcal{X}} f(y) P(x, \dd y)\]
+  for all \(f \in \mathcal{B}_b(\mathcal{X})\).
+\end{definition}
+
+Equivalently, the dual transition operator acting on \(f\) is 
+\[T_* f(x) = \mathbb{E}(f(x_1) \mid x_0 = x)\]
+where \((x_n)\) is the Markov process associated with \(P\).
+
+\begin{proposition}
+  The above operators are dual in the sense that, for all \(f \in \mathcal{B}_b(\mathcal{X})\),
+  \[\int_{\mathcal{X}} T_* f \dd \mu = \int_{\mathcal{X}} f \dd(T^* \mu).\]
+\end{proposition}
+\begin{proof}
+  Hint: first prove for \(f = \mathbf{1}_A\).
+\end{proof}
+
+For simplicity, we will denote both \(T^*\) and \(T_*\) with \(T\) when there is no 
+confusion.
+
+We note that \(T^*\) extends to signed measures allowing us to show linearity 
+(recall that the set of signed measures form a vector space over \(\mathbb{R}\)).
+
+In the case that \(\mathcal{X} = \{1, \cdots, N\}\) is finite, a probability 
+measure \(\nu\) is uniquely determined by its values on singletons 
+\(\{\nu(\{1\}), \cdots, \nu(\{N\})\}\). Then, if \(P = (p_{ij})\) is a stochastic matrix,
+we have \(T\nu = (\nu(\{i\}))_{i = 1}^N P\).
 
 \end{document}
