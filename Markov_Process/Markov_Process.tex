@@ -84,6 +84,9 @@
 \newcommand{\Arg}{\mathop{\mathrm{Arg}}}
 \newcommand{\hess}{\mathop{\mathrm{Hess}}}
 
+% the redefinition for the missing \setminus must be delayed
+\AtBeginDocument{\renewcommand{\setminus}{\mathbin{\backslash}}}
+
 \title{Markov Process}
 \author{Kexing Ying}
 
@@ -950,5 +953,209 @@ In the case that \(\mathcal{X} = \{1, \cdots, N\}\) is finite, a probability
 measure \(\nu\) is uniquely determined by its values on singletons 
 \(\{\nu(\{1\}), \cdots, \nu(\{N\})\}\). Then, if \(P = (p_{ij})\) is a stochastic matrix,
 we have \(T\nu = (\nu(\{i\}))_{i = 1}^N P\).
+
+\newpage 
+
+\section{Strong Markov Process}
+
+We will in the section continue to let \((\Omega, \mathcal{F}, \mathbb{P})\) be a 
+probability space and let \((\mathcal{F}_n)\) be a filtration on this probability 
+space.
+
+\subsection{Stopping Times}
+
+\begin{definition}[Stopping Time]
+  A function \(T : \Omega \to \overline{\mathbb{N}} := \{0, 1, \cdots \} \cup \{\infty\}\) 
+  is said to be a stopping time with respect to the filtration \((\mathcal{F}_n)\) if 
+  \[\{\omega \mid T(\omega) = n\} \in \mathcal{F}_n\]
+  for all \(n \ge 0\).
+\end{definition}
+
+This definition can be easily generalized to continuous time with the codomain 
+being \(\overline{\mathbb{R}}_+\) and taking 
+\[\{\omega \mid T(\omega) \le t\} \in \mathcal{F}_t\]
+for all \(t \ge 0\) instead. The generalized definition is consistent with the 
+discrete version since \(\{T \le n\} = \bigcup_{k = 1}^n {T = k}\) and 
+\(\{T = n\} = \{T \le n + 1\} \setminus \{T \le n\}\) and thus, 
+\(T\) is an \((\mathcal{F}_n)\) stopping time if and only if \(\{T \le n\} \in \mathcal{F}_n\) 
+for all \(n \ge 0\).
+
+\begin{definition}[Stopped Process]
+  Let \(T\) be a stopping time and let \((x_n)\) be a stochastic process. We define 
+  the stopped process \((x^T_n)\) by 
+  \[x^T_n(\omega) := x_{\min \{n, T(\omega)\}}(\omega),\]
+  for all \(\omega \in \Omega\), \(n \in \overline{\mathbb{N}}\).
+\end{definition}
+
+In some sense, the stopped process as the name suggests, stop the process once some 
+condition has been achieved. Consider the random walk on the integers with the 
+stopping time being the walk reaches 4. Then, for each \(\omega \in \Omega\), 
+the stopped process is the same as the process as long as \(x_n(\omega) \le 4\) 
+while after \(x_k(\omega) = 4\), the process stops in the sense that 
+\(x^T_n(\omega)\) is constant for all \(n \ge k\).
+
+The following three propositions are exercises.
+
+\begin{proposition}
+  If \(S, T\) are stopping times, then so are 
+  \[S \wedge T := \min\{S, T\} \text{ and } S \vee T := \max\{S, T\}.\]
+\end{proposition}
+
+\begin{proposition}
+  If \((S_n)\) is a sequence of stopping times, then 
+  \[\limsup_{n \to \infty} S_n \text{ and } \liminf_{n \to \infty} S_n\]
+  are stopping times.
+\end{proposition}
+
+\begin{proposition}
+  Constant functions are stopping times.
+\end{proposition}
+
+\begin{definition}[Stopped \(\sigma\)-algebra]
+  Given a stopping time \(T\), let \(\mathcal{F}_\infty := \bigvee_{n = 0}^\infty \mathcal{F}_n\) 
+  and define 
+  \[\mathcal{F}_T := \{A \in \mathcal{F}_\infty \mid A \cap \{T = n\} \in \mathcal{F}_n, \forall n \ge 0\}.\]
+  For the continuous case, the set \(\{T = n\}\) is replaced by \(\{T \le t\}\).
+\end{definition}
+
+We note that in the case that \(T\) is a constant, \(\mathcal{F}_T = \mathcal{F}_m\).
+Furthermore, if \(S \le T\) a.e. then \(\mathcal{F}_S \subseteq \mathcal{F}_T\) 
+(we assume the probability space is complete, i.e. null-sets are measurable).
+
+\begin{proposition}
+  For a stopping time \(T < \infty\), the stopped \(\sigma\)-algebra can be 
+  equivalently defined as
+  \[\mathcal{F}_T = \{A \in \mathcal{F} \mid A \cap \{T \le t\} \in \mathcal{F}_t, \forall t \ge 0\}.\]
+\end{proposition}
+\begin{proof}
+  Clearly the right hand side is larger and so, it suffices to show that, for all 
+  \(A \in \mathcal{F}\) such that \(A \cap \{T \le t\} \in \mathcal{F}_t, \forall t \ge 0\),
+  \(A \in \mathcal{F}_T\). Now, by considering 
+  \[A = \bigcup_{n \in \mathbb{N}} A \cap \{T \le n\},\]
+  where \(A \cap \{T \le n\} \in \mathcal{F}_n\), we have 
+  \[A = \bigcup_{n \in \mathbb{N}} A \cap \{T \le n\} \in \bigvee_{n = 0}^\infty \mathcal{F}_n,\]
+  and hence, \(A \in \mathcal{F}_T\) as required.
+\end{proof}
+
+\begin{proposition}
+  \(T\) is \(\mathcal{F}_T\)-measurable.
+\end{proposition}
+\begin{proof}
+  Let \(A = \{T = m\}\) and by construction, for all \(n \ge 0\), we have 
+  \(A \cap {T = n}\) is \(\varnothing\) if \(n \neq m\) and \(\{T = n\}\) if 
+  \(n = m\) both contained in \(\mathcal{F}_n\). Thus, \(\{T = m\} \in \mathcal{F}_T\) 
+  and hence \(T\) is \(\mathcal{F}_T\)-measurable.
+\end{proof}
+
+\begin{proposition}
+  For a stopping time \(T < \infty\), and an adapted process \((x_n)\), 
+  \begin{itemize}
+    \item \(\omega \mapsto x_{T(\omega)}(\omega)\) (denoted by \(x_T\)) is \(\mathcal{F}_T\)-measurable; 
+    \item for all \(n\), \(x_n^T\) is \(\mathcal{F}_T\)-measurable. 
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  We have \(\{x_T \in A\} \cap \{T = n\} = \{x_n \in A\} \cap \{T = n\} \in \mathcal{F}_n\) 
+  as \((x_n)\) is adapted. Thus, \(x_T\) is \(\mathcal{F}_T\)-measurable.
+
+  The second property follows as \(x^T_n = x_{T \wedge n}\) where \(T \wedge n\) 
+  is a stopping time. Thus, \(x_{T \wedge n}\) is \(\mathcal{F}_{T \wedge n}\)-measurable. 
+  On the other hand, as \(T \wedge n \le T\), we have \(\mathcal{F}_{T \wedge n} \subseteq \mathcal{F}_T\)
+  and thus, \(x^T_n\) is \(\mathcal{F}_T\)-measurable as required.
+\end{proof}
+
+\begin{proposition}
+  If \(T < \infty\) is a \(\mathcal{F}_T^x\)-stopping time, then for all \(n \ge 0\), 
+  \[\{T = n\} \in \sigma(x_{T \wedge 0}, \cdots, x_{T \wedge n}).\]
+  That is to say \(T\) is a stopping time with respect to the natural filtration of 
+  stopped process \(x_n^T\).
+\end{proposition}
+\begin{proof}
+  It suffices to show \(\mathbf{1}_{T = n}\) is of the form \(\phi(x_{T \wedge 0}, \cdots, x_{T \wedge n})\)
+  for some \(\phi \in \mathcal{B}_b(\mathcal{X}^{n + 1})\). We will prove this by induction.
+
+  Suppose there exists some \(\phi_l \in \mathcal{B}_b(\mathcal{X}^{l + 1})\) for all 
+  \(l \le k - 1\) such that 
+  \[\mathbf{1}_{\{T = l\}} = \phi(x_{T \wedge 0}, \cdots, x_{T \wedge l}).\]
+  We observe (factorisation lemma implies the existence of \(\psi\)),
+  \[\begin{split}
+    \mathbf{1}_{\{T = k\}} & = \mathbf{1}_{\{T = k\}}\mathbf{1}_{\{T \ge k\}} = \psi(x_0, \cdots, x_k) \mathbf{1}_{\{T \ge k\}}\\
+    & = \psi(x_{T \wedge 0}, \cdots, x_{T \wedge k}) \mathbf{1}_{\{T \ge k\}} \\ 
+    & = \psi(x_{T \wedge 0}, \cdots, x_{T \wedge k}) (1 - \mathbf{1}_{\{T \le k - 1\}}).\\
+  \end{split}\]
+  Now, since \(1 - \mathbf{1}_{\{T \le k - 1\}} = 1 - \sum_{l \le k - 1} \phi_l\), the result follows.
+\end{proof}
+
+\begin{proposition}
+  Let us denote \(\sigma(x^T) := \sigma(x_{T \wedge n} \mid n)\), then if 
+  \(T < \infty\) is a stopping time with respect to \(\mathcal{F}_n^x\), 
+  \[\mathcal{F}_T = \sigma(x^T).\] 
+\end{proposition}
+\begin{proof}
+  Clearly \(\mathcal{F}_T \supseteq \sigma(x^T)\) so we will prove the reverse. 
+  Let \(A \in \mathcal{F}_T\), then, for all \(n \ge 0\), as \(A \cap \{T = n\}\) 
+  is \(\mathcal{F}_n\) measurable, by the factorisation lemma, there exists some 
+  \(\psi \in \mathcal{B}_n(\mathcal{X}^{n + 1})\) such that
+  \[\psi(x_0, \cdots, x_n) = \mathbf{1}_{A \cap \{T = n\}} = \mathbf{1}_A\mathbf{1}_{\{T = n\}}.\]
+  So,
+  \[\mathbf{1}_A\mathbf{1}_{\{T = n\}} =  \mathbf{1}_A \mathbf{1}_{\{T = n\}}^2 = 
+    \mathbf{1}_{\{T = n\}} \psi(x_0, \cdots, x_n) = 
+    \mathbf{1}_{\{T = n\}} \psi(x_{T \wedge 0}, \cdots, x_{T \wedge n}).\]
+  Thus, as \(\{T = n\} \in \sigma(x_{T \wedge 0}, \cdots, x_{T \wedge n}) \subseteq \sigma(x^T)\) by the 
+  above lemma, \(\mathbf{1}_A \mathbf{1}_{\{T = n\}}\) is \(\sigma(x^T)\)-measurable. Hence,
+  \[\mathbf{1}_A = \sum_{n = 0}^\infty \mathbf{1}_A \mathbf{1}_{\{T = n\}} 
+    \in \sigma(x^T)\]
+\end{proof}
+
+\subsection{Strong Markov Property}
+
+Recall the shift operator, we define the following operator.
+
+\begin{definition}
+  Given a stopping time \(T < \infty\) a.e. we define \(\theta_T\) 
+  such that for all stochastic process \(x. = (x_n)\) 
+  \[(\theta_T x.)_n(\omega) := x_{T(\omega) + n}(\omega).\]
+\end{definition}
+
+\begin{definition}[Strong Markov Property]
+  A stochastic process \(x.\) is said to have the strong Markov property if 
+  for every stopping time \(T < \infty\) a.e. and every 
+  \(\Phi \in \mathcal{B}_b(\mathcal{X}^\infty)\), we have 
+  \[\mathbb{E}(\Phi(\theta_T x.) \mid \mathcal{F}_T) = \mathbb{E}(\Phi(\theta_T x.) \mid x_T),\]
+  almost everywhere.
+\end{definition}
+
+We may assume that \(\Phi\) is independent in its components. Namely, the strong Markov 
+property is equivalent to 
+\[\mathbb{E}\left(\prod_{i = 1}^m f_i(\theta_T x.)_{n_i} \mid \mathcal{F}_T\right) = 
+  \mathbb{E}\left(\prod_{i = 1}^m f_i(\theta_T x.)_{n_i} \mid x_T\right),\]
+for some \(f_i \in \mathcal{B}_b(\mathcal{X})\) and \(n_1 < n_2 < \cdots < n_m\).
+
+Our goal is to show that if \((x_n)\) is a time homogeneous Markov process with 
+transition probability \(P\), then it has the strong Markov property.
+
+\begin{proposition}
+  Let \(T < \infty\) a.e. be a stopping time. Then 
+  \[\mathbb{P}(x_{n + T} \in A \mid \mathcal{F}_T) = P^n(x_T, A)\]
+  almost everywhere. In particular, \((x_{n + T})= \theta_T x.\) is a Markov process 
+  with transition probability \(P\).
+\end{proposition}
+\begin{proof}
+  Let \(f \in \mathcal{B}_b(\mathcal{X})\), then, as \(\{T = \infty\}\) has measure 0, 
+  for all \(B \in \mathcal{F}_T\),
+  \[\begin{split}
+    \int_B f(x_{n + T}) \dd \mathbb{P} & = \sum_{m = 0}^\infty \int_{B \cap \{T = m\}} f(x_{n + m}) \dd \mathbb{P} \\
+    & = \sum_{m = 0}^\infty \int_{B \cap \{T = m\}} \mathbb{E}(f(x_{n + m}) \mid \mathcal{F}_m) \dd \mathbb{P}\\
+    & = \sum_{m = 0}^\infty \int_{B \cap \{T = m\}}  \int f(y)P^n(x_m, \dd y) \dd \mathbb{P}\\
+    & = \sum_{m = 0}^\infty \int_{B \cap \{T = m\}}  \int f(y)P^n(x_T, \dd y) \dd \mathbb{P}\\
+    & = \int_B \int f(y) P^n(x_T, \dd y) \dd \mathbb{P},
+  \end{split}\]
+  where the second equality follows as \(B \cap \{T = m\}\) is \(\mathcal{F}_m\)-measurable 
+  by the definition of stopping time while the third equality follows the the property 
+  of the transition probability. Thus, 
+  \[\mathbb{E}(f(x_{n + T}) \mid \mathcal{F}_T) = \int f(y) P^n(x_T, \dd y).\]
+  Hence, choosing \(f = \mathbf{1}_A\) completes the proof.
+\end{proof}
+
 
 \end{document}
