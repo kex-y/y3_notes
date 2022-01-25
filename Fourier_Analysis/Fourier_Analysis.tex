@@ -72,6 +72,8 @@
 
 \usepackage{pgfplots}
 \pgfplotsset{width=8cm,compat=1.9}
+\usetikzlibrary{external} % cache the plot
+\tikzexternalize[prefix=pgfplots/]
 
 \theoremstyle{definition}
 \newtheorem{theorem}{Theorem}
@@ -87,6 +89,9 @@
 \newcommand{\diag}{\mathop{\mathrm{diag}}}
 \newcommand{\Arg}{\mathop{\mathrm{Arg}}}
 \newcommand{\hess}{\mathop{\mathrm{Hess}}}
+
+% the redefinition for the missing \setminus must be delayed
+\AtBeginDocument{\renewcommand{\setminus}{\mathbin{\backslash}}}
 
 \title{Fourier Analysis and the Theory of Distributions}
 \author{Kexing Ying}
@@ -542,5 +547,261 @@ Let us summarise the above in the following statement.
 
 We remark there exists continuous functions whose Fourier series diverge at some 
 points. More curiously, there exists \(L_1\) functions which diverge at all points.
+
+\subsection{Continuous Functions}
+
+Suppose now \(f\) is a continuous function with period \(2\pi\) on \(\mathbb{R}\), 
+then it is uniquely determined by its Fourier series (exercise). Nonetheless, as 
+we have seen, the Fourier series of \(f\) does not necessarily equal to \(f\) 
+at every point. However, we can still reconstruct \(f\) from its Fourier series. 
+Consider the partial sums 
+\[S_k(x) = \frac{a_0}{2} + \sum_{j = 1}^k a_j \cos (jx) + b_j \sin (jx).\]
+Then, we define the Feje's sums 
+\[\sigma_n(x) := \frac{1}{n}(S_0(x) + S_1(x) + \cdots S_{n - 1}(x)),\]
+we have the following theorem.
+
+\begin{definition}[Fejer's Kernel]
+  Fejer's kernel is defined to be the function 
+  \[\Phi_n(z) = \frac{1}{2\pi n}\left(\frac{\sin(nz / 2)}{\sin(z / 2)}\right)^2\]
+  for all \(n \ge 0\).
+\end{definition}
+
+\begin{lemma}
+  Denoting \(\Phi_n\) as Fejer's kernel, we have 
+  \begin{itemize}
+    \item \(\Phi_n \ge 0\);
+    \item \(\int_{[-\pi, \pi]} \Phi_n \dd \lambda = 1\);
+    \item for all \(\delta \in (0, \pi]\), 
+      \(\int_{[-\pi, -\delta]} \Phi_n \dd \lambda = \int_{[\delta, \pi]} \Phi_n \dd \lambda \to 0\) as 
+      \(n \to \infty\).
+  \end{itemize}
+\end{lemma}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{theorem}[Fejer's]
+  If \(f\) is a continuous function with period \(2\pi\), then the sequence \((\sigma_n)\) 
+  of its Fejer's's sums converges to \(f\) uniformly on \(\mathbb{R}\).
+\end{theorem}
+\begin{proof}
+  Recall that 
+  \[S_k(x) = \frac{1}{2\pi} \int_{[-\pi, \pi]} f(x + z) D_k(z) \lambda(\dd z),\]
+  and so, 
+  \[\sigma_n(x) = \frac{1}{2\pi n} \int_{[-\pi, \pi]} f(x + z) \sum_{k = 0}^{n - 1} D_k(z) \lambda(\dd z).\]
+  Then, using the identity that 
+  \[\sum_{k = 0}^{n - 1} \sin(2k + 1)u = \frac{\sin^2(nu)}{\sin u},\]
+  we obtain
+  \[\sigma_n(x) = \int_{[-\pi, \pi]} f(x + z) \Phi_n(z) \lambda(\dd z)\]
+  where \(\Phi_n\) is Fejer's kernel. Now, by nothing that \(f\) is continuous and 
+  periodic, \(f\) is bounded and uniformly continuous on \(\mathbb{R}\). Thus, 
+  there exists some \(M > 0\), such that for all \(\sup_x |f(x)| \le M\) and for 
+  all \(\epsilon > 0\), there exists some \(\delta \in (0, \pi]\) such that 
+  \(|f(x) - f(y)| < \frac{\epsilon}{2}\left(\int_{[-\pi, \pi]} \Phi_n \dd \lambda\right)^{-1}\) 
+  for all \(|x - y| < 2\delta\). Now, 
+  \[\begin{split}
+    f(x) - \sigma_n(x) & = \int_{[-\pi, \pi]}(f(x) - f(x + z))\Phi_n(z) \lambda(\dd z)\\
+    & = \left(\int_{[-\pi, -\delta]} + \int_{[-\delta, \delta]} + \int_{[\delta, \pi]}\right)
+      (f(x) - f(x + z))\Phi_n(z) \lambda(\dd z).
+  \end{split}\]
+  Then, by the above lemma, there exists some \(N\) such that for all \(n \ge N\), 
+  \(\int_{[-\pi, -\delta]}\Phi_n \dd \lambda < \frac{\epsilon}{8M}\) and so, for all 
+  \(n \ge N\), we have \(\int_{[-\pi, -\delta]} (f(x) - f(x + z))\Phi_n(z) \lambda(\dd z) \le 
+  \int_{[-\pi, -\delta]} 2M \Phi_n(z) \lambda(\dd z) < 2M \frac{\epsilon}{8M} = \epsilon / 4\)
+  \[\begin{split}
+    f(x) - \sigma_n(x) & < \frac{\epsilon}{4} + \frac{\epsilon}{4} +
+    \int_{[-\delta, \delta]} (f(x) - f(x + z))\Phi_n \dd \lambda \\
+    & < \frac{\epsilon}{2} + \frac{\epsilon}{2}\left(\int_{[-\pi, \pi]} \Phi_n \dd \lambda\right)^{-1}
+      \int_{[-\delta, \delta]} \Phi_n \dd \lambda\\
+    & \le \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon.
+  \end{split}\] 
+  Hence, \(|f(x) - \sigma_n(x)| = f(x) - \sigma_n(x) < \epsilon\) for all \(x \in \mathbb{R}\) 
+  implying uniform convergence as required.
+\end{proof}
+
+While we had used the Weierstass approximation to obtain the above, Fejer's theorem 
+also implies Weierstass approximation theorem straight away. Nonetheless, while 
+the Stone-Weierstass theorem is more general, Fejer's theorem provides an explicit 
+construction of such an series.
+
+\begin{corollary}[Weierstass Approximation Theorem]
+  Any continuous periodic function is a limit of a uniformly convergent sequence 
+  of trigonometirc polynomials.
+\end{corollary}
+
+\begin{corollary}
+  The trigonometric system \(\{1, \sin nx, \cos nx \mid n = 1, 2, \cdots\}\) is 
+  complete in \(L_2[-\pi, \pi]\) as uniform convergence implies convergence in \(L_2\).
+\end{corollary}
+
+We remark that convergence in \(L_p[-\pi, \pi]\) implies the existence of a subsequence which 
+converges almost everywhere and hence, by Egorov's theorem, there exists a subsequence 
+which converges uniformly on an arbitrarily large space.
+
+By recalling that uniform convergence is definitionally equal to the supremum norm, 
+Fejer's theorem tells us that for all \(f \in \mathcal{C}_\infty[-\pi, \pi]\), 
+the sequence of its Fejer's sums converges \(f\) in \(\mathcal{C}_\infty[-\pi, \pi]\).
+Furthermore, if \(f \in L_1[-\pi, \pi]\), then \(\sigma_n \to f\) in \(L_1\).
+
+\begin{corollary}
+  For all \(f \in L_1[-\pi, \pi]\), it is (a.e.) uniquely determined by its 
+  Fourier coefficients. 
+\end{corollary}
+\begin{proof}
+  Suppose \(f, g \in L_1[-\pi, \pi]\) have the same Fourier coefficients. Then,
+  \(f\) and \(g\) have the same Fejer's sums. But, as \(L_1\) is a metric space, 
+  the Fejer's sums has a unique limit and hence, \(f = g\) in \(L_1\).
+\end{proof}
+
+\subsection{Fourier Transform}
+
+Thus far, we have considered periodic functions in \(L_1\) is represented uniquely 
+by its Fourier series. We would now like to generalize this theory to non-periodic 
+functions. 
+
+As an intuition (we will formally justify this later), consider the case first that 
+\(f\) is periodic on \([-l, l]\) for some \(l > 0\). 
+From the exercise sheet, we were able to extend the Fourier series and conclude that, 
+if \(f \in L_1\) and satisfies Dini's condition at each point of \([-l, l]\), then 
+\[f(x) = \frac{a_0}{2} + \sum_{k = 1}^\infty a_k\cos\left(\frac{k\pi}{l}x\right) + b_k \sin\left(\frac{k\pi}{l}x\right),\]
+where 
+\[a_k = \frac{1}{l}\int_{[-l, l]}f(t) \cos\left(\frac{k\pi}{l}t\right) \lambda(\dd t) \text{ and }
+  b_k = \frac{1}{l}\int_{[-l, l]}f(t) \sin\left(\frac{k\pi}{l}t\right) \lambda(\dd t).\]
+Thus,
+\[f(x) = \frac{1}{2l} \int_{[-l, l]} f \dd \lambda + \frac{1}{l}\sum_{k = 1}^\infty f(t) 
+  \cos\left(\frac{k\pi}{l}(t - x)\right)\lambda(\dd t).\]
+Hence, setting \(y_k = \pi k / l\), \(\Delta y = \pi / l\) and 
+taking \(l \to \infty\), we expect 
+\[f(x) = \frac{1}{\pi} \int_{(0, \infty)} \lambda(\dd y) \int_{\mathbb{R}} f(t) \cos(y(t - x)) \lambda(\dd t).\]
+This equation is known as the Fourier integral. To see the similarity of this with 
+the Fourier series, we may write the Fourier integral as 
+\[f(x) = \int_{(0, \infty)}(a_y \cos(yx) + b_y \sin(y_x)) \lambda(\dd y)\]
+where 
+\[a_y = \frac{1}{\pi} \int_{\mathbb{R}} f(t) \cos(yt) \lambda(\dd t) \text{ and }
+  b_y = \frac{1}{\pi} \int_{\mathbb{R}} f(t) \sin(yt) \lambda(\dd t).\]
+
+\begin{theorem}
+  Let \(f \in L_1\) and satisfy Dini's condition at every point. Then for all 
+  \(x \in \mathbb{R}\), we have
+  \[f(x) = \frac{1}{\pi} \int_{(0, \infty)} \lambda(\dd y) \int_{\mathbb{R}} f(t) \cos(y(t - x)) \lambda(\dd t).\]
+\end{theorem}
+\begin{proof}
+  Let us denote 
+  \[J_x(A) := \frac{1}{\pi} \int_{(0, A)} \lambda(\dd y) \int_{\mathbb{R}} f(t) \cos(y(t - x)) \lambda(\dd t),\]
+  and we will show \(J_x(A) \to f(x)\) as \(A \to \infty\). By assumption, \(f \in L_1\) 
+  and so, \(J_x\) converges absolutely, and hence, by Fubini's theorem, 
+  \[J_x(A) = \frac{1}{\pi} \int_{\mathbb{R}} \lambda(\dd t) f(t) \int_{(0, A)} \cos(y(t - x)) \lambda(\dd y)
+    = \frac{1}{\pi} \int_{\mathbb{R}} \lambda(\dd t) f(t) \frac{\sin A(t - x)}{t - x}.\]
+  By change of variables \(z = t - x\), we obtain 
+  \[J_x(A) = \frac{1}{\pi}\int_{\mathbb{R}} f(x + z) \frac{\sin Az}{z} \lambda (\dd z).\]
+  Now, by observing that \(\frac{1}{\pi}\int_{\mathbb{R}} \frac{\sin Az}{z} \lambda(\dd z) = 1\), 
+  we have 
+  \[\begin{split}
+    J_x(A) - f(x) & = \frac{1}{\pi} \int_{\mathbb{R}} \frac{f(x + z) - f(x)}{z} \sin Az \lambda(\dd z)\\
+    & = \frac{1}{\pi} \int_{[-N, N]} \frac{f(x + z) - f(x)}{z} \sin Az \lambda(\dd z)\\
+    & + \frac{1}{\pi} \int_{\mathbb{R} \setminus [-N, N]} \frac{f(x + z)}{z} \sin Az \lambda(\dd z)\\
+    & - \frac{f(x)}{\pi} \int_{\mathbb{R} \setminus [-N, N]} \frac{\sin Az}{z} \lambda(\dd z)
+  \end{split}\]
+  for all \(N > 0\). By observing that the last two integrand are bounded, both 
+  integrals tends to 0 as \(N \to \infty\). On the other hand, the first integral 
+  tends to 0 as \(A \to \infty\) for fixed \(N\) by the Riemann-Lebesgue lemma. 
+  With this in mind, let \(\epsilon > 0\), then, there exists some \(N > 0\) 
+  such that 
+  \[\left|\frac{1}{\pi} \int_{\mathbb{R} \setminus [-N, N]} \frac{f(x + z)}{z} \sin Az \lambda(\dd z)\right|,
+    \left|\frac{f(x)}{\pi} \int_{\mathbb{R} \setminus [-N, N]} \frac{\sin Az}{z} \lambda(\dd z)\right| < \frac{\epsilon}{3}.\]
+  Then, by the Riemann-Lebesgue lemma (and Dini's condition), there exists some 
+  \(B\), such that for all \(A \ge B\), 
+  \[\left|\frac{1}{\pi} \int_{[-N, N]} \frac{f(x + z) - f(x)}{z} \sin Az \lambda(\dd z)\right| < \frac{\epsilon}{3}.\]
+  Hence, for all \(A \ge B\), we have
+  \[\begin{split}
+    |J_x(A) - f(x)| & \le 
+        \left|\frac{1}{\pi} \int_{[-N, N]} \frac{f(x + z) - f(x)}{z} \sin Az \lambda(\dd z)\right|\\
+    & + \left|\frac{1}{\pi} \int_{\mathbb{R} \setminus [-N, N]} \frac{f(x + z)}{z} \sin Az \lambda(\dd z)\right|\\
+    & - \left|\frac{f(x)}{\pi} \int_{\mathbb{R} \setminus [-N, N]} \frac{\sin Az}{z} \lambda(\dd z)\right|
+      < \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3} = \epsilon,
+  \end{split}\]
+  implying \(J_x(A) \to f(x)\) as \(A \to \infty\) as required.
+\end{proof}
+
+Similar to the finite case, we may write the Fourier integral using the complex exponential
+function. In particular, as \(\cos\) is even, we have 
+\[f(x) = \frac{1}{2\pi} \int_{\mathbb{R}} \lambda(\dd y) \int_{\mathbb{R}} f(t) \cos(y(t - x)) \lambda(\dd t).\]
+On the other hand, as \(\sin\) is odd,
+\[\frac{1}{2\pi} \int_{\mathbb{R}} \lambda(\dd y) \int_{\mathbb{R}} f(t) \sin(y(t - x)) \lambda(\dd t) = 0.\]
+Summing the two integrals, we obtain that, if \(f \in L_1\) and satisfies the 
+Dini condition, then 
+\[f(x) = \frac{1}{2\pi} \int_{\mathbb{R}} \lambda(\dd y)\int_{\mathbb{R}}f(t) e^{-iy(t - x)} \lambda(\dd t).\]
+
+\begin{definition}[Fourier Transform]
+  Let \(f \in L_1\). We define the Fourier transform of \(f\) to be 
+  \[g(y) = \mathcal{F}[f](y) := \int_{\mathbb{R}}f(t) e^{-iyt} \lambda(\dd t).\]
+\end{definition}
+
+\begin{proposition}[Inversion of the Fourier Transform]
+  In the case that \(f\) satisfies Dini's condition at some point \(x\), then 
+  \[f(x) = \frac{1}{2\pi} \int_{\mathbb{R}} \mathcal{F}[f](y) e^{iyx} \lambda(\dd y).\]
+\end{proposition}
+\begin{proof}
+  See above.
+\end{proof}
+
+From the above process, we observe that the Fourier transform is very similar to 
+the Fourier series in which the Fourier transform is analogous to the Fourier 
+coefficients while the inversion formula is analogous to the Fourier series 
+both of which holds under Dini's condition.
+
+\begin{theorem}
+  Let \(f \in L_1\) and suppose \(\mathcal{F}[f] = 0\), then \(f = 0\) almost everywhere.
+\end{theorem}
+Thus, similar to the case of the Fourier series, the Fourier transform (a.e.) uniquely 
+determines a function.
+
+\begin{proof}
+  We note that we have not required Dini's condition and thus, we may not use 
+  the inversion formula. 
+
+  By change of variable, we note that \(\int f(x + t)e^{-i yx} \lambda(\dd x) = 0\) 
+  for all \(t, y\), and let us define 
+  \[\phi_\mu(x) := \int_{(0, \mu)} f(x + t) \lambda(\dd t)\]
+  for some \(\mu > 0\). As \(\phi_\mu\) is integrable, by Fubini's theorem, it 
+  follows that \(\mathcal{F}[\phi_\mu] = 0\). Furthermore, as \(\phi_\mu\) is 
+  an integral function, it is absolutely continuous on any finite interval, and hence, 
+  has a derivative a.e. and so, it satisfies Dini's condition a.e. Hence, by the 
+  Fourier inversion formula, we have 
+  \[\phi_u(x) = \frac{1}{2\pi}\int_{\mathbb{R}} \mathcal{F}[\phi_\mu](y)e^{iyx} \lambda(\dd y) = 0,\]
+  almost everywhere. But, as \(\phi_\mu\) is continuous (as its absolutely continuous), 
+  and so \(\phi_\mu = 0\) everywhere. Thus, it follows that \(f = 0\) a.e.
+\end{proof}
+
+\begin{lemma}
+  Let \(f, f_n \in L_1\) for \(n = 1, 2, \cdots\) such that \(f_n \to f\) in \(L_1\). 
+  Then, \(g_n(y) := \mathcal{F}[f_n](y) \to \mathcal{F}[f](y)\) uniformly on \(\mathbb{R}\).
+\end{lemma}
+\begin{proof}
+  Follows as 
+  \[|g_n - \mathcal{F}[f]| \le \int_{\mathbb{R}} |f_n - f| \dd \lambda.\]
+\end{proof}
+
+\begin{lemma}
+  Let \(f \in L_1\), then \(\mathcal{F}[f]\) is a bounded continuous function and 
+  \(\mathcal{F}[f](y) \to 0\) as \(|y| \to \infty\). 
+\end{lemma}
+\begin{proof}
+  Again, boundedness follows from the bound \(|\mathcal{F}[f]| \le \|f\|_1 < \infty\).
+
+  For the other two properties, we will first prove for indicator functions.
+  Consider 
+  \[\mathcal{F}[\mathbf{1}_{[a, b]}](y) = \int_{[a, b]} e^{-iy x} \lambda(\dd x) 
+    = \frac{e^{-i yb} - e^{-iy a}}{-iy}\]
+  which is continuous and tends to 0 as \(|y| \to \infty\).
+  
+  By the linearity of the Lebesgue integral, and hence, the Fourier transform is 
+  linear, we have that the Fourier transform of any simple function is also 
+  continuous and tends to 0 as \(|y| \to \infty\). Then, as the simple function 
+  is dense in \(L_1\), for any \(f \in L_1\), there exists a sequence \((f_n)\) of 
+  simple functions such that \(f_n \to f\) in \(L_1\). This, by the above lemma, 
+  we obtain \(\mathcal{F}[f_n] \to \mathcal{F}[f]\) uniformly. Hence, 
+  \(\mathcal{F}[f]\) is continuous and tends to 0 as \(|y| \to \infty\).
+\end{proof}
 
 \end{document}
