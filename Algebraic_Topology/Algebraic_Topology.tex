@@ -334,4 +334,205 @@ we will provide a proposition for situations where we have a space \(X\), a simp
 connected space \(\tilde X\) and a group \(\Gamma\) 
 characterising the lack of simply connectedness of \(X\).
 
+\subsection{Fundamental Group}
+
+Given a topological space \(X\), we will consider the set of all loops on 
+\(X\) quotiented by the homotopy relation. Then, by equipping this quotient with 
+the operation of gluing paths together, we obtain a group on this quotient. This 
+group is known as the Fundamental group.
+
+\begin{definition}[Concatenation of Paths]
+  Let \(\gamma_1, \gamma_2 : [0, 1] \to X\) be paths such that \(\gamma_1(1) = \gamma_2(0)\), 
+  then, we define the path 
+  \[\gamma_1 * \gamma_2 : [0, 1] \to X : t \mapsto 
+  \begin{cases}
+    \gamma_1(2t), \ & t \le 1 / 2,\\
+    \gamma_2(2t - 1), \ & t > 1 / 2. 
+  \end{cases}\] 
+  It is not difficult to see that this is continuous and hence is a path.
+\end{definition}
+
+\begin{definition}
+  We define the equivalence relation \(\sim\) on the space of paths with the 
+  same end points such that for \(\gamma_1, \gamma_2 : [0, 1] \to X\) with 
+  the same end points, \(\gamma_1 \sim \gamma_2\) if and only if 
+  \(\gamma_1\) is homotopic to \(\gamma_2\).
+\end{definition}
+
+\begin{definition}[Fundamental Group]
+  Let \(X\) be a path-connected space and let \(x_0 \in X\). Then, we define 
+  the fundamental group as 
+  \[\pi_1(X, x_0) := \{\text{loops at \(x_0\)}\} / \sim.\]
+\end{definition}
+
+We would like to equip the above quotient with a group structure using the 
+concatenation operation. To achieve this, we need to check that, for loops 
+at \(x_0\), \(\gamma_1\) and \(\gamma_2\), we have 
+\[[\gamma_1 * \gamma_2]_\sim = [\gamma_1]_\sim * [\gamma_2]_\sim\]
+and the equivalence class is compatible to concatenation independently of the 
+end representative of the equivalence class.
+
+\begin{proposition}
+  Let \(\gamma_1, \gamma_1'\) be paths from \(x\) to \(y\) and let \(\gamma_2, \gamma_2'\) 
+  be paths from \(y\) to \(z\), then if \(\gamma_1 \sim \gamma_1'\) and 
+  \(\gamma_2 \sim \gamma_2'\) then \(\gamma_1 * \gamma_2 \sim \gamma_1' * \gamma_2'\).
+\end{proposition}
+\begin{proof}
+  Concatenate the homotopies. Namely, if \(H_1\) is a homotopy between \(\gamma_1\) 
+  and \(\gamma_1'\) and \(H_2\) is a homotopy between \(\gamma_2\) and \(\gamma_2'\), 
+  then define \(H(t, u) := H_1(t, u) * H_2(t, u)\). 
+\end{proof}
+
+With the above proposition, we define the group operation on \(\pi_1(X, x_0)\) 
+such that \([\gamma_1] * [\gamma_2] := [\gamma_1 * \gamma_2]\).
+
+\begin{lemma}
+  Let \(\gamma : [0, 1] \to X\) be a path and let \(\phi : [0. 1] \to [0, 1]\) be 
+  a continuous function such that \(\phi(0) = 0\) and \(\phi(1) = 1\) (such \(\phi\) is known 
+  as a reparametrisation. Then, \(\gamma \circ \phi \sim \gamma\). 
+\end{lemma}
+\begin{proof}
+  We define the homotopy \(H(t, u) := \gamma((1 - u)t + u\phi(t))\). \(H\) is 
+  clearly continuous, \(H(0, u) = \gamma(0), H(1, u) = \gamma(1)\) and 
+  \(\gamma(t) = H(t, 0), \gamma(\phi(t)) = H(t, 1)\).
+\end{proof}
+
+\begin{proposition}
+  \((\pi_1(X, x_0), *)\) form a group.
+\end{proposition}
+\begin{proof}
+  The identity element of this group is the class of the constant loop \(\text{id} : t \mapsto x_0\). 
+  Indeed, for any loops \(\gamma\) at \(x_0\), we have 
+  \[\text{id} * \gamma : t \mapsto \begin{cases}
+    \gamma(2t), \ & t \le 1 / 2,\\
+    x_0, \ & t > 1 / 2. 
+  \end{cases}\]
+  Thus, we may construct the homotopy between \(\gamma\) and \(\text{id} * \gamma\) by 
+  defining 
+  \[H(t, u) := \begin{cases}
+    \gamma((1 + u)t), \ & t \le 1 / (1 + u),\\
+    x_0, \ & t > 1 / (1 + u).
+  \end{cases}\]
+  This is a homotopy by the glueing lemma and thus, \([\text{id} * \gamma] = [\gamma]\).
+  Alternatively, we observe \(\text{id} * \gamma\) is a reparametrisation of \(\gamma\) 
+  with \(\phi(t) = 2t\) for \(t \le 1 / 2\) and \(\phi(t) = 1\) for all \(t > 1 / 2\).
+
+  It is to check that, with the above definition of the identity, the inverse of the 
+  loop \([\gamma]\) is simply \([t \mapsto \gamma(1 - t)]\). Thus, it remains to 
+  check associativity.
+
+  Let \(\gamma_1, \gamma_2, \gamma_3\) be loops at \(x_0\). We note that 
+  \((\gamma_1 * \gamma_2) * \gamma_3 \neq \gamma_1 * (\gamma_2 * \gamma_3)\) though 
+  the two paths remain to be homotopic. Indeed, we see that the two paths are 
+  simply reparametrisations of each other with 
+  \[\phi : [0, 1] \to [0, 1] : t \mapsto \begin{cases}
+    2t, \ & t \le 1 / 4,\\
+    t + 1 / 4, \ & 1 / 4 < t \le 3 / 4,\\
+    t / 2 + 3 / 4, \ & t > 3 / 4,
+  \end{cases}\] 
+  such that \((\gamma_1 * \gamma_2) * \gamma_3 \circ \phi = \gamma_1 * (\gamma_2 * \gamma_3)\). 
+  Hence, by the above lemma, the two paths are homotopic and so, 
+  \[([\gamma_1] * [\gamma_2]) * [\gamma_2] = [\gamma_1] * ([\gamma_2] * [\gamma_2]),\]
+  as required.
+\end{proof}
+
+\begin{proposition}
+  Let \(x_0, x_1 \in X\), and let \(\delta : [0, 1] \to X\) be a path from \(x_0\) 
+  to \(x_1\). Then \(\delta\) induces and isomorphism between \(\pi_1(X_, x_0)\) 
+  and \(\pi_1(X_, x_1)\) by 
+  \[[\gamma] \mapsto [\delta^{-1} * \gamma * \delta].\]
+\end{proposition}
+\begin{proof}
+  Clearly, for the constant path, \(\delta^{-1} * \text{id} * \delta\) is an 
+  reparametrisation of \(\delta^{-1} * \delta\) which is homotopic to \(\text{id}\).
+  
+  Now, given \(\gamma_1, \gamma_2\) loops at \(x_0\), 
+  \[\begin{split}
+    [\delta^{-1} * \gamma_1 * \gamma_2 * \delta] & = [\delta^{-1} * \gamma_1] * [\gamma_2 * \delta] \\
+    & = [\delta^{-1} * \gamma_1] * [\delta * \delta^{-1}] * [\gamma_2 * \delta]  \\
+    & = [\delta^{-1} * \gamma_1 * \delta] * [\delta^{-1} * \gamma_2 * \delta].
+  \end{split}\]
+  Finally, as \(\delta^{-1}\) by symmetry induces a homomorphism from \(\pi_1(X, x_1)\) 
+  to \(\pi_1(X, x_0)\) and these two homomorphisms are inverses, the induced map
+  in an isomorphism as required.
+\end{proof}
+
+With the above proposition in mind, we see that the fundamental group of a space is 
+independent (up to isomorphism) of the choice of the base point. So, we have also 
+that a space is simply connected if and only if its fundamental group is trivial.
+
+\subsection{Covering Spaces}
+
+In the section we generalize the method introduced for toruses to general spaces.
+
+\begin{definition}[Covering Map]
+  A map \(\pi : \tilde X \to X\) is a covering map if there exists an open cover 
+  \((U_\alpha)_{\alpha \in A}\) of \(X\) for all \(\alpha \in A\), \(\pi^{-1}(U_\alpha)\) 
+  is a disjoint union of open sets of \(\tilde X\) each of which is homeomorphic to 
+  \(U_\alpha\) with \(\pi\) (i.e. the \(\pi\) restricts on such an open set is 
+  homeomorphic to \(U_\alpha\).
+
+  Given a covering map \(\pi\), we call \(X\) the base space and \(\tilde X\) the 
+  covering map.
+\end{definition}
+
+In some sense, the covering map provides a local homeomorphism for some specific 
+open cover which each open set of the cover is represented in the domain as disjoint 
+copies. 
+
+\begin{proposition}
+  If \(\pi : \tilde X \to X\) is a covering map for some connected \(X\), then 
+  the cardinalities of the fibres of \(\pi\) is constant. Namely the map
+  \[s : X \to \overline{\mathbb{N}} : x \mapsto \# \pi^{-1}(\{x\})\]
+  is constant. We call this constant the number of sheets of \(\pi\).
+\end{proposition}
+\begin{proof}
+  It is clear that for \(x, y \in U_\alpha\) where \(\alpha \in A\), the fibres of 
+  \(x\) and \(y\) have the same cardinalities. Thus, as \((U_\alpha)_{\alpha \in A}\) is 
+  an open cover, for all \(x \in X\),
+  \[s^{-1}\{s(x)\} = \bigcup_{\substack{\exists x' \in U_\alpha, \\s(x') = s(x)}} U_\alpha.\] 
+  Hence, \(s^{-1}\{s(x)\}\) is open. Then, then we have the disjoint open cover of \(X\)
+  \[\{s^{-1}\{s(x)\} \mid x \in X\}.\]
+  But, since \(X\) is connected, any disjoint open cover of \(X\) can have at most 1 
+  element, and thus, \(s\) is a constant as required.
+\end{proof}
+
+\begin{proposition}
+  Suppose \(\pi : \tilde X \to X\) be a covering map and let \(Y\) be a topological space and 
+  \(f : [0, 1] \times Y \to X\) is a continuous map such that there exists some 
+  \(\tilde f_0 : Y \to \tilde X\) such that \(\pi \circ \tilde f_0 = f(0, \cdot)\).
+  Then, there exists a unique \(\tilde f : [0, 1] \times Y \to \tilde X\) such that 
+  \(\tilde f(0, \cdot) = \tilde f_0\) and \(\pi \circ \tilde f = f\).
+\end{proposition}
+\begin{proof}
+  For all \(y \in Y\), there exists a neighbourhood \(N\) of \(y\) such that for 
+  all \(t \in [0, 1]\), there exists some \(I_t \subseteq [0, 1]\) containing 
+  \(t\) such that \(f(I_t \times N) \subseteq U_\alpha\) for some \(\alpha\) since 
+  \(f\) is continuous on the compact set \([0, 1]\).
+  
+  With this in mind, we can build the lift on \([0, 1] \times N\). for \(\{0\} \times N\), 
+  by assumption, the lift must be \(\tilde f_0\). By the construction of \(N\), 
+  there exists some \(U_\alpha\) such that \(f(\{0\} \times N) \subseteq U_\alpha\).
+  Then, by continuity, there exists a neighbourhood \(I_0 \subseteq [0, 1]\) such 
+  that \(f(I_0 \times N) \subseteq U_\alpha\) and so, we may define 
+  \[\tilde f : N \times I_0 \to \tilde X : (t, y) \mapsto (\pi|_{\tilde U_\alpha(\beta)})^{-1} \circ f\] 
+  as \(\pi^{-1}\) is a homeomorphism on \(\tilde U_\alpha(\beta)\) where 
+  \(\pi^{-1}(U_\alpha) = \bigsqcup_{\beta \in B} \tilde U_\alpha(\beta).\)
+
+  Now, by the compactness of \([0, 1]\), there exists 
+  \[0 = t_0 < t_1 < \cdots < t_n < t_{n + 1} = 1,\]
+  such that for all \(k = 0, \cdots, n\), \(f([t_k, t_{k + 1}] \times N) \subseteq U_{\alpha_k}\) 
+  for some \(\alpha_k \in A\). Now, by induction, we may extend \(\tilde f\) from 
+  \([0, t_k]\) to \([0, t_{k + 1}]\) resulting in an extension of \(\tilde f\) to 
+  the whole set of \([0, 1]\). 
+
+  Suppose now both \(\tilde f, \bar f\) lifts \(f\) with 
+  \(\tilde f(0, \cdot) = \bar f(0, \cdot) = \tilde f_0\). Let 
+  \[A := \{z \in [0, 1] \times N \mid \tilde f(z) = \bar f(z)\}.\]
+  Then, for all \(z \in A\), there exists some \(V_2 \subseteq N \times [0, 1]\) 
+  such that \(\tilde f(V_z), \bar f(V_z) \subseteq \tilde U_\alpha(\beta)\). 
+  On \(V_z\), it is clear that \(\tilde f = \bar f = (\pi\mid_{\tilde U_\alpha(\beta)})^{-1} \circ f\).
+  Now, since \(N\) is a union of connected components, we obtain uniqueness.
+\end{proof}
+
 \end{document}
