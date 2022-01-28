@@ -359,7 +359,8 @@ function in to a discrete, absolutely continuous and singular continuous distrib
   required decomposition after normalization.
 \end{proof}
 
-\subsection{Random Variables}
+\newpage
+\section{Random Variables}
 
 We will continue to let \((\Omega, \mathcal{F}, \mathbb{P})\) be a probability space. 
 
@@ -573,6 +574,8 @@ with any measurable set by restricting the measure onto that set.
    = \int \left(\int g(x, y) \mu_1(\dd x)\right) \mu_2(\dd y).\]
 \end{theorem}
 
+\subsection{Inequalities}
+
 \begin{lemma}[Jensen's Inequality]
   Let \(\xi\) be an integrable random variable and let \(g : \mathbb{R} \to \mathbb{R}\)
   be a measurable, convex function, then,
@@ -603,5 +606,198 @@ with any measurable set by restricting the measure onto that set.
   Thus, taking both sides to the power of \(1 / s\), we obtain 
   \(\|\xi\|_s = (\|\xi^s\|_1)^{1 / s} \le (\|\xi\|^s_t)^{1 / s} = \|\xi\|_t\) as required.
 \end{proof}
+
+\begin{proposition}[Markov Inequality]
+  Let \(\xi \ge 0\) be an integrable random variable and let \(c > 0\). Then 
+  \[\mathbb{P}(\xi \ge c) \le \frac{\mathbb{E}(\xi)}{c}.\]
+\end{proposition}
+\begin{proof}
+  \(\mathbb{E}(\xi) \ge \mathbb{E}(\xi\mathbf{1}_{\xi \ge c}) \ge 
+    c \mathbb{E}(\mathbf{1}_{\xi \ge c}) = c\mathbb{P}(\xi \ge c).\)
+\end{proof}
+
+\begin{definition}[Variance]
+  The variance (or dispersion) of a random variable \(\xi\) is defined to be 
+  \[V_\xi := \mathbb{E}[(\xi - \mathbb{E}\xi)^2]\]
+  and we define \(\sigma := \sqrt{V_\xi}\) the standard deviation of \(V_\xi\).
+\end{definition}
+
+By expanding the definition, we fine \(V_\xi = \mathbb{E}\xi^2 - (\mathbb{E}\xi)^2\).
+
+\begin{definition}[Covariance]
+  The covariance of random variables \(\xi\) and \(\eta\) is defined to be 
+  \[\text{cov}(\xi, \eta) := \mathbb{E}[(\xi - \mathbb{E})(\eta - \mathbb{E}\eta)].\]
+\end{definition}
+
+\begin{proposition}
+  For random variables \(\xi, \eta\), we have 
+  \begin{itemize}
+    \item \(V_{\xi + \eta} = V_\xi + V_\eta + 2 \text{cov}(\xi, \eta)\);
+    \item if \(\text{cov}(\xi, \eta) = 0\), then \(V_{\xi + \eta} = V_\xi + V_\eta\).
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  Clear.
+\end{proof}
+
+\begin{proposition}[Chebyshev's Inequality]
+  Let \(\xi\) be a integrable random variable. Then, for all \(\epsilon > 0\), 
+  \[\mathbb{P}(|\xi - \mathbb{E}\xi| \ge \epsilon) \le \frac{V_\xi}{\epsilon^2}.\]
+\end{proposition}
+\begin{proof}
+  By Markov inequality, for \(\xi \ge 0\), we have 
+  \[\mathbb{P}(\xi \ge \epsilon) = \mathbb{P}(\xi^2 \ge \epsilon^2) \le \frac{\mathbb{E}\xi^2}{\epsilon^2}.\]
+  Thus, by replacing \(\xi\) by \(|\xi - \mathbb{E}\xi|\), we have the required inequality. 
+\end{proof}
+
+\begin{proposition}[Exponential Chebyshev's Inequality]
+  Let \(\xi \ge 0\) be a random variable and let \(\epsilon, t > 0\) such that \(\xi, e^{t\xi}\) are
+  integrable. Then, 
+  \[\mathbb{P}(\xi \ge \epsilon) \le e^{-t\epsilon} \mathbb{E}(e^{t\xi}).\]
+\end{proposition}
+\begin{proof}
+  We observe, by Markov inequality 
+  \[\mathbb{P}(\xi \ge \epsilon) = \mathbb{P}(e^{t\xi} \ge e^{t\epsilon}) \le \frac{E(e^{t\xi})}{e^{t\epsilon}}.\]
+\end{proof}
+
+\begin{proposition}[Tail Probability]
+  Let \(\xi \ge 0\) be an integrable rndom variable. Then, 
+  \[\mathbb{E}(\xi) = \int_{[0, \infty)} \mathbb{P}(\xi \ge x) \lambda(\dd x).\]
+\end{proposition}
+\begin{proof}
+  By change of variable, we have,
+  \[\mathbb{E}\xi = \int_\Omega \xi \dd \mathbb{P} = \int_{[0, \infty)} x (\xi_*\mathbb{P})(\dd x) = 
+    \int_{[0, \infty)}\int_{[0, x]} \lambda(\dd t) (\xi_* \mathbb{P})(\dd x).\]
+  Then, by Fubini's theorem to the function \(g : (t, x) \mapsto \mathbf{1}_{[0, x]}(t)\), we have 
+  \[\int_{[0, \infty)}\int_{[0, x]} \lambda(\dd t) (\xi_* \mathbb{P})(\dd x) = 
+    \int_{[0, \infty)^2} g(t, x) \lambda(\dd t) (\xi_* \mathbb{P})(\dd x) = 
+    \int_{[0, \infty)} \mathbb{P}(\xi \ge x) \lambda(\dd x)\]
+  as required.
+\end{proof}
+
+\begin{definition}[Normal Random Variable]
+  A random variable \(\xi\) is said to be norm if \(\xi_* \mathbb{P} = f\lambda\) 
+  where 
+  \[f(x) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{(x - m)^2}{2\sigma^2}}\]
+  for some \(m \in \mathbb{R}, \sigma > 0\). We denote this by \(\xi \sim \mathcal{N}(m, \sigma^2)\).
+\end{definition}
+
+\begin{proposition}
+  Let \(\xi \sim \mathcal{N}(m, \sigma^2)\). Then, \(\mathbb{E}\xi = m\) and \(V_\xi = \sigma^2\),
+  and so, a normal random variable is fully determined by its mean and variance.
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{definition}[Moment]
+  Given a random variable \(\xi\), we define the \(k\)-th moment of \(\xi\) to be 
+  \(\mathbb{E}(\xi^{k})\).
+\end{definition}
+
+\subsection{Transformation of Random Variables}
+
+Let \(F_\xi(x)\) be a distribution function of a random variable \(\xi\). Then,
+if \(\phi\) is a real valued continuous function, we would like to consider the 
+distribution of \(\eta\) where \(\eta = \phi(\xi)\). An easy observation is 
+that
+\[F_\eta(y) = \mathbb{P}(\eta \le y) = \mathbb{P}(\eta \in \phi^{-1}(-\infty, y]) 
+  = \int_{\phi^{-1}(-\infty, y]} \dd(\xi_*\mathbb{P}).\]
+As one might expect, elementary methods from first year probability are sufficient 
+for most cases we encounter (consider the case \(\phi\) is linear of quadratic).
+
+Suppose now that \(\xi\) is absolutely continuous (and so, has a density by 
+Radon-Nikodym), we would like to find the density of \(\eta := \phi(\xi)\).
+Assume first that \(\xi(\Omega) \in I\) where \(I\) is a finite or infinite open 
+interval and let \(\phi\) be continuously differentiable and strictly increasing 
+on \(I\). Denoting \(h(y) = \phi^{-1}(\{y\})\) which is well-defined and differentiable, 
+for all \(y \in \phi(I\), 
+\[F_\eta(y) = \mathbb{P}(\eta \le y) = \mathbb{P}(\xi \le \phi^{-1}(\{y\})) 
+  = \int_{(-\infty, h(y)]} f_\xi \dd \lambda = \int_{(-\infty, y]} f_\xi(h(z)) h'(z) \lambda(\dd z)\]
+where \(f_\xi\) is the density of \(\xi\). Hence, the density of \(\eta\) is 
+\(f_\xi(h(y)) h'(y) = f_\xi(h(y)) |h'(y)|\). Similarly, if \(\phi\) is strictly 
+decreasing, \(\eta\) remain to have the density \(f_\xi(h(y)) |h'(y)|\). 
+With this in mind, we may obtain the density for a large class of 
+transformations by de compositing the density into a strictly increasing and 
+decreasing parts.
+
+In the case that \((\xi, \eta)\) is a random vector with joint distribution 
+\(F\) and let \(\phi\) be a continuous function. Then, \(\phi(\xi, \eta)\) 
+has distribution
+\[F_{\phi(\xi, \eta)}(z) = \int_{\phi^{-1}(-\infty, z]} \dd ((\xi, \eta)_* \mathbb{P}).\]
+
+\subsection{Independence}
+
+We recall that two random variables \(\xi, \eta\) are said to be independent if 
+\((\xi, \eta)_* \mathbb{P} = \xi_* \mathbb{P} \otimes \eta_* \mathbb{P}\). 
+Thus, if \(F_\xi, F_\eta\) are distributions of \(\xi\) and \(\eta\) respectively, 
+then, \(F_{(\xi, \eta)}(x, y) = F_\xi(x) F_\eta(y)\) for all \(x, y \in \mathbb{R}\) 
+where \(F_{(\xi, \eta)}\) is a distribution of the random vector \((\xi, \eta)\).
+
+\begin{proposition}
+  If \(\xi, \eta\) are independent random variables, then the distribution of 
+  \(\xi + \eta\) is 
+  \[F_{\xi + \eta}(z) = 
+    \int_{\mathbb{R}} F_\eta(z - x) \xi_*\mathbb{P}(\dd x) =
+    \int_{\mathbb{R}} F_\xi(z - y) \eta_*\mathbb{P}(\dd y).\]
+\end{proposition}
+\begin{proof}
+  By taking \(\phi : \mathbb{R}^2 \to \mathbb{R} : (x, y) \mapsto x + y\), we have 
+  \[F_{\xi + \eta}(z) = \int_{\phi^{-1}(-\infty, z]} \dd ((\xi, \eta)_* \mathbb{P})
+   = \int_{\phi^{-1}(-\infty, z]} \dd (\xi_* \mathbb{P} \otimes \eta_* \mathbb{P})\]
+  by independence. By considering that \((x, y) \in \phi^{-1}(-\infty, z]\) if and only 
+  if \(x + y \le < z\), we have by Fubini's theorem,
+  \[\begin{split}
+    \int_{\phi^{-1}(-\infty, z]} \dd (\xi_* \mathbb{P} \otimes \eta_* \mathbb{P}) & = 
+    \int_{\mathbb{R}^2} \mathbf{1}_{x + y \le z} \dd (\xi_* \mathbb{P} \otimes \eta_* \mathbb{P})\\
+    & = \int_{\mathbb{R}} \left(\int_{\mathbb{R}} \mathbf{1}_{x + y \le z} \eta_*\mathbb{P}(\dd y)\right) \xi_*\mathbb{P}(\dd x)\\
+    & = \int_{\mathbb{R}} F_\eta(z - x) \xi_*\mathbb{P}(\dd x) 
+      = \int_{\mathbb{R}} F_\xi(z - y) \eta_*\mathbb{P}(\dd y). 
+  \end{split}\]
+\end{proof}
+
+Recalling the definition of the convolution of a function, we may reformulate the 
+above as the following corollaries.
+
+\begin{definition}[Convolution]
+  Given two real-valued functions \(f, g : \Omega \to \mathbb{R}\), we define the
+  convolution of \(f\) with \(g\) by 
+  \[f * g := t \mapsto \int_{\mathbb{R}} f(x) g(t - x) \mu(\dd x).\]
+\end{definition}
+
+\begin{corollary}
+  The distribution function of the sum of two independent random variables is 
+  the convolution of their distribution functions.
+\end{corollary}
+
+\begin{corollary}
+  If \(\xi, \eta\) are independent absolutely continuous random variables, then,
+  the density of \(\xi + \eta\) is the convolution of their densities.
+\end{corollary}
+
+\begin{proposition}
+  Let \(\xi, \eta\) be independent integrable random variables. Then, \(\xi \cdot \eta\) 
+  is integrable and \(\mathbb{E}(\xi \cdot \eta) = \mathbb{E}(\xi) \mathbb{E}(\eta)\).
+\end{proposition}
+\begin{proof}
+  It is clearly true for indicator functions and so, we may extend to simple function 
+  by the linearity of expectation. Hence, by monotone convergence, the statement is 
+  true for non-negative random variables and hence true for arbitrary random variables 
+  by taking \(\xi = \xi^+ - \xi^-\) and \(\eta = \eta^+ - \eta^-\).  
+\end{proof}
+
+\begin{definition}
+  Random variables \(\xi, \eta\) are said to be uncorrelated if \(\text{cov}(\xi, \eta) = 0\).
+\end{definition}
+
+\begin{proposition}
+  Independent random variables are uncorrelated.
+\end{proposition}
+\begin{proof}
+  Clear since \(\text{cov}(\xi, \eta) = \mathbb{E}(\xi \cdot \eta) - \mathbb{E}\xi \mathbb{E}\eta\). 
+\end{proof}
+
+We note that the converse is not true. Namely, uncorrelated does not imply independence.
+
 
 \end{document}
