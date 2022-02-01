@@ -653,6 +653,14 @@ it is stationary if
 \[\mathbb{E}x_n = \mathbb{E}x_0\]
 for all \(n\) and the covariances are shift invariant.
 
+\newpage 
+
+\section{Strong Markov Property}
+
+We will in the section continue to let \((\Omega, \mathcal{F}, \mathbb{P})\) be a 
+probability space and let \((\mathcal{F}_n)\) be a filtration on this probability 
+space.
+
 \subsection{Transition Probability}
 
 Given a Markov process \((x_n)\) on the state space \(\mathcal{X}\), for 
@@ -876,10 +884,10 @@ the sequence of measures \((\mu_n)\) is consistent.
   \[\mu_n(A_0 \times A_n) := \int_{A_0} \cdots \int_{A_{n - 1}} 
   P(y_{n - 1}, A_n) P(y_{n - 2}, \dd y_{n - 1}) \cdots P(y_1, \dd y_0) \mu_0(\dd y_0).\]
   It is routine to check that this sequence of measures is well-defined and consistent, and 
-  thus, by the Kolmogorov extension theorem, there exists a unique \(P_\mu\) on \(\mathcal{X}^\infty\) 
-  such that \(P_\mu\) projects to \(\mu_n\) on \(\mathcal{X}^{n + 1}\). Thus, 
+  thus, by the Kolmogorov extension theorem, there exists a unique \(\mathbb{P}_\mu\) on \(\mathcal{X}^\infty\) 
+  such that \(\mathbb{P}_\mu\) projects to \(\mu_n\) on \(\mathcal{X}^{n + 1}\). Thus, 
   taking \((\pi_n)\) to be the canonical process on the canonical space 
-  \((\mathcal{X}^\infty, \otimes \mathcal{B}(\mathcal{X}), P_\mu)\), we have 
+  \((\mathcal{X}^\infty, \otimes \mathcal{B}(\mathcal{X}), \mathbb{P}_\mu)\), we have 
   found a Markov process which satisfies the condition.
 \end{proof}
 
@@ -953,14 +961,6 @@ In the case that \(\mathcal{X} = \{1, \cdots, N\}\) is finite, a probability
 measure \(\nu\) is uniquely determined by its values on singletons 
 \(\{\nu(\{1\}), \cdots, \nu(\{N\})\}\). Then, if \(P = (p_{ij})\) is a stochastic matrix,
 we have \(T\nu = (\nu(\{i\}))_{i = 1}^N P\).
-
-\newpage 
-
-\section{Strong Markov Process}
-
-We will in the section continue to let \((\Omega, \mathcal{F}, \mathbb{P})\) be a 
-probability space and let \((\mathcal{F}_n)\) be a filtration on this probability 
-space.
 
 \subsection{Stopping Times}
 
@@ -1157,5 +1157,226 @@ transition probability \(P\), then it has the strong Markov property.
   Hence, choosing \(f = \mathbf{1}_A\) completes the proof.
 \end{proof}
 
+Recall that given any measure \(\mu\) and transition probability \(P\), there exists 
+a unique probability measure \(\mathbb{P}_\mu\) on \(\mathcal{X}^\infty\) 
+(distribution of the canonical process) 
+which is the distribution of a Markov process (denoted by \(X^x\) with transition 
+probabilities \(P\) and initial distribution \(\mathbb{P}_\mu\). If \(\mu = \delta_x\) 
+the Dirac measure, then we denote \(\mathbb{P}_{\delta_x}\) by \(\mathbb{P}_x\).
+
+We introduce the following notation. If \(\Phi \in \mathcal{B}_b(\mathcal{X}^\infty)\),
+we denote 
+\[\mathbb{E}_x[\Phi] := \mathbb{E}(\Phi(X^x.)) = \int_{\mathcal{X}^\infty} \Phi \dd \mathbb{P}_x,\]
+where the equality follows by the change of variable formula. 
+
+\begin{theorem}[Strong Markov Property for Finite Stopping Time]
+  Let \((x_n)\) be a time homogeneous Markov process with transition probability \(P\) 
+  and let \(T\) be a finite stopping time. Then,
+  \begin{itemize}
+    \item \(\theta_T x.\) is also a time homogeneous Markov process with transition probability 
+      \(P\) and initial value \(x_T\);
+    \item if \(\Phi \in \mathcal{B}_b(\mathcal{X}^\infty)\), then 
+    \[\mathbb{E}(\Phi(\theta_T x.) \mid \mathcal{F}_T) = \mathbb{E}_{x_T}[\Phi].\]
+    That is to say, \(\theta_T x.\) also has the strong Markov property.
+  \end{itemize}
+\end{theorem}
+
+We have already proved the first property. We shall provide a proof for a simpler 
+case where \(T = n\) though the proof also works for the strong case (see official notes).
+
+Again, since the product \(\sigma\)-algebra on \(\mathcal{X}^\infty\) is determined 
+by the \(\pi\)-system of cylindrical sets, it is sufficient to check the property 
+for functions of the form \(x \mapsto \prod_{i = 1}^m f_i(x_{n_i})\) for 
+\(f_i \in \mathcal{B}_b(\mathcal{X})\). Thus, the property is equivalent to 
+\[\mathbb{E}\left(\prod_{i = 1}^k f_i(x_{n_i + T}) \mid \mathcal{F}_T\right) = 
+  \mathbb{E}_{x_T}\left[\prod_{i = 1}^k f_i \circ \pi_{n_i}\right],\]
+where \(\pi_{n_i}\) is the \(n_i\)-th projection map from \(\mathcal{X}^\infty\).
+
+Let us first consider the case where \(T = \text{id}\). Then, 
+\[\mathbb{E}_{x}\left[\prod_{i = 1}^k f_i \circ \pi_{n_i}\right] = 
+  \int \cdots \int \prod_{i = 1}^m f_i(y_i) \prod_{j = 1}^m
+  P^{n_j - n_{j - 1}}(y_{j - 1}, \dd y_j).\]
+In fact, \(\prod_{j = 1}^m P^{n_j - n_{j - 1}}(y_{j - 1}, \dd y_j)\) is the distribution 
+of \((\pi_{n_1}, \cdots, \pi_{n_m})\) on 
+\((\mathcal{X}^\infty, \bigotimes \mathcal{B}(\mathcal{X}), \mathbb{P}_x)\).
+
+\begin{proposition}
+  Let \((x_n)\) be a time homogeneous Markov chain with transition probability \(P\). 
+  Then, for any \(\Phi \in \mathcal{B}_b(\mathcal{X}^\infty)\), 
+  \[\mathbb{E}(\Phi(\theta_n x.) \mid \mathcal{F}_n)(\omega) = \mathbb{E}_{x_n(\omega)}[\Phi]\]
+  almost everywhere.
+\end{proposition}
+\begin{proof}
+  We may assume \(\Phi = \prod_{i = 1}^k f_i\), \(f_i \in \mathcal{B}_b(\mathcal{X})\)
+  and it suffices to show that, for \(m_1 < \cdots < m_k\), 
+  \[\mathbb{E}\left(\prod_{i = 1}^k f_i(x_{n + m_i}) \mid \mathcal{F}_n\right) 
+    = \mathbb{E}_{x_n}\left[\prod_{i = 1}^k f_i(x_{m_i})\right].\]
+  We will induct on \(k\). For \(k = 1\), 
+  \[\mathbb{E}(f(x_{n + m}) \mid \mathcal{F}_n)(\omega) = \int f(y) P^m(x_n, \dd y)\]
+  almost surely by the Markov property. Suppose now, the property holds for 
+  \(k - 1\). Then,
+  \[\begin{split}
+    & \mathbb{E}\left(\prod_{i = 1}^k f_i(x_{n + m_i}) \mid \mathcal{F}_n\right)\\
+    & = \mathbb{E}\left(\prod_{i = 1}^{k - 1} f_i(x_{n + m_i}) \mathbb{E}(f_k(x_{n + m_k}) \mid \mathcal{F}_{n + m_{k - 1}}) \mid \mathcal{F}_n\right)\\
+    & = \mathbb{E}\left(\prod_{i = 1}^{k - 1} f_i(x_{n + m_i}) \int f_k(y_k) P^{m_k - m_{k - 1}}(x_{n + m_{k - 1}}, \dd y_k) \mid \mathcal{F}_n\right)\\
+    & = \mathbb{E}_{x_n}\left[
+      \prod_{i = 1}^{k - 1} f_i(x_{n + m_i})\int f_k(y_k) P^{m_k - m_{k - 1}}(y_{k - 1}, \dd y_k)
+    \right]\\
+    & = \int \cdots \int \prod_{i = 1}^{k - 1} f_i(y_i) \int f_k(y_k) P^{m_k - m_{k - 1}}(y_{k - 1}, \dd y_k)
+      \prod_{i = 1}^{k - 1}P^{m_i - m_{i - 1}}(y_{i - 1}, \dd y_i)\\
+    & = \int \cdots \int \prod_{i = 1}^k f_i(y_i) \prod_{j = 1}^k P^{m_i - m_{i - 1}}(y_{i - 1}, \dd y_i)
+      = \mathbb{E}_{x_n}\left[\prod_{i = 1}^k f_i(x_{m_i})\right]
+  \end{split}\]
+  as required.
+\end{proof}
+
+\begin{theorem}[Strong Markov Property for non-finite Stopping Times]
+  Let \((x_n)\) be a time homogeneous Markov process with transition probability \(P\) 
+  and let \(T\) be a stopping time. Then for any \(\Phi : \mathcal{B}_b(\mathcal{X}^\infty)\),
+  \[\mathbb{E}(\Phi(\theta_T x.)\mathbf{1}_{\{T < \infty\}} \mid \mathcal{F}_T)(\omega) = 
+    \mathbb{E}_{x_T(\omega)}[\Phi]\]
+  on \(\{T < \infty\}\) almost everywhere.
+\end{theorem}
+
+More or less the same as the finite case since we are working on \(\{T < \infty\}\).
+
+Recall that the transition operator \(T^*\) is an operator acting on the space of 
+measures such that, for \(\mu\) a measure on \(\mathcal{X}\), 
+\[T^* \mu(A) = \int P(y, A) \mu(\dd y).\]
+We say \(\mu\) is invariant if \(\mu = T^* \mu\). If \(\mathcal{L}(x_0) = \pi\) 
+is an invariant probability measure, then \(\mathcal{L}(x_n) = \pi\) for all \(n \ge 0\).
+Thus, the distribution of the process does not change with time. Indeed, 
+by definition 
+\[\mathcal{L}(x_{n + 1})(A) = \mathbb{P}(x_{n + 1} \in A) = \int P(y, A) \mathcal{L}(x_n)(\dd y),\]
+and so follows by induction.
+
+\begin{definition}[Invariant]
+  A measure \(\mu\) is said to be invariant if \(\mu = T^* \mu\) where \(T^*\) is 
+  the transition operator with respect to some transition probability.
+\end{definition}
+
+\begin{definition}[Stationary]
+  A process \((x_n)\) is said to be stationary such that \(\theta_n x.\) has invariant 
+  distributions for all \(n \ge 0\).
+\end{definition}
+
+\begin{proposition}
+  A time homogeneous Markov process with invariant initial distribution is stationary.
+\end{proposition}
+\begin{proof}
+  Suppose \((x_n)\) is a Markov process with initial distribution \(\pi\) such that 
+  \(\pi\) is invariant. Then, we denote \(\mathbb{P}_\pi\) the distribution of \(x.\) 
+  on \(\mathcal{X}^\infty\), namely \(\mathbb{P}_\pi = (x.)_*\mathbb{P}\). By the 
+  Markov property, \(\theta_n x.\) is a Markov process with transition probability \(P\) 
+  and initial distribution \(\mathcal{L}((\theta_n x.)_0) = \mathcal{L}(x_n) = \pi\). 
+  Hence, \(\mathcal{L}(\theta_n x.) = \mathbb{P}_\pi\) and so, \((x_n)\) is a stationary 
+  process.
+\end{proof}
+
+\newpage
+\section{THMC With Discrete Time}
+
+We will in this section consdier time homogeneous Markov chains (THMC) on discrete time.
+
+We will in this section denote \(\mathcal{X} = \{1, 2, \cdots, N\}\) if \(|\mathcal{X}| < \infty\)
+and \(\mathcal{X} = \{1, 2, \cdots\}\) otherwise. Given a THMC on \(\mathcal{X}\) with 
+transition probability \(P\) with initial distribution \(\nu\), then, we write
+\(\mathcal{L}(x_n) =: \nu P^n\). As \(\nu\) is discrete, it is represented by a vector 
+\(v \in [0, 1]^{\mathcal{X}}\) such that for all \(i \in \mathcal{X}\), \(\nu(\{i\}) = v_i\).
+For short hand we write \(\nu(i) := \nu(\{i\})\). Then, 
+\[\nu P(i) = \sum_{k \in \mathcal{X}} \nu(k)P_{ki}.\]
+
+\begin{definition}[Accessible]
+  Let \(i, j \in \mathcal{X}\). Then we say \(j\) is accessible from \(i\) if there 
+  exists some \(n\) such that \(P^n_{ij} = \mathbb{P}(x_n = j \mid x_0 = i) > 0\). 
+  We denote this by \(i \longrightarrow j\).
+\end{definition}
+
+\begin{definition}[Communicating]
+  For \(i, j \in \mathcal{X}\), \(i, j\) are communicating if \(i \longrightarrow j\) 
+  and \(j \longrightarrow i\). We denoted this by \(i \sim j\).
+\end{definition}
+
+We note the communicating is not necessarily an equivalence relation as a state 
+might not communicate with itself.
+
+\begin{definition}[Communicating Class]
+  A communicating class for some \(i \in \mathcal{X}\) is the set 
+  \([i] = \{j \in \mathcal{X} \mid i \sim j\}\).
+\end{definition}
+
+\begin{definition}[Irreducible]
+  A chain is irreducible if there exists only one communicating class, otherwise 
+  it is reducible.
+\end{definition}
+
+\begin{lemma}
+  Communicating is transitive.
+\end{lemma}
+\begin{proof}
+  Suppose \(i, j, k \in \mathcal{X}\) and \(i \longrightarrow j, j \longrightarrow k\),
+  then, there exists some \(n_1, n_2\) such that \(P^{n_1}_{ij}, P^{n_2}_{jk} > 0\). 
+  Then, by the C-K,
+  \[\begin{split}
+    P^{n_2 + n_1}_{ik} & = P^{n_2 + n_1}(i, \{k\}) = \int P^{n_2}(y, \{k\}) P^{n_1}(i, \dd y) 
+      = \sum_{l \in \mathcal{X}} P^{n_2}(l, \{k\}) P^{n_1}(i, \{l\})\\
+      & \ge P^{n_2}(j, \{k\}) P^{n_1}(i, \{j\}) = P^{n_2}_{jk}P^{n_1}_{ij} > 0,
+  \end{split}\]
+  implying \(i \longrightarrow k\) as required.
+\end{proof}
+
+\begin{lemma}
+  Let \(i, j \in \mathcal{X}\) and suppose \(i \longrightarrow j\). Then, 
+  any element in \([j]\) is accessible from any element in \([i]\).
+\end{lemma}
+\begin{proof}
+  Let \(i' \in [i]\) and \(j' \in [j]\). Then, by definition
+  \[i' \longrightarrow i \longrightarrow j \longrightarrow j'\]
+  implying \(i' \longrightarrow j'\) by transitivity.
+\end{proof}
+
+With this lemma in hand, we may define a partial order (antisymmetric) on the 
+communicating classes. In particular, we say \([i] \le [j]\) if every element of 
+\(i\) can be assessed from any element of \(j\). Equivalently, \(j \longrightarrow i\). 
+
+\begin{definition}[Minimal]
+  Am communicating class \([i]\) is said to be minimal (or closed) if there does \textbf{not} exist 
+  a communicating class \([j] \neq [i]\) such that \([j] \le [i]\).
+\end{definition}
+
+\begin{definition}[Recurrent \& Transient]
+  Let \(\mathcal{X}\) be countable. A state \(i \in \mathcal{X}\) is recurrent 
+  if \(\mathbb{P}(T_i < \infty \mid x_0 = i) = 1\) where \(T_i := \inf\{n \ge 1 \mid x_n = i\}\)
+  is the first hitting time of \(i\) by the process. If a process is not recurrent 
+  at \(i\), then \(i\) is called a transient state.
+  
+  If every element of \(\mathcal{X}\) is recurrent, then the process is called 
+  recurrent. Similarly, the process is called transient if every state is transient.
+\end{definition}
+
+Let us introduce the following notation:
+\begin{itemize}
+  \item \(\mathbb{P}_i(A) := \mathbb{P}(A \mid x_0 = i)\),
+  \item \(\mathbb{P}_i(T_i < \infty) := \mathbb{P}(T_i < \infty \mid x_0 = i)\),
+  \item \(\mathbb{E}_i(Y) := \mathbb{E}(Y \mid x_0 = i)\).
+\end{itemize}
+
+We shall see later that this existence of a recurrent state implies the existence of 
+and invariant measure. Also, recurrent and transient are properties invariant 
+on communicating classes.
+
+\begin{lemma}
+  Given two states \(i, j \in \mathcal{X}\), \(i \longrightarrow j\) if and only 
+  if \(\mathbb{P}_i(T_j < \infty) > 0\). Also, 
+  \[\mathbb{P}_i(T_j < \infty) \le \sum_{n = 1}^\infty P_{ij}^n.\]
+\end{lemma}
+\begin{proof}
+  We note that \(\{T_j < \infty\} = \bigsqcup_{n = 1}^\infty \{T_j = n\}\) and so, 
+  if \(P^n_{ij} > 0\), \(0 < P^n_{ij} = \mathbb{P}_i(x_j = n) \le \mathbb{P}(\{T_j < \infty\})\).
+  On the other hand, 
+  \[\mathbb{P}_i(T_j < \infty) = \sum_{n = 1}^\infty \mathbb{P}_i(T_j = n) \le 
+    \sum_{n = 1}^\infty \mathbb{P}_i(x_n = j) = \sum_{n = 1}^\infty P^n_{ij}\] 
+  and so, if \(\mathbb{P}_i(T_j < \infty) > 0\), then, \(P_{ij}^n > 0\) for some \(n\).
+\end{proof}
 
 \end{document}
