@@ -69,6 +69,7 @@
 \usepackage{mathtools}
 \usepackage{esint}
 \usepackage[ruled,vlined]{algorithm2e}
+\usepackage{tikz-cd}
 \theoremstyle{definition}
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition*}{Definition}
@@ -334,7 +335,10 @@ we will provide a proposition for situations where we have a space \(X\), a simp
 connected space \(\tilde X\) and a group \(\Gamma\) 
 characterising the lack of simply connectedness of \(X\).
 
-\subsection{Fundamental Group}
+\newpage
+\section{Fundamental Group}
+
+\subsection{Definition}
 
 Given a topological space \(X\), we will consider the set of all loops on 
 \(X\) quotiented by the homotopy relation. Then, by equipping this quotient with 
@@ -470,7 +474,7 @@ In the section we generalize the method introduced for toruses to general spaces
   \((U_\alpha)_{\alpha \in A}\) of \(X\) for all \(\alpha \in A\), \(\pi^{-1}(U_\alpha)\) 
   is a disjoint union of open sets of \(\tilde X\) each of which is homeomorphic to 
   \(U_\alpha\) with \(\pi\) (i.e. the \(\pi\) restricts on such an open set is 
-  homeomorphic to \(U_\alpha\).
+  homeomorphic to \(U_\alpha\)).
 
   Given a covering map \(\pi\), we call \(X\) the base space and \(\tilde X\) the 
   covering map.
@@ -534,5 +538,160 @@ copies.
   On \(V_z\), it is clear that \(\tilde f = \bar f = (\pi\mid_{\tilde U_\alpha(\beta)})^{-1} \circ f\).
   Now, since \(N\) is a union of connected components, we obtain uniqueness.
 \end{proof}
+
+\subsection{Induced Maps}
+
+In the case that we have a map between to topological spaces, we can define an 
+induced map on their fundamental group by composing the map with the loops.
+
+\begin{definition}[Induced Map]
+  Let \(X, Y\) be topological spaces and let \(x, y\) be elements of \(X\) and \(Y\) respectively,
+  then if \(f : X \to Y\) is a continuous map such that \(f(x) = y\), then, the induced map 
+  \(f_*\) is defined to be 
+  \[f_* : \pi_1(X, x) \to \pi_1(Y. y) : [\gamma] \mapsto [f \circ \gamma].\]
+\end{definition}
+
+It is clear that this map is well-defined since if \(H\) is a homotopy between 
+\(\gamma_1, \gamma_2\) loops in \(X\) based at \(x\), then 
+\(f \circ H\) is a homotopy between \(f \circ \gamma_1\) and \(f \circ \gamma_2\).
+
+\begin{proposition}
+  The induced map \(f_* : \pi_1(X, x) \to \pi_1(Y, y)\) of \(f\) is a group homomorphism.
+\end{proposition}
+\begin{proof}
+  Clearly, \(f \circ \text{id}\) is the constant loop based at \(y\) and thus, 
+  \(f_*\) maps the identity to the identity. 
+
+  Now, let \(\gamma_1, \gamma_2\) be loops based at \(x\), it suffices to show that 
+  \((f \circ \gamma_1) * (f \circ \gamma_2)\) is homotopic to \(f \circ (\gamma_1 * \gamma_2)\).
+  But, in fact, the two paths above are equal. Hence, homotopic and thus, \(f_*\) 
+  is a group homomorphism as required.
+\end{proof}
+
+\begin{proposition}
+  Let \(\pi : \tilde X \to X\) be a covering space and suppose \(\pi(\tilde x) = x\) 
+  for some \(\tilde x \in \tilde X\) and \(x \in X\). Then, the induced map of \(\pi\),
+  \[\pi_* : \pi_1(\tilde X, \tilde x) \to \pi_1(X, x)\]
+  is injective.
+
+  Since \(\pi_*\) is a injective group homomorphism, in some sense, the covering 
+  space allows us to consider a fundamental group of the covering space as a subgroup 
+  of the fundamental group of the original space.
+
+  In this sense, the induced map of the covering map provides a correspondence 
+  between the covering space (quotiented by some relation) and the subgroups of the 
+  fundamental group.
+\end{proposition}
+\begin{proof}
+  We will show that \(\ker \pi_*\) is trivial. Suppose \(\gamma\) is a loop based at 
+  \(\tilde x\) such that \(\pi \circ \gamma\) is trivial and let \(H\) be the 
+  homotopy between \(\pi \circ \gamma\) and the constant loop based at \(x\). 
+  We will lift \(H\) along \(\pi\). 
+
+  Let \(\tilde H : [0, 1] \times [0, 1] \to \tilde X\) be the lift of \(H\) such that 
+  \(\gamma(t) = \tilde H(0, t)\) and \(\pi \circ \tilde H = H\). As \(\pi\) is locally 
+  homeomorphic and \(\tilde H\) is continuous, as
+  \(\tilde H(0, 0) = \tilde H(0, 1) = \gamma(0) = \tilde x\), we have 
+  \(\tilde H(u, 0) = \tilde H(u, 1) = \tilde x\). Now, by continuity, \(\tilde H(1, t)\) 
+  is constant with \(H(1, t) = x\) we have \(\tilde H(1, t) = \tilde x\) and thus, 
+  \(\tilde H\) is a homotopy between \(\gamma\) and the constant path as required. 
+\end{proof}
+
+An important example is the covering map \(\pi : S^1 \to S^1 : z \mapsto z^n\), 
+then the induced map \(\pi_* : \mathbb{Z} \to \mathbb{Z}\) (as \(\pi_1(S^1, 1)\) 
+is isomorphic to \(\mathbb{Z}\)) is the map \(k \mapsto nk\). 
+
+\subsection{Universal Covers}
+
+\begin{definition}[Universal Cover]
+  Let \(X\) be a topological space. A universal cover of \(X\) is a space \(\tilde X\) 
+  that covers \(X\) (i.e. there exists a covering map \(\pi : \tilde X \to X\)) and 
+  is simply connected.
+\end{definition}
+
+\begin{theorem}
+  If a topological space \(X\) is path connected, locally path connected and locally simply 
+  connected, then \(X\) has a unique universal cover.
+
+  We say a space has a property locally if every basis of neighbourhood has that 
+  property.
+\end{theorem}
+
+Although this is a powerful theorem, without any specific construction of the universal 
+cover, we will not be able to make much conclusion about the space. Therefore, 
+this theorem is not very useful for our purpose. We will provide universal covers 
+for most spaces we work with explicitly. For this reason, we will only provide the 
+proof for the uniqueness.
+
+\begin{lemma}
+  Let \(Y\) be a topological space that is simply connected and locally path connected
+  and suppose \(\pi : \bar X \to X\) is a covering map, \(f : Y \to X\) be 
+  continuous such that \(f(y) = \pi(\bar x) = x\) for some \(y \in Y, \bar x \in \bar X, x \in X\). 
+  Then, there exists a continuous unique map \(\bar f : Y \to \bar X\) such that 
+  \(\pi \circ \bar f = f\). i.e. the following diagram commutes
+  \[\begin{tikzcd}
+    && {\bar X \ni \bar x} \\
+    {y \in Y} && {X\ni x}
+    \arrow["\pi", from=1-3, to=2-3]
+    \arrow["f"', from=2-1, to=2-3]
+    \arrow["{\exists! \bar f}", dashed, from=2-1, to=1-3]
+  \end{tikzcd}\]
+\end{lemma}
+\begin{proof}
+  For all \(y' \in Y\), let \(\gamma\) a path 
+  from \(y\) to \(y'\), take \(\bar f(y')\) be the end point of the unique lift of \(f \circ \gamma\) 
+  starting at \(\bar x\). This is well-defined since if \(\gamma'\) is another 
+  path from \(y\) to \(y'\), then \(\gamma'\) is homotopic to \(\gamma'\) and thus, 
+  \(f \circ \gamma\) and \(f \circ \gamma'\) are homotopic and hence, their lifts 
+  are also homotopic with the same end points.
+
+  We will now show \(\bar f\) is continuous. Let \(U \subseteq X\) be a open neighbourhood 
+  of \(f(y')\) such that \(\pi^{-1}(U)\) is a disjoint copies of sets \(\{U_\alpha\}_{I'}\)
+  such that, on each copy, the restriction of \(\pi\) form a homeomorphism onto 
+  \(U\). Suppse \(\bar U\) is one such copy and let \(V\) be a sufficiently small 
+  neighbourhood of \(y'\) such that \(V \subseteq f^{-1}(U)\). I claim 
+  \(V \subseteq \bar f^{-1}(\bar U)\). Indeed, any paths from \(y\) to \(y'\) 
+  can be concatenated to a path with end point \(y''\) in \(V\). By definition, 
+  \(f(y'')\) is the end point of the lift of this concatenated path composed with \(f\) 
+  based at \(\bar x\), and thus, since \(\bar f(y') \in \bar U\), the lift remains 
+  in \(U\) and so \(y'' \in V\). Hence, as \(\bar U\) form a basis of open sets of \(\bar X\), 
+  \(\bar f\) is continuous.
+
+  Finally, to show uniqueness, we observe that, for any \(y' \in Y\) and 
+  a path \(\gamma\) from \(y\) to \(y'\), \(f \circ \gamma = \pi \circ \bar f \circ \gamma\), 
+  i.e. \(\bar f \circ \gamma\) equals the lift of \(f \circ \gamma\) based at some point. 
+  Now, as we require \(\bar f(y) = \bar x\), this lift must be based at \(\bar x\) 
+  and hence uniqueness follows by the uniqueness of the lift. 
+\end{proof}
+
+\begin{proposition}
+  If \(\pi_1 : \tilde X_1 \to X\) and \(\pi_2 : \tilde X_2 \to X\) are covering maps 
+  from simply connected spaces and \(X\) is path-connected such that for some 
+  \(x \in X, \tilde x_1 \in \tilde X_1, \tilde x_2 \in \tilde X_2\),
+  \(\pi_1(\tilde x_1) = x = \pi_2(\tilde x_2)\), then there exists a unique  
+  homeomorphism \(\phi : \tilde X_1 \to \tilde X_2\) such that the following diagram commutes.
+  \[\begin{tikzcd}
+    {\tilde X_1} && {\tilde X_2} \\
+    & X
+    \arrow["\exists! \phi", from=1-1, to=1-3]
+    \arrow["{\pi_1}"', from=1-1, to=2-2]
+    \arrow["{\pi_2}", from=1-3, to=2-2]
+  \end{tikzcd}\]
+\end{proposition}
+\begin{proof}
+  Take \(\phi\) to be the lift of \(\pi_1\) to \(\tilde X_2\) and one may check 
+  that the lift of \(\pi_2\) to \(\tilde X_1\) provides the inverse.
+\end{proof}
+
+\begin{proposition}
+  Let \(\pi : (\tilde X, \tilde x) \to (X, x)\) be a universal covering map where \(X\) is locally 
+  path-connected and let \(p : (\bar X, \bar x) \to (X, x)\) be another covering map.
+  Then, there exists a unique \(f : (\tilde X, \tilde x) \to (\bar X, \bar x)\)
+  such that \(\pi = p \circ f\). i.e. the following diagram commutes.
+\end{proposition}
+\begin{proof}
+  Clear by lifting \(\pi\) to \(\tilde X \to \bar X\).
+\end{proof}
+
 
 \end{document}
