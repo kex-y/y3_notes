@@ -799,5 +799,141 @@ above as the following corollaries.
 
 We note that the converse is not true. Namely, uncorrelated does not imply independence.
 
+\subsection{Weak Law of Large Numbers}
+
+Consider \((\Omega_n, \mathcal{A}, \mathbb{P}_n)\) as 
+a (finite) probability space such that 
+\[\Omega_n := \{\omega \mid \omega = (a_1, \cdots, a_n), a_i \in \{0, 1\}\},
+  \mathcal{A} = \mathcal{P}(\Omega_n)\]
+and 
+\[\mathbb{P}_n(\{\omega\}) = p(\omega) = p^{\sum_{i = 1}^n a_i}q^{n - \sum_{i = 1}^n a_i}\]
+for some \(0 < p < 1\) and \(q = 1 - p\). 
+Let \(\xi_1, \cdots, \xi_n : \Omega_n \to \{0, 1\}\) be random variables such that 
+\(\xi_i(\omega) = a_i\). It is easy to check that \(\xi_i\) are independent and 
+identically distributed (iid.). Indeed, 
+\[(\xi_i)_*\mathbb{P}_n(\{1\}) = \mathbb{P}_n(\{\omega \mid a_j(\omega) = 1\}) = 
+  p\sum_{k = 0}^{n - 1} {{n - 1} \choose k} p^kq^{n - k} = p\]
+and \((\xi_i)_*\mathbb{P}_n(\{0\}) = (\xi_i)_*\mathbb{P}_n(\{1\}^c) = 1 - p = q\). 
+
+Now defining \(S_n := \sum_{i = 1}^n \xi_i\), we observe that 
+\[\mathbb{E}S_n = \sum_{i = 1}^n \mathbb{E}\xi_i = \sum_{i = 1}^n p = np.\]
+Thus, the expectation of \(\frac{1}{n} S_n\) is simply \(p\). We now ask what is 
+\(|\frac{1}{n}S_n(\omega) - p|\). Immediately, we observe that \(|\frac{1}{n}S_n(\omega) - p|\) 
+cannot tends to 0 point-wise since \(S_n(0) = 0\) for all \(n\). Nonetheless, 
+we observe that \(\mathbb{P}_n(S_n = 0) = q^n \to 0\) as \(n \to \infty\). 
+
+Recalling that the Kolmogorov extension theorem, as \(\{\mathbb{P}_n\}\) is consistent, 
+there exists a unique probability measure \(\mathbb{P}\) on \((\mathbb{R}^\infty, \mathcal{B}(\mathbb{R}^\infty))\) 
+such that \(\mathbb{P}(\xi \in \mathbb{R}^\infty \mid (\xi_1, \cdots, \xi_n) \in B_n) = 
+\mathbb{P}_n((\xi_1, \cdots, \xi_n) \in B_n)\). With this measure in mind, using 
+Chebyshev's inequality, and the fact that they are independent and hence, uncorrelated,
+we obtain 
+\[\mathbb{P}\left(\left|\frac{1}{n}S_n - p\right| \ge \epsilon\right) \le \frac{V(\frac{1}{n}S_n)}{\epsilon^2}
+  = \frac{1}{\epsilon^2} \sum_{j = 1}^n V\left(\frac{1}{n} \xi_i\right) = \frac{1}{n^2 \epsilon^2}\sum_{i = 1}^n V_{\xi_i}
+  = \frac{npq}{n^2 \epsilon^2} \to 0\]
+as \(n \to \infty\). Thus, \(\frac{1}{n}S_n\) converges to \(p\) in measure (probability).
+
+This fact is known as Bernoulli's law of large numbers. By noting that we only used 
+the uncorrelated fact, we obtain a more general theorem.
+
+In general (with arbitrary \(\xi_i\)), we call the quantity \(\frac{1}{n} S_n\) the 
+time average and the (weak) law of large numbers tells us the time average converges 
+in measure to the space average \(\mathbb{E}\xi_i\). 
+
+\begin{theorem}[Weak Law of Large Numbers]
+  let \(\xi_1, \xi_2, \cdots\) be integrable random variables. Defining 
+  \(S_n^{(c)} = \sum_{i = 1}^n (\xi_i - \mathbb{E}\xi_i)\) (we note that 
+  \(\mathbb{E}S_n^{(c)} = 0\)). Then, if \(\xi_1, \xi_2 \cdots\) are uncorrelated 
+  and for all \(i\), \(V_{\xi_i} \le C\) for some \(C > 0\), for all \(\epsilon > 0\),
+  \[\lim_{n \to \infty} \mathbb{P}\left(\left|\frac{1}{n} S_n^{(c)}\right| \ge \epsilon\right) = 0\]
+  i.e. \(\frac{1}{n}S^{(c)}_n \to 0\) in measure.
+\end{theorem}
+\begin{proof}
+  By Chebyshev's inequality, as \(\xi_i\) are uncorrelated,
+  \[\mathbb{P}\left(\left|\frac{1}{n}S_n^{(c)}\right| \ge \epsilon\right) \le 
+  \frac{V(\frac{S_n^{(c)}}{n})}{\epsilon^2} \le \frac{c}{n\epsilon^2} \to 0\]
+  as \(n \to \infty\).
+\end{proof}
+
+\begin{corollary}
+  If \(\xi_1, \xi_2, \cdots\) integrable iid. random variables such that \(V_{\xi_i} < \infty\), 
+  then, \(\frac{1}{n}\sum_{i = 1}^n \xi_i\) converges to \(\mathbb{E}\xi_i\) in measure.
+\end{corollary}
+
+We would also like to consider the limiting behaviour of the distribution. 
+Let us first recall the big and small-O notation. 
+
+Given sequences of functions \((f_n), (g_n)\), we denote \(g_n = O_{n \to \infty}(|f_n|)\) 
+if \(|g_n / f_n|\) is eventually bounded, i.e. there exists some \(c, N\) such that 
+for all \(n \ge N\), \(|g_n| \le c|f_n|\). On the other hand, we denote 
+\(g_n = o_{n \to \infty}(|f_n|)\) if \(\lim_{n \to \infty} |g_n / f_n| = 0\). 
+
+Returning to our example of the Bernoulli random variables, we have the following 
+result.
+
+\begin{theorem}[Local Limit Theorem]
+  For any \(0 < p < 1\), 
+  \[\max_{0 \le k \le n} \left|\mathbb{P}(S_n = k) - \frac{1}{\sqrt{2\pi np(1 - p)}}e^{- \frac{x^2}{2p(1 - p)}} \right| 
+  = o\left(\frac{1}{\sqrt{n}}\right),\]
+  where \(x = x_{k, n} := \frac{k - np}{\sqrt{n}}\).
+\end{theorem}
+\begin{proof}
+  Let \(A_n > 0\) such that \(A_n = o(n)\) (e.g. \(A_n = n^\epsilon\) for some \(0 < \epsilon < 1\)).
+  Then, let \(k \in \mathbb{N}\) such that \(|x_{k, n}| \le A_n / \sqrt{n}\) and so, 
+  \[np - A_n \le k \le np + A_n.\]
+  Then, \(k, n- k \to \infty\) as \(n \to \infty\) and using Stirling's formula,
+  \[\begin{split}
+    \mathbb{P}(S_n = k) & = \frac{n!}{k!(n - k)!}p^k(1 - p)^{n - k}\\ 
+    & = \frac{\sqrt{2\pi n}}{\sqrt{2\pi k}{\sqrt{2\pi (n - k)}}}
+        e^{n \log n - k \log k - (n - k)\log(n - k)}p^k (1 - p)^{n - k}\left(1 + O\left(\frac{1}{n}\right)\right).
+  \end{split}\]
+  Then, by noting that \(np + x \sqrt{n} = k = np(1 + O(A_n / n))\) and 
+  \(n(1 - p) - x\sqrt{n} = n - k = n(1 - p)(1 + O(A_n / n))\), we have 
+  \[\begin{split}
+    \mathbb{P}(S_n = k) & =
+    \sqrt{\frac{n}{np2\pi n(1 - p)}}\left(1 + O\left(\frac{A_n}{n}\right)\right)
+    e^{n \log n - (np + x\sqrt{n})(\log(np) + \frac{x}{p\sqrt{n}} - \frac{x^2}{2p^2\sqrt{n}} + O\left(\frac{x}{\sqrt{n}}\right)^3)}\\
+    & e^{-(n(1 - p) - x\sqrt{n}(\log(n(1 - p) - \frac{x}{(1 - p)\sqrt{n}} - \frac{x^2}{2(1 - p)^2 n} + O\left(\frac{x}{\sqrt{n}}\right)^3)))}
+    e^{k\log p + (n - k)\log(1 - p)}\\
+    & = \sqrt{\frac{1}{2\pi n p(1 - p)}} \left(1 + O\left(\frac{A_n}{n}\right)\right)
+    e^{-(np + x\sqrt{n})(\frac{x}{p\sqrt{n}} - \frac{x^2}{2p^2 n} + O\left(\frac{x}{\sqrt{n}}\right)^3)}\\
+    & e^{(n(1 - p) - x\sqrt{n})(\frac{x}{(1 - p)\sqrt{n}} - \frac{x^2}{2(1 - p)^2 n} + O\left(\frac{x}{\sqrt{n}}\right)^3)}\\
+    & = \sqrt{\frac{1}{2\pi n p(1 - p)}} \left(1 + O\left(\frac{A_n}{n}\right)\right)\\
+    & e^{-\sqrt{n} x + \frac{x^2}{2p} - \frac{x^2}{p} +\frac{x^3}{2p^2 \sqrt{n}}}
+    e^{O\left(\frac{x}{\sqrt{n}}\right)^3 + \sqrt{n}x + \frac{x^2}{2(1 - p)} - \frac{x^2}{1 - p} -\frac{x^3}{2(1 - p^2)\sqrt{n}}}\\
+    & = \frac{1 + O\left(\frac{A_n}{n}\right)}{\sqrt{2\pi n p(1 - p)}} 
+      e^{-\frac{x^2}{2}(\frac{1}{p} + \frac{1}{1 - p}) + O\left(\frac{A_n^3}{\sqrt{n}^3 \sqrt{n}}\right)}\\
+    & = \frac{1}{\sqrt{2\pi p(1 - p)n}} e^{-\frac{x^2}{2p(1 - p)}}\left(1 + O\left(\frac{A_n^3}{n^2}\right) + 
+      O\left(\frac{A_n}{n}\right)\right).
+  \end{split}\]
+  Hence, choosing \(A_n = n^{7 / 12}\), the result follows for \(np - A_n \le k \le np + A_n\). 
+  Finally, by monotonicity of \(P(S_n = k)\), we have the result follows for all \(k \le n\).
+\end{proof}
+
+\begin{theorem}[de Moivre-Laplace Central Limit Theorem]
+  For any \(0 < p < 1\) and \(x \in \mathbb{R}\), 
+  \[\lim_{n \to \infty} \mathbb{P}\left(\frac{S_n - np}{\sqrt{np(1 - p)}} \le x\right) = \Phi(x),\]
+  where \(\Phi(x)\) is the distribution of the normal random variable with parameters 
+  \(m = 0, \sigma^2 = 1\).
+\end{theorem}
+\begin{proof}
+  Using the local limit theorem, we have
+  \[\begin{split}
+    \mathbb{P}\left(\frac{S_n - np}{\sqrt{np(1 - p)}} \le x\right) & = 
+    \mathbb{P}(S_n \le np + x\sqrt{np(1 - p)})
+     = \sum_{k = 0}^{\lfloor np + x\sqrt{np(1 - p)}\rfloor} \mathbb{P}(S_n = k)\\
+      & = o(1) + \sum_{k = \lfloor np - A_n \rfloor}^{\lfloor np + x\sqrt{np(1 - p)}\rfloor}
+      \frac{1}{\sqrt{2\pi}\sqrt{np(1 - p)}}e^{-\frac{1}{2}\left(\frac{k - np}{\sqrt{np(1 - p)}}\right)^2}
+  \end{split}\]
+  which converges to \(\int_{(-\infty, x]} \frac{1}{\sqrt{2\pi}} e^{-y^2 / 2} \lambda(\dd y)\) as 
+  required.
+\end{proof}
+
+Finally, as a remark, again using Sterling's formula, we see that 
+\[\begin{split}
+  \mathbb{P}(S_n = k) & = \frac{n(n - 1) \cdots (n - k + 1)}{k!}\left(\frac{\lambda}{n} + o\left(\frac{1}{n}\right)\right)^k\\
+  & = \left(1 - \frac{\lambda}{n} + o\left(\frac{1}{n}\right)\right)^{n - k} \to \frac{1}{k!} \lambda^ke^{-\lambda}
+\end{split}\]
+as \(n \to \infty\) where the limit is the Poisson distribution. 
 
 \end{document}
