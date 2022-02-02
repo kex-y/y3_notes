@@ -1344,6 +1344,8 @@ communicating classes. In particular, we say \([i] \le [j]\) if every element of
   a communicating class \([j] \neq [i]\) such that \([j] \le [i]\).
 \end{definition}
 
+\subsection{Recurrence and Transience}
+
 \begin{definition}[Recurrent \& Transient]
   Let \(\mathcal{X}\) be countable. A state \(i \in \mathcal{X}\) is recurrent 
   if \(\mathbb{P}(T_i < \infty \mid x_0 = i) = 1\) where \(T_i := \inf\{n \ge 1 \mid x_n = i\}\)
@@ -1377,6 +1379,145 @@ on communicating classes.
   \[\mathbb{P}_i(T_j < \infty) = \sum_{n = 1}^\infty \mathbb{P}_i(T_j = n) \le 
     \sum_{n = 1}^\infty \mathbb{P}_i(x_n = j) = \sum_{n = 1}^\infty P^n_{ij}\] 
   and so, if \(\mathbb{P}_i(T_j < \infty) > 0\), then, \(P_{ij}^n > 0\) for some \(n\).
+\end{proof}
+
+Let us define the following sequence of stopping times. Let \(T_j^0 = 0\), 
+\(T_j^1 = T_j\) and 
+\[T_j^{n + 1} := \inf \{k \ge T_j^n \mid x_k = j.\]
+That is the next returning time after \(T_j^n\). In the case that there is no confusion, 
+we simply denote \(T^n = T^n_j\).
+
+\begin{lemma}
+  If \(j \in \mathcal{X}\) is recurrent, then \(\{T_j^{n + 1} - T_j^n, n \ge 0\}\) 
+  are independent. Furthermore, \(T_j^{n + 1} - T_j^n\) are identically distributed 
+  and 
+  \[\mathbb{P}(T_j^{n + 1} - T_j^n = m) = \mathbb{P}_j(T_j = m)\]
+  for all \(n, m = 1, 2, \cdots\).
+\end{lemma}
+\begin{proof}
+  It is sufficient to show that for every \(n\), \(T^{n + 1} - T^n\) is independent 
+  of \(\mathcal{F}_{T^n} = \sigma(\theta_{T^n} x.)\) (since \(T^{k + 1} - T^k\) 
+  is \(\mathcal{F}_{T^n}\)-measurable for all \(k \le n\), so \(\sigma(T^{k + 1} - T^k) 
+  \subseteq \mathcal{F}_{T^n}\)). Now, since \(j\) is recurrent, 
+  \(\mathbb{P}_j(T_j < \infty) = 1\) and so, for any \(n \ge 1\), by the strong 
+  Markov property,
+  \[\begin{split}
+    \mathbb{P}(T^{n + 1} - T^n = m \mid \mathcal{F}_{T^n})(\omega) & = 
+    \mathbb{P}_{x_{T^n(\omega)}}(T = m) = \mathbb{P}_j(T = m).
+  \end{split}\]
+  Hence, taking expectation on both sides, we obtain
+  \[\mathbb{P}(T_j^{n + 1} - T_j^n = m) = \mathbb{P}_j(T_j = m).\]
+  Now, taking \(A \in \mathcal{F}_{T^n}\), we have 
+  \[\mathbb{P}(A \cap \{T^{n + 1} - T^n = m\}) = \mathbb{E}(\mathbf{1}_A \mathbb{P}_j(T = m))
+    = \mathbb{P}(A) \mathbb{P}(T^{n + 1} - T^n = m)\]
+  and thus, is independent.
+\end{proof}
+
+\begin{lemma}
+  Let \(i, j \in \mathcal{X}\) and \(k \ge 1\). Then 
+  \[\mathbb{P}_i(T_j^{k + 1} < \infty) = \mathbb{P}_i(T_j < \infty) \mathbb{P}_j(T_j^k < \infty).\]
+\end{lemma}
+\begin{proof}
+  Define 
+  \[\Phi : \mathcal{X}^\infty \to \mathbb{R} : (a_n) \mapsto 
+  \begin{cases}
+    1, \ & a_n = j \text{ for some } n,\\
+    0, \ & \text{ otherwise}.
+  \end{cases}\]
+  Then, \(T_j^{k + 1} < \infty\) if and only if \(\Phi(\theta_{T^k} x.) = 1\).
+  Again, by the strong Markov property, we have 
+  \[\begin{split}
+    \mathbb{E}(\mathbf{1}_{\{T_j^{k + 1} < \infty\}}\mathbf{1}_{T_j < \infty} \mid \mathcal{F}_{T_j}) & = 
+    \mathbb{E}(\Phi(\theta_{T^k} x.)\mathbf{1}_{T_j < \infty} \mid \mathcal{F}_{T_j})\\ 
+    & = \mathbb{E}_j(\Phi(x.))\mathbf{1}_{T_j < \infty}
+      = \mathbb{E}_j(\mathbf{1}_{T_j^{k} < \infty})\mathbf{1}_{T_j < \infty}.
+  \end{split}\]
+  Hence, the result follows by taking expectation on both sides.
+\end{proof}
+
+\begin{definition}
+  Let \(\eta_j := \sum_{n = 1}^\infty \mathbf{1}_{s_n = j}\). This is known as the occupation 
+  time of \(j\) and counts the number of visits to \(j\).
+\end{definition}
+
+We see that \(\mathbb{E}_j\eta_j = \sum_{n = 1}^\infty \mathbb{P}_j(x_n = j) = 
+\sum_{n = 1}^\infty P_{jj}^n\). 
+
+\begin{theorem}[Recurrence Criterion]
+  A state \(j \in \mathcal{X}\) is transient if and only if \(\sum_{n = 1}^\infty P_{jj}^n < \infty\) 
+  and recurrent if and only if \(\sum_{n = 1}^\infty P_{jj}^n = \infty\).
+\end{theorem}
+\begin{proof}
+  We have \(\mathbb{E}_j\eta_j = \sum_{n = 1}^\infty P_{jj}^n\). On the other hand, 
+  by the tail probability formula, 
+  \[\mathbb{E}_j \eta_j = \sum_{n = 1}^\infty \mathbb{P}(\eta_j \ge n) = 
+    \sum_{n = 1}^\infty \mathbb{P}_j(T^n_j < \infty) = \sum_{n = 1}^\infty(\mathbb{P}_j(T_j < \infty))^n\]
+  where \(\mathbb{P}_j(T^n_j < \infty) = (\mathbb{P}_j(T_j < \infty))^n\) by 
+  induction using the above lemma. As the right hand side is a geometric series, 
+  the sum is convergent if and only if \(\mathbb{P}_j(T_j < \infty) < 1\), i.e. 
+  \(j\) is transient. Hence, \(\sum_{n = 1}^\infty P_{jj}^n < \infty\) if and only 
+  if \(j\) is transient as required.
+\end{proof}
+
+With the above criterion, we can show whether or not a state is recurrent or transient 
+by considering the transition probabilities. As an example, consider again the symmetric 
+walk on \(\mathbb{Z}\). For all \(i \in \mathbb{Z}\), we have 
+\[P_{ii}^{2n} = {2n \choose n} \left(\frac{1}{2}\right)^{2n}\]
+as a path starting from \(i\) and ending at \(i\) in \(2n\) steps results in \(n\) 
+steps upwards and \(n\) steps down. On the other hand \(P_{ii}^{2n + 1} = 0\). 
+Hence, we have 
+\[\sum_{n = 1}^\infty P_{ii}^n = \sum_{n = 1}^\infty P_{ii}^{2n} = 
+  \sum_{n = 1}^\infty {2n \choose n} \left(\frac{1}{2}\right)^{2n}.\]
+By Stirling's formula, \(n! \sim (n / e)^n \sqrt{2\pi n}\), and so, 
+\(\sum_{n = 1}^\infty {2n \choose n} \left(\frac{1}{2}\right)^{2n} \sim 
+  c \sum_{n = 1}^\infty \frac{1}{\sqrt{n}} = \infty\)
+for some constant \(c\). Thus, every state in the symmetric walk is recurrent. 
+
+\begin{corollary}
+  If \(j \in [i]\) where \(i, j \in \mathcal{X}\). Then both \(i, j\) are recurrent 
+  or transient.
+\end{corollary}
+\begin{proof}
+  By symmetry, it suffices to show that \(i\) is recurrent implies \(j\) is. 
+  As \(i \sim j\), there exists some \(m_1, m_2\) such that \(P_{ij}^{m_1}, P_{ji}^{m_2} > 0\). 
+  Then, 
+  \[\sum_{n = 1}^\infty P_{jj}^n \ge P_{jj} + \cdots + P_{jj}^{m_1 + m_2} + 
+    \sum_{n = 1}^\infty P_{ji}^{m_2} P_{ii}^n P_{ij}^{m_1} 
+    \ge P_{ij}^{m_1} P_{ji}^{m_2} \sum_{n = 1}^\infty P_{ii}^n = \infty.\]
+  Hence \(j\) is recurrent as required.
+\end{proof}
+
+\begin{corollary}
+  Let \(j \in \mathcal{X}\). Then \(j\) is recurrent if and only if 
+  \(\mathbb{P}_j(\{x_n = j \text{ i.o.}\}) = 1\), and if transient if and only 
+  if \(\mathbb{P}_j(\{x_n = j \text{ i.o.}\}) = 0\).
+\end{corollary}
+\begin{proof}
+  We see that \(\{x_n = j \text{ i.o.}\} = \{\eta_j = \infty\}\) and 
+  \(\{\eta_j > m\} = \{T_j^{m + 1} < \infty\}\). Then, 
+  \[\mathbb{P}_j(\eta_j > m) = \mathbb{P}_j(T_j^{m + 1} < \infty) = 
+    (P_j(T_j < \infty))^{m + 1}.\]
+  Then, by continuity from above, 
+  \[\begin{split}
+    \mathbb{P}(\{x_n = j \text{ i.o.}\}) & = 
+    \mathbb{P}(\eta_j = \infty) = \mathbb{P}\left(\bigcup_{m = 1}^\infty\{\eta_j > m\}\right)\\
+    & =
+    \lim_{m \to \infty} \mathbb{P}(\eta_j > m) = \lim_{m \to \infty}(P_j(T_j < \infty))^{m + 1}.
+    \end{split}\]
+  So, \(j\) is recurrent (\(P_j(T_j < \infty) = 1\)) if and only if 
+  \(\mathbb{P}(\{x_n = j \text{ i.o.}\}) = 1\) and transient if and only if 
+  \(\mathbb{P}(\{x_n = j \text{ i.o.}\}) = 0\) as required.
+\end{proof}
+
+\begin{lemma}
+  Let \(\mathcal{X}\) be finite. A state is recurrent if and only if it is in a closed 
+  class.
+\end{lemma}
+\begin{proof}
+  The reverse direction is left as an exercise. Suppose \([i]\) is not closed, 
+  then there exists some \(j \in [i]\) and \(k \not\in [i]\) such that \(P_{jk} > 0\).
+  Then, by definition, a path starting from \(j\) arriving at \(k\) cannot return 
+  to \([i]\) and thus, \(\mathbb{P}_j(T_j < \infty) < 1\) implying \(j\) is transient.
 \end{proof}
 
 \end{document}
