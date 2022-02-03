@@ -693,5 +693,110 @@ proof for the uniqueness.
   Clear by lifting \(\pi\) to \(\tilde X \to \bar X\).
 \end{proof}
 
+\subsection{Group Actions and Quotients}
+
+Let us recall some definitions from group theory.
+
+\begin{definition}[Group Action]
+  An action of a group \(\Gamma\) on a topological space \(X\) is a group homomorphism 
+  \(\rho : \Gamma \to \text{Homeo}(X)\).
+\end{definition}
+
+Equivalently, an action is a map 
+\[\rho : \Gamma \times X \to X : (\gamma, x) \mapsto \gamma \cdot x\]
+is continuous whenever \(\Gamma\) is endowed with the discrete topology and 
+for all \(\gamma_1, \gamma_2 \in \Gamma\),
+\begin{itemize}
+  \item \(\gamma_1 \cdot (\gamma_2 \cdot x) = (\gamma_1 \gamma_2) \cdot x\);
+  \item \(e \cdot x = x\).
+\end{itemize}
+
+\begin{definition}
+  A group action from \(\Gamma\) to \(X\) is said to be ``nice'' if for all 
+  \(x \in X\), there exists \(U_x\) a neighbourhood of \(x\) such that for all 
+  \(\gamma \neq e\), \(\gamma \cdot U_x \cap U_x = \varnothing\).
+\end{definition}
+
+\begin{proposition}
+  If \(\Gamma\) acts nicely on \(X\), then for all \(\gamma_1, \gamma_2 \in \Gamma\), 
+  \(\gamma_1 \neq \gamma_2\), there exists some \(U_x\) a neighbourhood of \(x\) 
+  such that \(\gamma_1 \cdot U_x \cap \gamma_2 \cdot U_x = \varnothing\).
+\end{proposition}
+\begin{proof}
+  Since \(\Gamma\) acts nicely on \(X\), there exists some \(U_x\) a neighbourhood 
+  of \(x\) such that \(\gamma_2^{-1} \gamma_1 \cdot U_x \cap \cdot U_x = \varnothing\).
+  Thus, \(\varnothing = \gamma_2 \cdot (\gamma_2^{-1} \gamma_1 \cdot U_x )\gamma_2 \cdot U_x
+  = \gamma_1 \cdot U_x \cap \gamma_2 \cdot U_x\) as required.
+\end{proof}
+
+Let us introduce the equivalence relation where \(x \sim y\) if and only if 
+there exists some \(\gamma \in \Gamma\) such that \(\gamma \cdot x = y\). 
+We denote the quotient topology by this equivalence relation by \(X / \Gamma\).
+
+\begin{theorem}
+  Assume that \(\Gamma\) acts nicely on \(X\). Then, the projection map 
+  \[\pi : X \to X / \Gamma\]
+  is a covering map.
+\end{theorem}
+\begin{proof}
+  Let \(x \in X\) and take \(U_x\) to be a neighbourhood such that for all 
+  \(\gamma_1, \gamma_2 \in \Gamma\), \(\gamma_1 \neq \gamma_2\), 
+  \(\gamma_1 \cdot U_x \cap \gamma_2 \cdot U_x = \varnothing\). By the definition 
+  of the equivalence relation, \(\pi(\gamma_1 \cdot U_x) = \pi(\gamma_2 \cdot U_x)\)
+  for all \(\gamma_1, \gamma_2 \in \Gamma\) and so, taking \(V := \pi(U_x)\), 
+  \(\pi^{-1}(V) = \bigsqcup_{\gamma \in \Gamma} \gamma \cdot U_x\) and it remains 
+  to show \(\pi\mid_{\gamma \cdot U_x}\) is a homeomorphism for all \(\gamma\). 
+  This is however clear since it is continuous and has the continuous inverse 
+  (since the action is continuous)
+  \[u \in U_x \mapsto \gamma \cdot u \in \gamma \cdot U_x.\]
+  Hence, taking the open cover to be \(\{U_x\}_{x \in X}\), we have \(\pi\) is 
+  a covering map.
+\end{proof}
+
+\begin{proposition}
+  Let \(X\) be simply connected, path connected and locally simply and path connected 
+  and suppose \(\Gamma\) acts nicely on \(X\). Then, 
+  \begin{itemize}
+    \item \(X\) is the universal cover of \(X / \Gamma\),
+    \item for all \([x] \in X / \Gamma\), \(\Gamma \simeq \pi_1(X / \Gamma, [x])\).
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  We know that \(\pi : X \to X / \Gamma\) is a covering map from the above theorem. 
+  Now, since \(X\) is simply connected, by uniqueness, \(\pi\) is the universal 
+  covering of \(X / \Gamma\).
+
+  Let us define the following map 
+  \[\Phi : \Gamma \to \pi_1(X / \Gamma, [x]) : \gamma \mapsto [x \to \gamma \cdot x] (:= [\text{path from } x \text{ to } \gamma \cdot x]).\]
+  This map is well-defined since \(X\) is simply connected. This map is a group 
+  homomorphism since it clearly maps \(e\) to \([\text{id}]\) and for \(\gamma_1, \gamma_2 \in \Gamma\), 
+  \[\begin{split}
+    \Phi(\gamma_1 \gamma_2) & = [x \to \gamma_1 \gamma_2 \cdot x] = [x \to \gamma_1 * \gamma_1 \cdot x \to \gamma_1 \gamma_2 \cdot x]\\
+  & = [x \to \gamma_1 * \gamma_1(x \to \gamma_2 \cdot x)] = [x \to \gamma_1] * [x \to \gamma_2] = \phi(\gamma_1) \Phi(\gamma_2).
+  \end{split}\]
+  \(\Phi\) is injective, since for all \(\gamma \in \ker \Phi\), \(\pi \circ \delta\) 
+  is homotopic to the constant path for all \(\delta : x \to \gamma \cdot x\). 
+  Then, taking the lift of the homotopy, we have that \(\delta\) has the same fixed 
+  points implying \(\gamma \cdot x = x\) and so, \(\gamma = e\) (as the action is nice). 
+
+  Finally, \(\Phi\) is surjective since for all \(\gamma \in \pi_1(X / \Gamma, [x])\), we 
+  may lift \(\gamma\) as a path to \(X\) based at \(x\), \(\tilde \gamma : x \to \gamma' \cdot x\) 
+  for some \(\gamma' \in \Gamma\). Thus, \(\Phi(\gamma') = [\gamma]\) implying 
+  surjectivity.
+\end{proof}
+
+Let \(X\) be a connected, path-connected and locally simply and path-connected 
+topological space. Then, if \(\pi : \tilde X \to X\) is a covering map, we would like 
+to construct an action of \(\pi_1(X, x)\) for some \(x \in X\) \(\pi(\tilde x) = x\).
+
+Let \(\gamma \in \pi_1(X, x)\), then for any \(\tilde x\), let \(\tilde \gamma\) 
+be the unique lift of \(\gamma\) based 
+at \(\tilde x\). Then, we may define the action of \(\pi_1(X, x)\) on \(\tilde X\) 
+by taking \(\gamma \cdot \tilde x = \tilde \gamma\). It is an easy exercise 
+to check that this is indeed a group action. This action is in fact nice. Indeed,
+for all \(x \in X\), by the definition of covering map, let \(U\) be a neighbourhood 
+of \(x\) satisfying the covering property. Then, given \(\gamma \neq \text{id}\),
+\(U_{\tilde x} \cap U_{\gamma \tilde x} = \varnothing\), and thus, 
+\(U_x \cap \gamma \cdot U_x = \pi(U_{\tilde x}) \cap \pi(U_{\gamma \tilde x}) = \varnothing\).
 
 \end{document}
