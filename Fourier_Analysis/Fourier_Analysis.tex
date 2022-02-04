@@ -626,7 +626,7 @@ construction of such an series.
 
 \begin{corollary}[Weierstass Approximation Theorem]
   Any continuous periodic function is a limit of a uniformly convergent sequence 
-  of trigonometirc polynomials.
+  of trigonometric polynomials.
 \end{corollary}
 
 \begin{corollary}
@@ -802,6 +802,205 @@ determines a function.
   simple functions such that \(f_n \to f\) in \(L_1\). This, by the above lemma, 
   we obtain \(\mathcal{F}[f_n] \to \mathcal{F}[f]\) uniformly. Hence, 
   \(\mathcal{F}[f]\) is continuous and tends to 0 as \(|y| \to \infty\).
+\end{proof}
+
+\begin{lemma}
+  Let \(f \in L_1\) be differentiable with \(L_1\) derivative \(f'\) and suppose 
+  \(f\) is absolutely continuous on any finite integral. Then, 
+  \[\mathcal{F}[f'] = iy \cdot \mathcal{F}[f].\] 
+\end{lemma}
+\begin{proof}
+  Since \(f\) is a.c. 
+  \[f(x) = f(0) + \int_{[0, x]} f' \dd \lambda.\]
+  Thus, as \(f' \in L_1\), \(\lim_{x \to \pm \infty} f(x)\) exists. Now since 
+  \(f \in L_1\), \(\lim_{x \to \pm \infty} f(x) = 0\) and so, by integration by 
+  parts, 
+  \[\mathcal{F}[f'] = \int f'(x)e^{-iyx} \lambda(\dd x) = 
+    iy \int f(x)e^{-iy x} \lambda(\dd x) = iy \mathcal{F}[f]\]
+  as required.
+\end{proof}
+
+\begin{corollary}
+  In the case that \(f\) is \(n\)-times differentiable and \(f^(k) \in L_1\)
+  for all \(k = 0, \cdots, n\), then applying the above lemma \(n\)-times, 
+  we have 
+  \[\mathcal{F}[f^{(n)}] = (iy)^n \cdot \mathcal{F}[f],\]
+  and \(|\mathcal{F}[f]| = |\mathcal{F}[f^{(n)}]| / |y|^n \le C / |y|^n
+    \to 0\) as \(|y| \to \infty\) as \(\mathcal{F}[f^{(n)}]\) is bounded.
+\end{corollary}
+
+From the above corollary, we see that, similar to the Fourier series, \(\mathcal{F}[f]\) 
+decays faster at infinity the smoother it is. 
+
+\begin{corollary}
+  If \(f, f', f'' \in L_1\), then \(\mathcal{F}[f] \in L_1\).
+\end{corollary}
+\begin{proof}
+  We have \(|\mathcal{F}[f]| \le C / |y|^2\) for some constant \(C\) and 
+  so, 
+  \[\int_{\mathbb{R}} |\mathcal{F}[f]| \dd\lambda \le 
+    \int_{\mathbb{R}} \frac{C}{|y|^2} \lambda(\dd y) < \infty.\]
+\end{proof}
+
+The opposite is also true, namely, the faster \(f\) decays at infinity, the 
+smoother \(\mathcal{F}[f]\) is.
+
+\begin{lemma}
+  Let \(f(x), xf(x) \in L_1\), then, \(\mathcal{F}[f]\) is differentiable and 
+  \[D_y \mathcal{F}[f](y) = \mathcal{F}[-ixf(x)]\]
+  On the other hand, if \(f(x), xf(x), \cdots, x^pf(x) \in L_1\), then 
+  \(\mathcal{F}[f]\) is \(p\)-times differentiable and 
+  \[D^p_y \mathcal{F}[f](y) = \mathcal{F}[(-ix)^pf(x)].\]
+\end{lemma}
+\begin{proof}
+  It suffices to show the first statement as the second follows by induction. 
+  But this is clear by differentiating with respect to \(y\) under the integral 
+  (where we may differentiate under the integral as \(|xf(x)e^{-iyx}| \le |xf(x)|\)
+  where \(xf(x) \in L_1\) and so, we may differentiate by the dominated convergence 
+  theorem).
+\end{proof}
+
+\begin{corollary}
+  If \(x^pf(x) \in L_1\) for all \(p\). Then, \(\mathcal{F}[f]\) is infinitely 
+  differentiable. 
+\end{corollary}
+
+\begin{corollary}
+  If \(e^{\delta |x|}f(x) \in L_1\) for some \(\delta > 0\), then 
+  \(\int f(x)e^{ix \zeta} \lambda(\dd x)\) uniformly converges for all 
+  \(\zeta = y + iz\), \(|z| < \delta\). Therefore, 
+  \[g(\zeta) := \int f(x) e^{ix\zeta}\]
+  is an analytic function on the neighbourhood \(\mathbb{R} \times (-\delta, \delta)\).
+\end{corollary}
+
+\subsection{Schwartz Functions}
+
+Let us now consider the space of functions which are invariant under the Fourier 
+transform. This will lead us to define the Schwartz functions.
+
+Since the smoothness and decay at infinity swap after an application of the Fourier 
+transform (F.T.), we can easily indicate a class of function which are invariant 
+under F.T.
+
+\begin{definition}[Schwartz Function]
+  We define the space \(S_\infty\) as the space of functions on \(\mathbb{R}\) 
+  which are infinitely differentiable and such that for all \(p, q = 0, 1, \cdots\), 
+  there exists some constant \(C_{p, q}^f\) such that 
+  \[|x^p f^{(q)}(x)| < C_{p, q}^f\]
+  for all \(x \in \mathbb{R}\). If \(f \in S_\infty\), then we call \(f\) a Schwartz 
+  function.
+\end{definition}
+
+\begin{proposition}
+   If \(f \in S_\infty\), then \(g := \mathcal{F}[f] \in S_\infty\).
+\end{proposition}
+\begin{proof}
+  Since \(|x^pf^{(q)}(x)| < x^{-2} C_{p + 2, q}^f\) and so, is integrable 
+  for all \(p, q\). Hence, \(g = \mathcal{F}[f]\) is bounded and infinitely differentiable.
+  Moreover, since \(f^{(q)} \in L_1\), \(g(y)\) tends to 0 at infinity faster 
+  than \(1 / |y|^q\) for all \(q\), and so, it remains to show the same for \(g^{(p)}\). 
+  But this follows by the identity 
+  \[\mathcal{F}[((-ix)^p f)^{(q)}] = (i y)^q \mathcal{F}[(-ix)^p f] = 
+    (iy)^q g^{(p)}(y).\]
+  and that \(g^{(p)}\) is bounded for all \(p\). Hence, it follows \(\mathcal{F}[f] \in S_\infty\).
+\end{proof}
+
+Since Schwartz functions are infinitely differentiable, Dini's condition hold and thus, 
+the Fourier inverse transform holds and the map \(f \mapsto \mathcal{F}[f]\) is a
+bijection.
+
+\subsection{Convolution and Heat Equation}
+
+\begin{definition}[Convolution]
+  Let \(f_1, f_2 \in L_1\), the convolution of \(f_1\) with \(f_2\) is defined to be 
+  \[f(x) = f_1 * f_2(x) := \int_{\mathbb{R}} f_1(y)f_2(x - y) \lambda(\dd y).\]
+\end{definition}
+
+\begin{proposition}
+  If \(f_1, f_2 \in L_1\), then \(f_1 * f_2 \in L_1\).
+\end{proposition}
+\begin{proof}
+  By Fubini's theorem, we have 
+  \[\begin{split}
+    \int |f_1 * f_2(x)| \lambda(\dd x) & \le \int \int |f_1(y)| |f_2(x - y)| \lambda(\dd y) \lambda(\dd x) \\
+     & = \int |f_1(y)| \int |f_2(x - y)| \lambda(\dd x) \lambda(\dd y) < \infty. 
+    \end{split}\]
+\end{proof}
+
+\begin{theorem}
+  If \(f_1, f_2 \in L_1\), then 
+  \[\mathcal{F}[f_1 * f_2] = \mathcal{F}[f_1]\mathcal{F}[f_2].\]
+\end{theorem}
+\begin{proof}
+  Using Fubini's theorem and the change of variable \(t = x - y\), we have 
+  \[\begin{split}
+    \mathcal{F}[f_1 * f_2] & = \int f_1 * f_2(x) e^{-i z x} \lambda(\dd x) 
+      = \int e^{-izx}\int f_1(y)f_2(x - y) \lambda(\dd y) \lambda(\dd x) \\
+    & = \int f_1(y)  \int f_2(x - y) e^{-izx} \lambda(\dd x) \lambda(\dd y) 
+      = \int f_1(y) e^{-izy} \int f_2(t) e^{-izt} \lambda(\dd t) \lambda(\dd y)\\
+    & = \mathcal{F}[f_2] \int f_1 e^{-izy} \lambda(\dd y) = \mathcal{F}[f_1] \mathcal{F}[f_2]. 
+  \end{split}\]
+\end{proof}
+
+We note that since the derivative under F.T. becomes multiplication, the Fourier 
+transform is useful for solving differential equations. 
+
+Consider a linear 
+differential equation with constant coefficients for \(f(x)\) 
+\[f^{(n)} + a_1 f^{(n - 1)} + \cdots + a_{n - 1}f' + a_n f = \phi(x)\]
+under the Fourier transform is mapped to (denoting \(\mathcal{F}[f] = g\),
+\[(iy)^ng(y) + a_1 (iy)^{n - 1}g(y) + \cdots + a_{n - 1} iy g(y) + a_n g(y) = \mathcal{F}[\phi](y)\]
+if \(f, \phi \in L_1\). Thus, solving for \(g\), one may apply the inverse Fourier 
+transform to obtain \(f\). 
+
+However, we already know how to solve linear differential equations with matrix exponentials, 
+and so, Fourier transforms are more useful for solving partial differential equations.
+To illustrate this, let us consider the heat equation
+\[D_t u = D_x^2 u\]
+where \(u = u(x, t)\) is a function for \(x \in \mathbb{R}, t \ge 0\). The heat 
+equation models the evolution of the temperature over time in 1-D. 
+We are to be provided the initial temperature distribution \(u_0(x) = u(x, 0)\) 
+and we are asked to find \(u(x, t)\) for all \(t > 0\). 
+
+\begin{theorem}
+  Suppose that \(u_0, u_0', u_0'' \in L_1\), if there exist a solution \(u\) of the 
+  heat equation such that 
+  \begin{itemize}
+    \item \(u(x, t), D_x u(x ,t), D^2_x u(x, t) \in L_1\) for all \(t \ge 0\);
+    \item for all \(T \ge 0\), there exists some \(f_T \in L_1\) such that 
+      for all \(0 \le t \le T\),
+      \[|D_t u(x. t)| \le f_T(x),\]
+  \end{itemize}
+  then this solution is unique and can be found explicitly.
+\end{theorem}
+\begin{proof}
+  Applying F.T. to the right hand side of the heat equation, we obtain 
+  \[\mathcal{F}[D_t u](y) = -y^2 \mathcal{F}_t[u](y)\]
+  where we denote \(\mathcal{F}_t[u](y)\) the Fourier transform of \(u(t, \cdot)\) 
+  for all \(t \ge 0\). Then, by the second condition, the the dominated 
+  convergence theorem, 
+  \[\mathcal{F}[D_t u](y) = \int \pdv{u}{t} e^{-iyx} \lambda(\dd x) 
+    = \pdv{t} \int ue^{-iy x} \lambda(\dd x) = D_t \mathcal{F}_t[u](y).\]
+  Hence, we have 
+  \[D_t \mathcal{F}_t[u](y) = -y^2 \mathcal{F}_t[u](y).\]
+  Therefore, as \(\mathcal{F}_t[u](y)\) is Lipschitz (as it is continuously 
+  differentiable by condition 1), this IVP has a unique solution. Furthermore, 
+  we may find this solution explicitly by integrating both sides resulting in 
+  \[\mathcal{F_t}[u](y) = e^{-y^2 t}\mathcal{F}_0[u] = e^{-y^2 t}\mathcal{F}[u_0].\]
+  Thus, we may find \(u\) by taking the inverse Fourier transform. In particular, 
+  we have 
+  \[e^{-y^2 t} = \mathcal{F}\left[\frac{1}{2\sqrt{\pi t}} e^{-x^2 / 4t}\right]\]
+  and hence, 
+  \[\begin{split}
+    u(x, t) & = \mathcal{F}^{-1}[e^{-y^2 t}\mathcal{F}[u_0]] = 
+    \mathcal{F}^{-1}\left[\mathcal{F}\left[\frac{1}{2\sqrt{\pi t}} e^{-x^2 / 4t}\right]\mathcal{F}[u_0]\right]\\
+    & = \mathcal{F}^{-1}\left[\mathcal{F}\left[\frac{1}{2\sqrt{\pi t}} e^{-x^2 / 4t} * u_0(x)\right]\right]
+      = \frac{1}{2\sqrt{\pi t}} e^{-x^2 / 4t} * u_0(x).
+  \end{split}\]
+  By unfolding the definition, 
+  \[u(x, t) = \frac{1}{2\sqrt{\pi t}} e^{-x^2 / 4t} * u_0(x) 
+  = \frac{1}{2\sqrt{\pi t}} \int e^{- y^2 / 4t}u_0(x - y) \lambda(\dd y)\]
+  which is known as a Poisson integral.
 \end{proof}
 
 \end{document}
