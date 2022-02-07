@@ -1520,4 +1520,188 @@ for some constant \(c\). Thus, every state in the symmetric walk is recurrent.
   to \([i]\) and thus, \(\mathbb{P}_j(T_j < \infty) < 1\) implying \(j\) is transient.
 \end{proof}
 
+\subsection{Existence and Uniqueness of Invariant Measures}
+
+\begin{lemma}
+  \[\sum_{n = 1}^\infty P^n_{ij} = \frac{\mathbb{P}_i(T_j < \infty)}{1 - \mathbb{P}_j(T_j < \infty)}.\]
+\end{lemma}
+\begin{proof}
+  We may assume \(i \sim j\) (since otherwise, both sides are 0). Denote 
+  \(\eta_j = \sum_{n = 1}^\infty \mathbf{1}_{x_n = j}\). Then (by the tail probability)
+  \[\begin{split}
+    \sum_{n = 1}^\infty P^n_{ij} & = \mathbb{E}_i(\eta_j) = \sum_{n = 1}^\infty \mathbb{P}_i(\eta_j \ge n)
+      = \sum \mathbb{P}_i(T_j^k < \infty) \\
+    & = \mathbb{P}_i(T_j < \infty) \sum_{n = 1}^\infty (\mathbb{P}_j(T_j < \infty))^{k - 1}
+    = \frac{\mathbb{P}_i(T_j < \infty)}{1 - \mathbb{P}_j(T_j < \infty)}
+  \end{split}\]
+  where the last equality holds for both cases where \(\mathbb{P}_j(T_j < \infty) = 1\) 
+  or \(\mathbb{P}_j(T_j < \infty) < 1\).
+\end{proof}
+
+\begin{proposition}
+  If a state \(j \in \mathcal{X}\) is transient, then \(\sum_{n = 1}^\infty P^n_{ij} < \infty\)
+  and so, \(\lim_{n \to \infty} P_{ij}^n = 0\).
+\end{proposition}
+\begin{proof}
+  From the above lemma, we have 
+  \[\sum_{n = 1}^\infty P^n_{ij} = \frac{\mathbb{P}_i(T_j < \infty)}{1 - \mathbb{P}_j(T_j < \infty)}\]
+  where the right hand side is finite for \(\mathbb{P}_j(T_j < \infty) < 1\).
+\end{proof}
+
+Recalling that an invariant measure is invariant with respect to the transition operator, 
+we have the following theorem.
+
+\begin{theorem}
+  If \(\pi\) is an invariant probability measure (i.e. \(\pi(A) = \int P(x, A) \pi(\dd x)\)) 
+  and \(\pi(j) > 0\) for some \(j \in \mathcal{X}\), 
+  then \(j\) is recurrent.
+\end{theorem}
+\begin{proof}
+  Since \(\pi\) is invariant, \(\pi(j) = \int P^n_{ij} \pi(\dd i) = 
+  \sum_{i \in \mathcal{X}} P^n_{ij}\pi(i)\) for any \(n\). Then, we have 
+  \[\begin{split}
+    \infty & = \sum_{n = 1}^\infty \pi(j) = \sum_{n = 1}^\infty \sum_{i \in \mathcal{X}} P^n_{ij}\pi(i) 
+      = \sum_{i \in \mathcal{X}} \pi(i) \sum_{n = 1}^\infty P^n_{ij}\\
+      & = \sum_{i \in \mathcal{X}} \pi(i) \frac{\mathbb{P}_i(T_j < \infty)}{\mathbb{P_j}(T_j = \infty)}
+      = \frac{\mathbb{P}_{\pi}(T_j < \infty)}{\mathbb{P}_j(T_j = \infty)}
+  \end{split}\]
+  where numerator of the last fraction is positive as \(\pi(j) > 0\) and \(\pi\) 
+  is invariant. Thus, in order for the equation to hold, \(\mathbb{P}_j(T_j = \infty) = 0\) 
+  and thus, \(j\) is recurrent.
+\end{proof}
+
+\begin{corollary}
+  A transient Markov chain (every state is transient) does not have an invariant probability 
+  measure.
+\end{corollary}
+\begin{proof}
+  If \(\pi\) is invariant, then \(\pi(j) = 0\) for all \(j \in \mathcal{X}\) since the process 
+  is transient. Thus, \(\pi(\mathcal{X}) = \sum_{i \in \mathcal{X}} \pi(i) = 0\) implying \(\pi\) is 
+  not a probability measure.
+\end{proof}
+
+\begin{definition}[Positive Recurrent]
+  A state \(i \in \mathcal{X}\) is said to be positive recurrent if \(\mathbb{E}_i T_i < \infty\).
+  On the other hand, we say \(i\) is null-recurrent if \(\mathbb{E}_i T_i = \infty\).
+
+  One may show positive recurrence and null-recurrence are class properties.
+\end{definition}
+
+Let us now attempt to construct invariant measures from recurrent states. 
+Let \(i \in \mathcal{X}\) be recurrent. Then, for all \(j \in \mathcal{X}\), let 
+us define 
+\[\mu(j) = \mathbb{E}_i\left(\sum_{n = 0}^{T_i - 1} \mathbf{1}_{x_n = j}\right).\]
+This is the expected number of visits to \(j\) starting from \(i\) till the 
+first time the chain returns to \(i\). We note that \(\mu(i) = 1\) since 
+\(x_n \neq i\) for all \(n < T_i\) and \(x_{T_i} = i\) be definition.
+Furthermore, as \(i\) is recurrent, \(\mathbb{P}_i(T_i < \infty) = 1\),
+\[\mu(j) = \mathbb{E}_i\left(\sum_{n = 0}^\infty \mathbf{1}_{n < T_i} \mathbf{1}_{x_n = j}\right)
+  = \sum_n \mathbb{P}_i(x_n = j, n < T_i).\]
+Then, summing over all states, we have 
+\[\sum_{j \in \mathcal{X}} \mu(j) = \sum_{j \in \mathcal{X}} \sum_{n = 0}^\infty \mathbb{P}_i(x_n = j, T_i > n) = 
+  \sum_{n = 0}^\infty \mathbb{P}(T_j > n) = \mathbb{E}_i T_i.\]
+
+\begin{theorem}
+  Let \(i \in \mathcal{X}\) be recurrent. Then, the measure \(\mu\) defined by  
+  \[\mu(j) := \sum_{n = 0}^\infty \mathbb{P}_i(x_n = j, T_i > n)\]
+  is invariant.
+\end{theorem}
+\begin{proof}
+  Suppose first \(j \neq i\). Then, \(\mu(j) = \sum_{n = 1}^\infty \mathbb{P}_i(x_n = j, T_i > n)\)
+  and so, 
+  \[\begin{split}
+    \mu(j) & = \sum_{k \in \mathcal{X}}\sum_{n = 1}^\infty \mathbb{P}_i(x_n = j, T_i > n, x_{n - 1} = k, T_i > n - 1)\\
+    & = \sum_{k \in \mathcal{X}}\sum_{n = 1}^\infty \mathbb{P}_i(x_n = j, T_i > n | x_{n - 1} = k, T_i > n - 1)\mathbb{P}_i(x_{n - 1} = k, T_i > n - 1)\\
+    & = \sum_{k \in \mathcal{X}}\mu(k)\sum_{n = 1}^\infty \mathbb{P}_i(x_n = j | x_{n - 1} = k, T_i > n - 1)\\
+    & = \sum_{k \in \mathcal{X}}\mu(k)P_{kj} = T\mu(j)
+  \end{split}\]
+  where \(T\) is the transition operator. Now considering the \(i\) case. 
+  Consider 
+  \[\begin{split}
+    \mathbb{P}_i(T_i = n + 1) & = \sum_{k \neq i}\mathbb{P}_i(T_i > n, x_{n + 1} = i, x_n = k)\\
+    & = \sum_{k \neq i} \mathbb{P}_i(x_{n + 1} \mid x_n = k, T_i > n) \mathbb{P}_i(T_i > n, x_n = k)\\
+    & = \sum_{k \neq i} P_{ki} \mathbb{P}_i(T_i > n, x_n = k) = \sum_{k \in \mathcal{X}} P_{ki}\mathbb{P}_i(T_i > n, x_n = k).
+  \end{split}\]
+  Thus, 
+  \[T\mu(i) = \sum_{k \in \mathcal{X}} \sum_{n = 0}^\infty \mathbb{P}_i(T_i > n, x_n = k) P_{ki} 
+    = \sum_{n = 0}^\infty) \mathbb{P}(T_i = n + 1) = \mathbb{P}(T_i < \infty) = 1 = \mu(i).\]
+  Hence, \(T\mu = \mu\) as required.
+\end{proof}
+
+We now ask whether or not the invariant measure is unique. Obviously, a scalar multiple 
+of a invariant measure if invariant, so, we ask for uniqueness up to an scalar multiple.
+
+\begin{lemma}
+  Let \(i \in \mathcal{X}\) be recurrent and let \(\mu\) be the invariant measure 
+  constructed from \(i\). Then, if \(\nu\) is an invariant measure, then 
+  \[\nu(k) \ge \mu(k) \nu(i)\]
+  for all \(k \in \mathcal{X}\). Note that since \(\mu(i) = 1\), we may reformulate 
+  this as 
+  \[\frac{\nu(k)}{\nu(i)} = \frac{\mu(k)}{\mu(i)}\]
+\end{lemma}
+\begin{proof}
+  Clearly, equality holds for \(k = i\) and so assume \(k \neq i\). Let \(L^n\) be 
+  the last visit the chain visits \(i\) before \(n\). We note that 
+  \[\Omega = A_0 \cup \bigcup_{m = 0}^{n - 1} \{L^n = m\}\]
+  where \(A_0\) is the set of \(\omega \in \Omega\) for which \((x_n(\omega))\) 
+  does not visit \(i\) before \(n\). Then, 
+  \[\begin{split}
+    P^n_{jk} & = \mathbb{P}_j(x_n = k) \ge \sum_{m = 0}^{n - 1}\mathbb{P}_j(x_n = k, L^n = m)\\
+    & = \sum_{m = 0}^{n - 1} \mathbb{P}(x_n = k, x_{n - 1} \neq i, \cdots, x_{m + 1} \neq i, x_m = i)\\
+    & = \sum_{m = 0}^{n - 1} \mathbb{P}(x_n = k, x_{n - 1} \neq i, \cdots, x_{m + 1} \neq i | x_m = i) P_{ji}^m\\
+    & = \sum_{m = 0}^{n - 1} \mathbb{P}(x_{n - m} = k, x_{n - m - 1} \neq i, \cdots, x_1 \neq i | x_m = i) P_{ji}^m\\
+    & = \sum_{m = 0}^{n - 1} \mathbb{P}_i(x_{n - m} = k, T_i > n - m) P_{ji}^m
+  \end{split}\]
+  where the last equality holds as \(x_{n - m} = k \neq i\). Thus, 
+  \[\begin{split}
+    \nu(k) & = T^n\nu(k) = \sum_{j \in \mathcal{X}} \nu(j) P_{jk}^m
+    \ge \sum_{j \in \mathcal{X}} \nu(j) \sum_{m = 0}^{n - 1} \mathbb{P}_j(x_{n - m} = k, T_i > n - m) P_{ji}^m\\
+    & = \sum_{m = 0}^{n - 1} \mathbb{P}_j(x_{n - m} = k, T_i > n - m) \sum_{j \in \mathcal{X}} \nu(j) P_{ji}^m
+     = \sum_{m = 0}^{n - 1}\mathbb{P}_i(x_{n - m} = k, T_i > n + m)\nu(i).
+  \end{split}\]
+  Hence, change of index and taking the sum to \(\infty\), we have the inequality 
+  as required.
+\end{proof}
+
+\begin{theorem}
+  A irreducible, recurrent Markov process has invariant measure unique up to a scalar multiple.
+\end{theorem}
+\begin{proof}
+  If \(\nu\) be any invariant measure and let \(\mu\) be the invariant measure 
+  constructed from \(i\). Then, as \(\mu(i) = 1\),
+  \[\begin{split}
+    0 & = \nu(i) - \nu(i)\mu(i) = T^n \nu(i) - \nu(i)T^n\mu(i)
+       = \sum_{k \in \mathcal{X}} (\nu(k) - \nu(i) \mu(k)) P^n_{ki}
+  \end{split}\]
+  where \(\nu(k) - \nu(i) \mu(k) \ge 0\) for all \(k\) by the above lemma.
+  Thus, \((\nu(k) - \nu(i) \mu(k)) P^n_{ki} = 0\) for all \(n, k\). Then, 
+  as the process is irreducible, for any \(k, i\), \(k \sim i\) and so, there 
+  exists some \(n\) such that \(P^n_{ki} > 0\). Thus, \(\nu(k) = \nu(i)\mu(k)\) 
+  for all \(k \in \mathcal{X}\) implying \(\nu = \nu(i)\mu\) as required. 
+\end{proof}
+
+\begin{theorem}
+  If a Markov process is irreducible and has an invariant probability measure \(\pi\). 
+  Then, \(\mathbb{E}_iT_i < \infty\) (positively recurrent) for all \(i \in \mathcal{X}\) and 
+  \[\pi(i) = \frac{1}{\mathbb{E}_i T_i} (> 0).\]
+\end{theorem}
+\begin{proof}
+  Since \(\pi\) is a probability measure, there exists some \(i \in \mathcal{X}\) 
+  such that \(\pi(i) > 0\). Thus, \(i\) is recurrent and thus, the chain is recurrent 
+  by irreducibility. Thus, taking \(i\) arbitrarily, by uniqueness, 
+  \(\pi = \pi(i) \mu\) where \(\mu\) is 
+  the invariant measure associated with \(i\), namely, 
+  \[\mu(j) = \sum_{n = 0}^\infty \mathbb{P}_i(x_n = j, T_i > n).\]
+  Hence, since \(\sum_{j \in \mathcal{X}} \mu(j) = \mathbb{E}_i T_i\), we have 
+  \[\pi(i) = \frac{\mu(i)}{\mathbb{E}_i T_i} = \frac{1}{\mathbb{E}_i T_i}\]
+  as required.
+\end{proof}
+
+\begin{corollary}
+  An irreducible Markov process has an invariant probability measure if and only if 
+  it is recurrent.
+\end{corollary}
+
+\subsection{Long Run Probabilities}
+
 \end{document}
