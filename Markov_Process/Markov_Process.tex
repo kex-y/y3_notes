@@ -1704,4 +1704,249 @@ of a invariant measure if invariant, so, we ask for uniqueness up to an scalar m
 
 \subsection{Long Run Probabilities}
 
+We have seen that if \(\lim_{n \to \infty} P^n_{ij}\) exists for any \(j\) and 
+we define \(\nu(j) := \lim_{n \to \infty} P^n_{ij}\) then, \(\nu\) is an invariant 
+measure (Why?). We now ask whether or not the converse is true. 
+
+Suppose 
+the chain is irreducible and \(\pi\) is invariant, then, for all transient states 
+\(j \in \mathcal{X}\), \(\lim_{n \to \infty} P^n_{ij} = 0\) and \(\pi(j) = 0\) 
+(as invariant measures do not charge transient states). Hence, 
+\(\lim_{n \to \infty} P^n_{ij} = \pi(j)\) for transient states.
+On the other hand, for situation is more difficult for recurrent states. 
+Indeed, if we take the transition probability 
+\[P = \begin{pmatrix}
+  0 & 1 \\ 1 & 0
+\end{pmatrix},\]
+then, \(P^{2n + 1} = P\) and \(P^{2n} = \text{Id}\). Thus, 
+\(\lim_{n \to \infty} P^n_{ij}\) does not exist. On the other hand, this is an 
+irreducible recurrent chain, and thus, processes an invariant measure.
+This motivates the study of periodic and non-periodic chains.
+
+Denote \(R(i) := \{n > 0 \mid P^n_{ii} > 0\}\) such that \(n \in R(i)\) if 
+there exists a path from \(i\) to \(i\) of length \(n\). Clearly, 
+if \(n, m \in R(i)\), then \(n + m \in R(i)\) (C-K) and if \(R(i) \neq \varnothing\), 
+then \(|R(i)| = \infty\) (since if \(n \in R(i)\) then \(kn \in R(i)\) by the 
+previous statement for all \(k \in \mathbb{N}^*\).
+
+\begin{definition}[Period]
+  Given a state \(i \in \mathcal{X}\), we define its period to be 
+  \[d(i) := \begin{cases}
+    \gcd(R(i)), & \ R(i) \neq \varnothing,\\
+    \infty, & \ \text{ otherwise}.
+  \end{cases}\]
+\end{definition}
+
+\begin{definition}
+  A state \(i \in \mathcal{X}\) is aperiodic if \(d(i) = 1\) and periodic if 
+  \(d(i) > 1\).
+\end{definition}
+
+\begin{proposition}
+  Given \(i, j \in \mathcal{X}\) such that \(i \sim j\). Then \(d(i) = d(j)\).
+  Namely, the period is a class property.
+\end{proposition}
+\begin{proof}
+  Since \(i \sim j\), there exists some \(n, m\) such that \(P^n_{ij}, P^m_{ji} > 0\).
+  Then, by C-K, \(P^{n + m}_{ii} \ge P^{n}_{ij} + P^{m}_{ji} > 0\) and 
+  similarly for \(P^{n + m}_{jj} > 0\), and hence, \(n + m \in R(i) \cap R(j)\).
+  Now, taking \(k \in R(i)\), we have \(k + n + m \in R(j)\) and so, 
+  \(d(j) \mid k + n + m\) and \(d(j) \mid n + m\) implying \(d(j) \mid k\), 
+  and thus, \(d(j) \le d(i)\). By symmetry, \(d(i) \le d(j)\) and thus, 
+  \(d(i) = d(j)\) as required.
+\end{proof}
+
+\begin{definition}
+  A THMC (or \(P\)) is aperiodic if \(d(i) = 1\) for all \(i \in \mathcal{X}\) and 
+  is periodic with period \(d\) if \(d(i) = d > 1\) for all \(i \in \mathcal{X}\).
+\end{definition}
+
+From the definition, we have the following proposition.
+
+\begin{corollary}
+  An irreducible chain is either aperiodic or periodic.
+\end{corollary}
+
+Let \((x_n), (x_n')\) be independent time homogeneous Markov processes
+on \(\mathcal{X} = \mathbb{N}\) with the same transition probability \(P\). 
+Furthermore, assume \((x_n), (x'_n)\) has initial distribution \(\mu\) and \(\nu\) 
+and write 
+\[P^n_\mu := \mathcal{L}(x_n), P^n_\nu := \mathcal{L}(x'_n).\]
+\begin{lemma}[Doeblin Coupling]
+  \(z_n := (x_n, x'_n)\) is a THMC on \(\mathcal{X}^2\) 
+  with the initial distribution \(\mu \otimes \nu\) and transition probability 
+  \(Q\), where 
+  \[Q_{(ii'), (jj')} := P_{ij}P_{i'j'}\]
+  for all \(i, i', j, j' \in \mathcal{X}\).
+\end{lemma}
+
+Denoting \(T := \inf_{n \ge 0} \{x_n = x'_n\}\) (the coalessing time), we have 
+the following lemmas.
+
+\begin{lemma}[Successful Coupling]
+  \(\mathbb{P}(T < \infty) = 1\).
+\end{lemma}
+
+\begin{lemma}[Coupling Inequality]
+  \(\sum_{i \in \mathcal{X}} |\mathbb{P}(x_n = i) - \mathbb{P}(x'_n = i)| \le 
+  2\mathbb{P}(T > n)\). Thus, by the above lemma, the right hand side tends to 
+  0 as \(n \to \infty\).
+\end{lemma}
+
+\begin{theorem}
+  Let \(P\) be irreducible, aperiodic and positively recurrent (recall that this 
+  means \(\mathbb{E}_i T_i < \infty\) for all \(i \in \mathcal{X}\)), and 
+  let \(\pi\) be its unique invariant probability measure. Then, for all 
+  \(i \in \mathcal{X}\),
+  \[\lim_{n \to \infty} \sum_{j \in \mathcal{X}} |P^n_{ij} - \pi(j)| = 0\]
+\end{theorem}
+\begin{proof}
+  With the above constructions in mind, this theorem follows by taking 
+  \(x_0 := i, x'_0 := \pi\) and \(\mathbb{P}(x_n = j) = P^n_{ij}\), 
+  \(\mathbb{P}(x'_n = j) = \pi(j)\).
+\end{proof}
+
+In order to prove the above lemmas, we need more machinery, namely coupling.
+
+\begin{definition}[Coupling]
+  Given two random variables \(x, y : \Omega \to \mathcal{X}\), the coupling 
+  of the two is a random variable \(z = (x', y')\) with state space \(\mathcal{X}^2\) 
+  such that 
+  \[\mathcal{L}(x) = \mathcal{L}(x') \text{ and } \mathcal{L}(y) = \mathcal{L}(y').\]
+\end{definition}
+
+\begin{definition}[Doeblin Coupling]
+  Let\((x_n), (x_n')\) be independent time homogeneous Markov processes
+  on \(\mathcal{X} = \mathbb{N}\) with the same transition probability \(P\). 
+  Furthermore, assume \((x_n), (x'_n)\) has initial distribution \(\mu\) and \(\nu\).
+  Then, the Doeblin coupling is the stochastic process defined by 
+  \[z_n := (x_n, x'_n).\]
+\end{definition}
+
+\begin{lemma}[Coupling lemma]
+  Let \((x_n), (x'_n)\) be independent Markov processes with the same 
+  transition probability \(P\). Then, defining 
+  \[y_n := \begin{cases}
+    x_n, & \ n < T,\\
+    x'_n, & \ n \ge T,
+  \end{cases}\]
+  where \(T\) is the coalessing time, \((y_n)\) is a Markov process with 
+  the transition probability \(P\) and initial distribution \(\mathcal{L}(x_0)\).
+\end{lemma}
+\begin{proof}
+  Let \(f \in \mathcal{B}_b(\mathcal{X})\) and let 
+  \[\mathcal{F}_n = \sigma(x_k \mid k \le n) \vee \sigma(x'_k \mid k \le n).\]
+  Then, \((x_n), (x'_n)\) remains to be Markov processes with respect to the 
+  filtration \((\mathcal{F}_n)\) (by independence). Then, 
+  \[\begin{split}
+    \mathbb{E}(f(y_{n + 1}) \mid \mathcal{F}_n) & = 
+    \mathbb{E}(f(y_{n + 1})\mathbf{1}_{T \le n} \mid \mathcal{F}_n) + 
+    \mathbb{E}(f(y_{n + 1})\mathbf{1}_{T > n} \mid \mathcal{F}_n)\\
+    & = 
+    \mathbf{1}_{T \le n}\mathbb{E}(f(x'_{n + 1} \mid \mathcal{F}_n)) + 
+    \mathbf{1}_{T > n}\mathbb{E}(f(x_{n + 1} \mid \mathcal{F}_n))\\
+    & = \mathbf{1}_{T \le n} Tf(x'_n) + \mathbf{1}_{T > n} Tf(x_n)\\
+    & = \mathbf{1}_{T \le n} Tf(y_n) + \mathbf{1}_{T > n} Tf(y_n) 
+    = Tf(y)
+  \end{split}\]
+  where \(T\) is the transition operator of the transition probability 
+  \(P\). This implies \((y_n)\) is a Markov 
+  process with respect to \((\mathcal{F}_n)\) (and hence to its natural 
+  filtration) with the same transition probability \(P\).
+\end{proof}
+
+Let us now prove the previously claimed lemmas. 
+
+\begin{proof}[Coupling Inequality]
+  We are asked to prove 
+  \[\sum_{j} |\mathbb{P}(x_n = j) - \mathbb{P}(x'_n = j)| \le 2\mathbb{P}(T > n).\]
+  Defining \((y_n)\) as above, as \((x_n)\) and \((y_n)\) have the same 
+  distribution, 
+  \[\begin{split}
+    |\mathbb{P}(x_n = j) - \mathbb{P}(x'_n = j)| & = 
+    |\mathbb{P}(y_n = j) - \mathbb{P}(x'_n = j)|\\ 
+    & = |\mathbb{P}(y_n = j) - \mathbb{P}(x'_n = j, n < T) - 
+      \mathbb{P}(y_n = j, n \ge T)|\\
+    & = |\mathbb{P}(y_n = j, n < T) - \mathbb{P}(x'_n = j, n < T)|.
+  \end{split}\]
+  Hence, summing over \(j\) we have 
+  \[\sum_j|\mathbb{P}(x_n = j) - \mathbb{P}(x'_n = j)| \le 
+    \sum_j \mathbb{P}(y_n = j, n < T) + \sum_j \mathbb{P}(x'_n = j, n < T) 
+    \le 2 \mathbb{P}(n < T).\]
+\end{proof}
+
+\begin{proof}[Doeblin Coupling]
+  The Doeblin Coupling asks us to prove the coupling \(z_n := (x_n, x'_n)\) 
+  is a THMC on \(\mathcal{X}^2\) with initial distribution 
+  \(\mathcal{L}(x_0) \otimes \mathcal{L}(x'_0)\) and transition probability \(Q\) 
+  where 
+  \[Q_{(ii'),(jj')} = P_{ij} P_{i'j'}.\]
+  The initial distribution follows from independence. On the other hand, 
+  \[\begin{split}
+    \mathbb{P}(z_{n + 1} = (j, j') \mid \mathcal{F}_n) & = 
+    \mathbb{P}(x_{n + 1} = j, x'_{n + 1} = j' \mid \mathcal{F})\\
+    & = \mathbb{P}(x_{n + 1} = j \mid x_n)\mathbb{P}(x'_{n + 1} = j' \mid x'_n)\\
+    & = P(x_n, j) P(x'_n, j') = Q_{(x_n x'_n), (jj')}
+  \end{split}\]
+  where the second equality holds by independence.
+\end{proof}
+
+Before we can prove \(T < \infty\) almost everywhere, let us construct a larger 
+stopping time for which we know it is finite almost everywhere, hence proving the 
+claim.
+
+\begin{lemma}
+  If \(i \in \mathcal{X}\) is aperiodic and recurrent, then there exists some  
+  \(N\) such that \(P^n_{ii} > 0\) for all \(n \ge N\).
+\end{lemma}
+\begin{proof}
+  Since \(i\) is recurrent, \(\sum_{n = 1}^\infty P^n_{ii} = \infty\) and so, 
+  \(R(i) \neq \varnothing\). Since, by aperiodicity, \(\gcd(R(i)) = 1\), there 
+  exists a finite subset \(R_0 \subseteq R(i)\) such that \(\gcd(R_0) = 1\).
+  Then, by the Chinese remainder theorem, there exists some \(N\) such that 
+  for all \(n > N\), \(n \in R(i)\).
+\end{proof}
+
+\begin{corollary}
+  If \(P\) is irreducible, aperiodic and recurrent, then, for all 
+  \(i, j \in \mathcal{X}\), there exists some \(N\) such that for all 
+  \(n \ge N\), \(P^n_{ij} > 0\).
+\end{corollary}
+\begin{proof}
+  Since \(i \to j\) as \(P\) is irreducible, there exists some \(m\) such that 
+  \(P^m_{ij} > 0\). Then, by the above lemma, there exists some \(N\) such that 
+  for all \(n \ge N\), \(P^n_{ii} > 0\). So, for all \(k \ge m + N\), 
+  \[P^k_{ij} = P^{(k - m) + m}_{ij} \ge P^(k - m)_{ii} P^m_{ij} > 0\]
+  since \(k - m \ge N\). 
+\end{proof}
+
+\begin{lemma}
+  Let \(P\) be irreducible, aperiodic and positively recurrent. Then, \(Q\) 
+  (as defined above from Doeblin coupling) is also irreducible and positively 
+  recurrent.
+\end{lemma}
+\begin{proof}
+  Firstly, \(\pi \otimes \pi\) is an invariant probability measure for \(Q\) 
+  if \(\pi\) is invariant for \(P\). Thus, it suffices to show \(Q\) is irreducible. 
+
+  By induction, we can show that \(Q^n_{(ii'),(jj')} = P^n_{ij} P^n_{i'j'}\). 
+  On the other hand, as \(P\) is irreducible, for any \(i, i', j, j'\) there exists 
+  some \(n, n'\) such that \(P^n_{ij}, P^{n'}_{i'j'} > 0\). By the above corollary,
+  we may choose sufficiently large \(n\) such that \(P^n_{ij}, P^n_{i'j'} > 0\)
+  and so, \(Q^n_{(ii'),(jj')} = P^n_{ij} P^n_{i'j'} > 0\).
+\end{proof}
+
+Finally, we can prove the successful coupling lemma.
+
+\begin{proof}[Successful Coupling]
+  We are required to prove \(\mathbb{P}(T < \infty) = 1\). To achieve this, 
+  define 
+  \[T_{(i,i)} := \inf \{z_n = (i, i)\} = \inf \{x_n = x'_n = i\}.\]
+  It is not difficult to see that \(T \le T_{(i, i)}\) and so, it suffices to 
+  show \(\mathbb{P}(T_{(i, i)} < \infty) = 1\). Now, since \(Q\) is irreducible 
+  and recurrent, \(\mathbb{P}_z(T_{(i, i)} < \infty) = 1\) for any \(z \in \mathcal{X}^2\) 
+  and so, 
+  \[\mathbb{P}(T < \infty) \ge \mathbb{P}(T_{(i, i)} < \infty) = 1.\]
+\end{proof}
+
 \end{document}
