@@ -85,6 +85,26 @@
 \newcommand{\Arg}{\mathop{\mathrm{Arg}}}
 \newcommand{\hess}{\mathop{\mathrm{Hess}}}
 
+% `calc` is necessary to draw curved arrows.
+\usetikzlibrary{calc}
+% `pathmorphing` is necessary to draw squiggly arrows.
+\usetikzlibrary{decorations.pathmorphing}
+\tikzset{curve/.style={settings={#1},to path={(\tikztostart)
+    .. controls ($(\tikztostart)!\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
+    and ($(\tikztostart)!1-\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
+    .. (\tikztotarget)\tikztonodes}},
+    settings/.code={\tikzset{quiver/.cd,#1}
+        \def\pv##1{\pgfkeysvalueof{/tikz/quiver/##1}}},
+    quiver/.cd,pos/.initial=0.35,height/.initial=0}
+
+% TikZ arrowhead/tail styles.
+\tikzset{tail reversed/.code={\pgfsetarrowsstart{tikzcd to}}}
+\tikzset{2tail/.code={\pgfsetarrowsstart{Implies[reversed]}}}
+\tikzset{2tail reversed/.code={\pgfsetarrowsstart{Implies}}}
+% TikZ arrow styles.
+\tikzset{no body/.style={/tikz/dash pattern=on 0 off 1mm}}
+
+
 \title{Algebraic Topology}
 \author{Kexing Ying}
 
@@ -693,7 +713,7 @@ proof for the uniqueness.
   Clear by lifting \(\pi\) to \(\tilde X \to \bar X\).
 \end{proof}
 
-\subsection{Group Actions and Quotients}
+\subsection{Classification of Covering Maps}
 
 Let us recall some definitions from group theory.
 
@@ -792,11 +812,150 @@ to construct an action of \(\pi_1(X, x)\) for some \(x \in X\) \(\pi(\tilde x) =
 Let \(\gamma \in \pi_1(X, x)\), then for any \(\tilde x\), let \(\tilde \gamma\) 
 be the unique lift of \(\gamma\) based 
 at \(\tilde x\). Then, we may define the action of \(\pi_1(X, x)\) on \(\tilde X\) 
-by taking \(\gamma \cdot \tilde x = \tilde \gamma\). It is an easy exercise 
+by taking \(\gamma \cdot \tilde x = \tilde \gamma(1)\). It is an easy exercise 
 to check that this is indeed a group action. This action is in fact nice. Indeed,
 for all \(x \in X\), by the definition of covering map, let \(U\) be a neighbourhood 
 of \(x\) satisfying the covering property. Then, given \(\gamma \neq \text{id}\),
 \(U_{\tilde x} \cap U_{\gamma \tilde x} = \varnothing\), and thus, 
 \(U_x \cap \gamma \cdot U_x = \pi(U_{\tilde x}) \cap \pi(U_{\gamma \tilde x}) = \varnothing\).
+
+We will in the remainder of this section assume \(X\) is path-connected, 
+locally path- and simply-connected.
+
+Let \(\pi : (\bar X, \bar x) \to (X, x)\) be a covering map. Then, as we have 
+seen, this induces an injective group homomorphism 
+\(\pi_* : \pi_1(\bar X, \bar x) \to \pi_1(X, x)\). As alluded to before, 
+we may interpret the fundamental group in the covering space as a subgroup 
+of the fundamental group in the space by taking 
+\[\Gamma = \pi_*(\pi_1(\bar X, \bar x)) \le \pi_1(X, x),\]
+and \(\Gamma \simeq \pi_1(\bar X, \bar x)\). We ask whether or not the reverse 
+is true. Namely, for all subgroups \(\Gamma\) of \(\pi_1(X, x)\), does there exist a 
+covering space \(p : \bar X \to X\) such that 
+\[\Gamma = p_*(\pi_1(\bar X, \bar x)).\]
+Furthermore, if \(p_1 : (\bar X, \bar x) \to (X, x)\), 
+\(p_2 : (\tilde X, \tilde x) \to (X, x)\) are two 
+covering maps which induces the same subgroup, then the two covering 
+spaces are homeomorphic which maps \(\bar x\) to \(\tilde x\).
+
+\begin{theorem}
+  If \(\Gamma\) is a subgroup of \(\pi_1(X, x)\), then there exists a covering 
+  map \(\pi : \bar X \to X\) such that \(\Gamma = \pi_*(\pi_1(\bar X, \bar x))\).
+\end{theorem}
+\begin{proof}
+  By the assumption on \(X\), there exists a universal cover 
+  \(\pi : (\tilde X, \tilde x) \to (X, x)\) together with a nice action of 
+  \(\pi_1(X, x)\) on \(\tilde X\) such that \(X \simeq \tilde X / \pi_1(X, x)\).
+  Now, by restricting the action onto \(\Gamma\), we obtain an action of \(\Gamma\) 
+  on \(\tilde X\) which is nice. In particular, we have the following chain 
+  of quotients.
+  \[\begin{tikzcd}
+    {(\tilde X, \tilde x)} & {(\tilde X / \Gamma, [\tilde x]_\Gamma)} && {(X, x)}
+    \arrow["{q_\Gamma}", from=1-1, to=1-2]
+    \arrow["{q_{\pi_1(X, x)}}", from=1-2, to=1-4]
+    \arrow["\pi"', curve={height=18pt}, from=1-1, to=1-4]
+  \end{tikzcd}\]
+  Now, since \(\Gamma\) acts nicely on \(\tilde X\), \(q_\Gamma\) is a covering 
+  map, and so, \(q_{\pi_1(X, x)}\) is also a covering map. Furthermore, 
+  we have \(\pi_1(\tilde X / \Gamma, [x]_\Gamma) \simeq \Gamma\), and thus, it suffices 
+  to show \((q_{\pi_1(X, x)})_*(\pi_1(\tilde X / \Gamma, [x]_\Gamma)) = \Gamma\).
+  This follows by lifting \(\gamma \in \Gamma\) to \(\tilde X\) to show 
+  surjectivity.
+\end{proof}
+
+We will now show the uniqueness of this covering map. 
+
+\begin{theorem}
+  Suppose now \(p : (\bar X, \bar x) \to (X, x)\) is a covering map such that 
+  \[\Gamma = p_*(\pi_1(X, x)),\]
+  then there exists a homeomorphism 
+  \(\Phi : (\tilde X / \Gamma, [x]_\Gamma) \to (\bar X, \bar x)\) such that 
+  the following diagram commutes.
+  \[\begin{tikzcd}
+    {(\tilde X / \Gamma, [x]_\Gamma)} && {(\bar X, \bar x)} \\
+    \\
+    {(X, x)} && {(X, x)}
+    \arrow["\pi"', from=1-1, to=3-1]
+    \arrow["p", from=1-3, to=3-3]
+    \arrow["\Phi", from=1-1, to=1-3]
+    \arrow["{\text{id}_X}", from=3-1, to=3-3]
+  \end{tikzcd}\]
+  where we denote \(\pi : (\tilde X, \tilde x) \to (X, x)\) the universal 
+  cover.
+\end{theorem}
+\begin{proof}
+  Redo this.
+\end{proof}
+
+\subsection{Van Kampen Theorem}
+
+Review free groups. 
+
+Given any finitely generated group \(G = \langle g_1, \cdots, g_n\rangle\), 
+we can define the homomorphism 
+\[\Phi : \mathbb{F}_n \to G : a_i \mapsto g_i\]
+where \(a_1, \cdots, a_n\) are characters of \(\mathbb{F}_n\). Thus, with this 
+in mind, \(G \simeq \mathbb{F}_n/ \ker \Phi\). We note that \(\ker \Phi\) encodes 
+``relations'' on elements of \(G\). With this isomorphism, we can construct 
+groups from \(\mathbb{F}_n\). Let \(r_i \in I\) be reduced words and 
+denote \(\langle r_i \mid i \in I\rangle\) the normal subgroup generated 
+by \(r_i \in I\). Then, we denote 
+\[\langle a_1, \cdots, a_n \mid r_i(a_1, \cdots, a_n) = 1, 
+  i \in I\rangle := \frac{\mathbb{F}_n}{\langle r_i \mid i \in I\rangle}.\]
+We call this a presentation of the group. This is the construction we are 
+referring to whenever we say to compute a group. 
+
+\begin{definition}[Free Product]
+  Given finitely generated groups \(G_1, G_2\) with presentations 
+  \(\langle a_1, \cdots, a_n \mid r_i(a_1, \cdots, a_n) = 1, i \in I\rangle\) 
+  and \(\langle b_1, \cdots, b_m \mid s_j(b_1, \cdots, b_m) = 1, j \in J\rangle\),
+  we define the free product between \(G_1\) and \(G_2\) to be 
+  \[G_1 * G_2 := \langle a_1, \cdots, a_n, b_1, \cdots, b_m \mid 
+  r_i(a_1, \cdots, a_n) = 1, i \in I, s_j(b_1, \cdots, b_m) = 1, 
+  j \in J\rangle.\]
+\end{definition}
+
+\begin{definition}[Amalgamated Products]
+  Let \(H\) be a group and let \(h_1 : H \to G_1\), \(h_2 : H \to G_2\) be 
+  group homomorphisms- Then, the amalgamated product of \(G_1\) and \(G_2\) 
+  along \(H\) is 
+  \[G_1 *_H G_2 := 
+    \frac{G_1 * G_2}{\langle h_1(h) h_2(h)^{-1} \mid h \in H\rangle}.\]
+\end{definition}
+
+\begin{theorem}[Van Kampen Theorem]
+  If \((X, x_0)\) is a path-connected pointed space and \(A, B \subseteq X\) are 
+  open subsets of \(X\), \(A \cup B = X\) and \(x_0 \in A \cap B\) of which 
+  \(A \cap B\) is path connected. Then, 
+  \[\pi_1(X, x_0) \simeq \pi_1(A, x_0) *_{\pi_1(A \cap B, x_0)} \pi_(B, x_0).\]
+\end{theorem}
+\begin{proof}
+  Let \(j_A : A \hookrightarrow X\) and \(j_B : B \hookrightarrow X\) be the 
+  inclusion maps which induces corresponding group homomorphisms. Then, 
+  by the universal property of the free product, we obtain the group homomorphism 
+  \[\Phi : \pi_1(A, x_0) * \pi_1(B, x_0) \to \pi_1(X, x_0).\]
+  Thus, it suffices to show \(\Phi\) is surjective with \(\ker \Phi = 
+  \langle (j_A)_*(h) (j_B)_*(h)^{-1} \mid h \in \pi_1(A \cap B, x_0) \rangle\).
+
+  We will omit the injective part and only show surjectivity. Let \(\gamma\) be 
+  a loop on \(X\) based at \(x_0\). Then, since \(\gamma\) is continuous 
+  and \(A \cup B = X\), for all \(t\) there exists an open interval \(I_t \subseteq [0, 1]\) 
+  containing \(t\) such that \(\gamma(I_t) \subseteq A\) or 
+  \(\gamma(I_t) \subseteq B\) (compactness argument). Then, there exists 
+  some 
+  \[t_0 = 0 < t_1 < \cdots < t_n < t_{n + 1} = 1\]
+  such that \(\gamma([t_i, t_{i + 1}]) \subseteq A\) or \(B\) and for all 
+  \(i, \gamma(t_i) =: x_i \in A \cap B\). Now, since \(A \cap B\) is path 
+  connected, there exists \(\delta_i\) paths from \(x_0\) to \(x_i\). Then, 
+  denoting \(\gamma_k := \gamma|_{[t_i, t_{i + 1}]}\), we have 
+  \[[\gamma] = 
+    [(\delta_0 * \gamma_0 * \delta_1^{-1}) 
+    * (\delta_1 * \gamma_2 * \delta_2^{-1})
+    * \cdots * (\delta_n * \gamma_n * \delta_{n + 1}^{-1})],\]
+  where \(\gamma_i' := \delta_i \gamma_i \delta_{i + 1}^{-1}\) 
+  is either in \(A\) or \(B\) and is a loop based at \(x_0\). Hence, 
+  \([\gamma]\) is a product of elements of either 
+  \(\pi_1(A, x_0)\) or \(\pi_1(B, x_0)\) and so, 
+  \([\gamma] \in \Phi(\pi_1(A, x_0) * \pi_1(B, x_0))\).
+\end{proof}
 
 \end{document}
