@@ -936,4 +936,207 @@ Finally, as a remark, again using Sterling's formula, we see that
 \end{split}\]
 as \(n \to \infty\) where the limit is the Poisson distribution. 
 
+\newpage
+\section{Convergence and Characteristic Functions}
+
+\subsection{Different Modes of Convergence}
+
+Let us recall some different notions of convergence in probability theory.
+
+\begin{definition}
+  A sequence of random variables \((\xi_n)_n\) is said to converge 
+  \begin{itemize}
+    \item almost surely if \(\xi_n(\omega) \to \xi(\omega)\) almost everywhere 
+    on \(\Omega\);
+    \item in probability if for all \(\epsilon > 0\),
+    \[\lim_{n \to \infty} \mathbb{P}(|\xi_n - \xi| \ge \epsilon) = 0;\]
+    \item in \(L^p\) for \(1 \le p < \infty\) (also known as convergence in mean 
+    of order \(p\)) if 
+    \[\lim_{n \to \infty} \mathbb{E}(|\xi_n - \xi|^p) = 0;\]
+    \item in distribution (or weakly) if for any bounded continuous function \(f\),
+    \[\mathbb{E}(f(\xi_n)) \to \mathbb{E}(f(\xi)).\]
+    Namely, this condition requires laws \((\xi_n)_* \mathbb{P}\) converges weakly 
+    to \(\xi_*\mathbb{P}\). Note that this does not require \((\xi_n)\) to be 
+    defined on the same probability space.
+  \end{itemize}
+\end{definition}
+
+\begin{proposition}
+  We have the following relations between the different notions of convergence.
+  \begin{itemize}
+    \item Convergence almost surely implies convergence in probability.
+    \item Convergence in probability implies the existence of a convergent almost 
+      surely subsequence.
+    \item Convergence in \(L^p\) implies convergence in probability.
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{theorem}
+  Let \(\xi_n \ge 0\) be a sequence of integrable random variable which converges 
+  almost surely to \(\xi\). Then, if \(\mathbb{E}\xi_n \to \mathbb{E}\xi\), 
+  we have \(\xi_n \to \xi\) in \(L^1\).
+\end{theorem}
+\begin{proof}
+  We see 
+  \[\mathbb{E}|\xi_n - \xi| = \mathbb{E}(\xi - \xi_n)\mathbf{1}_{\xi \ge \xi_n} 
+    + \mathbb{E}(\xi_n - \xi)\mathbf{1}_{\xi_n > \xi} = 
+    2\mathbb{E}(\xi - \xi_n) \mathbf{1}_{\xi \ge \xi_n} + \mathbb{E}(\xi_n - \xi).\]
+  Thus, the result follows by considering \(0 \le (\xi - \xi_n)\mathbf{1}_{\xi \ge \xi_n} \le \xi\), 
+  and applying dominated convergence. 
+\end{proof}
+
+\begin{proposition}
+  Convergence in probability implies convergence in distribution for integrable 
+  random variables.
+\end{proposition}
+\begin{proof}
+  Let \((\xi_n)\) be a sequence of integrable random variables which converges 
+  in probability to \(\xi\). Fix \(\epsilon > 0\) and let \(f\) be a continuous 
+  bounded function such that \(|f(x)| \le C\) for all \(x\). By Markov's 
+  inequality, there exists some \(N\) such that 
+  \[\mathbb{P}(|\xi| > N) \le \frac{\epsilon}{4c}.\]
+  Now, as \(f\) is continuous, there exists some \(\delta > 0\) such that 
+  \(|f(x) - f(y)| < \epsilon / 2\) for all \(|x|\le N\), \(|x - y| \le \delta\).
+  Then, 
+  \[\begin{split}
+    \mathbb{E}(|f(\xi_n) - f(\xi)|) & = 
+    \mathbb{E}(|f(\xi) - f(\xi_n)|)\mathbf{1}_{|\xi_n - \xi| \le \delta, |\xi| \le n}\\
+    & + \mathbb{E}(|f(\xi) - f(\xi_n)|)\mathbf{1}_{|\xi_n - \xi| \le \delta, |\xi| > n}
+    + \mathbb{E}(|f(\xi) - f(\xi_n)|)\mathbf{1}_{|\xi_n - \xi| > \delta}\\
+    & \le \frac{\epsilon}{2} + 2c \frac{\epsilon}{4c} + 2c \mathbb{P}(|\xi_n - \xi| > \delta)\\
+    & \le \frac{\epsilon}{2} + \frac{\epsilon}{2} + 2c \mathbb{P}(|\xi_n - \xi| > \delta)
+  \end{split}\]
+  where the last equality follows as \(\xi_n\) converges to \(\xi\) in probability.
+  Thus, as the \(\epsilon\) is arbitrary, 
+  \[\lim_{n \to \infty} \mathbb{E}(|f(\xi_n) - f(\xi)|) = 0.\]
+\end{proof}
+
+\begin{theorem}[Portmanteau Theorem]
+  Let \((\xi_n)\) be a sequence of integrable random variables. Then, the 
+  following are equivalent:
+  \begin{enumerate}
+    \item \(\xi_n\) converges in distribution to \(\xi\).
+    \item \(\limsup_n \mathbb{P}(\xi_n \in B) \le \mathbb{P}(\xi \in B)\) for all closed \(B\).
+    \item \(\liminf_n \mathbb{P}(\xi_n \in A) \ge \mathbb{P}(\xi \in A)\) for all open \(A\).
+    \item \(\lim_n \mathbb{P}(\xi_n \in C) = \mathbb{P}(\xi \in C)\) for all borel \(C\) with 
+      \(\mathbb{P}(\xi \in \partial C) = 0\).
+    \item The distribution functions \(F_{\xi_n}\) converges to \(F_\xi\) at all 
+      points of continuity of \(F_\xi\).
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  \((1 \implies 2)\). Let \(B\) be closed and let \(f := \mathbf{1}_B\) and let 
+  \(f_\epsilon(x) := g(\epsilon^{-1} \text{dist}(x, B))\) where 
+  \[g(t) := \begin{cases}
+    1, \ & t\le 0,\\
+    1 - t, \ & 0 \le t \le 1,\\
+    0, \ & t > 1.
+  \end{cases}\]
+  We observe that \(f_\epsilon(x)\) is 0 if \(x\) is not in a \(\epsilon\)-neighbourhood
+  of \(B\). In particular, defining \(B_\epsilon := \{x \mid \text{dist}(x, B)\}\), 
+  \(f_\epsilon(B_\epsilon^c) = \{0\}\). We note that \(B_\epsilon \downarrow B\) 
+  as \(\epsilon \downarrow 0\) and so \(f_\epsilon \to f\). Now, by considering
+  \[\begin{split}
+    \mathbb{P}(\xi_n \in B) & = \int f \dd (\xi_n)_*\mathbb{P}
+      \le \int f_\epsilon \dd (\xi_n)_*\mathbb{P},
+  \end{split}\]
+  we have 
+  \[\begin{split}
+    \limsup_n \mathbb{P}(\xi_n \in B) 
+    & \le \limsup_n \int f_\epsilon \dd (\xi_n)_*\mathbb{P} 
+      = \int f_\epsilon \dd \xi_*\mathbb{P} \le \mathbb{P}(\xi \in B_\epsilon)
+  \end{split}\]
+  where the equality follows by convergence in distribution and the second 
+  inequality follows as \(f_\epsilon(B_\epsilon^c) \le 1\). Thus, by the continuity 
+  of measure, \(\mathbb{P}(\xi \in B_\epsilon) \to \mathbb{P}(\xi \in B)\) as 
+  \(\epsilon \downarrow 0\) and hence, 
+  \(\limsup_n \mathbb{P}(\xi_n \in B) \le \mathbb{P}(\xi \in B)\) as required.
+
+  \((2 \iff 3)\). Follows taking the complement. 
+
+  \((2, 3 \implies 4)\). Taking any borel set \(C\), we recall that 
+  \(\overline{C} = C \cup \partial C\) and \(C^\circ = C \setminus \partial C\).
+  Then, as \(\mathbb{P}(\xi \in \partial C) = 0\), we have 
+  \[\limsup_n \mathbb{P}(\xi_n \in C) \le \limsup_n \mathbb{P}(\xi_n \in \overline{C}) 
+    \le \mathbb{P}(\xi \in \overline{C}) = \mathbb{P}(\xi \in C),\]
+  and 
+  \[\liminf_n \mathbb{P}(\xi_n \in C) \ge \liminf_n \mathbb{P}(\xi_n \in C^\circ) 
+    \ge \mathbb{P}(\xi \in C^\circ) = \mathbb{P}(\xi \in C).\]
+  Hence, \(\lim_n \mathbb{P}(\xi_n \in C) = \mathbb{P}(\xi \in C)\) as required.
+
+  \((4 \implies 5)\). Obvious from 5.
+
+  \((5 \implies 1)\). This implication is a bit more complicated. The general idea 
+  uses the fact that if 5 holds, then there exists a probability space 
+  \((\Omega', \mathcal{F}', \mathbb{P}')\) and a sequence of random variables 
+  \((\eta_n)\) on this probability space such that 
+  \((\xi_n)_*\mathbb{P}_n = (\eta_n)_*\mathbb{P}'\) (I'm writing 
+  \(\mathbb{P}_n\) to especially indicate \(\xi_n\) are on possibly different 
+  measurable spaces) \(\xi_*\mathbb{P} = \eta_* \mathbb{P}'\) and \(\eta_n \to \eta\) 
+  almost surely.
+
+  Assuming this theorem (which will will prove below), 
+  let \(f\) be a continuous bounded function. As 
+  \(f\) is continuous, \(f(\eta_n) \to f(\eta)\) almost surely. Now, as 
+  they are bounded, we may apply dominated convergence such that 
+  \[\mathbb{E}(f(\xi_n)) = \mathbb{E}(f(\eta_n)) \to \mathbb{E}(f(\eta)) = \mathbb{E}(f(\xi))\]
+  where the equalities follows by change of variables.
+\end{proof}
+
+\begin{lemma}
+  Let \(\xi\) be a random variable with distribution function \(F_\xi\) and let 
+  \(U\) be a uniformly distributed random variable on the interval \([0, 1]\) 
+  where we denote 
+  \[F^{-1}(u) := \sup \{y \mid F_\xi(y) < u\}.\]
+  Then, \(\xi_* \mathbb{P} = (F^{-1}(U))_* \lambda\).
+\end{lemma}
+\begin{proof}
+  This follows as \(u \le F_\xi(x) \iff F_\xi^{-1}(u) \le x\) since \(F_\xi\) 
+  is nondecreasing and continuous from the right. Indeed, 
+  if \(u \le F_\xi(x)\) and suppose for contradiction that \(F_\xi^{-1}(u) > x\),
+  then, by definition, \(\sup \{y \mid F_\xi(y) < u\} > x\) and so, 
+  \(\sup \{y \mid F_\xi(y) < u \le F_\xi(x)\} > x\). However, this is not possible 
+  as \(F_\xi\) is nondecreasing, thus a contradiction.
+  On the other hand, if \(x \le F_\xi^{-1}(u) = \sup \{y \mid F_\xi(y) < u\}\), 
+  as \(F_\xi\) is nondecreasing and continuous from the right, 
+  \(F_\xi(x) \ge F_\xi(\sup \{y \mid F_\xi(y) < u\}) \ge u\).
+\end{proof}
+
+\begin{theorem}[Single Probability Space Theorem]
+  Let \((\xi_n)\) be a sequence of integrable random variables such that the 
+  distribution functions \(F_{\xi_n}\) converges to \(F_\xi\) at all 
+  points of continuity of \(F_\xi\). Then, there exists a probability space 
+  \((\Omega', \mathcal{F}', \mathbb{P}')\) and a sequence of random variables 
+  \((\eta_n)\) on this probability space such that 
+  \((\xi_n)_*\mathbb{P}_n = (\eta_n)_*\mathbb{P}'\), 
+  \(\xi_*\mathbb{P} = \eta_* \mathbb{P}'\) and \(\eta_n \to \eta\) 
+  almost surely.
+\end{theorem}
+\begin{proof}
+  Let \((\Omega', \mathcal{F}', \mathbb{P}') := ([0, 1], \mathcal{B}([0, 1]), \lambda)\).
+  Then, it suffices to prove that \(F_{\xi_n}^{-1}(u) \to F_\xi^{-1}(u)\) for all 
+  \(u\) such that \(|F_\xi^{-1}(u)| < \infty\) and the measure of all other points 
+  is zero as they form a countable set (nondecreasing function can have at most 
+  countably many discontinuities). Indeed, defining \(\eta_n := F_{\xi_n}^{-1}(U)\) 
+  converges to \(\eta := F_\xi^{-1}(U)\) almost surely. Then, by the above lemma, 
+  the result follows. 
+
+  Suppose \(u\) is a point such that \(|F_\xi^{-1}(u)| < \infty\). Then, for any 
+  \(x < F_\xi^{-1}(u)\), \(F(x) < u\) and if \(x\) is a point of continuity 
+  of \(F_\xi\), we have \(F_{\xi_n}(x) \to F_\xi(x)\) and so, \(F_{\xi_n}< u\) 
+  for sufficiently large \(n\). Thus, \(x \le F_{\xi_n}^{-1}(u)\) implying 
+  \(x \le \liminf_n F_{\xi_n}^{-1}(u)\). Now, by taking a sequence \((x_n)\) 
+  of points of continuity of \(F_\xi\) such that \(x_n \uparrow F^{-1}(u)\), 
+  we obtain \(F^{-1}(u) \le \liminf_n F_{\xi_n}^{-1}(u)\).
+
+  On the other hand, if \(x > F_\xi^{-1}(u)\), we have \(F(x) \ge u\). 
+  If \(F_\xi(x) = u\), then we see that \(|F_{\xi}^{-1}(u)| = \infty\). 
+  So, \(F_\xi(x) > u\) and from which by the same argument as the less 
+  than case, we obtain \(F^{-1}(u) \ge \limsup_n F_n^{-1}(u)\) implying 
+  convergence as required.
+\end{proof}
+
 \end{document}
