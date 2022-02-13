@@ -336,7 +336,9 @@ Going through all proved theorems for real spaces, we find they also hold for
 complex spaces (with trivial modifications).
 
 \newpage
-\section{Trigonometric Series}
+\section{Fourier Series}
+
+\subsection{Trigonometric Series}
 
 We will consider the space \(L_2[-\pi, \pi]\) (the space of square-integrable functions 
 from \([-\pi, \pi]\) quotiented by the a.e.-equal equivalence relation equipped with 
@@ -653,7 +655,8 @@ Furthermore, if \(f \in L_1[-\pi, \pi]\), then \(\sigma_n \to f\) in \(L_1\).
   the Fejer's sums has a unique limit and hence, \(f = g\) in \(L_1\).
 \end{proof}
 
-\subsection{Fourier Transform}
+\newpage
+\section{Fourier Transform}
 
 Thus far, we have considered periodic functions in \(L_1\) is represented uniquely 
 by its Fourier series. We would now like to generalize this theory to non-periodic 
@@ -744,6 +747,8 @@ Dini condition, then
 \begin{proof}
   See above.
 \end{proof}
+
+\subsection{Properties of the Fourier Transform}
 
 From the above process, we observe that the Fourier transform is very similar to 
 the Fourier series in which the Fourier transform is analogous to the Fourier 
@@ -1003,5 +1008,346 @@ and we are asked to find \(u(x, t)\) for all \(t > 0\).
   = \frac{1}{2\sqrt{\pi t}} \int e^{- y^2 / 4t}u_0(x - y) \lambda(\dd y)\]
   which is known as a Poisson integral.
 \end{proof}
+
+\subsection{Fourier Transform in \texorpdfstring{\(L_2\)}{Lg}}
+
+For convenience and generality, we will consider the complex \(L_2\) in this 
+section. Recall that for \(f \in L_1[-\pi, \pi]\), we defined the complex Fourier 
+coefficients 
+\[c_n := \frac{1}{2\pi} \int_{[-\pi, \pi]} f(x)e^{-inx} \lambda(\dd x).\]
+By Hölder's inequality, we have \(L_q \subseteq L_p\) for all \(p \le q\) 
+in a finite measure space, and thus we have 
+\(L_2[-\pi, \pi] \subseteq L_1[-\pi, \pi]\). Thus, \(c_n\) is defined for any 
+\(f \in L_2[-\pi, \pi]\). Moreover, the map \(f \in L_2[-\pi, \pi]\) to its 
+Fourier coefficients 
+is a linear operator from \(L_2[-\pi, \pi]\) to \(\ell_2\) satisfying 
+Parseval's identity. 
+
+The same is not true for general measure spaces and the Fourier transform is 
+not necessarily defined for \(L_2\) functions. Therefore, we will need to extend 
+the definition of Fourier transforms.
+
+\begin{theorem}[Plancherel's Theorem]
+  For any \(f \in L_2\), the integral 
+  \[g_N(y) := \int_{[-N, N]} f(x)e^{-iyx}\lambda(\dd x)\]
+  is \(L_2\) for any \(N\). Furthermore, \(g_N\) converges in \(L_2\) to some 
+  \(g \in L_2\) as \(N \to \infty\). We call this \(g\) the Fourier transform 
+  of \(f\) and Parseval's identity holds, namely
+  \[\int_{\mathbb{R}} |g(y)|^2 \lambda(\dd y) =
+     2\pi \int_{\mathbb{R}} |f(x)|^2 \lambda(\dd x).\]
+  Thus, if \(f \in L_1 \cap L_2\), then \(g\) coincides with \(\mathcal{F}[f]\).
+\end{theorem}
+\begin{proof}
+  We will first prove Plancherel's theorem for Schwartz functions and then use 
+  the fact that such functions are dense in \(L_2\) (as simple functions can be  
+  approximated by Schwartz functions) to complete the proof.
+
+  Let \(f_1, f_2 \in S_\infty\) and denote \(g_1, g_2\) their Fourier transforms 
+  (which also belong in \(S_\infty\)). Then, by the inverse Fourier transform 
+  and the Fubini theorem, 
+  \[\begin{split}
+    \int_{\mathbb{R}} f_1 \overline{f_2} \dd \lambda & = 
+    \int \frac{1}{2\pi} \int g_1(y)e^{iyx} \lambda(\dd(y)) \overline{g_2(y)} 
+      \lambda(\dd(x))\\
+    & = \frac{1}{2\pi} \int g_1(y) \overline{\int f_2(x)e^{-iyx} 
+      \lambda(\dd x)} \lambda(\dd y)\\
+    & = \frac{1}{2\pi} \int g_1(y) \overline{g_2(y)} \lambda(\dd y).
+  \end{split}\]
+  Hence, the Parseval's identity holds by setting \(f_1 = f_2\).
+
+  Now, let \(f \in L_2\) such that \(f(x) = 0\) for all \(x \not\in [-a, a]\) 
+  for some \(a > 0\). Then, \(f \in L_2[-a, a]\) and as \([-a, a]\) has 
+  finite measure, \(f \in L_1[-a, a]\) and so, as \(f\) is identically zero outside 
+  \([-a, a]\), \(f \in L_1\). Hence, the Fourier transform is defined. 
+  
+  Now since 
+  \(S_\infty\) is dense, we may take a sequence \((f_n)\) of Schwarz functions 
+  which are 0 outside \([-a, a]\) and \(f_n \to f\) in \(L_2\). Hence, by the 
+  same argument \(f_n \to f\) in \(L_1\). Therefore, \(g_n := \mathcal{F}[f_n]\)
+  converges to \(g\) uniformly. Moreover, \((g_n)\) is Cauchy and hence convergent 
+  to \(g\) in \(L_2\). Indeed, as \(g_n - g_m \in S_\infty\), and by Parseval's identity 
+  for \(S_\infty\), we have 
+  \[\int |g_n - g_m|^2 \dd \lambda = 2\pi \int |f_n - f_m|^2 \dd \lambda,\]
+  from which the Cauchy property follows. Parseval's identity follows similarly 
+  by taking the limit of \(\|f_n\|^2_2 = \frac{1}{2\pi}\|g_n\|^2_2\) as 
+  \(n \to \infty\) on both sides.
+
+  Finally, for any \(f \in L_2\), define \(f_N := \mathbf{1}_{[-N, N]}f\). Clearly, 
+  by dominated convergence, \(\|f - f_N\|_2 \to 0\) as \(N \to \infty\). 
+  Since \(f_N \in L_1\), its Fourier transform exists and is given by
+  \[g_N(y) = \int f_N(x)e^{-iyx}\lambda(\dd y) = \int_{[-N, N]} f(x)e^{-iyx}\lambda(\dd x).\]
+  Then, as Parseval holds for functions vanishing outside compact interval, 
+  we have \(\|f_N - f_M\|_2^2 = \frac{1}{2\pi}\|g_N - g_M\|_2^2\) and hence, 
+  \((g_n)\) is Cauchy and thus, converges to some \(g \in L_2\). Similar to above, 
+  we can take the limit \(\|f_n\|^2_2 = \frac{1}{2\pi}\|g_n\|^2_2\) as 
+  \(n \to \infty\) on both sides to obtain Parseval's identity.
+\end{proof}
+
+\begin{corollary}
+  Parseval's identity implies that for any \(f_1, f_2 \in L_2\), 
+  \[\int f_1 \overline{f_2} \dd \lambda = 
+    \frac{1}{2\pi}\int g_1 \overline{g_2} \dd \lambda.\]
+\end{corollary}
+\begin{proof}
+  Try using the polarization identity:
+  \[\langle u, v\rangle = \frac{1}{4}(\|u + v\|^2 - \|u - v\|^2 
+  + i\|u + iv\|^2 - i\|u - iv\|^2).\]
+\end{proof}
+
+\subsection{Laplace Transform}
+
+In the case that a function is neither \(L_1\), we may not in general
+use the Fourier transform directly. Instead, we would like to consider an 
+analogue of the Fourier transform on of which is known as the Laplace transform.
+In particular, the idea is that some nonintegrable functions \(f\) becomes 
+integrable by multiplying it with \(e^{-\gamma x}\) for some 
+\(\gamma \in \mathbb{R}\). Namely, we take 
+\[g(s) := \int_{\mathbb{R}} f(x)e^{-isx}\lambda(\dd x) 
+  = \int_{\mathbb{R}}f(x)e^{-iyx}e^{-zx}\lambda(\dd x)\]
+where \(s = y - i z\).
+
+Suppose \(f\) satisfy the Dini condition and \(f(x) = 0\) for all \(x < 0\) 
+and \(|f(x)| < ce^{\gamma_0 x}\) for all \(x \ge 0\) for some \(c, \gamma_0 > 0\),
+then, we say \(f \in L\). We note that for \(s = y + iz\), we have
+\[g(s) = \int_{\mathbb{R}} f(x) e^{-isx} = 
+  \int_{[0, \infty)} f(x)e^{zx}e^{-iyx}\lambda(\dd x)\]
+converges uniformly for \(z < -\gamma_0\) and so, \(g\) is defined 
+on the half plane \(\mathbb{R} + i(-\infty, -\gamma_0)\) and is analytic on said 
+half plane.
+
+For fixed \(z < -\gamma_0\), we note that \(g\) is simply the Fourier transform 
+of the function \(f(x)e^{zx}\) and so, as \(f\) satisfy the Dini condition, 
+we may apply the inversion formula, namely 
+\[f(x)e^{zx} = \frac{1}{2\pi}\int_{\mathbb{R}}g(s)e^{iyx}\lambda(\dd y),\]
+so (noting that the integrals are principle),
+\[f(x) = \frac{1}{2\pi}\int_{\mathbb{R}}g(s)e^{-zx + iyx}\lambda(\dd y) 
+  = \frac{1}{2\pi}\int_{iz-\infty}^{iz + \infty}g(s)e^{isx} \lambda(\dd s).\]
+Now, changing the variable with \(p = is\) and denote \(\Phi(p) = g(s)\) and 
+\(w = -z\),
+we obtain,
+\[\Phi(p) = \int_{[0, \infty)}f(x)e^{-px} \lambda(\dd x)\]
+and (where the integral is principle),
+\[f(x) = \frac{1}{2\pi i} \int_{w - i\infty}^{w + i\infty} \Phi(p)e^{px}\lambda(\dd x)
+  \equiv \frac{1}{2\pi i} \lim_{T \to \infty}\int_{w - iT}^{w + iT} \Phi(p)e^{px}\lambda(\dd x),\]
+where \(w > \gamma_0\). This motivates the definition of the Laplace transform.
+
+\begin{definition}[Laplace Transform]
+  Given \(f \in L\), we define the Laplace transform of \(f\) to be 
+  \[\Phi(p) = \int_{[0, \infty)}f(x)e^{-px} \lambda(\dd x).\]
+  From the above argument, we have that \(\Phi\) is analytic for 
+  \(\text{Re}(p) > \gamma_0\).
+\end{definition}
+
+The Laplace transform has applications to solutions of differential equations. 
+Consider the IVP
+\[y^{(n)} + a_1 y^{(n - 1)} + \cdots + a_n y = b(x), a_1, \cdots, a_n \in \mathbb{C},\]
+with initial condition \(y(0) = y_0, y'(0) = y_1, \cdots, y^{(n - 1)}(0) = y_{n - 1}\).
+Furthermore, assume \(b \in L\) and we will look for a solution \(y\) such that 
+\(y, y', \cdots, y^{(n)} \in L\). 
+
+Let \(\mathcal{Y}(p), B(p)\) be the Laplace transform of \(y\) and \(b\) respectively. 
+Then, by integration by parts, we observe 
+\[\int_{[0, \infty)} y'(x)e^{-px} \lambda(\dd x) = 
+ y(x)e^{-px}|_0^\infty + p\int_{[0, \infty)} y(x)e^{-px}\lambda(\dd x) 
+ = p\mathcal{Y}(p) - y_0.\]
+By induction, we have 
+\[\int_{[0, \infty)} y^{(n)}(x)e^{-px} \lambda(\dd x) = 
+  p^n\mathcal{Y}(p) - y_{n - 1} - py_{n - 2} - \cdots - p^{n - 1}y_0.\]
+Thus, after applying the Laplace transform to the differential equation, we 
+obtain 
+\[Q(p) + R(p)\mathcal{Y}(p) = B(p)\]
+where \(R(p) = p^n + a_1p^{n - 1} + \cdots + a_n\) and \(Q(p)\) is a polynomial 
+of degree \(n - 1\) with coefficients in our initial conditions. Hence, 
+we conclude, 
+\[\mathcal{Y}(p) = \frac{B(p) - Q(p)}{R(p)}\]
+implying 
+\[y(x) = \frac{1}{2\pi i} 
+  \int_{w - i\infty}^{w + i\infty} \frac{B(p) - Q(p)}{R(p)} e^{ipx} \lambda(\dd p),\]
+by applying the inverse Laplace transform.
+
+\subsection{Fourier-Stieltjes Transform}
+
+Let us now return to the Fourier transforms. Recall the Stieltjes integral 
+and we observe that, for \(f \in L_1\), we may write its Fourier transform 
+as a Lebesgue-Stieltjes integral,
+\[\mathcal{F}[f](y) = \int_{\mathbb{R}}e^{-iyx}f(x)\lambda(\dd x)
+  = \int_{\mathbb{R}} e^{-iyx}\dd F(x)\]
+where \(F(x) = \int_{(-\infty, x]} f(t) \lambda(\dd t)\). Note that \(F\) is 
+absolutely continuous with bounded variation on \(\mathbb{R}\). On the other 
+hand, the last integral remains to be well-defined for any function of bounded 
+variation.
+
+Let us first recall some definitions required of the Lebesgue-Stieltjes integral. 
+
+\begin{definition}[Bounded Variation on an Interval]
+  A function \(F\) is said to have bounded variation on \([a, b]\) if the variation 
+  of \(F\),
+  \[V_a^bF := \sup_{P \in \mathcal{P}}\sum_{i = 1}^{n_P} |f(x_i) - f(x_{i - 1})| < \infty,\]
+  where \(\mathcal{P}\) is the set of all finite divisions of \([a, b]\). Namely, 
+  \(P \in \mathcal{P}\) denotes the points 
+  \[a_0 = x_0 \le x_1 \le \cdots \le x_{n_P} = b.\]
+\end{definition}
+
+We observe that, if \(F\) is non-decreasing, then the sum of any partition is 
+telescoping, and thus, \(V_a^b F = F(b) - F(a)\) for any interval \([a, b]\).
+
+\begin{definition}[Bounded Variation on \(\mathbb{R}\)]
+  A function \(F\) is said to have bounded variation on \(\mathbb{R}\) if the 
+  limit
+  \[V_{-\infty}^\infty F := 
+  \lim_{\substack{a \to -\infty;\\ b \to \infty}}V_a^b F\]
+  exists and is finite.
+\end{definition}
+
+\begin{proposition}
+  If \(F\) is a function of bounded variation on \(\mathbb{R}\), then, there 
+  exists non-decreasing functions \(F_1, F_2\) such that \(F = F_1 - F_2\). 
+  Moreover, \(F\) is differentiable almost everywhere 
+  and can be written as 
+  \[F = \phi + \psi + y\]
+  where \(\phi\) is absolutely continuous (and \(F' = \phi'\) a.e.), 
+  \(\psi\) is singular continuous (and \(\psi' = 0\) a.e.), and 
+  \(y\) is a jump function (with \(y' = 0\) a.e.).
+\end{proposition}
+
+With this in mind, we recall that the Lebesgue-Stieltjes measure can be defined 
+for all functions of bounded variation and the Lebesgue-Stieltjes integral is 
+simply the Lebesgue integral taken with respect to that measure.
+
+\begin{definition}[Lebesgue-Stieltjes Measure of an Interval]
+  Let \(F\) be a function of bounded variation on \([a, b]\) and suppose 
+  \(F = F_1 - F_2\) where \(F_1, F_2\) are non-decreasing. Then, the 
+  Lebesgue-Stieltjes measure of \(F\) on 
+  the interval \([a, b]\) is defined to be the unique measure obtained from 
+  the Caratheodory extension of the outer measure 
+  \[w((s, t]) := F_1(t) - F_1(s) + F_2(t) - F_2(s).\]
+\end{definition}
+
+\begin{definition}[Fourier-Stieltjes Transform]
+  The integral 
+  \[g(y) := \int_{\mathbb{R}} e^{-iyx} \dd F(x)\]
+  where \(F\) is a function of bounded variation on \(\mathbb{R}\), is 
+  called the Fourier-Stieltjes transform of \(F\).
+\end{definition}
+
+\begin{lemma}
+  The Fourier-Stieltjes transform (F.S.T.) of \(F\), \(g\) is bounded and continuous 
+  on \(\mathbb{R}\).
+\end{lemma}
+\begin{proof}
+  We have \(|g(y)| \le \int |e^{-iyx}| \dd F(x) = \lambda_F(\mathbb{R})\). Now, 
+  since \(\lambda_{V_{-\infty}^xF} \ge \lambda_F\) where \(V_{-\infty}^xF\) is 
+  non-decreasing, by the continuity of measures from below, 
+  \[\lambda_F(\mathbb{R}) = \lim_{x \to \infty}\lambda_F((-\infty, x]) \le 
+    \lim_{x \to \infty} \lambda_{V_{-\infty}^xF}((-\infty, x]) = 
+    \lim_{x \to \infty} V_{-\infty}^xF = V_{-\infty}^\infty F.\]
+  Hence, \(|g|\) is bounded by \(V_{-\infty}^\infty F\).
+
+  Secondly, we observe 
+  \[\begin{split}
+    |g(y_1) - g(y_2)| & \le \int_{[-N, N]} |e^{-iy_1x} - e^{-iy_2x}| \dd V_{-\infty}^xF 
+    + \int_{|x| \ge N} |e^{-iy_1x} - e^{-iy_2x}| \dd V_{-\infty}^xF. 
+  \end{split}\]
+  Thus, taking \(N\) sufficiently large, the second term is arbitrarily small 
+  (independent of \(y_1, y_2\)), and thus, as the first term tends to 0 at 
+  \(|y_1 - y_2| \to 0\), we conclude \(g\) is continuous.
+\end{proof}
+
+Unlike the Fourier transform, the Fourier-Stieltjes transform of a function 
+does not necessarily vanish at \(\pm \infty\). Indeed, defining 
+\(F = \mathbf{1}_{[0, \infty)}\), the Lebesgue-Stieltjes measure of \(F\) 
+is \(\lambda_F = \delta_0\) (Dirac measure at 0), and so, the F.S.T. of \(F\) is 
+\[g(y) = \int_{\mathbb{R}} e^{-iyx} \dd F(x) = 
+  \int_{\mathmbox{R}} e^{-iyx} \dd \delta_0 = 1.\]
+
+Recall for \(L_1\) functions, we defined the convolution of two functions 
+\(f_1, f_2\) to be \(f_1 * f_2(x) = \int_{\mathbb{R}}f_1(x - y)f_2(x) \lambda(\dd y)\).
+We will define a similar definition for functions of bounded variations.
+
+Let \(F(x) = \int_{(-\infty, x]}f(t) \lambda(\dd t)\) and 
+\(F_i(x) = \int_{(-\infty, x]}f_i(t) \lambda(\dd t)\) for \(i = 1, 2\),
+where \(f = f_1 * f_2\),  
+by the absolute integrability of \(f, f_1, f_2\) and Fubini's theorem, 
+we have 
+\[\begin{split}
+  F(x) & = \int_{(-\infty, x]} f(t) \lambda(\dd t) = 
+  \int_{(-\infty, x]} \int_{\mathbb{R}}f_1(t - y)f_2(y)\lambda(\dd y)\lambda(\dd t)\\
+  & = \int_{\mathbb{R}}\left(\int_{(-\infty, x]} f_1(t - y) \lambda(\dd t)\right)f_2(y) \lambda(\dd y)
+    = \int_{\mathbb{R}}F_1(x - y) \dd F_2(y).
+\end{split}\]
+This motivates for the definition of the convolution of two functions of bounded 
+variation.
+
+\begin{definition}[Convolution of Functions of Bounded Variation]
+  Given \(F_1, F_2\) are functions of bounded variation, we define the 
+  convolution of \(F_1\) with \(F_2\) to be
+  \[F_1 * F_2(x) = \int_{\mathbb{R}} F_1(x - y) \dd F_2(y).\]
+\end{definition}
+
+\begin{proposition}
+  If \(F_1, F_2\) are functions of bounded variation on \(\mathbb{R}\), 
+  then so is \(F_1 * F_2\) a function of bounded variation on \(\mathbb{R}\).
+\end{proposition}
+\begin{proof}
+  Consider 
+  \[|F(x_1) - F(x_2)| 
+    \le \int_{\mathbb{R}}|F_1(x_1 - y) - F_1(x_2 - y)| \dd V_{-\infty}^y F_2.\]
+  So, 
+  \[\begin{split}
+    \sum_i |F(x_i) - F(x_{i - 1})| 
+    & \le \sum_i \int_{\mathbb{R}}|F_1(x_i - y) - F_1(x_{i - 1} - y)| \dd V_{-\infty}^y F_2\\
+    & = \int_{\mathbb{R}} \left(\sum_i|F_1(x_i - y) - F_1(x_{i - 1} - y)|\right) \dd V_{-\infty}^y F_2\\
+    & \le \int_{\mathbb{R}} V_{-\infty}^\infty F_1 \dd V_{-\infty}^y F_2 
+      = V_{-\infty}^\infty F_1 V_{-\infty}^\infty F_2.
+  \end{split}\]
+  Hence, \(V_{-\infty}^\infty F \le V_{-\infty}^\infty F_1 V_{-\infty}^\infty F_2 < \infty\) 
+  implying \(F\) has bounded variation as required.
+\end{proof}
+
+\begin{theorem}
+  Let \(F\) be the convolution of the function \(F_1, F_2\) of bounded 
+  variations on \(\mathbb{R}\) and let \(g, g_1, g_2\) be their Fourier-Stieltjes 
+  transforms respectively. Then, \(g = g_1 \cdot g_2\).
+\end{theorem}
+\begin{proof}
+  Let \(F = F_1 * F_2\) and consider the division 
+  \[a = x_0 \le x_1 \le \cdots \le x_n = b\]
+  of the interval \([a, b]\). Then, for any \(y\), as \(e^{-iyx}\) is continuous,
+  the Lebesgue-Stieltjes integral of \(e^{-iyx}\) coincides with the 
+  Riemann-Stieltjes integral. In particular, 
+  \[\begin{split}
+    \int_{[a, b]} e^{-iyx} \dd F(x) 
+    & = \lim_{\max \Delta x_k \to 0} \sum_{k = 1}^n e^{iyx_k} (F(x_k) - F(x_{k - 1}))\\
+    & = \lim_{\max \Delta x_k \to 0} \int_{\mathbb{R}}\sum_{k = 1}^n e^{iy(x_k - t)} 
+      (F(x_k - t) - F(x_{k - 1} - t)) e^{-iyt} \dd F_2(t)\\
+    & = \int_{\mathbb{R}} \left(\int_{a - y}^{b - y} e^{-iyx}\dd F_1(x)\right)
+      e^{-iyt} \dd F_2(t)\\
+    & = \left(\int_{a - y}^{b - y} e^{-iyx}\dd F_1(x)\right)
+      \left(\int_{\mathbb{R}} e^{-iyt} \dd F_2(t)\right)
+  \end{split}\]
+  where the third equality holds by dominated convergence. Hence, 
+  taking the limit \(a \to \infty, b \to -\infty\), we obtain 
+  \[g(y) = \int_{\mathbb{R}} e^{-iyx} \dd F(x) 
+    = \left(\int_{\mathbb{R}} e^{-iyx}\dd F_1(x)\right)
+    \left(\int_{\mathbb{R}} e^{-iyt} \dd F_2(t)\right) = g_1(y)g_2(y)\]
+  as required.
+\end{proof}
+
+This fact is applicable in probability theory and especially useful when dealing 
+with characteristic functions. In particular, if \(\xi, \eta\) are two independent 
+random variables and \(F_1, F_2\) are their distributions, i.e. 
+\(F_1(x) = \xi_* \mathbb{P}((-\infty, x])\) and \(F_2(x) = \eta_* \mathbb{P}((-\infty, x])\).
+Then, \(\xi + \eta\) has distribution \(F_1 * F_2\) (see probability theory).
+
+The characteristic function of a random variable \(X\) is defined to be the 
+F.S.T. of its distribution. Namely, if \(X\) has distribution \(F\), 
+then its characteristic function is defined to be 
+\[g(y) := \int_{\mathbb{R}} e^{-i y x} \dd F(x).\]
+Therefore, a corollary of the above theorem is that the characteristic function 
+of \(\xi + \eta\) is simply the product of the characteristic functions of the 
+two.
+
+From this, one may obtain the distribution of \(\xi + \eta\) by applying the 
+inverse Fourier-Stieltjes transform which formula is on the exercise sheet.
 
 \end{document}
