@@ -1128,7 +1128,7 @@ we obtain,
 \[\Phi(p) = \int_{[0, \infty)}f(x)e^{-px} \lambda(\dd x)\]
 and (where the integral is principle),
 \[f(x) = \frac{1}{2\pi i} \int_{w - i\infty}^{w + i\infty} \Phi(p)e^{px}\lambda(\dd x)
-  \equiv \frac{1}{2\pi i} \lim_{T \to \infty}\int_{w - iT}^{w + iT} \Phi(p)e^{px}\lambda(\dd x),\]
+  \equiv \frac{1}{2\pi i} \lim_{T \to \infty}\int_{w - iT}^{w + iT} \Phi(p)e^{px}\lambda(\dd p),\]
 where \(w > \gamma_0\). This motivates the definition of the Laplace transform.
 
 \begin{definition}[Laplace Transform]
@@ -1258,7 +1258,7 @@ does not necessarily vanish at \(\pm \infty\). Indeed, defining
 \(F = \mathbf{1}_{[0, \infty)}\), the Lebesgue-Stieltjes measure of \(F\) 
 is \(\lambda_F = \delta_0\) (Dirac measure at 0), and so, the F.S.T. of \(F\) is 
 \[g(y) = \int_{\mathbb{R}} e^{-iyx} \dd F(x) = 
-  \int_{\mathmbox{R}} e^{-iyx} \dd \delta_0 = 1.\]
+  \int_{\mathbb{R}} e^{-iyx} \dd \delta_0 = 1.\]
 
 Recall for \(L_1\) functions, we defined the convolution of two functions 
 \(f_1, f_2\) to be \(f_1 * f_2(x) = \int_{\mathbb{R}}f_1(x - y)f_2(x) \lambda(\dd y)\).
