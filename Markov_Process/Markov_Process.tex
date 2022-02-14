@@ -1949,4 +1949,353 @@ Finally, we can prove the successful coupling lemma.
   \[\mathbb{P}(T < \infty) \ge \mathbb{P}(T_{(i, i)} < \infty) = 1.\]
 \end{proof}
 
+Before moving on, let us first consider the following well-known lemma from 
+elementary number theory.
+
+\begin{lemma}
+  Let \(S \subseteq \mathbb{N}\) be a non-empty additive set and let \(d = \gcd(S)\).
+  Then, there exists some \(\kappa > 0\) such that \(kd \in S\) for all \(k > \kappa\).
+\end{lemma}
+\begin{proof}
+  We may assume \(d = 1\) by dividing every element of \(S\) by \(d\). In this 
+  case, by Bezout's lemma, there exists \(a_1, \cdots, a_n \in \mathbb{Z}\) 
+  and \(d_1, \cdots, d_n \in S\) such that \(1 = \sum_{i = 1}^n a_i d_i\). 
+  Then, defining \(M = \sum_{i = 1}^n d_i\), for all \(k < M\), we observe 
+  that 
+  \[NM + k = \sum_{i = 1}^n Nd_i + k \sum_{i = 1}^n a_i d_i = \sum_{i = 1}^n(N + ka_i)d_i.\]
+  Hence, for \(N\) sufficiently large, i.e. \(N \ge N_0\) such that 
+  \(N_0 + ka_i \ge 0\) for all \(i\) and \(0 \le k < M\), we have 
+  \(N + ka_i \ge 0\) implying \(NM + k \in S\) as \(S\) is additive. 
+  Thus, as all natural numbers larger than \(N_0M\) can be written in the form 
+  \(NM + k\) where \(N \ge N_0\) and \(0 \le k < M\), the claim follows.
+\end{proof}
+
+\subsection{Total Variation Distance}
+
+Recall that in measure theory, we had considered the total variation of signed 
+and complex measures. With regards to probability measures directly, the notion 
+of total variation is less useful as the total variation of a probability measure 
+is always 1. Instead we consider the total variation distance between two 
+probability measures.
+
+\begin{definition}[Total Variation Distance]
+  The total variation distance between two probability measure \(\mu, \nu\) is 
+  \[\|\mu - \nu\|_{TV} := 2\sup_{A \in \mathcal{F}} |\mu(A) - \nu(A)|.\]
+  We observe that the total variation distance is simply the total variation of 
+  the signed measure obtained from \(\mu - \nu\) (multiplied by 2 by convention).
+\end{definition}
+
+It is easy to check that 
+\begin{itemize}
+  \item \(\|\mu - \nu\|_{TV} = 0 \iff \mu = \nu\);
+  \item \(\|\mu - \nu\|_{TV} \le 2\);
+  \item \(\|\mu - \nu\|_{TV} = 2\) if \(\mu \perp \nu\). Indeed, if \(\mu \perp \nu\), 
+    then there exists \(A, B\) such that \(A \cup B = \Omega\) and 
+    \(\mu(B) = \nu(A) = 0\). So, \(\mu(A) - \nu(A) = \mu(A) + \mu(B) \ge 
+      \mu(A \cup B) = \mu(\Omega) = 1\).
+\end{itemize}
+
+\begin{lemma}
+  If \(\mathcal{X}\) is countable and \(\mu, \nu\) are probability measures on 
+  \(\mathcal{X}\), then 
+  \[\|\mu - \nu\|_{TV} = \sum_{j \in \mathcal{X}} |\mu(j) - \nu(j)|.\]
+  In particular, if you consider \(\mu, \nu\) as functions on \(\mathcal{X}\), 
+  the right hand side is simply the \(L^1\) norm of \(\mu - \nu\).
+\end{lemma}
+\begin{proof}
+  Define \(B = \{j \mid \mu(j) \ge \nu(j)\}\). Then, as \(\mu, \nu\) are probability 
+  measures, \(\mu(B) - \nu(B) = \nu(B^c) - \mu(B^c)\). Thus, 
+  \[\begin{split}
+    \sum_{j \in \mathcal{X}} |\mu(j) - \nu(j)| & = 
+    \sum_{j \in B} (\mu(j) - \nu(j)) + \sum_{j \in B^c} (\nu(j) - \mu(j))\\
+    & = \mu(B) - \nu(B) + \nu(B^c) - \mu(B^c) = 2(\mu(B) - \nu(B))\\ 
+    & \le \|\mu - \nu\|_{TV}.
+  \end{split}\]
+  On the other hand, for all measurable set \(A \subseteq \mathcal{X}\),
+  \[\begin{split}
+    |\mu(A) - \nu(A)| & \le
+    |(\mu - \nu)(A \cap B) + (\mu - \nu)(A \cap B^c)|\\
+    & \le (\mu - \nu)(A \cap B) \vee (\mu - \nu)(A \cap B^c)\\
+    & \le (\mu - \nu)(B) \vee (\mu - \nu)(B^c) = \mu(B) - \nu(B)\\
+    & = \frac{1}{2}\sum_{j \in \mathcal{X}} |\mu(j) - \nu(j)|.
+  \end{split}\]
+  Hence, the required inequality follows by multiplying both sides by 2.
+\end{proof}
+
+\begin{proposition}
+  If \(\mu = f \lambda\) and \(\nu = g\lambda\). Then, 
+  \[\|\mu - \nu\|_{TV} = \int |f - g| \dd \lambda = \|f - g\|_{L^1}.\]
+\end{proposition}
+\begin{proof}
+  Exercise. By the same idea as above.
+\end{proof}
+
+\begin{definition}
+  A sequence of measures \((\mu_n)\) is said to converge in total variation 
+  to the measure \(\mu\) if 
+  \[\lim_{n \to \infty}\|\mu_n - \mu\|_{TV} = 0.\]
+\end{definition}
+
+We note that convergence in total variation is different to convergence weakly. 
+Indeed, consider the sequence of Dirac measures \((\delta_{1 / n})\). 
+For all bounded continuous functions \(f\), we have 
+\[\int f \dd \delta_{1 / n} = f(1 / n) \to f(0) = \int f \dd \delta_0.\]
+Thus \(\delta_{1 / n} \to \delta_0\) weakly. On the other hand, 
+for all \(n\), we have 
+\[\|\delta_{1 / n} - \delta_0\|_{TV} = 2\]
+and so, \(\delta_{1 / n}\) does not converge in total variation to \(\delta_0\).
+
+\begin{proposition}
+  Given probability measures \(\mu, \nu\), 
+  \[\|\mu - \nu\|_{TV} = 
+  \sup_{\substack{f \in \mathcal{B}_b(\mathcal{X})\\\|f\|_\infty = 1}}
+  \left|\int f\dd\mu - \int f \dd \nu\right|.\]
+\end{proposition}
+\begin{proof}
+  See Sheffe's lemma.
+\end{proof}
+
+\begin{corollary}
+  Convergence in total variation implies convergence weakly.
+\end{corollary}
+
+Before moving further, let us remark that the space of all probability 
+measures \(\mathbb{P}(\Omega)\) on \(\Omega\) forms a complete metric space 
+with the distance \(\|\cdot\|_{TV}\). We will return to this later.
+
+With the notion the total variation distance in mind, we may reformulate our 
+convergence theorem regarding the transition probability. Namely, we have 
+\[\sum_{j = 1}^\infty |P^n_{ij} - \pi(j)| = \|P^n(i, \cdot) - \pi\|_{TV}.\]
+Recall that, if \(\mathcal{L}(x_0) = \mu\), then 
+\[\mu P^n(j) := \mathbb{P}(x_n = j) = \sum_{i = 1}^\infty \mu(i)P^n_{ij}.\]
+
+\begin{lemma}
+  If \(\lim_{n \to \infty} \|P^n(i, \cdot) - \pi\|_{TV} = 0\) for all 
+  \(i \in \mathcal{X}\), then \(\lim_{n \to \infty}\|\mu P^n - \pi\|_{TV} = 0\).
+\end{lemma}\
+\begin{proof}
+  We observe 
+  \[\|\mu P^n - \pi\|_{TV} = 
+    \sum_{j = 1}^\infty \left|\sum_{i = 1}^\infty 
+    \mu(i)P^n_{ij} - \sum_{i = 1}^\infty \mu(i)\pi(j)\right|.\]
+  As \(\sum \mu(i) = 1\), for all \(\epsilon > 0\), there exists some 
+  \(N\) such that \(\sum_{i = N + 1}^\infty \mu(i) < \epsilon / 4\). Then, 
+  \[\begin{split}
+    \sum_{j = 1}^\infty \left|\sum_{i = N + 1}^\infty 
+    \mu(i)P^n_{ij} - \sum_{i = 1}^\infty \mu(i)\pi(j)\right|
+    & \le \sum_{i = N + 1}^\infty \mu(i) \sum_{j = 1}^\infty |P^n_{ij} - \pi(j)|\\
+    & \le \sum_{i = N + 1}^\infty \mu(i) \sum_{j = 1}^\infty (|P^n_{ij}| + |\pi(j)|)\\
+    & < 2 \frac{\epsilon}{4} = \frac{\epsilon}{2}.
+  \end{split}\]
+  On the other hand, as \(\sum_{j = 1}^\infty |P^n_{ij} - \pi(j)| \to 0\) as 
+  \(n \to \infty\), there exists some \(M\) such that for all \(n \ge M\),
+  \(\sum_{j = 1}^\infty |P^n_{ij} - \pi(j)| < \epsilon / 2\) and so, for \(n \ge M\), 
+  \[\sum_{j = 1}^\infty \left|\sum_{i = 1}^N 
+  \mu(i)P^n_{ij} - \sum_{i = 1}^\infty \mu(i)\pi(j)\right| 
+  \le \sum_{j = 1}^\infty \sum_{i = 1}^N \mu(i)|P^n_{ij} - \pi(j)| < \sum_{i = 1}^N \mu(i)\frac{\epsilon}{2} 
+  \le \frac{\epsilon}{2}.\]
+  Hence, adding the two sums together, we have \(\|\mu P^n - \pi\|_{TV} < \epsilon\) 
+  for \(n \ge M\) implying \(\lim_{n \to \infty}\|\mu P^n - \pi\|_{TV} = 0\) as 
+  required.
+\end{proof}
+
+\begin{theorem}
+  If \((x_n)\) is an irreducible, aperiodic, positively recurrent THMC with 
+  \(\mathcal{L}(x_0) = \mu\), then
+  \[\lim_{n \to \infty}\|\mu P^n - \pi\|_{TV} = 0.\]
+\end{theorem}
+\begin{proof}
+  Follows by the above lemma and the reformulation of the convergence theorem.
+\end{proof}
+
+We have so far considered aperiodic chains. Let us now consider what happens 
+with periodic ones.
+
+\begin{lemma}
+  Let \((x_n)\) be irreducible and let \(d > 1\). Then \((x_n)\) has period 
+  \(d\) if and only if \(\mathcal{X}\) is a disjoint union of sets 
+  \(A_0, \cdots, A_{d - 1}\) such that if \(i \in A_n\) for some \(n\) and 
+  \(j \in \mathcal{X}\) such that \(P_{ij} > 0\), then \(j \in A_{n + 1}\) 
+  (we define \(A_d := A_0\)).
+\end{lemma}
+\begin{proof}
+  Suppose first that \(P\) has period \(d\). Then, we define 
+  \[A_n := \{j \in \mathcal{X} \mid 
+    P_{1j}^{kd + n} > 0 \text{ for some } k = 0, 1, \cdots\}\]
+  for \(n = 0, \cdots, d - 1\). Clearly, \(\bigcup_{n = 0}^{d - 1} A_n = \mathcal{X}\)
+  since \(P\) is irreducible and every natural number can be written as 
+  \(kd + n\) for some \(k \in \mathbb{N}\), \(0, \le n \le d - 1\). 
+  
+  Furthermore, \((A_n)_{n = 0}^{d - 1}\) is pair-wise disjoint since if 
+  \(j \in A_{n_1} \cap A_{n_2}\), then \(P_{1j}^{n_1 + k_1d}, P_{1j}^{n_2 + k_2d} > 0\)
+  for some \(k_1, k_2\). By irreducibility, there exists some \(m\) such that 
+  \(P_{j1}^m > 0\) and so, \(P_{11}^{n_1 + k_1d + m}, P_{11}^{n_2 + k_2d + m} > 0\), 
+  namely, \(n_1 + k_1d + m, n_2 + k_2d + m \in R(i)\). Thus, \(d \mid |n_1 - n_2|\) 
+  implying \(n_1 = n_2\) as \(0 \le n_1, n_2 \le d - 1\).
+
+  On the other hand, if such a sequence of sets \((A_n)_{n = 0}^{d - 1}\) exists. 
+  By C-K, \(P_{ii}^m = 0\) for all \(d \not \mid m\). Since the chain is irreducible, 
+  it follows \(P^{kd}_{ii} > 0\) for some \(k\), and hence, \(d = d(i)\) as 
+  required.
+\end{proof}
+
+\begin{proposition}
+  Let \(T\) denote the transition operator. If for some \(n\), \(T^n \mu = \mu\), 
+  then 
+  \[\hat \mu = \frac{1}{n}\sum_{k = 1}^n T^k \mu\]
+  is an invariant measure, i.e. \(T\hat\mu = \hat\mu\).
+\end{proposition}
+\begin{proof}
+  Follows straight away by computation,
+  \[\begin{split}
+    T \hat\mu & = \frac{1}{n}\sum_{k = 1}^n T^{k + 1}\mu 
+      = \frac{1}{n} \left(\sum_{k = 2}^n T^k \mu + T^{n + 1}\mu\right)\\
+    & = \frac{1}{n} \left(\sum_{k = 2}^n T^k \mu + T\mu\right) 
+      = \frac{1}{n}\sum_{k = 1}^n T^k \mu = \hat \mu.
+  \end{split}\]
+\end{proof}
+
+With this in mind, if \(P\) has period \(d\) and \(\mu\) is an invariant 
+measure for the chain on \(A_0\) (where \(\mathcal{X} = \bigsqcup A_n\)) as 
+constructed above, then \(\frac{1}{d}\sum_{k = 1}^d P^k \mu\) is an 
+invariant measure for \(P\).
+
+\subsection{Law of Large Numbers for THMC}
+
+We recall the strong law of large numbers.
+
+\begin{theorem}[Kolmogorov's Strong Law of Large Numbers]
+  Let \((\xi_n)\) be a sequence of real-valued, independent and identically 
+  distributed random variables. Then, if \(\mathbb{E}|\xi_n| < \infty\) and 
+  \(\mathbb{E}\xi_n = a\) for all \(n\), 
+  \[\frac{1}{n} \sum_{k = 1}^n \xi_k \to a\]
+  almost everywhere and in \(L^1\).
+\end{theorem}
+
+We may not apply this LLN directly to Markov chains as the sequence is not 
+necessarily independent. Nonetheless, there is a version of the law of large 
+numbers for THMCs.
+
+\begin{theorem}[Law of Large Numbers]
+  Let \((x_n)\) be an irreducible positively recurrent THMC on 
+  \(\mathcal{X} = \mathbb{N}\) and let \(\pi\) denote its invariant probability 
+  measure. Then, for all \(f \in L^1\), 
+  \[\lim_{n \to \infty} \frac{1}{n}\sum_{k = 1}^n f(x_k) = 
+    \int_{\mathcal{X}} f \dd \pi\]
+  almost everywhere.
+\end{theorem}
+
+We observe that Kolmogorov's SLLN is a special case of this by taking 
+\(f = \text{id}\). Furthermore, by taking 
+\(f = \mathbf{1}_{\{i\}}\), \(\mu \sim \mathcal{L}(x_0)\), we have 
+\[\frac{1}{n}\sum_{k = 1}^n \mathbf{1}_{\{i\}}(x_k) \to \pi(i)\]
+almost everywhere. As we have already show, if \((x_n)\) is aperiodic, 
+\(\lim_{n \to \infty} \mathbb{E}_\mu(\mathbf{1}_{\{i\}}(x_k)) = 
+\lim_{n \to \infty}\mathbb{P}_\mu(x_n = i) = \pi(i)\). Thus, by 
+dominated convergence, 
+\[\lim_{n \to \infty}\mathbb{E}_\mu \frac{1}{n}\sum_{k = 1}^n \mathbf{1}_{\{i\}}(x_k)
+  = \pi(i).\]
+
+\begin{proof}
+  Let \(i \in \mathcal{X}\), \(T = T_i\), \(T^k\) the successive return times to 
+  \(i\), \(x_0 = i\). Then it is clear that 
+  \[\left\{\sum_{l = T^k}^{T^{k + 1}}f(x_l), k = 0, 1, \cdots\right\}\]
+  are independent, identically distributed for all \(f \in L^1\). Suppose for 
+  now \(f \ge 0\). Then, 
+  \[\begin{split}
+    \mathbb{E} \sum_0^T f(x_l) 
+    & = \mathbb{E} \sum_0^T \sum_{j \in \mathcal{X}} f(j)\mathbf{1}_{x_l = j}
+      = \sum_{j \in \mathcal{X}} f(j)\mathbb{E}\sum_0^T \mathbf{1}_{x_l = j}.
+  \end{split}\]
+  Then, by recalling that \(\mathbb{E}_i \sum_{l = 0}^T \mathbf{1}_{x_l = j} = 
+  \mu(j)\) which is a invariant measure, so proportional to \(\pi\) by the factor 
+  \(\mathbb{E}_i T\), we have 
+  \[\mathbb{E} \sum_{l = 0}^T f(x_l)  = \sum_{j \in \mathcal{X}}f(j) \mu(j) 
+    = \sum_{j} f(j)\pi(j)\mathbb{E}_i T = \mathbb{E}_i[T]\int f \dd \pi < \infty.\]
+  Hence, our sequence of i.i.d. random variables is integrable, and 
+  we may applying SLLN to our constructed sequence, i.e. 
+  \[\frac{1}{n}\sum_{l = 0}^{T^n}f(x_l) \to \mathbb{E}_i[T] \int f \dd \pi\]
+  almost everywhere.
+
+  Now, by recalling \((T^{k + 1} - T^k)_k\) is i.i.d., by applying SLLN, we have 
+  \[\lim_{n \to \infty} \frac{T^n}{n} = \mathbb{E}_i T\]
+  almost everywhere. So, defining \(\eta(n) := \sum_{k = 1}^n \mathbf{1}_{x_k = i}\), 
+  we have \(T^{\eta(n)} \le n < T^{\eta(n) + 1}\). Furthermore, as \(i\) is recurrent,
+  \(\eta(n) \to \infty\) and so, \(T^{\eta(n)} / n \sim 1\). With this, we obtain 
+  \[\frac{\eta(n)}{n}\frac{1}{\eta(n)} \sum_{l = 0}^{T^{\eta(n)}}f(x_l) 
+    \le \frac{1}{n}\sum_{l = 0}^n f(x_l) 
+    \le \frac{\eta(n) + 1}{n}\frac{1}{\eta(n) + 1}\sum_{l = 0}^{T^{\eta(n) + 1}}f(x_l).\]
+  Thus, as 
+  \[\lim_{n \to \infty}\frac{\eta(n)}{n} = 
+    \lim_{n \to \infty}\frac{T^{\eta(n)}}{n}\frac{\eta(n)}{T^{\eta(n)}} = 
+    \frac{1}{\mathbb{E}_iT},\]
+  by sandwich, we have 
+  \[\lim_{n \to \infty} \frac{1}{n}\sum_{l = 0}^n f(x_l) = 
+    \lim_{n \to \infty} \frac{\eta(n)}{n}\frac{1}{\eta(n)} \sum_{l = 0}^{T^{\eta(n)}}f(x_l) 
+    = \frac{1}{\mathbb{E}_i T} \mathbb{E_i}T \int f \dd \pi = \int f \dd \pi,\]
+  almost everywhere as required. Now, applying the theorem to \(f^+, f^-\), we 
+  obtain the theorem for the general case.
+\end{proof}
+
+We note that in the above proof, we had proved the limit 
+\[\frac{1}{n}\sum_{l = 0}^{T^n} f(x_l) \to \mathbb{E}_i T \int f \dd \pi.\]
+Then, taking \(f = \mathbf{1}_{\{j\}})\), we have 
+\[\frac{1}{n}\sum_{l = 0}^{T^n}\mathbf{1}_{\{j\}}(x_l) \to \frac{\pi(j)}{\pi(i)}.\]
+In words, this is saying the average time of a chain at \(j\) during a excursion 
+to \(i\) is the proportion \(\pi(j) / \pi(i)\).
+
+\textbf{Application}: 
+Empirical average, Monte Carlo Markov chain (see official notes).
+
+\subsection{Reversible Markov Chain}
+
+Let \((x_n)\) be an irreducible THMC with transition probability \(P\) with 
+invariant probability measure \(\pi > 0\) and define \(\hat P\) such that
+\[\hat P_{ji} = \frac{\pi(i)}{\pi(j)} P_{ij}.\]
+Then, as \(\pi\) is invariant,
+\[\sum_{i \in \mathcal{X}} \hat P_{ji} = 
+  \sum_{i \in \mathcal{X}} \frac{\pi(i)}{\pi(j)} P_{ij} = 1,\]
+so \(\hat P\) is also a transition probability. Now, noting by elementary 
+properties, we have 
+\[\mathbb{P}(x_n = j \mid x_{n + 1} = i) = 
+  \frac{\mathbb{P}(x_{n + 1} = i \mid x_n = j)\mathbb{P}(x_n = j)}{\mathbb{P}(x_{n + 1} = i)}
+  = \frac{\pi(j)}{\pi(i)}P_{ji} = \hat P_{ij}\]
+if \(\mathcal{L}(x_0) = \pi\). Thus, in some sense, if we take a Markov 
+chain and run it backwards in time, we obtain another Markov chain with transition 
+probability \(\hat P\). This notion made formal with the following theorem.
+
+\begin{theorem}
+  Let \((x_n)\) be an irreducible, positively recurrent THMC with initial 
+  distribution \(\pi\) which is invariant. Then, for any \(M \in \mathbb{N}\), 
+  defining \(\hat x_n := x_{M - n}\), \((\hat x_n)\) is a THMC with transition 
+  probability \(\hat P\) and initial distribution \(\pi\) where 
+  \[\hat P_{ji} = \frac{\pi(i)}{\pi(j)}P_{ij}.\]
+\end{theorem}
+\begin{proof}
+  The initial distribution of \(\hat x_n\) is \(\pi\) by construction and we 
+  observe 
+  \[\begin{split}
+    \mathbb{P}(\hat x_0 = i_0, \cdots, \hat x_n = i_n) & = 
+    \mathbb{P}(x_M = i_0, \cdots, x_{M - n} = i_n)\\
+    & = \pi(i_n) P_{i_ni_{n - 1}} \cdots P_{i_1i_0}\\
+    & = \frac{\pi(i_n)}{\pi(i_{n - 1})}P_{i_ni_{n - 1}} \cdots 
+      \frac{\pi(i_1)}{\pi(i_0)}P_{i_1i_0} \pi(i_0)\\
+    & = \hat P_{i_{n - 1} i_n} \cdots \hat P_{i_1 i_0} \pi(i_0).
+  \end{split}\]
+\end{proof}
+
+\begin{corollary}
+  If \(\pi(i)P_{ij} = \pi(j)P_{ji}\), then \((\hat x_n)\) is a THMC with 
+  transition probability \(P\) and initial distribution \(\pi\).
+\end{corollary}
+
+We note that if \(\pi(i)P_{ij} = \pi(j)P_{ji}\), then 
+\[\sum_{i \in \mathcal{X}} \pi(i) P_{ij} = \pi(j)\sum_{i} P_{ji} = \pi(j)\]
+implying \(\pi\) is invariant.
+
+\begin{definition}[Reversible]
+  A THMC \((x_n)\) is said to be reversible with respect to \(\pi\) if 
+  \((\hat x_m)\) is a Markov chain with the same transition probability.
+\end{definition}
+
 \end{document}
