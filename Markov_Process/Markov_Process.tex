@@ -2298,4 +2298,184 @@ implying \(\pi\) is invariant.
   \((\hat x_m)\) is a Markov chain with the same transition probability.
 \end{definition}
 
+\subsection{Finite State Markov Chain}
+
+In this section, we will consider specifically Markov chains on finite 
+state spaces. 
+
+\begin{proposition}
+  Let \(\mathcal{X} = \{1, \cdots, N\}\), the following are equivalent
+  \begin{itemize}
+    \item \(P\) is irreducible and aperiodic;
+    \item \(P^n\) is irreducible for every \(n \ge 1\);
+    \item Let \(\delta_n := \min_{i,j} (P^n)_{ij}\), then there exists some 
+      \(n_0 \ge 1\) such that \(\delta_{n_0} > 0\).
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  Clearly the second statement implies the first and in particular, if \(P\) 
+  has period \(d > 1\), then \(P^d\) is reducible to each cycle.
+
+  Suppose the third statement is true, then \(P\) is irreducible since 
+  \(P_ij^{n_0} > 0\) for all \(i, j\). Furthermore, for any \(m \ge 0\), we have 
+  \[P_{jk}^{n_0 + m} = \sum_{l}P^m_{jl}P^{n_0}_{lk} \ge \delta_0 \sum_l P^m_{jl} = 
+    \delta_0,\]
+  in particular, \(P^n\) has all positive entries for all \(n \ge n_0\). Thus, 
+  \(n_0, n_0 + 1, \cdots \in R(i)\) and so the chain is aperiodic. Furthermore, 
+  as for all \(n \le n_0\), we may find \(k\) sufficiently large such that 
+  \(kn \ge n_0\) and so, \(P^{kn} >0\) implying \(P^n\) is irreducible.
+
+  Finally, assuming \(P\) is irreducible and aperiodic, for all \(i\), 
+  there exists some \(N_i\) such that \(P^n_{ii} > 0\) for all \(n \ge N_i\). 
+  Thus, for any \(i, j \in \mathcal{X}\), as \(P\) is irreducible, there 
+  exists some \(m_{ij}\) such that \(P_{ij}^{m_{ij}} > 0\) and so, for all 
+  \(n \ge N_i + m_{ij}\),
+  \[P^n_{ij} \ge P^{n - m_{ij}}_{ii} P^{m_{ij}}_{ij} > 0.\]
+  Thus, taking \(n_0 = \max_{i, j}N_i + m_{ij}\), we have the required \(n_0\).
+\end{proof}
+
+\begin{lemma}
+  Let \((x_n)\) be a aperiodic, irreducible THMC on a finite state space with 
+  transition probability \(P\). Then for any two states \(i, j\), 
+  \[\mathbb{E}_i(T_j^\alpha) < \infty\]
+  for any \(\alpha \ge 1\).
+\end{lemma}
+\begin{proof}
+  As \(P\) is irreducible, we have \(\mathbb{P}_j(T_i < \infty) = 1\). 
+  Furthermore, we note
+  \[\begin{split}
+    \mathbb{E}_j(T_i^\alpha) & = \sum_{n \ge 0}n^\alpha\mathbb{P}_j(T_i = n) 
+      \le \sum_{n \ge 0} n^\alpha \mathbb{P}_j(T_i > n - 1).
+  \end{split}\]
+  Now, let \(n_0\) such that \(\delta_{n_0} > 0\), we have 
+  \[\begin{split}
+    \mathbb{P}_j(T_i > n_0(k + 1))
+    & \le \mathbb{P}_j(x_{n_0(k + 1)} \neq i, x_{n_0k} \neq i, \cdots, x_{n_0} \neq i)\\
+    & = \mathbb{P}_j(x_{n_0(k + 1)} \neq i \mid x_{n_0k} \neq i, \cdots, x_{n_0} \neq i)
+      \mathbb{P}_j((x_{n_0k} \neq i, \cdots, x_{n_0} \neq i)\\
+    & = \mathbb{P}_j(x_{n_0(k + 1)} \neq i \mid x_{n_0k} \neq i)
+      \mathbb{P}_j((x_{n_0k} \neq i, \cdots, x_{n_0} \neq i)\\
+    & \le (1 - \delta_{n_0})\mathbb{P}_j(T_j > n_0k) \le \cdots \le (1 - \delta_{n_0})^{k - 2},
+  \end{split}\]
+  where we used the inequality 
+  \(\mathbb{P}_j(x_{n_0(k + 1)} \neq i \mid x_{n_0k} \neq i) \le 1 - \delta_{n_0}\).
+
+  Now, by considering \(\mathbb{P}_j(T_j > n - 1) \le \mathbb{P}_j(T_j > n_0 k - 1)
+  \le (1 - \delta)^k\) for \(n_0 k \le n \le n_0(k + 1)\), we have 
+  \[\mathbb{E}_j(T_i) \le \sum_{n \ge 0}(1 - \delta_{n_0})^{k(n)}
+    \le \sum_{k = 0}^\infty n_0^\alpha(k + 1)^\alpha (1 + \delta)^k 
+    = n_0^\alpha \sum_{k = 1}^\infty k^\alpha (1 - \delta_{n_0})^{k - 1}
+    < \infty\]
+\end{proof}
+
+\begin{lemma}
+  Let \(P\) be irreducible and aperiodic, then there exists some \(n > 0\), 
+  \(\delta > 0\) such that for every vector \(\eta \in \mathbb{R}_+^N\), 
+  \[\eta P^n \ge \delta \|\eta\|_1 \mathbf{1}\]
+  where \(\mathbf{1}\) the the row vector of 1s and \(\|\eta\|_1 = \sum_i |\eta_i|\).
+\end{lemma}
+\begin{proof}
+  We observe
+  \(\eta P^n(j) = \sum_{i \in \mathcal{X}} \eta(i)P^n_{ij} \ge 
+  \min_{i, j}P^n_{ij} \sum_{i \in \mathcal{X}} \eta(i)\). Thus, choosing 
+  \(n_0, and \delta_{n_0}\) as above, the result follows.
+\end{proof}
+
+\begin{lemma}
+  Let \(P\) be a irreducible \(N \times N\) stochastic matrix and define 
+  \[T_n = \frac{1}{n}(P + P^2 + \cdots + P^n).\]
+  Then, there exists a number \(n_0\) such that \(T_{n_0}\) has only positive 
+  entries. Furthermore, for all \(\eta \in \mathbb{R}_+^N\), 
+  \[\eta T_{n_0} \ge \delta \|\eta\|_1 \mathbf{1}\]
+  where \(\delta > 0\) is chosen such that \(\min_{i, j} (T_{n_0})_{ij} \ge \delta\).
+\end{lemma}
+\begin{proof}
+  The result follows from above in the case that \(P\) is periodic so suppose 
+  \(P\) has period \(d \ge 1\). Then, \(\mathcal{X} = A_0 \sqcup \cdots \sqcup A_{d - 1}\) 
+  where \(P^d\) is aperiodic and irreducible on \(A_k\). Thus, there exists some 
+  \(n_0\) such that \(P^{n_0 d} > 0\) in \(A_k\). Then, if \(j \in A_{k + 1}\), 
+  as \(P\) is irreducible, there exists some \(i_0 \in A_k\) such htat 
+  \(P_{i_0j} > 0\). Then, for all \(i \in A_k\), 
+  \[P_{ij}^{n_0d + 1} \ge P_{ii_0}^{n_0d} P_{i_0j} > 0.\]
+  Thus, \(P_{ij}^{n_0 d} + P_{ij}^{n_0 d + 1} > 0\) for all \(i, j \in A_k \cup A_{k + 1}\). 
+  Hence, by induction, 
+  \[P_{ij}^{n_0d} + \cdots, P_{ij}^{n_0d + d} > 0,\]
+  for all \(i, j \in \mathcal{X}\) implying \(T^n > 0\) for some \(n\).
+\end{proof}
+
+\begin{theorem}[Perron-Frobenius Theorem]
+  Let \(P\) be an irreducible \(N \times N\) stochastic matrix. Then, the following 
+  holds,
+  \begin{enumerate}
+    \item 1 is a left eigenvalue of \(P\) and there exists exactly 
+      one left eigenvector for 1 up to multiplication by a constant.
+
+      Furthermore, \(\pi\) can be chosen to have strictly positive entries 
+      and normalised such that \(\sum_{i = 1}^N \pi(i) = 1\). This vector 
+      is called the Perron-Frobenius vector of \(P\).
+    \item Every eigenvalue \(\lambda\) of \(P\) must satisfy \(|\lambda| \le 1\). If \(P\) is 
+      furthermore aperiodic, all eigenvalues other than 1 satisfy \(|\lambda| < 1\).
+    \item If \(P\) is periodic with period \(d\) it has eigenvalues
+      \[\lambda_j = e^{-\frac{2\pi i j}{d}}\]
+      for \(j = 1, \cdots, d\) with associated eigenvectors \(\mu_j\) such that 
+      \[\mu_j(n) = (\lambda_j)^{-k} \pi(n)\]
+      if \(n \in A_k\) where \(\mathcal{X} = A_0 \sqcup \cdots \sqcup A_{d - 1}\).
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  We will not by using the 3rd. claim for this course and the proof is left in the 
+  official notes.
+
+  If \(\mu P = \lambda \mu\), then \(\|\mu P\|_1 = |\lambda| \|\mu\|_1\). But 
+  \(\|\mu P\|_1 = \sum_{i, j} |\mu(i)P_{ij}| \le \sum_{i}|\mu(i)| = \|\mu\|_1\).
+  Thus, \(|\lambda| \le 1\) as claimed.
+
+  Consider that \((P\mathbf{1})_k = \sum_{j = 1}^N P_{kj} = 1\) for all 
+  \(k\), we have \(P\mathbf{1} = \mathbf{1}\) implying 1 is an 
+  (right)eigenvalue of \(P\) with \textbf{right}-eigenvector \(\mathbf{1}\). 
+  Now, since \(P^T\) has the same (right)eigenvalues as \(P\), 1 is an eigenvalue 
+  of \(P^T\) implying 1 is an left-eigenvalue of \(P\). Let \(\pi \in \mathbb{R}^N\)
+  such that \(\pi P = \pi\) (where we can choose \(\pi\) to be a real vector as \(P\) 
+  is real). Then, we observe 
+  \[\pi T_n \equiv \frac{1}{n}\pi(P + P^2 + \cdots + P^n) = \frac{1}{n} n\pi = \pi.\]
+  If \(\pi > 0\) or \(\pi < 0\) for all its entries, we may simply normalise as 
+  claimed, so suppose otherwise, \(\alpha := \|\pi^+\|_1 \wedge \|\pi^-\|_1 > 0\).
+  By previous lemmas, as \(P\) is irreducible, there exists some \(n\) such that 
+  \(T_n > \delta > 0\) for all of its entries. Then, 
+  \[\pi^+ T_n \ge \delta\alpha \mathbf{1} \text{ and, } 
+    \pi^- T_n \ge \delta \alpha \mathbf{1}.\]
+  So, 
+  \[\begin{split}
+    \|\pi T_n\|_1 & = 
+    \|\pi^+ T_n - \delta \alpha \mathbf{1} + \delta \alpha \mathbf{1} - \pi^- T_n\|_1 \\
+    & \le \|\pi^+ T_n - \delta \alpha \mathbf{1}\| + 
+      \|\pi^- T_n - \delta \alpha \mathbf{1}\|\\
+    & = \|\pi^+ T_n\| - \|\delta \alpha \mathbf{1}\|_1 + \|\pi^- T_n\| - \|\delta \alpha \mathbf{1}\|_1\\
+    & = \|\pi T_n\|_1 - 2 \delta \alpha n,
+  \end{split}\]
+  which is a contradiction for all \(\alpha > 0\) and so, either \(\pi^+ = 0\) or 
+  \(\pi^- = 0\).
+
+  With this in mind, we may assume \(\pi \ge 0\) and \(\sum_{i = 1}^N \pi(i) = 1\) 
+  and so, 
+  \[\pi(i) = \pi T_n(i) = \sum_{j} \pi(j) T_{ji}^n \ge \delta \sum_{j} \pi(j) = \delta > 0,\]
+  and so, \(\pi\) has only positive entries. 
+
+  Finally, we will prove the uniqueness of the eigenvector. Suppose \(\pi, \tilde \pi\) 
+  are both normalised left-eigenvectors of \(P\) of eigenvalue 1. Then, 
+  \[\pi - \tilde \pi = (\pi - \tilde \pi)P,\]
+  and we can choose \(\pi - \tilde \pi \ge 0\). But, 
+  \[0 = \sum_i \pi(i) - \sum_i \tilde \pi(i) = \sum_i (\pi - \tilde \pi)(i),\]
+  we have \(\pi(i) = \tilde \pi(i)\) for all \(i\) as required.
+\end{proof}
+
+\begin{corollary}
+  An irreducible Markov chain on a finite state space is positively recurrent.
+\end{corollary}
+\begin{proof}
+  P-F tells us its unique invariant measure has positive charge at every state. 
+  Thus, recalling \(\pi(i) = 1 / \mathbb{E}_i T_i\), the chain is positively 
+  recurrent.
+\end{proof}
+
 \end{document}
