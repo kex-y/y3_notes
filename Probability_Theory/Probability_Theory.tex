@@ -1014,6 +1014,8 @@ Let us recall some different notions of convergence in probability theory.
   \[\lim_{n \to \infty} \mathbb{E}(|f(\xi_n) - f(\xi)|) = 0.\]
 \end{proof}
 
+\subsection{Weak Convergence of Measures}
+
 \begin{theorem}[Portmanteau Theorem]
   Let \((\xi_n)\) be a sequence of integrable random variables. Then, the 
   following are equivalent:
@@ -1137,6 +1139,120 @@ Let us recall some different notions of convergence in probability theory.
   So, \(F_\xi(x) > u\) and from which by the same argument as the less 
   than case, we obtain \(F^{-1}(u) \ge \limsup_n F_n^{-1}(u)\) implying 
   convergence as required.
+\end{proof}
+
+\begin{definition}[Relatively Compact]
+  A family of probability measures \(\mathcal{P} := 
+  \{\mathbb{P}_\alpha \mid \alpha \in A\}\) and the corresponding set of distribution 
+  functions \(F_\alpha\) is called relatively compact if every sequence of 
+  measures of \(\mathcal{P}\) has a subsequence which converges weakly 
+  (not necessary in \(\mathcal{P}\) hence the name ``relatively''). 
+\end{definition}
+
+We note that the weak convergence of measures is metrizable with the corresponding 
+metric known as the Levy-Prokhorov metric. In this sense, relatively compactness 
+of \(\mathcal{P}\) is equivalent to \(\overline{\mathcal{P}}\) is compact in 
+this metric space.
+
+Denote \(\mathcal{G}\) the set of functions \(F : \mathbb{R} \to [0, 1]\) which 
+is non-decreasing and continuous from the right (and we call functions of 
+this form generalised distribution functions), we have the following result.
+
+\begin{theorem}[Helly's Theorem]
+  The set \(\mathcal{G}\) is sequentially compact, i.e. any sequence 
+  \((F_n) \subseteq \mathcal{G}\) has a subsequence \((F_{n_k})\) such that 
+  \(F_{n_k}(x) \to F(x)\) for all \(x \in C_F\).
+\end{theorem}
+\begin{proof}
+  Let us enumerate \(\mathbb{Q}\) with \((q_i)_{i = 1}^\infty\). Then, as 
+  \(\{F_n(q_1) \mid n\}\) is bounded, it has a convergent subsequence 
+  \(F_{n_k^{(1)}}(q_1) \to f(q_1)\). Similarly, as \(\{F_{n_k^{(1)}}(q_2) \mid n\}\) 
+  is bounded, we can find a subsequence \(F_{n_k^{(1)}}\), \(F_{n_k^{(2)}}\) 
+  which converges for both \(q_1, q_2\). Then, iterating this process, for all 
+  \(i\), we obtain a subsequence of \(F_{n_k^{(i - 1)}}\) which converges 
+  at \(q_1, \cdots, q_i\). Thus, by defining \(F_{n_k} := F_{n_k^{(k)}}\), 
+  i.e. the diagonal, we have found a subsequence of \(F_n\) which converges 
+  at all rational numbers. Let us denote the limit of \(F_{n_k}(q_i)\) as \(f(q_i)\).
+
+  Now, defining 
+  \[F(x) := \inf \{f(q) \mid q \in \mathbb{Q}_{> x}\},\]
+  I claim that \(F \in \mathcal{G}\), \(F(q) \ge f(q)\) for all \(q \in \mathbb{Q}\)
+  and \(F(x) \le f(q)\) for all \(x < q\), \(q \in \mathbb{Q}\). Indeed, 
+  the last inequality is clear by construction while the second inequality 
+  follows as \(f\) is non-decreasing. Thus, by the definition of \(\inf\), 
+  \(F\) is continuous from the right and so, \(F \in \mathcal{G}\).
+
+  Finally, it remains to check that \(F_{n_k}(x) \to F(x)\) at all points of 
+  continuity. Let \(x\) be a point of continuity and fix \(\epsilon > 0\). As 
+  \(x\) is a point of continuity, there exists some \(y < p < x < q\), such that 
+  \[F(x) - \epsilon < F(y) \le F(p) \le F(x) \le F(q) < F(x) + \epsilon.\] 
+  Then, as \(F(y) \le f(p)\) for all \(y < p\), \(F(x) - \epsilon < f(p)\). 
+  On the other hand, \(F(p) \ge f(p)\), so 
+  \[F(x) - \epsilon < f(p) \le F(p) \le F(x) \le f(q) < F(x) + \epsilon.\]
+  Thus, for sufficiently large \(k\), 
+  \[F(x) - \epsilon < F_{n_k}(p) \le F_{n_k}(x) \le F_{n_k}(q) < F(x) + \epsilon,\]
+  implying \(|F_{n_k}(x) - F(x)| < \epsilon\) and hence, 
+  \(F_{n_k}(x) \to F(x)\) as required.
+\end{proof}
+
+\begin{definition}[Tight]
+  A family of probability measures \(\mathcal{P} := 
+  \{\mathbb{P}_\alpha \mid \alpha \in A\}\) on \((\mathbb{R}, \mathcal{B}(\mathbb{R}))\) 
+  is called tight if for all \(\epsilon > 0\), there exists a compact set 
+  \(K \subseteq \mathbb{R}\) such that 
+  \[\sup_{\alpha \in A} \mathbb{P}_\alpha(K^c) \le \epsilon.\]
+\end{definition}
+
+\begin{theorem}[Prokhorov's Theorem]
+  A family of probability measures \(\mathcal{P} := \{\mathbb{P}_\alpha \mid \alpha \in A\}\) 
+  is tight if and only if it is relatively compact.
+\end{theorem}
+\begin{proof}
+  Suppose first \(\mathcal{P}\) is relatively compact and suppose for contradiction 
+  it is not tight. That is, there exists some \(\epsilon > 0\), for all compact 
+  \(K \subseteq \mathbb{R}\), 
+  \[\sup_{\alpha \in A} \mathbb{P}_\alpha(K^c) > \epsilon.\]
+  In particular, we may choose \(K_n := [-n, n]\) for any \(n\). Thus, 
+  for any \(n\), there exists some \(\mathbb{P}_{\alpha_n} \in \mathcal{P}\) 
+  such that \(\mathbb{P}_{\alpha_n}(K_n^c) > \epsilon\). Now, since \(\mathcal{P}\)
+  is relatively compact, it has a weakly convergent subsequence 
+  \(\mathbb{P}_{\alpha_{n_k}} \to \mathbb{P}\) for some probability measure 
+  \(\mathbb{P}\). As \(\mathbb{P}_n\) are probability measures, we have 
+  for all \(m > k\), 
+  \[\mathbb{P}_{\alpha_m}([-k, k]) \le \mathbb{P}_{\alpha_m}([-m, m]) < 1 -\epsilon.\]
+  So, by weak convergence, 
+  \[\mathbb{P}([-k, k]) = \int \mathbf{1}_{[-k, k]} \dd \mathbb{P} = 
+    \lim_{m \to \infty} \int \mathbf{1}_{[-k, k]} \dd \mathbb{P}_{\alpha_{n_m}}
+    < 1 - \epsilon.\]
+  On the other hand, as \(\mathbb{P}\) is a probability measure,
+  \[1 = \mathbb{P}(\mathbb{R}) = 
+    \mathbb{P}\left(\bigcup_{k \in \mathbb{N}} [-k, k]\right) = 
+    \lim_{k \to \infty} \mathbb{P}([-k, k]) \le 1 - \epsilon < 1,\]
+  which is a contradiction. Hence, \(\mathcal{P}\) is tight.
+
+  Suppose now \(\mathcal{P}\) is tight and let \((\mathbb{P}_n) \subseteq \mathcal{P}\) 
+  be a sequence of probability measures with corresponding distribution functions 
+  \((F_n)\). By Helly's theorem, there exists a subsequence \((F_{n_k})\) which 
+  converges to some \(F \in \mathcal{G}\) at all points of continuity of \(F\). 
+  It remains to show \(\lim_{x \to - \infty} F(x) = 0\) and 
+  \(\lim_{x \to \infty} F(x) = 1\).
+
+  Fix \(\epsilon > 0\). Then, by tightness, there exists some compact \(K\) 
+  such that \(\sup \mathbb{P}_{n_k}(K^c) \le \epsilon\). Now, since 
+  \(K \subseteq \mathbb{R}\) it is bounded by some \(M\) (choose \(M\) such that 
+  \(\pm M\) is a point of continuity of \(F\)) and so, 
+  \(K \subseteq [-M, M]\) and 
+  \[\sup F_{n_k}(-M) = 
+    \sup \mathbb{P}_{n_k}((-\infty, -M]) \le 
+    \sup \mathbb{P}_{n_k}([-M, M]^c) \le 
+    \sup \mathbb{P}_{n_k}(K^c) \le \epsilon.\]
+  Thus, as \(F(M) \le \epsilon\), and as it is non-decreasing, 
+  \(\lim_{x \to -\infty} F(x) = 0\). Similarly, we have 
+  \[\inf F_{n_k}(M) = \inf \mathbb{P}_{n_k}((-\infty, M]) 
+    \ge \inf \mathbb{P}_{n_k}([-M, M]) \ge \inf \mathbb{P}_{n_k}(K) \ge 1 - \epsilon.\]
+  Thus, \(\lim_{x \to \infty} F(x) = 1\). Hence, \(\mathbb{P}_{n_k}\) 
+  converges to the probability measure corresponding to \(\mathbb{P}\) weakly 
+  by Portmanteau's theorem as required.
 \end{proof}
 
 \end{document}
