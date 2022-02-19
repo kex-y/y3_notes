@@ -1255,4 +1255,73 @@ this form generalised distribution functions), we have the following result.
   by Portmanteau's theorem as required.
 \end{proof}
 
+\begin{corollary}
+  If \(F_{\xi_n}\) is a sequence of distribution functions which tends to the distribution 
+  function \(F\) at all points of continuity of \(F\), then \(\{\xi_n\}\) is 
+  tight.
+\end{corollary}
+
+To check \(F\) is indeed a distribution function, by recalling Helly's theorem, 
+it suffices to check \(\lim_{x \to -\infty}F(x) = 0\) and \(\lim_{x \to -\infty}F(x) = 1\).
+
+Prokhorov's theorem remains true for in a much general context. Namely, Prokhorov's 
+theorem holds for measures on \(\mathbb{R}^n, \mathbb{R}^\infty\) and measures 
+on any complete separable metric space with a Borel \(\sigma\)-algebra.
+
+\newpage
+\section{Characteristic Functions}
+
+\begin{definition}[Characteristic Function]
+  The characteristic function of a random variable \(\xi\) is 
+  \[\phi_{\xi}(t) := \mathbb{E}e^{it\xi} = \int e^{itx} \dd F_{\xi}(x),\]
+  which is the Fourier-Stieltjes transform of the distribution \(F_{\xi}\).
+
+  If \(\xi = (\xi_1, \cdots, \xi_n)\) is a random vector, then the characteristic 
+  function of \(\xi\) is 
+  \[\phi_{\xi}(t_1, \cdots, t_n) := \mathbb{E}e^{i\sum_{k = 1}^n t_k \xi_k}.\]
+\end{definition}
+
+By the very definition of the characteristic function, we observe the following 
+properties of the characteristic function. 
+\begin{itemize}
+  \item If \(\xi\) is a random variable and \(a, b\) are constants, then 
+    defining \(\eta := a\xi + b\), we have
+  \[\phi_{\eta}(t) = e^{itb} \mathbb{E}e^{iat\xi}.\]
+  \item \(|\phi(t)| \le \phi(0) = 1\).
+  \item If \(\xi\) is a random variable, then \(\phi_\xi\) is uniformly 
+    continuous on \(\mathbb{R}\). Indeed, we observe 
+    \[\begin{split}
+      |\phi(t + h) - \phi(t)| & = |\mathbb{E}e^{it\xi}(e^{ih\xi} - 1)|
+        \le \mathbb{E}|e^{ih\xi} - 1|
+    \end{split}\]
+    where the last term is independent of \(t\) and tends to 0 as 
+    \(h \to 0\) by dominated convergence. 
+  \item If \(\xi_1, \cdots, \xi_n\) are independent random variables, and we 
+    define \(S := \xi_1 + \cdots + \xi_n\), then 
+    \[\phi_S(t) = \prod_{k = 1}^n \phi_{\xi_k}(t).\]
+\end{itemize}
+
+\begin{proposition}
+  If \(\xi \sim \mathcal{N}(m, \sigma^2)\), then 
+  \(\phi_\xi(t) = e^{itm - \frac{t^2 \sigma^2}{2}}\).
+\end{proposition}
+\begin{proof}
+  Let \(\eta = (\xi - m)/ \sigma\) so that \(\eta \sim \mathcal{N}(0, 1)\). Then, 
+  \(\xi = \sigma \eta + m\) and hence, by the previous result, 
+  \[\phi_\xi(t) = e^{itm}\mathbb{E}e^{i\sigma \eta}.\] 
+  Thus, it is sufficient to show \(\phi_\eta(t) = e^{-t^2/2}\). Indeed, 
+  we compute 
+  \[\begin{split}
+    \phi_\eta(t) & = \mathbb{E}e^{it\eta} = 
+    \frac{1}{\sqrt{2\pi}} \int e^{itx} f_\eta(x) \lambda(\dd x)
+    = \frac{1}{\sqrt{2\pi}} \int e^{itx - \frac{x^2}{2}} \lambda(\dd x)\\
+    & = e^{-\frac{t^2}{2}}\frac{1}{\sqrt{2\pi}} \int e^{-\frac{1}{2}(x - it)^2} \lambda(\dd x)
+    = e^{-\frac{t^2}{2}}\frac{1}{\sqrt{2\pi}} \int_{-\infty - it}^{\infty + it} 
+      e^{-\frac{z^2}{2}} \lambda(\dd z).
+  \end{split}\]
+  Then, by contour integration, we find \(\int_{-\infty - it}^{\infty + it} 
+  e^{-\frac{z^2}{2}} \lambda(\dd z) = \sqrt{2\pi}\) and so, \(\phi_\eta(t) = e^{-t^2 / 2}\) 
+  as required.
+\end{proof}
+
 \end{document}
