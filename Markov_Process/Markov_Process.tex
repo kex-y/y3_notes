@@ -2381,7 +2381,7 @@ state spaces.
   \(n_0, and \delta_{n_0}\) as above, the result follows.
 \end{proof}
 
-\begin{lemma}
+\begin{lemma}\label{exist_T}
   Let \(P\) be a irreducible \(N \times N\) stochastic matrix and define 
   \[T_n = \frac{1}{n}(P + P^2 + \cdots + P^n).\]
   Then, there exists a number \(n_0\) such that \(T_{n_0}\) has only positive 
@@ -2476,6 +2476,152 @@ state spaces.
   P-F tells us its unique invariant measure has positive charge at every state. 
   Thus, recalling \(\pi(i) = 1 / \mathbb{E}_i T_i\), the chain is positively 
   recurrent.
+\end{proof}
+
+If \(\mu_1, \cdots, \mu_k\) are invariant probability measures for \(P\). 
+Then, so are the convex combinations of these measures a invariant probability 
+measure for \(P\). That is to say, if \(a_i \in [0, 1]\) and \(\sum_{i = 1}^k a_i = 1\), 
+then \(\sum_{i = 1}^k a_i \mu_i\) is also a invariant probability measure for \(P\)
+(see exercise sheet).
+
+Let us denote \(I = \{\pi \in P(\mathcal{X}) \mid \pi P = \pi\}\) and we say 
+\(\pi \in I\) is the extremal of \(I\) if it cannot be written as a convex 
+combination of other measures in \(I\).
+
+\begin{theorem}
+  Let \(P\) be a stochastic matrix. Then the set of its invariant probability 
+  measures are precisely all convex combinations of the Perron-Frobenius 
+  vectors of the restriction of \(P\) to its recurrent comminication classes. 
+\end{theorem}
+\begin{proof}
+  See exercise sheet.
+\end{proof}
+
+We observe that the Perron-Frobenius vectors of the restriction of \(P\) to its 
+recurrent comminication classes are precisely the extremal of \(I\).
+
+\begin{definition}[Sub-Stochastic Matrix]
+  An \(N \times N\) matrix with non-negative entries \(P\) is a sub-stochastic 
+  matrix if 
+  \[\sum_{j \in \mathcal{X}} P_{ij} \le 1.\]
+\end{definition}
+
+Sub-stochastic matrices are in general obtained by restricting to transient 
+communication classes. 
+
+\begin{lemma}
+  Let \(P\) be an irreducible sub-stochastic matrix which is not a stochastic 
+  matrix. Then, for any \(\mu \in \mathbb{N}\), \(\mu P^n \to 0\). Furthermore
+  there exists some \(a \in (0, 1)\) such that \(\|\mu P^n\|_1 \le a^n\). 
+  In particular, the eigenvalues of \(P^n\) has modulus less than 1 and 
+  \(\text{id} - P\) is invertible. 
+\end{lemma}
+\begin{proof}
+  Clearly, if \(\mu = 0\) then we are done, so suppose otherwise. Then, 
+  we may decompose \(\mu = \mu^+ - \mu^-\) and so, we may take \(\mu > 0\) 
+  and hence, normalise it to be a probability measure. 
+  Define 
+  \[T^n = \frac{1}{n}(P + \cdots + P^n).\]
+  Then, as \(\|\mu P\|_1 \le \|\mu\|_1\), we have 
+  \[\|\mu P^{n + 1}\|_1 \le \frac{1}{n} (\|\mu P^{n + 1}\|_1 + \cdots + \|\mu P^{n + 1}\|_1) 
+  \le \frac{1}{n}(\|\mu P^{n + 1}\|_1 + \cdots + \|\mu P\|_1)
+  = \frac{1}{n} \|\mu P T^n\|_1,\]
+  where the last equality holds as all entries are non-negative.
+
+  Then, using the same argument as lemma~\ref{exist_T}, one may show there exists some 
+  \(n_0\) such that \(T^{n_0}\) has only positive entries. Namely, for all \(i\),
+  \[\mu T^{n_0}(i) = \sum_{k \in \mathcal{X}} \mu(k) T^{n_0}_{ki} \ge \min_{k} T_{k_i}^{n_0} =: \delta > 0.\]
+  Now, as \(P\) is not a stochastic matrix, there exists some row \(i_0\) such that 
+  \(\sum_{j \in \mathcal{X}} P_{i_0 j} = 1 - \alpha\) for some \(\alpha \in (0, 1]\).
+  Thus, denoting \(e_{i_0}\) the vector which is 1 at the \(i_0\)-th position and 
+  0 otherwise, \(\|e_{i_0} P\| = 1 - \alpha\) and so, 
+  \[\begin{split}
+    \|\mu P^{n_0 + 1}\|_1 & \le \|\mu P T^{n_0}\|_1 = 
+    \|\mu T^{n_0} P - \delta e_{i_0} P + \delta e_{i_0} P\|_1\\
+    & \le \|(\mu T^{n_0} - \delta e_{i_0}) P\|_1 + \|\delta e_{i_0} P\|_1
+    \le \|\mu T^{n_0} - \delta e_{i_0}\| + \delta(1 - \alpha)\\
+    & = \|\mu T^{n_0}\|_1 - \delta\|e_i\|_1 + \delta(1 - \alpha)
+    = \|\mu T^{n_0}\|_1 - \delta \alpha \le 1 - \delta \alpha.
+  \end{split}\]
+  Thus, 
+  \[\|\mu P^{k(n_0 + 1)}\|_1 \le (1 - \delta \alpha)^k,\]
+  and so, defining \(a = (1 - \delta \alpha)^{\frac{1}{n_0 + 1}}\), we have 
+  \[\|\mu P^n\|_1 \le a^n\]
+  as required.
+\end{proof}
+
+\begin{theorem}[Minorisation]
+  If there exist some \(j_0 \in \mathcal{X}\), \(\delta > 0\) such that 
+  \(P_{ij_0} \ge \delta\) for all \(i \in \mathcal{X}\). Then, \((\mu P^n)\) 
+  is a Cauchy sequence for any \(\mu \in P(\mathcal{X})\). Furthermore, 
+  as \((P(\mathcal{X}), \|\cdot\|_{TV})\) is complete, \(\mu P^n \to \pi\) 
+  for some \(\pi \in P(\mathcal{X})\), \(\pi(j_0) \ge \delta\) and 
+  \[\|\mu P^n - \pi\|_1 \le 2(1 - \delta)^n.\]
+\end{theorem}
+\begin{proof}
+  Similar proof to above (Hint: \(P^n_{ij_0} > 0\)).
+\end{proof}
+
+As the final topic for finite chains, we will discuss the long run behaviour 
+of a finite Markov chain. As we have seen, in the case a chain is irreducible, 
+aperiodic, positively recurrent (which is automatic for finite chains), 
+then \(\lim_{n \to \infty} P_{ij}^n = \pi(j)\) where \(\pi\) is an invariant 
+probability measure. We will now consider the case where the chain is 
+reducible.
+
+\begin{definition}[Sink]
+  A state \(i \in \mathcal{X}\) is said to be a sink if it is recurrent and 
+  \([i] = \{i\}\).
+\end{definition}
+
+Let us denote 
+\[B_i := \{\omega \in \Omega \mid \exists n_0, x_n(\omega) = i, 
+  \ \forall n \ge n_0\}.\]
+
+\begin{proposition}
+  If \(i \in \mathcal{X}\) is a sink, then 
+  \[\lim_{n \to \infty} P^n_{ji} = P_j(B_i).\]
+\end{proposition} 
+\begin{proof}
+  Let \(B^n_i := \{x_n = i\}\). We note \(B^n_i\) is increasing and 
+  \(B_i = \bigcup_{n} B^n_i\). Thus, by the continuity of measures, we have 
+  \[\lim_{n \to \infty}P^n_{ij} = \lim_{n \to \infty}\mathbb{P}_j(B^n_i)
+    = \mathbb{P}_j\left(\bigcup_{n} B^n_i\right) = \mathbb{P}_j(B_i).\]
+\end{proof}
+
+Let us now denote \(f(j) := \mathbb{P}_j(B_i)\). Then, we find 
+\[\begin{split}
+  f(j) & = \mathbb{E}(\mathbf{1}_{B_i} \mid x_0 = j) = 
+    \mathbb{E}(\mathbb{E}(\mathbf{1}_{B_i} \mid \sigma(x_0) \vee \sigma(x_1)) \mid x_0 = j)\\
+    & = \mathbb{E}(\mathbb{E}(\mathbf{1}_{B_i} \mid x_1) \mid x_0 = j)
+      = \mathbb{E}(f(x_1) \mid x_0 = j)\\
+    & = \sum_{k \in \mathcal{X}} f(k)P_{jk} = (Pf)(j).
+\end{split}\]
+Thus, \(f\) is a right eigenvector of \(P\) with eigenvalue 1 
+(and is known as ``harmonic''), namely \(f = Pf\).
+
+In the case that the minimal class is not a singleton, we may consider the 
+minimal class as a single node and use the above method. From which, we 
+may then work with the minimal class redistributing the probabilities 
+to the ratio of the whole chain.
+
+\begin{proposition}
+  Let \(P\) be a stochastic matrix. Decomposing 
+  \(\mathcal{X} = T \cup \bigcup_{i = 1}^k A_i\) where \(T\) are the transient 
+  states and \(A_i\) are the recurrent communicating classes, then by reordering 
+  we can write
+  \[P = \begin{pmatrix}
+    T & S\\ 
+    0 & \tilde P
+  \end{pmatrix},\]
+  where \(\tilde P = \bigoplus P_i\) for which \(P_i\) are stochastic matrices 
+  corresponding to \(A_i\) and \(T\) is a sub-stochastic matrix. Furthermore,
+  denoting \(A_{ij} = \mathbb{P}_i(x_n \text{ eventually ends in } j)\), we 
+  have 
+  \[A := (A_{ij}) = (\text{id} - T)^{-1}S.\]
+\end{proposition}
+\begin{proof}
+  Exercise (Hint: show \(A_{ij} = (TA)_{ij} + S_{ij}\)).
 \end{proof}
 
 \end{document}
