@@ -2530,7 +2530,7 @@ communication classes.
 
   Then, using the same argument as lemma~\ref{exist_T}, one may show there exists some 
   \(n_0\) such that \(T^{n_0}\) has only positive entries. Namely, for all \(i\),
-  \[\mu T^{n_0}(i) = \sum_{k \in \mathcal{X}} \mu(k) T^{n_0}_{ki} \ge \min_{k} T_{k_i}^{n_0} =: \delta > 0.\]
+  \[\mu T^{n_0}(i) = \sum_{k \in \mathcal{X}} \mu(k) T^{n_0}_{ki} \ge \min_{k} T_{ki}^{n_0} =: \delta > 0.\]
   Now, as \(P\) is not a stochastic matrix, there exists some row \(i_0\) such that 
   \(\sum_{j \in \mathcal{X}} P_{i_0 j} = 1 - \alpha\) for some \(\alpha \in (0, 1]\).
   Thus, denoting \(e_{i_0}\) the vector which is 1 at the \(i_0\)-th position and 
@@ -2622,6 +2622,151 @@ to the ratio of the whole chain.
 \end{proposition}
 \begin{proof}
   Exercise (Hint: show \(A_{ij} = (TA)_{ij} + S_{ij}\)).
+\end{proof}
+
+\newpage
+\section{Invariant Measures in General State Space}
+
+\subsection{Weak Convergence and Feller}
+
+We recall the transition operator \(T^* : \mu \mapsto (A \mapsto \int P(x, A) \mu(\dd x))\) 
+and the dual transition operator \(T_* : f \mapsto (x \mapsto \int f(y) P(x, \dd y))\),
+and the relation 
+\[\int f \dd T^* \mu = \int T_* f \dd \mu.\]
+We note that one may deduce \(P, T^*\) and \(T_*\) from one another and 
+in general, we will denote \(T\) for both \(T^*\) and \(T_*\).
+
+\begin{definition}[Weak Convergence of Measures]
+  A sequence of measures \((\mu_n)\) is said to converge weakly to \(\mu\) 
+  if for any bounded continuous real-valued function \(\phi\), 
+  \[\lim_{n \to \infty} \int \phi \dd \mu_n = \int \phi \dd \mu.\]
+\end{definition}
+
+The definition of weak convergence is inspired by the following lemma.
+
+\begin{lemma}
+  Let \(\mu, \nu\) be measures on a separable complete metric space \(\mathcal{X}\). 
+  Then, \(\mu = \nu\) if for every bounded real-value uniformly continuous function
+  \(f\), we have 
+  \[\int f \dd \mu = \int f \dd \nu.\]
+  Furthermore, the space of measures \(P(\mathcal{X})\) can be equipped with 
+  a topology known as the weak topology which is metrizable in which 
+  \(\mu_n \to \mu\) weakly if and only if \(d(\mu_n, \mu) \to 0\).
+\end{lemma}
+
+\begin{proposition}
+  If \(\mathcal{X}\) is discrete, then any function is continuous. So, 
+  \(\mu_n \to \mu\) weakly if and only if \(\mu_n(A) \to \mu(A\) for all 
+  measurable \(A\) (choosing \(\phi = \mathbf{1}_A\)). 
+\end{proposition}
+
+\begin{proposition}
+  If \(x_n \to x\) in \(\mathcal{X}\), then \(\delta_{x_n} \to \delta_x\) weakly.
+\end{proposition}
+
+\begin{proposition}
+  If \(\mathcal{X} = \mathbb{R}\), defining \(F_n(x) = \mu((-\infty, x])\) 
+  and \(F(x) = \mu((-\infty, x])\), \(\mu_n \to \mu\) weakly if and only if 
+  \(F_n(x) \to F(x)\) at all points of continuity of \(F\).
+\end{proposition}
+
+It is easy to check that the above holds, except perhaps the last proposition 
+for which a more general proof is presented in the probability theory notes.
+
+\begin{definition}[Feller]
+  A time homogeneous Markov process with transition operator \(T\) is Feller 
+  if \(Tf\) is continuous whenever \(f\) is bounded continuous.
+\end{definition}
+
+We note that \(T \phi(x) = \int \phi(y) P(x, \dd y)\) and so, \(T\) is Feller 
+if and only if \(x \mapsto P(x, \cdot)\) is continuous in the weak topology of 
+\(P(\mathcal{X})\).
+
+\begin{definition}[Strong-Feller]
+  A time homogeneous Markov process with transition operator \(T\) is Strong-Feller 
+  if \(Tf\) is continuous whenever \(f\) is bounded measurable.
+\end{definition}
+
+\begin{lemma}
+  Let \(\mu\) be a probability measure on a complete separable metric space. Then 
+  for every \(\epsilon > 0\), there exists a compact set \(K\) such that 
+  \(\mu(K) \ge 1 - \epsilon\).
+\end{lemma}
+\begin{proof}
+  Recall that totally bounded + complete implies compact. So, as \(\mathcal{X}\) 
+  is complete, it suffices to find a totally bounded \(K\) satisfying 
+  \(\mu(K) \ge 1 - \epsilon\).
+
+  As \(\mathcal{X}\) is separable, there exists some 
+  \(\{x_i\}_{i = 1}^\infty \subseteq \mathcal{X}\) dense. So, for all \(n \in \mathcal{N}\), 
+  \(\mathcal{X} = \bigcup_{i = 1}^\infty B_{1 / n}(x_i)\). Then, by the continuity 
+  of measures, there exists some \(N_n\) such that 
+  \[\mu\left(\bigcup_{i = 1}^{N_n} B_{1 / n}(x_i)\right) \ge 1 - \frac{\epsilon}{2^n}.\]
+  Thus, defining \(K := \bigcap_{n = 1}^\infty \bigcup_{i = 1}^{N_n} B_{1 / n}(x_i)\),
+  \[\mu(K^c) = \mu\left(\bigcup_{n = 1}^\infty \left(\bigcup_{i = 1}^{N_n} B_{1 / n}(x_i)\right)^c\right)
+    \le \sum_{n = 1}^\infty \mu\left(\bigcup_{i = 1}^{N_n} B_{1 / n}(x_i)\right)^c
+    \le \sum_{n = 1}^\infty \frac{\epsilon}{2^n} = \epsilon,\]
+  implying \(\mu(K) \ge 1 - \epsilon\) as required. Finally, \(K\) is totally bounded 
+  as for all \(\delta > 0\), there exists some \(n\) such that \(1 / n < \delta\), 
+  and so, \(\{B_{1 / n}(x_i) \mid i = 1, \cdots, N_n\}\) is a finite cover of 
+  \(K\) with each element having radius \(1 / n < \delta\).
+\end{proof}
+
+This lemma motivates the definition of tightness (note the analogy with uniform 
+integrability).
+
+\begin{definition}[Tight]
+  Let \(M \subseteq P(\mathcal{X})\). Then, \(M\) is said to be tight if for 
+  all \(\epsilon > 0\), there exists some compact \(K \subseteq \mathcal{X}\) 
+  such that 
+  \[\mu(K) \ge 1 - \epsilon\]
+  for all \(\mu \in M\).
+\end{definition}
+
+\begin{theorem}[Prokhorov]
+  Let \(\mathcal{X}\) be a separable complete metric space. Then a family 
+  \(M \subseteq P(X)\) is tight if and only if \(M\) is relatively compact
+  (i.e. for all \((\mu_n) \subseteq M\), there exists some \(\mu \in P(\mathcal{X})\)
+  such that \(\mu_n \to \mu\) weakly). 
+\end{theorem}
+\begin{proof}
+  See probability theory notes.
+\end{proof}
+
+\begin{theorem}[Krylov-Bogoliubov]
+  Let \(P\) be Feller on the complete separable metric space \(\mathcal{X}\). 
+  If there exists some \(x_0 \in \mathcal{X}\) such that the family of measures
+  \(\{P^n(x_0, \cdot) \mid n \in \mathbb{N}\} \subseteq P(\mathcal{X})\) is 
+  tight, then \(P\) has an invariant probability measure.
+\end{theorem}
+\begin{proof}
+  Define 
+  \[\mu_N(A) := \frac{1}{N} \sum_{n = 1}^N P^n(x_0, A)\]
+  for all \(A \in \mathcal{B}(\mathcal{X})\). Then, \(\{\mu_N\}\) is tight 
+  (by choosing the same \(K\) as \(\{P^n(x_0, \cdot)\}\))
+  and by Prokhorov's theorem, there exists some \(\pi \in P(\mathcal{X})\) 
+  such that \(\mu_{N_k} \to \pi\) weakly.
+
+  As mentioned previously, \(T\pi = \pi\) if \(\int f \dd(T\pi) = \int f \dd \pi\) 
+  for all bounded continuous functions \(f\), and so, it suffices to show the latter.
+  Indeed, by noting \(P(\cdot, A)\) is continuous as \(T\) is Feller, 
+  \[\begin{split}
+    T\pi(A) & = \int P(y, A) \pi(\dd y) = \lim_{k \to \infty} \int P(y, A) \mu_{N_k}(\dd y)\\
+    & = \lim_{k \to \infty} \int P(y, A) \frac{1}{N_k} \sum_{n = 1}^{N_k} P^n(x_0, \dd y)\\
+    & = \lim_{k \to \infty} \frac{1}{N_k} \sum_{n = 1}^{N_k} \int P(y, A) P^n(x_0, \dd y)\\
+    & = \lim_{k \to \infty} \frac{1}{N_k} \sum_{n = 1}^{N_k}P^{n + 1}(x_0, A)\\
+    & = \lim_{k \to \infty} \mu_{N_k}(A) + \frac{1}{N_k}(P^{N_k + 1}(x_0, A) - P(x_0, A)).
+  \end{split}\]
+  Thus, for all bounded continuous \(f\), as 
+  \(\int f(y) P^{N_k + 1}(x_0, \dd y) \le \|f\|_\infty\), 
+  \[\begin{split}
+    \int f \dd(T\pi) & = 
+    \lim_{k \to \infty} \int f(y) \mu_{N_k}(\dd y) 
+    + \frac{1}{N_k} \int f(y) P^{N_k + 1}(x_0, \dd y) 
+    - \frac{1}{N_k} \int f(y) P(x_0, \dd y)\\
+    & = \lim_{k \to \infty} \int f(y) \mu_{N_k}(\dd y) = \int f \dd \pi
+  \end{split}\]
+  as required.
 \end{proof}
 
 \end{document}
