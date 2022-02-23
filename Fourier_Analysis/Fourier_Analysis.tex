@@ -1353,9 +1353,11 @@ inverse Fourier-Stieltjes transform which formula is on the exercise sheet.
 \newpage
 \section{Linear Functional on Normed Space}
 
-\subsection{Review}
+This section is mostly a review of definitions and results from 
+functional analysis. See functional analysis notes for more details as 
+some proofs are omitted.
 
-We will first review some definitions and results from functional analysis. 
+\subsection{Linear Functional}
 
 \begin{definition}[Functional]
   Let \(L\) be a linear space (not necessarily topological) over 
@@ -1447,6 +1449,8 @@ and so, we may apply Hahn-Banach to this special case.
   Yet, \(\|f\| \ge \|f_0\| = c\), we have \(\|f\| = \|f_0\|\) as required.
 \end{proof}
 
+\subsection{Dual Space}
+
 \begin{definition}
   Given a linear space \(L\), we define its adjoint (or dual) \(L^*\) as the space 
   of all linear functionals on \(L\) equipped with point-wise addition and 
@@ -1488,5 +1492,157 @@ We note that the dual is complete irrespective of the completeness of \(E\).
   Thus, by considering \(f \mapsto \overline{f}\) and its inverse 
   \(\overline{f} \mapsto \overline{f}|_E\), we have our isometry.
 \end{proof}
+
+\begin{proposition}
+  Denote \(c_0 \subseteq \ell_\infty\) the space of sequences which converges 
+  to 0. Then, \(c_0^*\) is isometric to \(\ell_1\).
+\end{proposition}
+\begin{proof}
+  Let \(f \in \ell_1\). Then defining 
+  \[\hat f : c_0 \to \mathbb{R} : x \mapsto \sum_{n = 1}^\infty f_n x_n.\]
+  This is well-defined since as \(x \to 0\) for all \(x \in c_0\), 
+  \[\|\hat f(x)\| \le \|x\| \|f\|_{\ell_1} < \infty,\]
+  which further implies \(f \to \hat f\) is continuous.
+  Clearly, \(f \mapsto \hat f\) is linear and so, it remains to show this 
+  map preserves norm and is surjective. 
+
+  Consider the sequence \((x^N) \subseteq c_0\) defined by 
+  \(x^N := \sum_{n = 1}^N \frac{f_n}{|f_n|} e_n\) where \(f_n / |f_n|\) is 
+  defined to be 0 if \(f_n = 0\). It is clear that \(\|x^N\| \le 1\) and 
+  \[\hat f(x^N) = \sum_{n = 1}^N \hat f(e_n) \frac{f_n}{|f_n|} = \sum_{n = 1}^N|f_n|.\]
+  Hence, taking \(N \to \infty\), we have \(\hat f(x^N) \to \|f\|_{\ell_1}\) 
+  implying \(\|\hat f\| \ge \|f\|_{\ell_1}\). Thus, as we have already shown 
+  \(\|\hat f\| \le \|f\|_{\ell_1}\), we obtain \(\|\hat f\| = \|f\|_{\ell_1}\).
+
+  Finally, suppose \(g \in c_0^*\). We note that \(x = \sum_{n = 1}^\infty x_n e_n\).
+  So, by the continuity of \(g\), \(g(x) = \sum_{n = 1}^\infty x_n \hat g(e_n)\).
+  Thus, defining \(f \in \ell_1\) such that \(f = (g(e_n))_{n = 1}^\infty\), 
+  we have \(\hat f(x) = \sum_{n = 1}^\infty g(e_n) x_n
+  = \sum_{n = 1}^\infty g(x_n e_n) = g(x)\). Thus, it remains to show that 
+  \(f \in \ell_1\). Indeed, we observe 
+  \[\sum_{n = 1}^N |g(e_n)| = 
+    \sum_{n = 1}^N \frac{g(e_n) g(e_n)}{|g(e_n)|}
+    = g\left(\sum_{n = 1}^N \frac{g(e_n)}{|g(e_n)|}e_n\right) 
+    = g(x^N) \le \|g\|,\]
+  implying \(f \in \ell_1\) as required.
+\end{proof}
+
+\begin{proposition}
+  \(\ell_1^*\) is isometric to \(\ell_\infty\).
+\end{proposition}
+
+This is an important counter-example to the statement that \((E^*)^*\) is 
+canonically isomorphic to \(E\). Indeed, \((c_0^*)^* \cong (\ell_1)^* \cong \ell_\infty\)
+yet \(\ell_\infty\) is clearly much larger than \(c_0\). Nonetheless, the 
+double-dual isomorphism constructed for finite-dimensional spaces remains to 
+provide an injection (recall \(x \in E \mapsto (f \in E^* \mapsto f(x))\)). 
+
+\begin{proposition}\label{dual_lp}
+  For \(1 \le p < \infty\), \(\ell_p^*\) is isometric to \(\ell_q\) where 
+  \(1 / p + 1 / q = 1\).
+\end{proposition}
+
+\begin{proposition}
+  If \(H\) is a real Hilbert space, then \(H\) is isometric to its dual. 
+\end{proposition}
+\begin{proof}
+  For all \(f \in H^*\), by Riesz representation, there exists a unique \(x_f \in H\) 
+  such that \(f = \langle \cdot, x_f \rangle\). Thus, defining 
+  \(\phi : f \mapsto x_f\) which is clearly linear, we observe \(\phi\) is 
+  an linear isomorphism as it has inverse \(x \mapsto \langle \cdot, x\rangle\).
+
+  Now, this is an isometry since \(\|f\| \ge |f(x_f / \|x_f\|)| = \|x_f\|\) and 
+  by Cauchy-Schwarz, \(|f(x / \|x\|)| = |\langle x, x_f \rangle / \|x\|| \le 
+  \|x\| \|x_f\| / \|x\| = \|x_f\|\) implying \(\|f\| = \|x_f\|\).
+\end{proof}
+
+Thus, if \(E\) is any inner product space (so not necessarily complete), 
+and \(H\) is its completion, we have \(E^* \cong H^* \cong H\). 
+
+Since the map \(x \in E \mapsto \phi_x := (f \in E^* \mapsto f(x))\) is 
+injective, it is useful to introduce the following notation. In particular, 
+for all \(x \in E, f \in E^*\), we denote 
+\[(f, x) := f(x) = \phi_x(f).\]
+So, \((\cdot, x) \in (E^*)^*\) and \((f, \cdot) \in E^*\).
+
+\begin{lemma}
+  For a normed linear space \(E\), \(\pi : x \mapsto \phi_x\) preserves the 
+  norm.
+\end{lemma}
+\begin{proof}
+  Clearly, for all \(\|f\| = 1\), \(|\phi_x(f)| = |f(x)| \le \|x\|\|f\| = \|x\|\) 
+  implying \(\|\phi_x\| \le \|x\|\). On the other hand, by taking \(f\) to 
+  be the Hahn-Banach extension of \(f_0\) where \(f_0(x) = \|x\|\) and 
+  \(\|f_0\| = 1\), we have \(|\phi_x(f)| = |f(x)| = |f_0(x)| = \|x\|\) 
+  implying \(\|\phi_x\| = \|x\|\) as required. 
+\end{proof}
+
+\begin{definition}[Reflexive]
+  A normed linear space \(E\) is said to be reflexive if \(\pi(E) = (E^*)^*\).
+  Thus, \(E\) is reflexive if it is canonically isometric to its double dual.
+\end{definition}
+
+As a consequence of~\ref{dual_lp}, we see that \(\ell_p\) is reflexive for 
+all \(1 < p < \infty\).
+
+\subsection{Linear Topological Space}
+
+\begin{definition}
+  The set \(E\) is a linear topological space, also known as a topological 
+  vector space (TVS), if 
+  \begin{itemize}
+    \item \(E\) is a real (or complex) vector space, 
+    \item \(E\) is a topological space,
+    \item the topology on \(E\) is compatible with the vector space operations, 
+      namely, addition and scalar multiplication are continuous.
+  \end{itemize}
+\end{definition}
+
+\begin{proposition}
+  The topology on a TVS \(E\) is uniquely determined by its open neighbourhood 
+  of 0.
+\end{proposition}
+\begin{proof}
+  Since addition is continuous, \(U \subseteq E\) is open if and only if 
+  \(U + x\) is open for all \(x \in E\). Thus, all open neighbourhoods in 
+  \(E\) can be shifted to an open neighbourhood of 0 allowing us to conclude 
+  the claim.
+\end{proof}
+
+In addition to the claim that the translation operator 
+\(T_\alpha : x \mapsto \alpha + x\) is continuous, we have the following 
+facts about TVS.
+
+\begin{proposition}
+  Let \(U, V \subseteq E\) be open, \(\alpha \in \mathbb{R}\) (or \(\mathbb{C}\)),
+  \(F \subseteq E\) closed, \(x \in E \setminus F\), then 
+  \begin{itemize}
+    \item \(U + V\) is open,
+    \item \(\alpha U\) is open,
+    \item \(\alpha F\) is closed,
+    \item \(x\) and \(F\) have non-intersecting neighbourhoods.
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+We note that the fourth property implies Hausdorff. 
+
+If \(C^\infty[a, b]\) is the set of infinitely differentiable functions on 
+\((a, b)\), we may equip it with the topology formed by the open neighbourhoods 
+\(U_{m, \epsilon}\) for \(m \in \mathbb{N}, \epsilon > 0\) where 
+\[U_{m, \epsilon} := \{\phi \in C^\infty[a, b] \mid \|\phi^{(k)}\|_\infty < 
+  \epsilon, k = 0, \cdots, m\}.\]
+One may show this is a topological vector space.
+
+\begin{definition}[Bounded]
+  Let \(E\) be a TVS. Then \(M \subseteq E\) is bounded if for any 
+  open neighbourhood \(U\) of 0, there exists some \(n > 0\) such that 
+  \(M \subseteq \lambda U\) for all \(|\lambda| \ge n\).
+\end{definition}
+
+It is an easy exercise to show that this definition agrees with the notion 
+of boundedness in normed spaces.
 
 \end{document}
