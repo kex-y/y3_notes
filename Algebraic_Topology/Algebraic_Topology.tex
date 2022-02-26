@@ -1100,4 +1100,141 @@ So far, we note that the definition of the simplicial homology depends on the
 \(\Delta\)-complex structure. However, as we shall see, the definition 
 is in fact invariant under different \(\Delta\)-complexes. 
 
+\subsection{Singular Homology}
+
+We will now provide another construction of the homology group known as 
+singular homology. This turns out to be the same homology group as the 
+simplicial homology yet easier to manipulate formally. Yet, they are much 
+more difficult to compute, hence our current construction.
+
+\begin{definition}
+  Let \(X\) be a topological space. For all \(n \in \mathbb{N}\), we define 
+  \[C_n(X) := \bigoplus_{\substack{\Phi : \Delta_n \to X\\\text{continuous}}} 
+    \mathbb{Z} \cdot [\Phi].\]
+\end{definition}
+
+Recall that \(n\)-dimensional \(\Delta\)-simplex is defined to be 
+\(\text{conv}(e_0, \cdots, e_n) \subseteq \mathbb{R}^{n + 1}\) where \(e_i\) 
+has 1 in the \(i\)-th position and 0 everywhere else. Thus, if 
+\(A : \mathbb{R}^{n + 1} \to \mathbb{R}^{n + 1}\) is a linear map induced by 
+a permutation on the \(e_i\)s, we would like to identify \([\Phi]\) with
+\([\Phi \circ A]\) if \(A\) preserves orientation (namely the permutation 
+correspondence to \(A\) as positive sign) and \([\Phi]\) with \(-[\Phi \circ A]\) 
+if the permutation has negative sign. 
+
+\begin{definition}
+  Given the definition above, we define the group homomorphism 
+  \(\partial_n : C_n(X) \to C_{n - 1}(X)\) by extending
+  \[\partial_n ([\Phi]) := \sum_{i = 0}^n (-1)^i [\Phi|_{\partial_i \Delta_n}]\]
+  linearly.
+\end{definition}
+
+\begin{proposition}
+  For all \(n \ge 1\), \(\partial_{n - 1} \circ \partial_n = 0\).
+\end{proposition}
+\begin{proof}
+  Same proof as simplicial homology.
+\end{proof}
+
+\begin{corollary}
+  \((C_n(X), \partial_n)\) is a chain complex.
+\end{corollary}
+
+\begin{definition}[Singular Homology]
+  The singular homology groups of the topological space \(X\) are the homology 
+  groups of the chain complex \((C_n(X), \partial_n)\), i.e. 
+  \[H_n(X) := \ker(\partial_{n}) / \text{Im}(\partial_{n + 1}).\]
+\end{definition}
+
+\begin{definition}[Induced Map]
+  If \(f : X \to Y\) is a continuous map and \(\Phi : \Delta_n \to X \in C_n(X)\). 
+  Then, \(f \circ \Phi : \Delta_n \to Y \in C_n(Y)\). Thus, \(f\) induces 
+  a group homomorphism \(f_* : H_n(X) \to H_n(Y)\).
+\end{definition}
+
+With the above definitions, we may introduce a notion known as 
+relative homology. 
+
+Let \(A \subseteq X\) and we can consider for all \(k\),
+\(C_k(A) \subseteq C_k(X)\). We observe 
+\(\partial_k(C_k(A)) \subseteq C_{k - 1}(A)\) implying \(\partial_k\) induces 
+a group homomorphism 
+\[\partial_k : C_k(X) / C_k(A) \to C_{k - 1}(X) / C_{k - 1}(A).\]
+With this in mind, we denote \(C_k(X, A) := C_k(X) / C_k(A)\). 
+
+\begin{proposition}
+  \((C_k(X, A), \partial_k)_{k \in \mathbb{N}}\) is a chain complex.
+\end{proposition}
+\begin{proof}
+  Follows as \(\partial_{n - 1} \circ \partial_n = 0\) as maps from 
+  \(C_n(X) \to C_{n - 2}(X)\).
+\end{proof}
+
+\begin{definition}[Relative Homology]
+  The homology groups of \(X\) relative to \(A\) are the homology groups 
+  of the chain complex \((C_k(X, A), \partial_k)_{k \in \mathbb{N}}\).
+  We denote them by \(H_n(X, A)\).
+\end{definition}
+
+Now, by denoting \(i : A \hookrightarrow X\) as the inclusion map, 
+\(\pi : C_n(X) \to C_n(X) / C_n(A)\) the quotient map, we have induced maps 
+\(i_* : H_n(A) \to H_n(X)\) and \(\pi_* : H_n(X) \to H_n(X, A)\). These 
+two maps are related with something called a long exact sequence.
+
+\begin{definition}[Exact Sequence]
+  Given groups \(A, B, C\) and group homomorphisms \(f : A \to B, g : B \to C\), 
+  the chain it forms is an exact sequence if
+  \[\begin{tikzcd}
+    A & B & C
+    \arrow["f", from=1-1, to=1-2]
+    \arrow["g", from=1-2, to=1-3]
+  \end{tikzcd}\]
+  \(\text{Im}(f) = \ker(g)\).
+\end{definition}
+
+\begin{definition}[Long Exact Sequence]
+  Let \((A_i)_{i \in \mathbb{N}}\) be a sequence of groups and let 
+  \(f_i : A_{i + 1} \to A_i\) be the group homomorphisms. Then, the chain 
+  \[\begin{tikzcd}
+    \cdots & {A_{i + 1}} & {A_i} & {A_{i - 1}} & \cdots
+    \arrow["{f_i}", from=1-2, to=1-3]
+    \arrow["{f_{i + 1}}", from=1-1, to=1-2]
+    \arrow["{f_{i - 1}}", from=1-3, to=1-4]
+    \arrow["{f_{i - 2}}", from=1-4, to=1-5]
+  \end{tikzcd}\]
+  is exact if for all \(i\), \(\text{Im}(f_i) = \ker(f_i)\).
+\end{definition}
+
+Now, for all \(u \in H_n(X, A) = \ker(\partial_n) / \text{Im}(\partial_{n + 1})\),
+\(u\) is represented by some \(c \in C_n(X)\) such that 
+\(\partial_n c \in C_{n - 1}(A)\). With this in mind, we may define the 
+group homomorphism 
+\[\partial : H_n(X, A) \to H_{n - 1}(A) : [c] \mapsto [\partial_n c].\]
+
+\begin{theorem}
+  The chain
+  \[\begin{tikzcd}
+    \cdots & {H_{n + 1}(X, A)} & {H_n(A)} & {H_n(X)} & {H_n(X, A)} & \cdots
+    \arrow["\pi_*", from=1-1, to=1-2]
+    \arrow["\partial", from=1-2, to=1-3]
+    \arrow["{i_*}", from=1-3, to=1-4]
+    \arrow["{\pi_*}", from=1-4, to=1-5]
+    \arrow["\partial", from=1-5, to=1-6]
+  \end{tikzcd}\]
+  is a long exact sequence.
+\end{theorem}
+\begin{proof}
+  We will first show \(\text{Im}(\partial) = \ker(i_*) \subseteq H_n(A)\). 
+  Indeed, for all \([\partial_{n + 1} c] \in \text{Im}(\partial)\), 
+  \([\partial_{n + 1} c] \in \ker(\partial_n)\) (as \(\partial_n \circ \partial_{n + 1} = 0\)).
+  Thus, as \(\partial_{n + 1}c \in \text{Im}(\partial_{n + 1})\), we have 
+  \([\partial_{n + 1} c] = 0\) implying \(\text{Im}(\partial) \subseteq \ker(i_*)\).
+  Conversely, if \(a \in \ker(i_*)\), \(a \in \text{Im}(\partial_{n + 1})\), 
+  implying there exists some \(c \in C_{n + 1}(X)\) such that 
+  \(a = \partial_{n + 1} c = \partial c\). Thus, 
+  \(\text{Im}(\partial) = \ker(i_*)\) as required. 
+
+  The other two equalities are straight forward checks also.
+\end{proof}
+
 \end{document}
