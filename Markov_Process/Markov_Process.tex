@@ -2733,6 +2733,8 @@ integrability).
   See probability theory notes.
 \end{proof}
 
+\subsection{Invariant Measures and Lyapunov Function Test}
+
 \begin{theorem}[Krylov-Bogoliubov]
   Let \(P\) be Feller on the complete separable metric space \(\mathcal{X}\). 
   If there exists some \(x_0 \in \mathcal{X}\) such that the family of measures
@@ -2767,6 +2769,113 @@ integrability).
     & = \lim_{k \to \infty} \int f(y) \mu_{N_k}(\dd y) = \int f \dd \pi
   \end{split}\]
   as required.
+\end{proof}
+
+\begin{corollary}
+  If \(\mathcal{X}\) is compact, any Feller transition probability operator 
+  has an invariant probability measure.
+\end{corollary}
+
+\begin{corollary}
+  If \((x_n)\) is a Markov chain with \(\mathcal{L}(x_0) = \delta_{x_0}\) 
+  on \(\mathbb{R}^n\) with Feller transition probability \(P\). Then, there exist 
+  an invariant probability measure if any of the following holds:
+  \begin{itemize}
+    \item \(\sup_n \mathbb{E}|x_n|^p < \infty\) for some \(p > 0\);
+    \item \(\sup_n \mathbb{E} \log(|x_n| + 1) < \infty\).
+  \end{itemize}
+\end{corollary}
+\begin{proof}
+By definition, \(P^n(x_0, \cdot) = \mathcal{L}(x_n)\), and so, for all \(M\), 
+\[P^n(x_0, \overline{B_M(0)}^c) = \mathbb{P}(|x_n| > M) \le 
+\frac{\sup_n \mathbb{E}\log(|x_n| + 1)}{\log(M + 1)} \to 0,\]
+by Markov's inequality. Thus, \(\{P^n(x_0, \cdot)\}\) is tight implying the 
+existence of an invariant measure with Krylov-Bogoliubov.
+
+Similar proof for the first case.
+\end{proof}
+
+\begin{proposition}
+Let \(P\) be a transition function on \(\mathcal{X}\) and let \(V : \mathcal{X} \to \mathbb{R}_+\)
+be Borel measurable. Then, if there exists some \(\gamma \in (0, 1)\) and \(c > 0\)
+such that 
+\[TV(x) \le \gamma V(x) + c,\]
+then, \(T^n V(x) \le \gamma^n V(x) + \frac{c}{1 - \gamma}\).
+\end{proposition}
+\begin{proof}
+\[\begin{split}
+  T^nV(x) & = \int_{\mathcal{X}} V(y) P^n(x, \dd y) 
+    = \int_{\mathcal{X}} \int_{\mathcal{X}} V(y) P(z, \dd yy)P^{n - 1}(x, \dd z)\\
+  & = \int_{\mathcal{X}} TV(z)P^{n - 1}(x, \dd z)
+    \le \gamma \int_{\mathcal{X}} V(z) P^{n - 1}(x, \dd y) + c\\ 
+  & \le \cdots \le \gamma^n V(x) + \frac{c}{1 - \gamma}.
+\end{split}\]
+\end{proof}
+
+\begin{definition}[Lyapunov Function]
+  Let \(\mathcal{X}\) be a complete separable metric space and \(P\) a transition 
+  probability on \(\mathcal{X}\). Then, a Borel measurable function 
+  \(V : \mathcal{X} \to \overline{\mathbb{R}_+}\) is a Lyapunov function for 
+  \(P\) if 
+  \begin{itemize}
+    \item \(V^{-1}(\mathbb{R}_+) \neq \varnothing\);
+    \item \(V^{-1}([0, a])\) is compact for all \(a \in \mathbb{R}\);
+    \item there exists some \(\gamma < 1\) and \(c\) such that 
+    \(TV(x) \le \gamma V(x) + c\) for all \(x\) which \(V(x) \neq \infty\).
+  \end{itemize}
+\end{definition}
+
+\begin{theorem}[Lyapunov Function Test]
+  If a transition function \(P\) is Feller and admits a Lyapunov function \(V\),
+  then, it has an invariant probability measure \(\pi\).
+\end{theorem}
+\begin{proof}
+  Let \(x_0 \in \mathcal{X}\) with \(V(x_0) < \infty\) and let \(a > 0\) and 
+  define \(K_a := V^{-1}[0, a]\) which is compact. Then, 
+  \[\begin{split}
+    P^n(x_0, K_a^c) & = \int_{V(y) > a} P^n(x_0, \dd y) \le \int \frac{V(y)}{a} P^n(x_0, \dd y)\\
+    & = \frac{1}{a} T^n V(x_0) \le \frac{1}{a}\left(\frac{c}{1 - \gamma} + \gamma^n V(x_0)\right).
+  \end{split}\]
+  Thus, for all \(\epsilon > 0\), choosing \(a > \frac{1}{\epsilon}\left(\frac{c}{1 - \gamma} + V(x_0)\right)\),
+  we have \(P^n(x_0, K_a) > 1 - \epsilon\) for all \(n\) implying \(\{P^n(x_0, \cdot)\}\) 
+  is tight which implies the existence of an invariant probability measure 
+  by Krylov-Bogoliubov.
+\end{proof}
+
+\begin{proposition}
+  Let \(P\) be a trnasition function on \(\mathcal{X}\) and let \(V : \mathcal{X} \to \mathbb{R}_+\)
+  be a Borel measurable function. Then, if there exists some \(\gamma \in (0, 1)\), 
+  \(c > 0\) such that \(TV(x) \le \gamma V(x) + c\), every invariant probability 
+  measure \(\pi\) for \(P\) satisfies 
+  \[\int_{\mathcal{X}} V \dd \pi \le \frac{c}{1 - \gamma}.\]
+\end{proposition}
+\begin{proof}
+  Let \(M > 0\), then 
+  \[\int V \wedge M \dd \pi = \int T^n(V \wedge M) \dd \pi \le \int 
+    \gamma^n  V \wedge M + \frac{c}{1 - \gamma} \dd \pi.\]
+  By dominated convergence, by taking \(n \to \infty\),
+  \[\in V \wedge M \dd \pi \le \frac{c}{1 - \gamma}\]
+  for all \(M\). Thus, taking \(M \uparrow \infty\), allows us to conclude the 
+  inequality.
+\end{proof}
+
+\begin{corollary}
+  Let \(F : \mathcal{X} \times \mathcal{Y} \to \mathcal{X}\) be Borel measurable and 
+  let \((\xi_n)\) be i.i.d. on \(\mathcal{Y}\) all of which are independent of 
+  \(x_0\) on \(\mathcal{X}\). Then, defining \(x_{n + 1} := F(x_n, \xi_{n + 1})\),
+  we have \(TV(x) = \mathbb{E}V(F(x, \xi_n))\). 
+  
+  Now, if \(F(\cdot, \xi_n(\omega))\) 
+  is continuous for all \(\omega \in A\) where \(A\) is some set of probability 1, 
+  and there exists a Borel measurable function \(V : \mathcal{X} \to \mathbb{R}_+\) 
+  with compact level sets such that there exists some \(\gamma \in (0, 1), c \ge 0\), 
+  \[\mathbb{E}V(F(x, \xi_n)) \le \gamma V(x) + c,\]
+  then \((x_n)\) is Feller and \((x_\cdot)\) has at least one invariant probability
+  measure.
+\end{corollary}
+\begin{proof}
+  The first claim follows by sequential continuity while the second follows straight 
+  away by the Lyapunov function test.
 \end{proof}
 
 \end{document}
