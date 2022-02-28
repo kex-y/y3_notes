@@ -2878,4 +2878,283 @@ then, \(T^n V(x) \le \gamma^n V(x) + \frac{c}{1 - \gamma}\).
   away by the Lyapunov function test.
 \end{proof}
 
+\subsection{Deterministic Contraction and Minorisation}
+
+So far, with the Lyapunov function test, we have provided a sufficient condition
+for the existence of an invariant probability measure. We will now consider their 
+uniqueness. 
+
+Suppose \(\pi_1, \pi_2\) are two probability measures on a complete separable 
+space \(\mathcal{X}\). Let \(\mu\) be the coupling of \(\pi_1\) and \(\pi_2\), 
+namely, \(\mu \in P(\mathcal{X}^2)\) and \((\text{pr}_1)_*\mu = \pi_1\) and 
+\((\text{pr}_2)_*\mu = \pi_2\) where \(\text{pr}_1, \text{pr}_2\) are the two 
+projection maps.
+
+\begin{lemma}
+  If there exists a coupling \(\mu\) of \(\pi_1\) and \(\pi_2\) such that 
+  \(\mu(\Delta) = 1\) where \(\Delta = \{(x, x) \mid x \in \mathcal{X}\}\), 
+  then \(\pi_1 = \pi_2\). In particular, \(\pi_1 = \pi_2\) if 
+  \[\int_{\mathcal{X}^2} 1 \wedge d(x, y) \mu(\dd x, \dd y) = 0.\]
+\end{lemma}
+\begin{proof}
+  Let \(A \in \mathcal{B}(\mathcal{X})\), we have 
+  \[\begin{split}
+    \pi_1(A) & = \mu(A \times \mathcal{X}) = \mu((A \times \mathcal{X}) \cap \Delta)\\
+    & = \mu((\mathcal{X} \times A) \cap \Delta) = \mu(\mathcal{X} \times A) = \pi_2(A)
+  \end{split}\]
+  where the second equality follows as \(\mu(\Delta) = 1\). Thus, \(\pi_1 = \pi_2\) 
+  as required.
+
+  Now, by observing that \(\{(x, y) \mid 1 \wedge d(x, y) = 0\} = \Delta\), if 
+  \[\int_{\mathcal{X}^2} 1 \wedge d(x, y) \mu(\dd x, \dd y) = 0\]
+  then \(1 \wedge d(x, y) \mu(\dd x, \dd y) = 0\) almost everywhere, implying 
+  \(1 = \mu(\{1 \wedge d(x, y) \mu(\dd x, \dd y) = 0\}) = \mu(\Delta)\).
+\end{proof}
+
+\begin{lemma}
+  Let \(\{\mu_n\}\) be a family of couplings of \(\pi_1\) and \(\pi_2\). Then 
+  \(\{\mu_n\}\) is tight.
+\end{lemma}
+\begin{proof}
+  As \(\pi_1, \pi_2\) are probability measures, they are themselves tight. Thus, 
+  for all \(\epsilon > 0\), there exists some compact \(K_1, K_2\) such that 
+  \(\pi_i(K_i^c) < \epsilon / 2\). Then, as \((K_1 \times K_2)^c \subseteq 
+  K_1^c \times \mathcal{X} \cup \mathcal{X} \times K_2^c\), we have 
+  \[\mu_i((K_1 \times K_2)^c) \le \mu(K_1^c \times \mathcal{X}) + \mu(\mathcal{X} \times K_2^c)
+    = \pi_1(K_1^c) + \pi_2(K_2^c) < \epsilon.\]
+  Hence, as \(K_1 \times K_2\) is compact, we have \(\{\mu_n\}\) is tight as required.
+\end{proof}
+
+\begin{lemma}
+  If \(\{\mu_n\}\) are couplings of \(\pi_1\) and \(\pi_2\), then so is any of 
+  its accumulation points (also known as limit/cluster points).
+\end{lemma}
+\begin{proof}
+  Suppose \(\mu_{n_k} \to \mu\) weakly. Then, as the projection map is continuous, 
+  \[\int f \dd \pi_i = \lim_{n \to \infty} \int f \circ \text{pr}_i \dd \mu_n
+    = \int f \circ \text{pr}_i \dd \mu,\]
+  for all bounded continuous \(f\). Thus, \(\int f \dd \pi_i = \int f \dd (\text{pr}_i)_* \mu\)
+  implying \(\pi_i = (\text{pr}_i)_* \mu\) as required.
+\end{proof}
+
+\begin{lemma}
+  Let \(x_{n + 1} = F(x_n, \xi_{n + 1}), y_{n + 1} = F(y_n, \xi_{n + 1})\) be 
+  Markov chains where \(\xi_i\) are i.i.d.
+  where \(x_0, y_0\) are independent and independent from \(\xi_i\) and let 
+  \(\mu_n = \mathcal{L}((x_n, y_n))\). Then, if there exists some constant \(\gamma \in (0, 1)\) such that 
+  \[\mathbb{E} d(F(x, \xi_1), (y, \xi_1)) \le \gamma d(x, y),\] 
+  we have
+  \[\lim_{n \to \infty} \mathbb{E}(1 \wedge d(x_n, y_n)) = 
+    \lim_{n \to \infty} \int_{\mathcal{X}} 1 \wedge d \dd \mu_n = 0\]
+\end{lemma}
+\begin{proof}
+  Define \(\phi(t) = 1 \wedge t\). By noting that \(\phi\) is convex, we may apply the 
+  conditional Jensen's inequality, namely
+  \[\begin{split}
+    \mathbb{E}(1 \wedge d(x_n, y_n)) & = \mathbb{E} (\mathbb{E} \phi(d(x_n, y_n)) \mid x_{n - 1}, y_{n - 1})\\
+    & \le \mathbb{E} \phi(\mathbb{E}(d(x_n, y_n) \mid x_{n - 1}, y_{n - 1}))\\
+    & = \mathbb{E}\phi(\mathbb{E} d(F(x_{n - 1}, \xi_n), F(y_{n - 1}, \xi_n)))\\
+    & \le \mathbb{E}\phi(\gamma d(x_{n - 1}, y_{n - 1})) = \mathbb{E}(1 \wedge \gamma d(x_{n - 1}, y_{n - 1})).
+  \end{split}\]
+  By iterating this inequality, we obtain \(\mathbb{E}(1 \wedge d(x_n, y_n)) \le 
+  \mathbb{E}(1 \wedge \gamma^n d(x_0, y_0))\). Thus, as \(1 \wedge \gamma^n d(x_0, y_0) \to 0\) 
+  as \(n\ to \infty\) almost everywhere, by dominated convergence 
+  \[\lim_{n \to \infty}\mathbb{E}(1 \wedge d(x_n, y_n)) = 0\]
+  as required.
+\end{proof}
+
+\begin{theorem}[Deterministic Contraction]
+  Let \(x_{n + 1} = F(x_n, \xi_{n + 1})\) be a Markov chain where \(\xi_i\) are i.i.d.
+  Then, if there exists some constant \(\gamma \in (0, 1)\) such that 
+  \[\mathbb{E} d(F(x, \xi_1), (y, \xi_1)) \le \gamma d(x, y)\]
+  for all \(x, y \in \mathcal{X}\), \((x_n)\) has at most one invariant probability 
+  measure.  
+\end{theorem}
+\begin{proof}
+  Let \(\pi_1, \pi_2\) be invariant probability measures and let \(x_0, y_0\) 
+  be independent random variables both independent from \(\xi_i\) such that 
+  \(\mathcal{L}(x_0) = \pi_1\) and \(\mathcal{L}(y_0) = \pi_2\). Then, as \(\pi_i\) 
+  are invariant, \(x_n, y_n\) has distribution \(\pi_1, \pi_2\) respectively
+  for all \(n\). 
+  
+  Now, defining \(\mu_i = \mathcal{L}((x_n, y_n))\), \(\{\mu_n\}\) is a 
+  coupling of \(\pi_1\) and \(\pi_2\). By the above lemma, \(\{\mu_n\}\) is tight 
+  and so, by Prokhorov's theorem, there exists a weakly convergent subsequence 
+  \(\mu_{n_k}\) with limit \(\mu\) which is also a coupling of \(\pi_1\) and \(\pi_2\).
+  Thus, as by the above lemma,
+  \[\int 1 \wedge d \dd \mu = \lim_{k \to \infty} \int 1 \wedge d \dd \mu_{n_k} = 0,\]
+  we have \(\pi_1 = \pi_2\) as required.
+\end{proof}
+
+\begin{definition}[Minorisation]
+  Let \(\eta \in P(\mathcal{X})\). We say a family of transition probabilities 
+  \(P = (P(x, \cdot))\) is minorised by \(\eta\) if there exists some \(a > 0\) 
+  such that for all \(x \in \mathcal{X}\),
+  \[P(x, \cdot) \ge a \eta.\]
+\end{definition}
+
+In the finite state case, minorisation is saying that \(P(i, j) \ge a \eta(j)\) 
+for all \(i, j \in \mathcal{X}\). Thus, if we take \(\eta\) to be the vector 
+with 1 in the \(j_0\)-th position and 0 everywhere else, \(P\) is minorised by 
+\(\eta\) if and only if \(P(i, j_0) \ge a\) for all \(i\).
+
+Before moving on, let us introduce another alternative definition for the total 
+variation of measures which will be helpful.
+
+\begin{proposition}
+  Let \(\mu, \nu\) be positive measures on \(\Omega\). Let \(\eta\) be 
+  a positive measure such that \(\mu \ll \eta\) and \(\nu \ll \eta\). Then, 
+  \[\|\mu - \nu\|_{TV} = \int \left|\dv{\mu}{\eta} - \dv{\nu}{\eta}\right| \dd \eta.\]
+  We note that such an \(\eta\) always exists by simply taking \(\eta = \mu + \nu\).
+\end{proposition}
+
+We note that this formulation is independent of the choice of \(\eta\). 
+Indeed,
+\[\begin{split}
+  \int \left|\dv{\mu}{\eta} - \dv{\nu}{\eta}\right| \dd \eta & = 
+  \int \dv{(\mu + \nu)}{\eta} \left|\dv{\mu}{(\mu + \nu)} - \dv{\nu}{(\mu + \nu)}\right| \dd \eta\\
+  & = \int \left|\dv{\mu}{(\mu + \nu)} - \dv{\nu}{(\mu + \nu)}\right| \dd (\mu + \nu).
+\end{split}\]
+
+\begin{definition}
+  Given measures \(\mu, \nu\), we define 
+  \[\mu \wedge \nu := \left(\dv{\mu}{\eta} \wedge \dv{\nu}{\eta}\right)\eta\]
+  where \(\mu, \nu \ll \eta\). This definition is independent of the choice of \(\eta\).
+\end{definition}
+
+\begin{lemma}
+  Given measures \(\mu, \nu\), 
+  \[\|\mu - \nu\|_{TV} = \mu(\Omega) + \nu(\Omega) - 2 \mu \wedge \nu(\Omega)\]
+  which equals \(2(1 - \mu \wedge \nu(\Omega))\) if \(\mu, \nu \in P(\Omega)\).
+\end{lemma}
+
+\begin{lemma}
+  The space \(P(\mathcal{X})\) is complete under \(\|\cdot\|_{TV}\).
+\end{lemma}
+\begin{proof}
+  Let \((\mu_n)\) be a Cauchy sequence of probability measures and let 
+  \[\eta := \sum_{n = 1}^\infty \frac{1}{2^n} \mu_n,\]
+  so that \(\mu_n \ll \eta\) for all \(n\).Thus, 
+  \[\|\mu_n - \mu_m\|_{TV} = \int \left|\dv{\mu_n}{\eta} - \dv{\mu_m}{\eta}\right| \dd\eta.\]
+  So, \((\mu_n)\) is Cauchy if and only if \((\dd \mu_n / \dd \eta)\) is Cauchy 
+  in \(L^1\). As \(L^1\) is complete, there exists some \(f \in L^1\) such that 
+  \(\dd \mu_n / \dd \eta \to f\) in \(L^1\). So, \(\mu_n \to \mu\) in total variation 
+  where \(\mu = f \eta \in P(\mathcal{X})\).
+\end{proof}
+
+\begin{lemma}
+  Let \(\mu, \nu\) be probability measures on \(\mathcal{X}\). Then, denoting 
+  \[\bar \mu := \frac{\mu - \mu \wedge \nu}{\frac{1}{2}\|\mu - \nu\|_{TV}},\]
+  and 
+  \[\bar \nu := \frac{\nu - \mu \wedge \nu}{\frac{1}{2}\|\mu - \nu\|_{TV}},\]
+  \(\bar \mu, \bar \nu\) are probability measures and 
+  \[\mu - \nu = \frac{1}{2}\|\mu - \nu\|_{TV} (\bar \mu - \bar \nu).\]
+\end{lemma}
+\begin{proof}
+  Clear.
+\end{proof}
+
+\begin{corollary}
+  Let \(\mu, \nu\) be probability measures on \(\mathcal{X}\) and \(T\) a transition 
+  operator. Then 
+  \[\|T\mu - T\nu\|_{TV} = \frac{1}{2}\|\mu - \nu\|_{TV} \|T\bar \mu - T \bar \nu\| 
+    \le \|\mu - \nu\|_{TV}.\]
+\end{corollary}
+
+\begin{theorem}[Geometric Convergence Theorem]
+  Suppose \(P\) is a transition probability on \(\mathcal{X}\) minorised by a 
+  probability measure \(\eta\) (i.e. \(P(x, \cdot) \ge a\eta\) for some \(a \in (0, 1)\)).
+  Then, \(P\) has a unique invariant probability measure \(\pi\).  
+
+  Furthermore, if \(\mu, \nu \in P(\mathcal{X})\), we have 
+  \[\|T^{n + 1}\mu - T^{n + 1}\nu\|_{TV} \le (1 - a)^{n + 1} \|\mu - \nu\|_{TV}.\]
+\end{theorem}
+\begin{proof}
+  If \(m\) is a probability measure on \(\mathcal{X}\), then 
+  \[Tm = \int_{\mathcal{X}} P(x, \cdot) m(\dd x) \ge a \eta.\]
+  Furthermore, \((Tm - a \eta)(\mathcal{X}) = 1 - a\). So, 
+  \[\begin{split}
+    \|Tm - T\tilde m\|_{TV} & = \|(Tm - a \eta) - (T\tilde m - a \eta)\|_{TV}\\
+    & \le (1 - a) \left\|\frac{Tm - a \eta}{1 - a} - \frac{T\tilde m - a \eta}{1 - a}\right\|_{TV} 
+      \le 2(1 - a).
+  \end{split}\]
+  Hence, for \(\mu, \nu \in P(\mathcal{X})\), using the above lemma
+  \[\begin{split}
+    \|T\mu - T\nu\|_{TV} = \frac{1}{2}\|\mu - \nu\|_{TV} \|T\bar \mu - T \bar \nu\| 
+    \le \frac{1}{2}\|\mu - \nu\|_{TV} 2 (1 - a) = (1 - a)\|\mu - \nu\|_{TV}.
+  \end{split}\]
+  Thus, by the Banach fixed point theorem, \(T\) has a unique fixed point, 
+  namely \(P\) has a unique invariant probability measure.
+\end{proof}
+
+\begin{corollary}
+  If \(\pi\) is the invariant probability measure for \(T\), 
+  \[\|T^n \mu - \pi\|_{TV} \le (1 - a)^n\|\mu - \pi\|_{TV}.\]
+\end{corollary}
+
+We note that we may generalise the convergence theorem such that \(P\) has 
+a unique invariant probability measure if there exists some \(n_0\), \(a \in (0, 1)\) 
+\(\eta \in P(\mathcal{X})\) such that \(P^{n_0}(x, \cdot) \ge a \eta\) by considering 
+the the more general Banach fixed point theorem which only require \(T^n\) to be 
+a strict contraction for some \(n\).
+
+\subsection{Strong Feller Property}
+
+\begin{definition}[Support]
+  Let \(\mu\) be a measure on the separable metric space \(\mathcal{X}\). Then, 
+  the support of \(\mu\) is the closed set \(A\) such that \(A\) is the smallest  
+  closed set of full-measure, i.e. 
+  \[\text{supp}(\mu) := \bigcap_{\substack{\mu(A^c) = 0\\A \text{ closed}}}A.\]
+  Alternatively, the support is the set \(A\) such that any open set containing 
+  it has positive measure. 
+\end{definition}
+
+\begin{theorem}
+  If \(\mu, \nu\) are mutually singular probability measures, and is 
+  invariant for a transition operator \(T\). Then, if \(T\) has the strong 
+  Feller property, 
+  \[\text{supp}(\mu) \cap \text{supp}(\nu) = \varnothing.\]
+\end{theorem}
+\begin{proof}
+  As \(\mu \perp \nu\), there exists some measurable \(F \subseteq \mathcal{X}\) 
+  such that \(\mu(F) = 1\) and \(\nu(F) = 0\). Then, as \(T\) is strong Feller, 
+  \(T\mathbf{1}_{F}(x) = P(x, F) \in [0, 1]\) is continuous. Now, as \(\nu\) 
+  is invariant, 
+  \[0 = \nu(F) = \int \mathbf{1}_F \dd \nu = \int \mathbf{1}_F \dd T\nu = 
+  \int T\mathbf{1}_F \dd \nu.\]
+  Since, \(T\mathbf{1}_{F}(x) = P(x, F) \ge 0\), 
+  \(\nu(T\mathbf{1}_F^{-1}(\{0\})) = \nu(\{T\mathbf{1}_F = 0\}) = 1\). Similarly, 
+  we have \(\mu(T\mathbf{1}_F^{-1}(\{1\})) = 1\). Thus, as 
+  \(T\mathbf{1}_F^{-1}(\{0\}), T\mathbf{1}_F^{-1}(\{1\})\) are closed as 
+  \(T\mathbf{1}_F\) is continuous, we have 
+  \[\text{supp}(\mu) \cap \text{supp}(\nu) \subseteq 
+    T\mathbf{1}_F^{-1}(\{1\}) \cap T\mathbf{1}_F^{-1}(\{0\}) = \varnothing.\]
+\end{proof}
+
+\begin{proposition}
+  Let \(g : \mathbb{R}^n \to \mathbb{R}_+\) be measurable such that 
+  \(\int g \dd \lambda = 1\). If \(Tf(x) = \int f(y)g(x - y) \lambda(\dd y) = f * g(x)\),
+  then \(T\) has strong Feller property.
+\end{proposition}
+\begin{proof}
+  This follows from the fact \(f : \mathbb{R}^n \to \mathbb{R}\) is bounded measurable 
+  and \(g : \mathbb{R}^n \to \mathbb{R}\) is in \(L^1\), then \(f * g\) is a bounded 
+  continuous function. 
+\end{proof}
+
+\begin{proposition}
+  Let \(P : \mathcal{X}^2 \to \mathbb{R}\) be measurable such that 
+  \(P(x, \dd y) = P(x, y)\mu\) for some measure \(\mu\) on \(\mathcal{X}\). 
+  Then, if either (1) and (2) or (1) and (3) holds, \(P\) has the strong 
+  Feller property, where 
+  \begin{enumerate}
+    \item \(P(\cdot, y)\) is continuous for all \(y\).
+    \item for all \(x\), there exists some \(a > 0\) such that 
+      \[\sup_{z \in B_a(x)} P(z, \cdot) \in L^1(\mu).\]
+    \item for all \(x\), there exists some \(a > 0\) such that 
+      \(\{P(z, y) \mid z \in B_a(x)\}\) is uniformly integrable.
+  \end{enumerate}
+  We note that (2) implies (3).
+\end{proposition}
+
 \end{document}
