@@ -1645,4 +1645,117 @@ One may show this is a topological vector space.
 It is an easy exercise to show that this definition agrees with the notion 
 of boundedness in normed spaces.
 
+Most notions regarding linear functional remain to hold for linear functionals
+from a topological vector space. 
+
+\begin{proposition}
+  A linear functional from a TVS is continuous if and only if it is bounded 
+  on a neighbourhood of 0.
+\end{proposition}
+
+Similarly, we call the space of linear functionals as the dual. However, we 
+do not have a norm on the dual and thus, the properties discussed previously 
+no longer holds. Let us now construct a topology on the dual which is compatible 
+with the induced topology in the normed case.
+
+Recall that a system \(B\) of open neighbourhoods of 0 is \textit{defining} 
+(or a local base) is any open set around 0 contains a element of \(B\). 
+If a system \(B\) is defining, then any open set in the induced topology 
+\(\tau\) is a union of translations of elements of \(B\), i.e. 
+\[\{A + x \mid A \in B, x \in E\}\]
+form a basis of \(\tau\).
+
+In the normed case a defining system is \(\{U_\epsilon \mid \epsilon > 0\}\) where 
+\[U_\epsilon := \{f \in E^* \mid \|f\| < \epsilon\}
+   = \{f \in E^* \mid |f(x)| < \epsilon, \|x\| \le 1\}.\]
+Thus, considering this system on arbitrary TVS, 
+\(\{U_{\epsilon, A} \mid \epsilon > 0, A \text{ bounded}\}\) where
+\[U_{\epsilon, A} := \{f \in E^* \mid |f(x)| < \epsilon, x \in A\}\]
+we obtain a topology on \(E^*\) and this is known as the strong topology on 
+\(E^*\).
+
+Similar to before, considering the double dual \((E^*)^*\), we again can define 
+the natural map \(\pi : E \to (E^*)^* : x \mapsto (f \mapsto f(x))\). 
+
+\begin{definition}[Reflexive]
+  A topological vector space \(E\) is reflexive if \(\pi(E) = (E^*)^*\) 
+  and \(\pi\) is continuous.
+\end{definition}
+
+We note that we require continuity as we can no longer conclude that \(\pi\) 
+is an isometry.
+
+\subsection{Weak Topology and Weak Convergence}
+
+We will now introduce another topology on \(E\). 
+
+Let \(\epsilon > 0\), \(f_1, \cdots, f_n \in E^*\), then the set 
+\[U := \{x \in E \mid |f_j(x)| < \epsilon, j = 1, \cdots, n\}\]
+is open (since \(U = \bigcap_{j = 1}^n f_j^{-1}(B_\epsilon(0))\)) and 
+contains 0. Furthermore, as such sets are closed under intersection, 
+this system is defining and so, generates a topology on \(E\). Under 
+this new topology, each open set is open with respect to the original topology 
+and so, is called the weak topology on \(E\). 
+
+One may show that this is the weakest topology on \(E\) such that the elements of 
+\(E^*\) remain to be continuous.
+
+\begin{definition}[Weak Convergence]
+  Convergence within the weak topology is called weak convergence while 
+  convergence within the original topology is known as strong convergence.
+\end{definition}
+
+\begin{proposition}
+  Clearly, as all open sets of the weak topology on \(E\) are open with respect 
+  to the original topology, strong convergence implies weak convergence. 
+\end{proposition}
+
+A useful characterisation of weak convergence is the following.
+
+\begin{proposition}
+  A sequence \((x_n)\) in \(E\) converges weakly to \(x_0 \in E\) if for all 
+  \(f \in E^*\), \(f(x_n) \to f(x_0)\) as \(n \to \infty\).
+\end{proposition}
+\begin{proof}
+  By shifting, we may assume \(x_0 = 0\) and suppose \(f(x_n) \to f(x_0) = 0\) 
+  for all \(f \in E^*\). Then, for any weak neighbourhood of 0
+  \[U = \{x \mid |f_j(x)| < \epsilon, j = 1, \cdots, k\}\]
+  there exists some \(N\) such that \(x_n \in U\) for all \(n \ge N\) 
+  by the continuity of \(f\) as \(k\) is finite.
+
+  Conversely, if \(x_n \to 0\) in the weak topology, for any \(U\), there exists 
+  some \(N\) such that \(x_n \in U\) for all \(n \ge N\). Then, for 
+  all \(f \in E^*\), \(f(x_n) \to 0\) as required.
+\end{proof}
+
+\begin{theorem}
+  If \((x_n)\) weakly converges to \(x_0\) in the normed linear space \(E\), 
+  then, there exists some \(C > 0\) such that \(\|x_n\| \le C\) for all \(n\). 
+  Namely, a weakly convergent sequence is bounded.
+\end{theorem}
+\begin{proof}
+  Defining 
+  \[A_{k,n} = \{f \in E^* \mid |(f, x_n)| \le K\}\]
+  for all \(k, n = 1, 2, \cdots\). Now, since \((\cdot, x_n) \in (E^*)^*\) 
+  is continuous, \(A_{k, n} = (\cdot, x_n)^{-1}[-K, K]\) is closed. 
+  Thus, the intersection 
+  \[A_k := \bigcap_{n = 1}^\infty A_{k, n}\]
+  is also closed. Now, since \((x_n)\) is weakly convergent, 
+  \((f, x_n) = f(x_n)\) is bounded for all \(f \in E^*\) and so,
+  \(E^* = \bigcup_{k = 1}^\infty A_k\). Now, since \(E^*\) is complete, 
+  by the Baire category theorem it cannot be a countable union of nowhere 
+  dense sets. Thus, for some \(k_0\), \(A_{k_0}\) is dense in some ball 
+  \(B_{\epsilon}(f_0)\) and since, \(A_{k_0}\) is closed, 
+  \(B_{\epsilon}(f_0) \subseteq A_{k_0}\). Thus, \(f(x_n)\) is bounded 
+  for all \(f \in B_{\epsilon}(f_0)\) and hence, \(f(x_n)\) is bounded on 
+  the unit ball. By noting that this is equivalent to 
+  \((\cdot, x_n)\) being bounded on the unit ball, and \(\pi : E \to (E^*)^*\) 
+  preserves norm and hits \((\cdot, x_n)\), we have \((x_n)\) is bounded 
+  as required.
+\end{proof}
+
+We remark that we didn't really use the fact that \((x_n)\) is weakly convergent. 
+In particular, the proof remains to work that \((f, x_n)\) is bounded for all 
+\(f \in E^*\).
+
 \end{document}
