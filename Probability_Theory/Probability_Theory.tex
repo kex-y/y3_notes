@@ -1324,4 +1324,329 @@ properties of the characteristic function.
   as required.
 \end{proof}
 
+\subsection{Moments and Inversion}
+
+\begin{theorem}
+  Let \(\xi\) be a random variable with characteristic function \(\phi_\xi\) 
+  and distribution \(F_\xi\). Then, if 
+  \begin{itemize}
+    \item \(\mathbb{E}|\xi|^n < \infty\) for some \(n \ge 1\), then 
+      \(\phi_\xi^{(r)}\) exists for any \(0 \le r \le n\) and is given by
+    \[\phi_\xi^{(r)}(t) = \int_{\mathbb{R}} (ix)^r e^{ixt} \dd F_\xi(x).\]
+      Furthermore, \(\mathbb{E}\xi^r = i^{-r} \phi^{(r)}(0)\). By Taylor's theorem, 
+    \[\phi(t) = \sum_{r = 0}^{n - 1} \frac{(it)^r}{r!} \mathbb{E}\xi^r + 
+      \frac{it^n}{n!}\epsilon_n(t)\]
+      where \(|\epsilon_n(t)| \le 3 \mathbb{E}|\xi|^n\) and \(\epsilon_n(t) \to 0\) 
+      as \(t \to 0\).
+    \item \(\mathbb{E}|\xi|^n < \infty\) for all \(n \ge 1\) and 
+  \[\limsup_{n \to \infty} \frac{(\mathbb{E}|\xi|^n)^{1 / n}}{n} = \frac{1}{eT} < \infty\]
+    for some \(T\) (note that \((\mathbb{E}|\xi|^n)^{1 / n} = \|\xi\|_n\)), then 
+  \[\phi(t) = \sum_{n = 0}^\infty \frac{(it)^n}{n!}\mathbb{E}\xi^n\]
+    for all \(|t| < T\). 
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  By noting that \(\mathbb{E}|\xi|^n = \|\xi\|_n^n\), and 
+  \(L_p(\Omega) \subseteq L_q(\Omega)\) for \(q \le p\) and \(\Omega\) a finite 
+  measure space, \(\mathbb{E}|\xi|^n < \infty\) implies \(\xi \in L_p\) for all 
+  \(p \le n\) and thus, \(\mathbb{E}|\xi|^p < \infty\) for all \(p \le n\). 
+  By noting that 
+  \[\left|\frac{e^{ihx} - 1}{h}\right| \le x\]
+  by dominated convergence and l'Hopital's rule,
+  \[\begin{split}
+    \phi_\xi'(t) &= \lim_{h \to 0} \frac{\phi(t + h) - \phi(t)}{h} 
+      = \lim_{h \to 0}\mathbb{E}\left(e^{it\xi} \frac{e^{ih\xi} - 1}{h}\right)
+      = i\mathbb{E}\xi e^{it\xi}\\
+    & = i\int_{\mathbb{R}} x e^{itx} \dd F_\xi(x).
+  \end{split}\]
+  With this, we obtain the \(r\)-th derivative by induction.
+
+  By Taylor's theorem, \(e^{it\xi} = \sum_{k = 0}^{n - 1}\frac{(it\xi)^k}{k!} + 
+  \frac{(it\xi)^n}{n!}(\cos t \xi \theta_1(\omega) + i\sin t \xi \theta_2(\omega))\).
+  Thus, as the sum is finite, by the linearity of expectation,
+  \[\mathbb{E}e^{it\xi} = \sum_{k = 0}^{n - 1}\frac{(it)^k}{k!}\mathbb{E}\xi^k + 
+  \frac{(it\xi)^n}{n!}(\mathbb{E}\xi^n + \epsilon_n(t))\]
+  where \(\epsilon_n(t) = \mathbb{E}(\xi^n (\cos t \xi \theta_1 + i\sin t\xi \theta_2 - 1))\).
+  Thus, \(|\epsilon_n(t)| \le \mathbb{E}|3\xi^n| = 3\mathbb{E}|\xi|^n\) 
+  and \(\epsilon_n(t) \to 0\) as \(t \to 0\) by dominate convergence.
+
+  Let \(0 < t_0 < T\). Then, 
+  \[\limsup_{n \to \infty} \frac{(\mathbb{E}|\xi|^n)^{1 / n}}{n} < \frac{1}{et_0}\]
+  implying 
+  \[\limsup_{n \to \infty}\left(\frac{\mathbb{E}|\xi|^n}{n^n} t_0^n e^n\right)^{1 / n} < 1.\]
+  We note that this formula is very similar to Stirling's formula and 
+  \[\limsup_{n \to \infty}\left(\frac{\mathbb{E}|\xi|^n t_0^n}{n!}\right)^{1 / n} < L < 1\]
+  and so \(\sum_{n = 0}^\infty \frac{\mathbb{E}|\xi|^n}{n!} t_0^n\) converges 
+  by the root test.
+\end{proof}
+
+With this theorem in mind, we see that if \(\mathbb{E}|\xi|^n < \infty\) 
+exists for all \(n \ge 1\), the characteristic function \(\phi_\xi\) is 
+uniquely determined on \([-T, T]\) by the moments of \(\xi\). Furthermore, 
+taking \(s = T / 2\), by the same proof, we obtain 
+\[\phi_\xi(t) = \sum_{k = 0}^\infty i^k \frac{(t - s)^k}{k!}\phi_\xi^{(k)}(s)\]
+where \(\phi_\xi^{(k)}(s) = \mathbb{E}\xi^k e^{is\xi}\) for \(- T/2 < s < T/2\). 
+Thus, \(\phi_\xi\) is uniquely determined by moments on \(3 / 2 T\). Continuing 
+this process, we find \(\phi_\xi(t)\) is uniquely determined by moments for all 
+\(t\). 
+
+A stronger sufficient condition for the unique determination of \(\phi_\xi\) is 
+that 
+\[\sum_{n = 0}^\infty \frac{1}{(\mathbb{E} \xi^{2n})^{1 / 2n}} = \infty.\]
+This is called Carleman's test. We will omit the proof. In some sense, 
+if \(\mathbb{E}\xi^n\) grows too fast, there may be multiple \(\phi(t)\) with 
+these moments. 
+
+\begin{theorem}[Inversion]
+  Let \(\xi\) be a random variable with characteristic function \(\phi_\xi\) and 
+  distribution \(F_\xi\). Then, if \(a < b\) are points of continuity of \(F_\xi\), 
+  \[F_\xi(b) - F_\xi(a) = \lim_{T \to \infty}\frac{1}{2\pi} 
+  \int_{[-T, T]} \frac{e^{-ita} - e^{-itb}}{it} \phi_\xi(t) \lambda(\dd t).\]
+  Furthermore, if \(\int |\phi| \dd \lambda < \infty\), then \(F_\xi\) is absolutely 
+  continuous with density \(f_\xi\) such that 
+  \[f_\xi(x) = \frac{1}{2\pi} \int_{\mathbb{R}} e^{-itx} \phi_\xi(t) \lambda(\dd t).\]
+\end{theorem}
+
+By recalling that the characteristic function is the Fourier-Stieltjes transform 
+of \(F_\xi\), this is simply the Fourier-Stieltjes inverse formula.
+
+\begin{proof}
+  If \(F_\xi\) is absolutely continuous, the Lebesgue-Stieltjes measure 
+  \(\lambda_{F_\xi}\) is absolutely continuous with respect to the Lebesgue measure 
+  \(\lambda\). Thus, by Radon-Nikodym, there exists some \(f\) such that 
+  \(\lambda_{F_\xi} = f\lambda\). Thus, 
+  \[\phi_\xi(t) = \int_{\mathbb{R}}e^{itx} f(x)\lambda(\dd x)\]
+  implying \(\int|\phi_\xi| \dd \lambda = \int |f| \dd \lambda = 1 < \infty\) and 
+  so \(\phi_\xi\) is integrable. Then, by the inverse Fourier transform, 
+  provided \(f\) satisfy some regularity conditions (Dini's condition, c.f. 
+  Fourier analysis course notes)
+  \[f(x) = \frac{1}{2\pi} \int_{\mathbb{R}} e^{-itx}\phi_\xi(t) \lambda(\dd t).\]
+  Hence, integrating this and applying Fubini's theorem, 
+  \[F(b) - F(a) = \int_{(a, b]} f \dd \lambda = 
+    \frac{1}{2\pi}\int_{(a, b] \times \mathbb{R}} 
+      e^{-itx}\phi_\xi(t) \lambda(\dd t) \lambda(\dd x)
+    = \frac{1}{2\pi}\int_{\mathbb{R}} \frac{e^{-ita} - e^{-itb}}{it} \phi_\xi(t) \lambda(\dd t).\]
+  It remains to show that \(f\) satisfy Dini's condition which we shall omit.
+
+  Now, let us consider the general case. Define 
+  \[\phi_T := \frac{1}{2\pi} \int_{[-T, T]} \frac{e^{-ita} - e^{-itb}}{it}\phi(t)\lambda(\dd t)
+    = \int \psi_T(x) \dd F_\xi(\dd x)\]
+  where \(\psi_T)x := \frac{1}{2\pi} \int_{[-T, T]} \frac{e^{-ita} - e^{-itb}}{it} e^{itx} \lambda(\dd t)\), 
+  where the last equality follows by Fubini's theorem. Now, by noting 
+  \[\begin{split}
+    \psi_T(x) & = \frac{1}{2\pi} \int_{[-T, T]} \frac{\sin(t(x - a)) - \sin(t(x - b))}{t} \lambda(\dd t)\\
+    & = \frac{1}{2\pi}\left(\int_{-T(x - a)}^{T(x - a)} - \int_{-T(x - b)}^{T(x - b)}\right) \frac{\sin u}{u} \lambda(\dd u),
+  \end{split}\]
+  and \(\int_{[-R, R]} \frac{\sin u}{u} \lambda(\dd u) \to \pi\) as \(R \to \infty\), 
+  there exists some \(c > 0\), such that \(|\psi_T(x)| < c\) for all \(x\). Furthermore, 
+  by observing that 
+  \[\psi_T(x) \to \psi(x) = 
+    \begin{cases}
+      0, \ & x \not\in [a, b],\\
+      1 / 2, \ & x \in \{a, b\},\\
+      1, \ & x \in (a, b),
+    \end{cases}\]
+  by dominated convergence, as \(T \to \infty\),
+  \[\phi_T = \int \psi_T \dd F \to \int \psi \dd F = 
+    F(b-) - F(a) + \frac{1}{2}(F(a) - F(a-) + F(b) - F(b-)).\]
+  Finally, as \(a, b\) are points of continuity, \(\phi_T \to F(b) - F(a)\) as 
+  claimed.
+
+  Now, if \(\int |\phi| \dd \lambda < \infty\), the function  
+  \[f(x) := \frac{1}{2\pi} \int e^{-itx}\phi(t) \lambda(\dd t).\]
+  exists and by dominated convergence, is continuous, differentiable 
+  (and is integrable on \([a, b]\)). Then, by Fubini's theorem, 
+  \[\begin{split}
+    \int_{[a, b]} f \dd \lambda & = 
+    \int \frac{1}{2\pi} \phi(t) \frac{e^{-ita} - e^{-itb}}{it} \lambda(\dd t)  
+    = F(b) - F(a),
+  \end{split}\]
+  where \(F(x) = \int_{(-\infty, x]} f \dd \lambda\). Thus, \(F\) is absolutely 
+  continuous and by the arguments above, we conclude the proof.
+\end{proof}
+
+\begin{corollary}
+  Probability distributions on \((\mathbb{R}, \mathcal{B}(\mathbb{R}))\) 
+  and characteristic functions are in 1-to-1 correspondence.
+\end{corollary}
+\begin{proof}
+  Since points of continuity of a distribution function is dense, by the 
+  continuity of measure to define \(F(b) - F(a)\) uniquely for any \(a, b\) 
+  from any characteristic functions.
+\end{proof}
+
+We will now provide some useful theorems without proof.
+
+\begin{theorem}[Bochner]
+  Let \(\phi\) be continuous on \(\mathbb{R}\) such that \(\phi(0) = 1\). Then, 
+  \(\phi\) is a characteristic function if and only if \(\phi\) is positive 
+  semi-definite, i.e. 
+  \[\sum_{k, j = 1}^n \phi(t_j - t_k) \alpha_j \overline{\alpha}_k\]
+  for all \(t_1, \cdots, t_n \in \mathbb{R}\) and 
+  \(\alpha_1, \cdots, \alpha_n \in \mathbb{C}\).  
+\end{theorem}
+
+\begin{theorem}[Polya]
+  Let \(\phi \ge 0\) be continuous, even, \(\phi(0) = 1, \lim_{x \to \infty}\phi(x) = 0\) 
+  and is convex on \(0 \le t < \infty\). Then \(\phi\) is a characteristic function.
+\end{theorem}
+
+An example of the above is \(e^{-|t|}\).
+
+\begin{theorem}[Marcinkievicz]
+  If a characteristic function is of the form \(e^{p(t)}\) where \(p(t)\) is a 
+  polynomial, then \(p\) has degree at most 2. 
+\end{theorem}
+
+\begin{definition}[Cumulant]
+  If there exists an expansion such that
+  \[\log \phi_\xi(t) = \sum_{k = 0}^n \frac{(it)^k}{k!}S_k + o_{t \to 0}(|t|^n),\]
+  then the coefficients \(S_k\) are called cumulants of \(\xi\).
+\end{definition}
+
+As an exercise, one can show \(\mathbb{E}\xi = S_1\) and \(V_\xi = S_2\).
+
+In general, by the Marcinkievicz theorem, if there \(\xi\) is a random variable 
+such that \(S_k = 0\) for all \(k \ge n\) for some \(n\), then, \(S_k = 0\) 
+for all \(k \ge 3\). One may show that if \(\xi\) is normal, then this condition 
+is satisfies and thus, as this determines the characteristic function which 
+in turn determines the distribution, if there exists some \(n\) such that 
+\(S_k = 0\) for all \(k \ge n\), then \(\xi \sim \mathcal{N}(S_1, S_2)\).
+
+\begin{theorem}
+  Let \(\phi\) be a characteristic function of \(\xi\) such that \(|\phi(t_0)| = 1\) 
+  for some \(t_0 \neq 0\). Then, \(\xi\) is a pure point random variable. 
+\end{theorem}
+\begin{proof}
+  As \(|\phi(t_0)| = 1\), there exists some \(a \in \mathbb{R}\) such that 
+  \(\phi(t_0) =  e^{iat_0}\). Then, by the definition of characteristic functions, 
+  \[\int e^{it_0x} \dd F_\xi(x) = e^{iat_0}.\]
+  Thus, by comparing the real parts, we obtain 
+  \[1 = \int \cos(t_0(x - a)) \dd F_\xi(x)\]
+  and so \(\int 1 - \cos(t_0(x - a)) \dd F_\xi(x) = 0\). But 
+  \(1 - \cos(t_0(x - a)) \ge 0\) implying \(\cos(t_0(x - a)) = 1\) almost everywhere 
+  with respect to \(\lambda_{F_\xi}\). Thus, \(\lambda_{F_\xi}\) is concentrated 
+  at points of the form \(a + \frac{2\pi}{t_0}n\) for \(n \in \mathbb{Z}\).
+\end{proof}
+
+\subsection{Central Limit Theorem}
+
+We had previously prove the central limit theorem for Bernoulli random variables. 
+However, as we know, the central limit theorem applies to a much wider class of 
+random variables. We shall in this section prove the general central limit theorem 
+using the characteristic functions.
+
+\begin{theorem}[Continuity]
+  Let \(\phi_n\) be a sequence of characteristic functions of distribution functions 
+  \(F_n\). Then, 
+  \begin{itemize}
+    \item if \(F_n \to F\) at all points of continuity (i.e. the corresponding 
+      random variables converges weakly) where \(F\) is a distribution function, 
+      then \(\phi_n \to \phi\) point-wise where \(\phi\) is the characteristic function 
+      of \(F\), i.e.
+      \[\phi(t) = \int e^{itx} \dd F(x).\]
+    \item if \(\lim_{n \to \infty} \phi_n(t) = \phi(t)\) exists and \(\phi\) 
+      is continuous at 0, then \(\phi\) is a characteristic function of some 
+      distribution \(F\) and \(F_n \to F\) at all points of continuity.
+    \item if \(\phi_n\) corresponds to \(F_n\) and \(\phi\) corresponds to 
+      \(F\), then \(\phi_n \to \phi\) point-wise if and only if 
+      \(F_n \to F\) as all points of continuity. 
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  The first statement is obvious by the very definition of weak convergence. 
+  While the third statement is implied by the first two. We omit the second. 
+\end{proof}
+
+\begin{theorem}[Central Limit Theorem for i.i.d. Random Variables]
+  Let \((\xi_n)\) be independent and identically distributed random variables 
+  such that \(\mathbb{E}\xi_1^2 < \infty\) and nondegenerate (i.e. \(V_{\xi} \neq 0\).
+  Then, defining \(S_n = \sum_{i = 1}^n \xi_n\), 
+  \[\mathbb{P}\left(\frac{S_n - \mathbb{E}S_n}{\sqrt{V_{S_n}}} \le x\right)
+    \to \frac{1}{\sqrt{2\pi}}\int_{(-\infty, x]}e^{-y^2 / 2} \lambda(\dd y)\]
+  as \(n \to \infty\) for all \(x \in \mathbb{R}\).
+
+  Namely, the central limit theorem states that \(\frac{S_n - \mathbb{E}S_n}{\sqrt{V_{S_n}}}\) 
+  converges in distribution to \(\mathcal{N}(0, 1)\).
+\end{theorem}
+\begin{proof}
+  Suppose \(m = \mathbb{E}\xi\) and \(\sigma^2 = V_{\xi}\). Then, setting 
+  \(\phi(t) = \mathbb{E}e^{it(\xi - m)}\) and 
+  \(\phi_n(t) = \mathbb{E} e^{it \frac{S_n - \mathbb{E}S_n}{\sqrt{V_{S_n}}}}\).
+  Then, by independence, 
+  \[\phi_n(t) = \left(\phi\left(\frac{t}{\sigma\sqrt{n}}\right)\right)^n.\]
+  As \(\mathbb{E}\xi^2 < \infty\), \(\phi(t) = 1 - \frac{\sigma^2 t^2}{2} + o(t^2)\).
+  So, \(\phi_n(t) = \left(1 - \frac{t^2}{2n} + o\left(\frac{1}{2n}\right)\right)^n\) 
+  which tendsto \(e^{-t^2 / 2}\) as \(n \to \infty\). Thus, as this is the 
+  characteristic function of the standard normal distribution, by the continuity 
+  theorem, we obtain the result.
+\end{proof}
+
+\begin{theorem}[Central Limit Theorem for Independent Random Variables]
+  Let \((\xi_n)\) be independent with \(\mathbb{E}\xi_i^2 < \infty\) and 
+  distribution function \(F_i\) for all \(i\). Then, denoting 
+  \(m_i = \mathbb{E}\xi_i\), \(\sigma_i^2 = V_{\xi_i}\), 
+  \(S_n = \sum_{i = 1}^n \xi_n\) and \(D_n^2 = \sum_{i = 1}^n \sigma_i^2\). 
+  Then, if the Lindenberg condition holds, namely for all \(\epsilon > 0\), 
+  \(\frac{1}{D_n^2} \sum_{k = 1}^n \int_{\{|x - m_k| \ge \epsilon D_n\}}
+  (x - m_k)^2 \dd F_k(x)\) which tendsto 0 as 
+  \(n \to \infty\). Then, 
+  \[\frac{S_n - \mathbb{E}S_n}{\sqrt{V_{S_n}}} \to \mathcal{N}(0, 1)\]
+  in distribution.
+\end{theorem}
+
+Let us note some conditions which implies the Lindenberg condition.
+\begin{itemize}
+  \item Lyapunov condition: there exists some \(\delta > 0\) such that 
+  \[\frac{1}{D_n^{2 + \delta}} \sum_{k = 1}^n(|\xi_k - m_k|^{2 + \delta})
+    \to 0\]
+  as \(n \to \infty\).
+  \begin{proof}
+    Indeed, for all \(\epsilon > 0\), 
+    \[\begin{split}
+      \mathbb{E}|\xi_k - m_k|^{2 + \delta} & = \int |x - m_k|^{2 + \delta} \dd F_k(x) \\
+      & \ge (\epsilon D_n)^\delta \int_{\{|x - m_k| \ge \epsilon D_n\}}
+        |x - m_k|^2 \dd F_k(x).
+    \end{split}\]
+    Thus, 
+    \[\frac{1}{D_n^2}\sum_{k = 1}^n \int_{\{|x - m_k| \ge \epsilon D_n\}}
+    (x - m_k)^2 \dd F_k(x) \le \frac{1}{\epsilon^\delta D^{2 + \delta}} 
+    \sum_{k = 1}^n \mathbb{E}|\xi_k - m_k|^{2 + \delta} \to 0\]
+    allowing us to conclude.
+  \end{proof}
+  \item There exists some \(K > 0\) such that \(|\xi_k| \le K\) for all \(k\) 
+    and \(D_n \to \infty\) as \(n \to \infty\).
+  \begin{proof}
+    Exercise.
+  \end{proof}
+\end{itemize}
+
+We will now consider the rate of convergence. 
+
+\begin{theorem}[Berry-Esseen Inequality]
+  Let \((\xi_k)\) be i.i.d. random variables with \(\mathbb{E}|\xi_1|^3 < \infty\). 
+  Then
+  \[\sup_{x} \left|\mathbb{P}\left(\frac{S_n - \mathbb{E}S_n}{\sqrt{V_{S_n}}} \le x\right) - \Phi(x)\right|
+  \le \frac{c \mathbb{E}|\xi_1 - \mathbb{E}\xi_1|^3}{\sigma^3 \sqrt{n}}\]
+  where \(\Phi\) is the distribution function of a standard normal distribution 
+  and \(c\) is a constant such that \(\frac{1}{\sqrt{2\pi}} \le c \le 1 / 2\).
+\end{theorem}
+\begin{proof}
+  Omitted.
+\end{proof}
+
+We remark that the decay \(o(1 / \sqrt{n})\) is the optimal rate of convergence
+by considering a sequence of Bernoulli random variables taking values in \(\pm 1\).
+
+We note that we required the random variables to have finite second moment 
+in the statement of CLT. This condition is necessary. Indeed, if 
+\((\xi_n)\) is a sequence of i.i.d. Cauchy random variables with density 
+\[f(x) = \frac{\theta}{\pi(x^2 + \theta^2)}, \theta > 0.\]
+It is easy to show that \(\mathbb{E}\xi^2 = \infty\) and 
+\[\phi_\xi(t) = \frac{\theta}{\pi} \int \frac{e^{itx}}{x^2 + \theta^2} \lambda(\dd x) 
+  = e^{- \theta|t|}.\]
+Thus, by independence, 
+\[\phi_{S_n / n}(t) = \left(e^{-\theta|t| / n}\right)^n = e^{-\theta|t|} = \phi_\xi(t).\]
+Hence, \(S_n / n\) also has the Cauchy distribution!
+
 \end{document}
