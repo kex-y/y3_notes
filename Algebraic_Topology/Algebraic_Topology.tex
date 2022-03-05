@@ -1237,4 +1237,38 @@ group homomorphism
   The other two equalities are straight forward checks also.
 \end{proof}
 
+\subsection{Baycentric Subdivision and Excision}
+
+This section and the next proves the following theorem. We leave the details 
+of the proof to official lecture notes.
+
+\begin{theorem}
+  For \(X\) a finite \(\Delta\)-complex, 
+  \[H_m^\Delta(X) \simeq H_m(X)\]
+  for all \(m\).
+\end{theorem}
+
+\subsection{Homotopy Invariance}
+
+Now, we extend out definition of homotopy for general functions instead of 
+just loops.
+
+\begin{definition}
+  Let \(f : X \to Y\), \(g : X \to Y\) be maps between topological spaces. 
+  Then, \(f\) and \(g\) are said to by homotopic if there exists a continuous 
+  map \(H : [0, 1] \times X \to Y\) such that \(f = H(0, \cdot)\) and 
+  \(g = H(1, \cdot)\).
+\end{definition}
+
+\begin{proposition}
+  If \(f, g : X \to Y\) are homotopic, then the induced maps 
+  \(f_*, g_* : H_n(X) \to H_n(Y)\) are equal. 
+\end{proposition}
+\begin{proof}
+  Let \(\phi \in C_n(X)\). Then, it follows by considering that there exists some 
+  \(\psi \in C_{n + 1}(X)\) which corresponds to \(\phi \times [0, 1]\). Then, 
+  \[\ker \partial \ni \partial H(\cdot, \psi) = f \circ \phi - g \circ \phi\]
+  implying \([f \circ \phi] = [g \circ \phi]\) as required.
+\end{proof}
+
 \end{document}
