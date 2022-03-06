@@ -1889,4 +1889,205 @@ in the weak-\(*\) topology. It is useful to contrast this fact by recalling that
 the closed ball of any infinite dimensional normed space is not compact 
 with respect to the strong topology.
 
+\subsection{Countably Normed Space}
+
+\begin{definition}[Compatible]
+  Two norms \(\|\cdot\|_1, \|\cdot\|_2\) on a linear space \(E\) are said to 
+  be compatible if for any sequence \((x_n) \subseteq E\) which is Cauchy 
+  in both norms and converges to some \(x\) in \(E\) with respect to \(\|\cdot\|_1\), 
+  then \(x_n \to x\) in \(\|\cdot\|_2\) as well.
+\end{definition}
+
+\begin{definition}[Countably Normed]
+  A linear space \(E\) is said to be countably normed if a countable system of 
+  pair-wise compatible norms \((\|\cdot\|_i)_{i = 0}^\infty\) is given on 
+  \(E\).
+
+  A countably normed space \(E\) induces a topology obtained by taking 
+  \[U_{r, \epsilon} := \{x \in E \mid \|x\|_0 < \epsilon, \cdots, \|x\|_r < \epsilon\}\]
+  as the system of neighbourhood of 0 where \(\epsilon > 0, r = 0, 1, \cdots\).
+\end{definition}
+
+It is easy to check that a countably normed space is a topological vector space. 
+Also, by the definition of these neighbourhoods, we see that a sequence \((x_n)\)
+converges in this topology to some \(x\) if and only if \(x_n \to x\) with respect 
+to all \(\|\cdot\|_n\).
+
+The countably normed space is itself not a normed space. However, it is 
+metrizable.
+
+\begin{lemma}
+  A countably normed space \(E\) is metrizable with the metric 
+  \[\rho(x, y) := \sum_{n = 0}^\infty \frac{1}{2^n} \frac{\|x - y\|_n}{1 + \|x + y\|_n}.\]
+\end{lemma}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+Some common examples of countably normed spaces comes to mind. 
+\begin{itemize}
+  \item The space \(C^\infty[a, b]\) of infinitely differentiable functions 
+    on \([a, b]\) is countably normed with the norms 
+    \[\|f\|_m := \sup_{0 \le k \le m; t} |f^{(k)}(t)|.\]
+  \item The space \(S_\infty\) of Schwartz functions is countably normed 
+    with the norms 
+    \[\|f\|_m := \sup_{\substack{0 \le k, q \le m\\ t < m}}|t^k f^{(q)}(t)|.\]
+\end{itemize}
+It is an exercise to check that the above are indeed compatible norms. 
+
+The norms on \(E\) can always be considered satisfying the relation 
+\(\|x\|_k \le \|x\|_e\) for all \(x \in E\), \(k < e\). Indeed, if otherwise, 
+we may define 
+\[\|x\|_k' := \sup\{\|x\|_0, \cdots, \|x\|_k\}\]
+which is a norm inducing the same topology. Hence, for this reason, we will 
+from this point forward, assume that the norms of a countably normed space are 
+monotone increasing.
+
+\begin{proposition}
+  A linear functional \(f\) on a countably normed space \(E\) is continuous if and only 
+  if there exists some \(k\) such that \(f\) is continuous with respect to 
+  \(\|\cdot\|_k\).
+\end{proposition}
+\begin{proof}
+  Let \(f\) be a continuous linear functional on a countably normed space \(E\) 
+  (so it is bounded on some neighbourhood \(U\) of 0). By the definition of the 
+  topology on \(E\), there is some \(\epsilon, k\) such that 
+  \[B_{k, \epsilon} = \{x \mid \|x\|_0 < \epsilon, \cdots, 
+    \|x\|_k < \epsilon\} = \{x \mid \|x\|_k < \epsilon\} \subseteq U.\]
+  Then, \(f\) is bounded on \(B_{k, \epsilon}\) and therefore, continuous with 
+  respect of \(\|\cdot\|_k\). 
+  
+  The converse is clear.
+\end{proof}
+
+\begin{corollary}
+  If \(E\) is a countably normed space, 
+  \[E^* = \bigcup_{n = 0}^\infty E_n^*\]
+  where \(E_n^*\) is the dual of \((E, \|\cdot\|_n)\). Moreover, the monotonicity 
+  of the norms implies \(E_n^* \subseteq E_m^*\) for all \(n \le m\). 
+  With this in mind, if \(f \in E^*\), there exists a smallest \(n\) such that 
+  \(f \in E_n^*\). We call this \(n\) the order of \(f\).
+\end{corollary}
+
+\newpage
+\section{Distributions}
+
+Finally, with the set up of the last section we can now discuss the theory of 
+distributions. However, before delving in, let us first provide some motivation.
+\begin{itemize}
+  \item Physics: often in physics, we need to describe a notion of infinitely 
+    dense at a certain point. This leads to the definition of the \(\delta\)-function.
+    This was used rigorously in physics as they simply considered it as a 
+    function with some special property however, this is to be made rigorous 
+    with the theory of distributions. 
+  \item Differential Equations: we would like to generalize the notion of derivative 
+    which applies to a larger class of functions (in particular, any integrable functions).
+    This is achieved with linear functionals. 
+\end{itemize}
+If \(f : \mathbb{R} \to \mathbb{R}\) is locally integrable (i.e. integrable 
+on any compact set), we define the linear functional
+\[T_f : C_c(\mathbb{R}) \to \mathbb{R} : \phi \mapsto 
+  \langle f, \phi\rangle = \int_{\mathbb{R}} f\phi \dd \lambda,\]
+which is well-defined as \(\phi\) has compact support. It is clear that 
+\(f \mapsto T_f\) is essentially injective 
+(as \(T_f - T_g = 0\) implies \(f - g = 0\) almost everywhere), and thus, 
+locally integrable functions are essentially embedded into the space of 
+linear functionals. 
+
+However, we note that this map is not surjective. 
+Indeed, the \(\delta\)-functional, \(\delta(\phi) = \phi(0)\) is not
+in the image of \(f \mapsto T_f\) and so, the space of linear functionals 
+is an effective extension of functions. This idea can be generalised resulting 
+in the theory of distributions.
+
+\subsection{Definitions}
+
+We introduce the notation \(C_c^\infty(A)\) as the space of infinitely 
+differentiable functions (i.e. smooth) on \(A \subseteq \mathbb{R}\) with 
+compact support.
+
+An important class of functions in \(C_c^\infty(\mathbb{R})\) are the bump 
+functions. 
+
+\begin{definition}[Bump Functions]
+  For all \(a < b\) we define the bump function 
+  \[\phi_{a, b}(x) := \begin{cases}
+    e^{-\frac{1}{(b - x)(x - a)}},\ & x \in (a, b),\\
+    0,\ & \text{otherwise}.
+  \end{cases}\]
+  It is easy to see that \(\phi_{a, b} \in C_c^\infty(\mathbb{R})\) with 
+  support \((a, b)\). 
+\end{definition}
+
+\begin{definition}[Test Functions]
+  The space of test functions on the set \(A \subseteq \mathbb{R}\) is simply 
+  \(\mathcal{D}(A) = C_c^\infty(A)\) and we denote 
+  \(\mathcal{D} = \mathcal{D}(\mathbb{R}) = C_c^\infty(\mathbb{R})\).
+
+  We will later generalize this definition to a larger class of domains. 
+\end{definition}
+
+We equip the space of test functions with a topology. Define 
+\(\mathcal{D}_m \subseteq \mathcal{D}\) the space of functions with 
+support in \([-m, m]\). Then, \(\mathcal{D}_m\) is a increasing sequence of 
+subspaces of \(\mathcal{D}\) with \(\mathcal{D} = \bigcup_{n = 0}^\infty \mathcal{D}_n\).
+Now, noting that \(\mathcal{D}_m\) is countably normed with the norms 
+\[\|\phi\|_n^{(m)} := \sup_{\substack{0 \le k \le n\\ |t| \le m}} |\phi^{(k)}(t)|.\]
+Then, the topology of \(\mathcal{D}\) is induced by the system of neighbourhoods 
+of 0, where \(U\) is a neighbourhood of 0 if and only if \(U \cap \mathcal{D}_m\) 
+is a neighbourhood of 0 in \(\mathcal{D}_m\) (recall \(\mathcal{D}_m\) is equipped 
+with the topology induced by the norms). 
+
+One can show \(\mathcal{D}\) equipped with this topology forms a topological 
+vector space (the proof is rather involved and omitted).
+
+\begin{lemma}
+  A sequence \((\phi_n)_{n = 1}^\infty \subseteq \mathcal{D}\) converges to 
+  \(\phi \in \mathcal{D}\) if and only if 
+  \begin{itemize}
+    \item there is some \([a, b]\) such that for all \(n\), \(\phi_n\) is 0 
+      outside of \([a, b]\) and 
+    \item for all \(k = 0, 1, \cdots\), the sequence \((\phi_n^{(k)})\) 
+      converges to \(\phi^{(k)}\) uniformly.
+  \end{itemize} 
+\end{lemma}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{definition}[Distribution]
+  A distribution (also known as generalized function) on \(\mathbb{R}\) is a 
+  continuous linear functional on the space of test functions \(\mathcal{D}\),
+  i.e. the space of distributions is \(\mathcal{D}^*\) and is denoted by 
+  \(\mathcal{D}'\). 
+\end{definition}
+
+\begin{lemma}
+  A linear functional \(f\) on \(\mathcal{D}\) is continuous 
+  (i.e. \(f \in \mathcal{D}'\)) if and only if \(f(\phi_n) \to f(\phi)\) 
+  for all \(\phi_n \to \phi\) in \(\mathcal{D}\). 
+\end{lemma}
+\begin{proof}
+  This is simply sequential continuity.
+\end{proof}
+
+Let us consider some examples of distributions. 
+\begin{itemize}
+  \item Any locally integrable function \(f : \mathbb{R} \to \mathbb{R}\) 
+    corresponds to a distribution by mapping \(f\) to 
+    \[T_f : \mathcal{D} \to \mathbb{R} : \phi \mapsto \int_{\mathbb{R}} f\phi \dd \lambda.\]
+    This is clearly linear, and is continuous since for all \(\phi_n \to 0\) in 
+    \(\mathcal{D}\), by the above lemma, there exists some \([a, b]\) such that 
+    \(\phi_n = 0\) outside of \([a, b]\) and \(\phi_n \to 0\) uniformly. 
+    Thus, as \(f\) is locally integrable, \(I := \int_{[a, b]} |f| \dd \lambda < \infty\) 
+    and for all \(\epsilon > 0\), there exists some \(N\) such that \(|\phi_n| < \epsilon / 2I\) 
+    for all \(n \ge N\). Hence, for all \(n \ge N\),
+    \[|T_f(\phi_n)| = \left|\int f \phi_n \dd \lambda \right|
+      \le \frac{\epsilon}{2I}\int_{[a, b]} |f|\dd \lambda < \epsilon\]
+    implying \(T_f(\phi_n) \to 0\) and so, \(T_f\) is continuous.
+
+    With the above in mind, \(T_f \in \mathcal{D}'\) and we call these distributions 
+    regular (otherwise we call them singular).  
+\end{itemize}
+
 \end{document}
