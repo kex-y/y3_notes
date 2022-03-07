@@ -3157,4 +3157,124 @@ a strict contraction for some \(n\).
   We note that (2) implies (3).
 \end{proposition}
 
+\subsection{Invariant Sets}
+
+\begin{definition}[Invariant Sets]
+  Let \(P\) be a family of transition probabilities. A Borel set \(B\) 
+  is \(P\)-invariant if \(P(x, A) = 1\) for all \(x \in A\).
+\end{definition}
+
+An easy example of an invariant set is a communication class. 
+
+It is easy to see that if \(A\) is an invariant set of the Markov chain 
+\((x_n)\), then 
+\[\mathbb{P}(x_0 \in A, \cdots, x_n \in A) = \pi(A)\]
+where \(\pi\) is the initial distribution. Furthermore, if \(\mathbb{P}_\pi\) 
+is the stationary distribution on \(\mathcal{X}^N\) where \(\pi\) is the 
+initial distribution. Then, \(\mathbb{P}_\pi(A^n) = \pi(A)\).
+
+Since for an invariant set \(A\), \(P(x, A) = 1\) for all \(x \in A\), 
+\(P|_A\) provides a family of transition probabilities on \(A\). 
+As we in general work with \textbf{complete} separable metric space, 
+in order for the restriction to also be complete, we prefer to consider 
+closed invariant sets such that Krylov-Bogoliubov can be applied.
+
+\begin{lemma}
+  Let \(A\) be \(P\)-invariant and let \(\pi^0\) be a probability measure 
+  on \(A\), we can define a probability measure \(\pi\) on \(X\) with 
+  \[\pi(B) := \pi^0(B \cap A).\]
+  Then, \(\pi^0\) is invariant for \(P|_A\) if and only if \(\pi\) is invariant 
+  for \(P\).
+\end{lemma}
+\begin{proof}
+  Denoting \(T\) the transition operator, for all \(B\), 
+  \[T\pi(B) = \int_{\mathcal{X}} P(x, B) \pi(\dd x) = 
+    \int_A P(x, B) \pi(\dd x) = \int_A P(x, B \cap A) \pi(\dd x) 
+    = \pi^0(B \cap A) = \pi(B),\]
+  where the second equality is due to \(\pi(A) = 1\) and the third equality 
+  follows as for all \(x \in A\), \(P(x, B) = P(x, B \cap A)\).
+
+  Reverse direction is clear.
+\end{proof}
+
+\begin{theorem}
+  Let \(P\) be Feller and suppose there exists a compact \(P\)-invariant set 
+  \(A\). Then, there exists an invariant probability measure for \(P\).
+\end{theorem}
+\begin{proof}
+  Let \(P^0\) be the restriction of \(P\) to \(A\). Then, as \(A\) is compact, 
+  \(P^0\) is tight. Then, for all \(f : A \to \mathbb{R}\) bounded continuous, 
+  by Tietze's lemma, it extends to a bounded continuous function 
+  \(\bar f : \mathcal{X}\to \mathbb{R}\). Thus, \(P^0\) is Feller. Hence, 
+  as \(P^0\) has an invariant probability measure by Krylov-Bogoliubov,
+  the above lemma allows us to conclude \(P\) has an invariant probability
+  measure.
+\end{proof}
+
+We can also use invariant sets to show the uniqueness of the invariant measure 
+provided the invariant set is sufficiently absorbing. Consider the following 
+sequence. Let \(A\) be invariant, \(A_0 = A\) and 
+\(A_{n + 1} = \{x \mid P(x, A_n) > 0\}\). We see that \((A_n)\) is a sequence 
+such that elements of \(A_{n + 1}\) can reach inside \(A_n\) in 1 time step 
+with positive probability.
+
+\begin{lemma}
+  \((A_n)\) is increasing.
+\end{lemma}
+\begin{proof}
+  We will show by induction \(A_n \subseteq A_{n + 1}\). Clearly 
+  \(A_0 \subseteq A_1\) as \(A_0 = A\) and so, for all \(x \in A_0\), 
+  \(P(x, A_0) = 1 > 0\) implying \(x \in A_1\). Now, for all \(n\), 
+  \(x \in A_n\), by the inductive hypothesis \(A_{n - 1} \subseteq A_n\) and 
+  so, \(P(x, A_n) \ge P(x, A_{n - 1}) > 0\) implying \(x \in A_{n + 1}\) as 
+  required.
+\end{proof}
+
+\begin{lemma}
+  Let \(A\) be \(P\)-invariant, then for any \(n \ge 1\), for any \(x \in A_n\), 
+  \(P^n(x, A) > 0\).
+\end{lemma}
+\begin{proof}
+  Clear by Chapman-Kolmogorov.
+\end{proof}
+
+\begin{proposition}
+  Let \(A\) be \(P\)-invariant. Then, if \(\bigcup_{n = 0}^\infty A_n = \mathcal{X}\),
+  every invariant probability measure \(\pi\) of \(P\) is an invariant probability 
+  measure of \(P\) on \(A\). 
+\end{proposition}
+\begin{proof}
+  If \(\pi(A) < 1\), then there exists some \(A_{n_0}\) with 
+  \(\pi(A_{n_0} \setminus A) > 0\) (as \(\lim_{n \to \infty} \pi(A_n) = 1\)).
+  Thus, 
+  \[\begin{split}
+    \pi(A) & = T^{n_0}\pi(A) = \int P^{n_0}(x, A) \pi(\dd x) 
+      \ge \int_{A_{n_0}} P^{n_0}(x, A) \pi(\dd x) \\
+    & = \int_A P^{n_0}(x, A) \pi(\dd x) + \int_{A_{n_0} \setminus A}
+      P^{n_0}(x, A) \pi(\dd x) > \pi(A)
+  \end{split}\]
+  which is a contradiction. Hence, \(\pi\) is a probability measure on \(A\). 
+  Now as \(\pi\) is invariant on \(A\) as it is invariant on \(\mathcal{X}\), 
+  we conclude the claim.
+\end{proof}
+
+\begin{corollary}
+  If \(A\) is compact, \(P\)-invariant where \(P\) is Feller and 
+  \(\bigcup_{n = 0}^\infty A_n = \mathcal{X}\). Then, if there exists some 
+  \(\gamma < 1\) such that 
+  \[\mathbb{E}d(F(x, \xi_1), F(y, \xi_1)) \le \gamma d(x, y)\]
+  for all \(x, y \in A\), there exists a unique invariant probability measure 
+  for \(P\).
+\end{corollary}
+\begin{proof}
+  Applying the deterministic contraction theorem on \(P\) restricted to \(A\), 
+  we obtain that \(P\) has a unique invariant measure on \(A\). Now, by the 
+  above lemmas, this invariant measure can be extended to \(\mathcal{X}\) 
+  implying the existence of an invariant probability measure. On the other 
+  hand, if we can another invariant measure, it restricted on \(A\) is a 
+  invariant measure on \(A\) and hence, by uniqueness, they are equal. 
+  Thus, we obtain the uniqueness of the invariant measure.
+\end{proof}
+
+
 \end{document}
