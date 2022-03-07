@@ -1,0 +1,163 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{fontspec}
+  \setmainfont{Bitstream Charter}
+  % Cabin -- round
+  % Bitstream Charter -- almost computer modern
+  % \usepackage{unicode-math}
+  % \defaultfontfeatures{Scale=MatchLowercase}
+  % \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Conditional Expectation},
+  pdfauthor={Kexing Ying},
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=red,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin = 1.5in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{esint}
+\usepackage[ruled,vlined]{algorithm2e}
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition*}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem*{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{example}{Example}[section]
+\newcommand{\diag}{\mathop{\mathrm{diag}}}
+\newcommand{\Arg}{\mathop{\mathrm{Arg}}}
+\newcommand{\hess}{\mathop{\mathrm{Hess}}}
+\newcommand\eqae{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily a.e.}}}{=}}}
+
+\title{Distribution vs. Signed Measures}
+\author{Kexing Ying}
+\date{July 24, 2021}
+
+\begin{document}
+\maketitle
+
+Distributions are interpreted as generalized functions with the motivating example 
+of the \(\delta\)-function. The \(\delta\)-function, arising naturally from physics 
+is a function with the property that it is 0 everywhere but at a single point 
+and has integral 1. Namely a function
+\(\delta_x : \mathbb{R} \to \mathbb{R}\) which satisfies 
+\begin{itemize}
+  \item \(\delta_x(y) = 0\) for all \(y \neq x\) and, 
+  \item \(\int \delta_x = 1\). 
+\end{itemize}
+It is clear such a function does not exist as the first property implies 
+\(\delta_x = 0\) almost everywhere which implies it has integral 0. Distributions 
+are suppose to solve this problem by generalizing functions to the space of 
+distributions.
+
+\begin{definition}[Test Function]
+  The space of test function \(\mathcal{D}\) is the space of infinitely 
+  differentiable functions \(f : \mathbb{R} \to \mathbb{R}\) with compact support.
+\end{definition}
+
+\begin{definition}[Distribution]
+  A distribution on \(\mathbb{R}\) is a continuous linear function of the space 
+  of test functions \(\mathcal{D}\). Namely, the space of distributions is the 
+  dual of \(\mathcal{D}\) and we denote it by \(\mathcal{D}'\). 
+\end{definition}
+
+Functions can be naturally embedded into the space of distributions via the map 
+\(f \mapsto T_f\) where 
+\[T_f : \mathcal{D} \to \mathbb{R} : \phi \mapsto \int f \phi \dd \lambda,\]
+where \(\lambda\) is the Lebesgue measure. For this embedding to make sense, 
+we require \(f\) to be locally integrable. This is a rather relaxed requirement 
+as any measurable function which is bounded on a compact set is locally integrable. 
+
+The \(delta\) function can be represented naturally as a distribution. 
+In particular, we take \(\delta_x \in \mathcal{D}'\) such that 
+\(\delta'(\phi) := \phi(x)\). This represents the \(\delta\)-function we had 
+in mind by considering that \textit{if} such a function \(f\) which satisfy 
+the aforementioned two properties, 
+\[T_f(\phi) = \int f \phi \dd \lambda = 
+  \int \mathbf{1}_{\{x\}}f \phi \dd \lambda = \phi(x)\int f \dd \lambda = \phi(x).\]
+However, we now note a different method of representing the \(\delta\)-function. 
+Namely, the Dirac measures. The Dirac measure at \(x\) is a probability measure 
+defined as \(\delta_x(A) = 1\) if \(x \in A\) and 0 otherwise. This is similar 
+to the distribution version as for all \(\phi\) measurable, 
+\[\int \phi \dd \delta_x = \phi(x)\]
+and so, by considering the map \(\mu \mapsto T_\mu \in \mathcal{D}'\) where 
+\[T_\mu : \mathcal{D} \mapsto \mathbb{R} : \phi \mapsto \int \phi \dd \mu,\]
+we have a natural embedding of measures into the space of distributions.
+
+However, unlike the space of distributions, only non-negative functions 
+\(f : \mathbb{R} \to \mathbb{R}_+\) induces a measure with \(f \lambda\). Thus, 
+in order to embed general functions, we need to consider signed measures. 
+This process is easy by mapping 
+\[f \mapsto A \mapsto \int_A f \dd \lambda = \int_A f^+ \dd \lambda - 
+  \int_A f^- \dd \lambda,\]
+i.e. \(f \mapsto f^+ \lambda - f^- \lambda\). With this, we have the following 
+embeddings 
+\[(\mathbb{R} \to \mathbb{R}) \hookrightarrow \mathbb{R}-\text{signed measures}
+  \hookrightarrow \mathcal{D}'.\]
+One can show that every distribution which is non-negative on non-negative functions 
+defines a measure which commutes with our embedding. However, not all distributions 
+arises from a signed measure. Indeed, the derivative of the 
+\(\delta\) distribution (\(f \mapsto -f'(0)\)) cannot be represented as a signed 
+measure.
+
+\end{document}

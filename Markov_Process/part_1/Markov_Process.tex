@@ -686,17 +686,17 @@ almost surely. Fixing \(x\), under some regularities, its not difficult to show 
 As an example, consider the Markov chain \((x_n)\) on \(\mathcal{X}\) where 
 \(x_{n + 1} := F(x_n, \xi_{n + 1})\) for \(x_0, \xi_1, \xi_2, \cdots\)
 independent with \((\xi_i : \Omega \to \mathcal{Y}) \sim \mu\) for all \(i\). 
-Then, for all \(\omega \in \Omega\), we have (recall that we denote the event 
-\(x_n^{-1}(\{\omega\})\) by \(x_n = \omega\)
+Then, for all \(x \in \mathcal{X}\), we have (recall that we denote the event 
+\(x_n^{-1}(\{x\})\) by \(x_n = x\)
 \[\begin{split}
-  \mathbb{P}(x_{n + 1} \in A \mid x_n = \omega) & = \mathbb{P}(F(x_n(\omega), \xi_{n + 1}) \in A)\\
-  & = \int_{\mathcal{Y}} \mathbf{1}_A(F(x_n(\omega), \xi_{n + 1})) \dd \mathbb{P}\\
-  & = \int_{\mathcal{Y}} \mathbf{1}_A(F(x_n(\omega), y)) \mu(\dd y).
+  \mathbb{P}(x_{n + 1} \in A \mid x_n = x) & = \mathbb{P}(F(x_n(x, \xi_{n + 1}) \in A)\\
+  & = \int_{\mathcal{Y}} \mathbf{1}_A(F(x, \xi_{n + 1})) \dd \mathbb{P}\\
+  & = \int_{\mathcal{Y}} \mathbf{1}_A(F(x, y)) \mu(\dd y).
 \end{split}\]
 Hence, defining 
 \[P(x, A) := \int_{\mathcal{Y}} \mathbf{1}_A(F(x, y)) \mu(\dd y),\]
 \(\{P(x, A)\}\) are the transition probabilities and 
-\[\mathbb{P}(x_{n + 1} \in A \mid x_n = \omega) = P(x_n(\omega), A).\]
+\[\mathbb{P}(x_{n + 1} \in A \mid x_n = x) = P(x, A).\]
 
 We remark that, in the case that the state space is countable, by \(\sigma\)-additivity,
 it is sufficient to work with transitional probabilities of singletons. In particular, 
