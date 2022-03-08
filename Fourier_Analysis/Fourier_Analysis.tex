@@ -2169,9 +2169,26 @@ easily.
   If \(f : \mathbb{R} \to \mathbb{R}\) has jumps at \(x_1, x_2, \cdots\) and 
   is continuously differentiable elsewhere, its distributional derivative is 
   \[\mathbf{1}_{\mathbb{R} \setminus \{x_n\}_n}
-    f'(x) + \sum_{i = 1}^\infty f({x_i}_+)\delta(x - x_i).\]
+    f'(x) + \sum_{i = 1}^\infty f(x_i)\delta(x - x_i).\]
 \end{proposition}
 
+Consider now the function \(f\) with \(2\pi\)-period on \(\mathbb{R}\) defined by 
+\[f(x) := \sum_{n = 1}^\infty \frac{\sin nx}{n} = 
+  \begin{cases}
+    \frac{\pi - x}{2}, & \ 0 < x \le \pi,\\
+    -\frac{\pi + x}{2}, & \ -\pi \le x < 0,\\
+    0, & \ x = 0,
+  \end{cases}\]
+for \(x \in [-\pi, \pi]\). Taking the distributional derivative oh the right hand 
+side (where a jump occurs at \(2\pi k\) for all \(k\)), we have 
+\[f' = - \frac{1}{2} + \pi\sum_{k = -\infty}^\infty \delta(x - 2\pi k)\]
+(note that only finitely many terms are non-vanishing when applied to 
+\(\phi \in \mathcal{D}\).) On the other hand, the distributional derivative 
+of the left hand side is 
+\[f' = \sum_{n = 1}^\infty \cos nx,\]
+since the partial sums converges as distributions. Thus, comparing the 
+two, we obtain 
+\[\sum_{n = -\infty}^\infty = 2\pi \sum_{k = -\infty}^\infty \delta(x - 2\pi k).\]
 
 
 \end{document}
