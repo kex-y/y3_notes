@@ -2088,6 +2088,90 @@ Let us consider some examples of distributions.
 
     With the above in mind, \(T_f \in \mathcal{D}'\) and we call these distributions 
     regular (otherwise we call them singular).  
+  \item The \(\delta\)-distribution: \(\delta(\phi) = \phi(0)\).
+  \item Shifted \(\delta\) defined as \(\delta(x - a)(\phi) = \phi(a)\).
+  \item The function \(1 / x\) is no integrable at 0. However, 
+  \(\int \frac{1}{x} \phi(x) \lambda(\dd x)\) exists as a principal value integral. 
+  Indeed, suppose \(\phi \in \mathcal{D}\) is supported on \([-R, R]\), we have 
+  \[\begin{split}
+    \int \frac{1}{x}\phi(x) \lambda(\dd x) & = \int_{[-R, R]} \frac{1}{x} \phi(x) \lambda(\dd x) 
+      = \int_{[-R, R]} \frac{\phi(x) - \phi(0)}{x} \lambda(\dd x) + 
+        \phi(0) \int_{[-R, R]} \frac{\lambda(\dd x)}{x}
+  \end{split}\]
+  which exists by integration by parts and noting that 
+  \(\int_{[-R, R]} \frac{\lambda(\dd x)}{x}\) has principal value 0. Hence, 
+  \(T_{1 / x}\) defines a distribution.
 \end{itemize}
+
+\begin{lemma}
+  A linear functional \(f\) on \(\mathcal{D}\) is continuous if and only if \(f\) 
+  is continuous as a linear functional on \(\mathcal{D}_m\) for all \(m\), i.e. 
+  for all \(m\), there exists some \(C, n\) such that 
+  \[|f(\phi)| \le C\|\phi\|^{(m)}_n = C\sup_{0 \le k \le n, |x| \le m}|\phi^{(k)}(x)\]
+  for all \(\phi \in \mathcal{D}_m\).
+\end{lemma}
+\begin{proof}
+  If \(f \in \mathcal{D}'\) and there exists some \(m\) such that for all \(n. c\), 
+  there exists some \(\phi_{n, c} \in \mathcal{D}_m\) such that 
+  \[|f(\phi_{n, c})| > c\|\phi_{n, c}\|_n^{(m)}.\]
+  Defining 
+  \[\psi_{n, c} := \frac{\phi_{n, c}}{|f(\phi_{n, c})|},\]
+  so \(1 > c \|\psi_{n, c}\|^{(m)}_n\) we have \(\|\psi_{n, n}\|_{n}^{(m)} < 1 / n\)
+  implying \(\psi_{n, n} \to 0\) in \(\mathcal{D}\) as \(n \to \infty\). But, 
+  as \(f(\psi_{n, n}) = 1\) we have a contradiction. 
+
+  The converse is clear.
+\end{proof}
+
+\begin{proposition}
+  Strong and weak-* convergence of sequences in \(\mathcal{D}'\) coincide. 
+\end{proposition}
+
+\begin{definition}
+  A sequence of distributions \(f_n\) is said to converge to a distribution 
+  \(f\) if for all \(\phi \in \mathcal{D}\), 
+  \(f_n(\phi) \to f(\phi)\).
+\end{definition}
+ 
+\subsection{Derivative of Distributions}
+
+Suppose that \(T_f \in \mathcal{D}'\) is a regular distribution corresponding 
+to the continuously differentiable function \(f\). Then, we may define the 
+derivative of \(T_f\) to be \(T_{f'}\) where \(f'\) is the derivative of \(f\).
+Namely, 
+\[T_f'(\phi) = T_{f'}(\phi) = \int f' \phi \dd \lambda = 
+  -\int f \phi' \dd \lambda = - T_f(\phi')\]
+where the second to last equality is due to integration by parts (as \(\phi\) is differentiable 
+with compact support). This, suggests the following definition.
+
+\begin{definition}[Derivative]
+  A derivative of a distribution \(f \in \mathcal{D}'\) is the distribution \(f'\)
+  defined by \(f'(\phi) := -f(\phi')\). Similarly, we define 
+  \(f^{(k)}(\phi) := (-1)^k f(\phi^{(k)})\).
+\end{definition}
+
+\begin{proposition}
+  It is clear that if \(f_n \to f\) in \(\mathcal{D}'\), then so do \(f_n' \to f'\).
+\end{proposition}
+
+Consider the case where we take the distributional derivative of the regular 
+distribution of a non-differentiable function. Consider the Heaviside function 
+\[H(x) := \begin{cases}
+  1, & \ x > 0,\\
+  0, & \ x \le 0.
+\end{cases}\]
+Then, \(T_H(\phi) = \int_{\mathbb{R}_+} \phi \dd \lambda\) and 
+\(T_H' = -  \int_{\mathbb{R}_+} \phi' \dd \lambda = \phi(0)\) by the fundamental 
+theorem of calculus. Hence, \(T_H' = \delta\). This observation can be generalized 
+easily. 
+
+\begin{proposition}
+  If \(f : \mathbb{R} \to \mathbb{R}\) has jumps at \(x_1, x_2, \cdots\) and 
+  is continuously differentiable elsewhere, its distributional derivative is 
+  \[\mathbf{1}_{\mathbb{R} \setminus \{x_n\}_n}
+    f'(x) + \sum_{i = 1}^\infty f({x_i}_+)\delta(x - x_i).\]
+\end{proposition}
+
+
 
 \end{document}
