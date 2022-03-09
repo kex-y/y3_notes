@@ -3276,5 +3276,106 @@ with positive probability.
   Thus, we obtain the uniqueness of the invariant measure.
 \end{proof}
 
+\subsection{Random Dynamical System}
+
+We recall the definition of initial value problem. Given 
+\(g : \mathbb{R}^n \to \mathbb{R}^n\), \(f : \mathbb{R} \to \mathbb{R}^n\) 
+measurable, a initial value problem 
+\[\begin{cases}
+  \dot x(t) & = g(x(t)) + f(t),\\
+  x(t_0) & = x
+\end{cases}\]
+is said to have solution \(x \in C(a, b)\) if \(t_0 \in (a, b)\) and 
+for all \(t \in (a, b)\), 
+\[x(t) = x + \int_{t_0}^t g(x(s)) \dd s + \int_{t_0}^t f(s) \dd s.\]
+If \(g\) is locally Lipschitz and \(f\) is continuous, \(\dot x\) exists.
+
+We recall the existence and uniqueness of solutions from second year.
+
+\begin{proposition}[Picard-Lindelöf]
+  If \(g\) is locally Lipschitz and \(f\) is locally bounded, then for every 
+  initial value, there exists a unique maximal solution. Furthermore, if 
+  there exists some \(c\) such that 
+  \[\langle x, g(x) \rangle \le c(1 + |x|^2)\]
+  for all \(x\), the the solution exists on \(\mathbb{R}\). This condition 
+  is called the one sided linear growth condition.
+\end{proposition}
+
+\begin{proposition}[Flow Condition]
+  Suppose \(\phi_{t_0, t}(x)\) is the global solution to the IVT with initial 
+  values \(x(t_0) = x\), then, 
+  \[\phi_{u, t}(x) = \phi_{s, t}(\phi_{u, s}(x))\]
+  for all \(u < s < t\). We denote \(\phi_t(x) = \phi_{0, t}(x)\).
+\end{proposition}
+
+\begin{theorem}
+  Suppose \(g\) is globally Lipschitz and \(f\) is bounded measurable. Then 
+  there exists a unique global solution \(\phi_{t_0, t}(x)\). 
+  Furthermore, the map \((t, x) \mapsto \phi_t(x)\) is continuous (with repsect 
+  to both \(t, x\)) and the map \(x \mapsto \phi_t(x)\) is differentiable. 
+  Denoting \(V_t = (D\phi_t)_{x_0}(v_0)\) for all \(x_0, v_0 \in \mathbb{R}^n\),
+  \(V_t\) is the unique solution to 
+  \[\begin{cases}
+    \dot V(t) & = (Dg)_{\phi_t(x_0)}(v(t)),\\
+    V(0) & = v_0. 
+  \end{cases}\] 
+  Finally, \((x, v) \mapsto (Dg)_x(v)\) is continuous and Lipschitz.
+\end{theorem}
+
+\begin{corollary}
+  If \(\langle Dg(x)(v), v\rangle \le -c(x)|v|^2\) for some \(c\). Then, 
+  \[|v_t| \le e^{-\int_0^t c(\phi_s(x)) \dd s}\]
+  where \(v_t = (D\phi_t)_{\phi_t(x)}(v)\).
+\end{corollary}
+\begin{proof}
+  \[\begin{split}
+    \dv{t}|v_t|^2 & = 2\langle v_t, \dv{t}v_t\rangle 
+      = 2 \langle v_t, (Dg)_{\phi_t(x)}(v_t)\rangle\\
+      & \le -2c(\phi_t(x))|v_t|^2,
+  \end{split}\]
+  which implies the result by integrating both sides.
+\end{proof}
+
+Thus, if \(c(x) \ge c > 0\), then 
+\[|\phi_t(x) - \phi_t(y)| \le \|D\phi_t\|_\infty |x - y| \le e^{-ct}|x - y|.\]
+
+We also introduce a more general system where we allow \(g\) to evolve with 
+time. Namely, \(g : \mathbb{R}_+ \times \mathbb{R}^d \to \mathbb{R}^d\) 
+and consider 
+\[\begin{cases}
+  \dot x(t) & = g(t, x(t)),\\
+  x(t_0) & = x.
+\end{cases}\]
+
+\begin{proposition}
+  If \(|g(t, x) - g(t, y)| \le K|x - y|\) i.e. \(g\) is Lipschitz with respect to 
+  the second argument, then, for any initial value, there exists a unique 
+  global solution which is differentiable in time. In particular, 
+  \[x(t) = x_0 + \int_{t_0}^t g(\gamma, x(\gamma)) \dd \gamma.\]
+  Also, if \(\phi_{t_0, t}(x)\) denotes this solution, the map 
+  \(x \mapsto \phi_{t_0, t}(x)\) is differentiable (and hence also continuous).
+\end{proposition}
+
+With the above in mind, we come back to Markov processes by constructing a 
+Markov process with a dynamical system. Namely, we will vary \(f\). 
+Denote \(\phi_t(x, f)\) the solution to 
+\[\begin{cases}
+  \dot x(t) & = g(x(t)) + f(t),\\
+  x(0) & = x,
+\end{cases}\]
+and assume that there exists a unique global solution for any initial value. 
+Denoting the solution at time 1 as \(\Phi\), i.e. \(\Phi(x, f) = \phi_1(x, f)\), 
+if \((\xi_n : \Omega \to C_b(\mathbb{R}))\) is a sequence of continuous iid. 
+random variables (where \(C_b(\mathbb{R})\) is the space of bounded continuous 
+functions on \(\mathbb{R}\))
+\[\begin{cases}
+  \dot x(t) & = g(x(t)) + \xi_n(t, \omega),\\
+  x(0) & = x,
+\end{cases}\]
+we define \(x_0 := x, x_1 := \Phi(x, \xi_1), \cdots, x_n := \Phi(x_{n - 1}, \xi_n), \cdots\).
+Indeed, \((x_n)\) is a Markov chain as \((\xi_n)\) are independent.
+
+See official notes for a detailed example of such a random process and a proof 
+that such an process has an invariant measure using \(P\)-invariant sets.
 
 \end{document}
