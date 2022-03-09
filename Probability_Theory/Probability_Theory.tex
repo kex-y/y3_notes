@@ -1649,4 +1649,232 @@ Thus, by independence,
 \[\phi_{S_n / n}(t) = \left(e^{-\theta|t| / n}\right)^n = e^{-\theta|t|} = \phi_\xi(t).\]
 Hence, \(S_n / n\) also has the Cauchy distribution!
 
+\newpage
+\section{Results in Probability Theory}
+
+We will in this section consider some important results in probability theory. 
+In particular, we will study the Borel-Cantelli lemmas, Kolmogorov's inequality 
+and the strong law of large numbers.
+
+\subsection{Borel-Cantelli Lemmas}
+
+\begin{theorem}[First Borel-Cantelli Lemma]
+  Let \((A_n)\) be a sequence of measurable sets. Then, if 
+  \(\sum_{n = 1}^\infty \mathbb{P}(A_n) < \infty\), we have 
+  \[\mathbb{P}(\{A_n \text{ i.o.}\}) = 
+    \mathbb{P}\left(\limsup_{n \to \infty} A_n\right)
+    = \mathbb{P}\left(\bigcap_{n = 0}^\infty \bigcup_{k \ge n} A_k\right) = 0.\]
+\end{theorem}
+\begin{proof}
+  Define \(B_n := \bigcup_{k \ge n} A_k\) so that \(B_n\) is decreasing. Then, 
+  by continuity, 
+  \[\mathbb{P}\left(\bigcap_{n = 0}^\infty B_n\right) = 
+    \lim_{n \to \infty} \mathbb{P}(B_n) = 
+    \lim_{n \to \infty}\mathbb{P}\left(\bigcup_{k \ge n} A_k\right)
+    \le \lim_{n \to \infty} \sum_{k \ge n} \mathbb{P}(A_k) = 0.\]
+  Hence, as \(\bigcap_{n = 0}^\infty B_n = \{A_n \text{ i.o.}\}\), we have the 
+  required result. 
+\end{proof}
+
+\begin{theorem}[Second Borel-Cantelli Lemma]
+  Let \((A_n)\) be a sequence of \textbf{independent} measurable sets. Then, if 
+  \(\sum_{n = 1}^\infty \mathbb{P}(A_n) = \infty\), we have 
+  \[\mathbb{P}(\{A_n \text{ i.o}\}) = \
+    \mathbb{P}\left(\limsup_{n \to \infty} A_n\right)
+    = \mathbb{P}\left(\bigcap_{n = 0}^\infty \bigcup_{k \ge n} A_k\right) = 1.\]
+\end{theorem}
+\begin{proof}
+  Consider \(\{A_n \text{ i.o.}\}^c = \bigcup_{n = 1}^\infty \bigcap_{k \ge n} A_k^c\),
+  so by continuity and independence,
+  \[1 - \mathbb{P}(\{A_n \text{ i.o.}\}) = 
+    \lim_{n \to \infty}\mathbb{P}\left(\bigcap_{k \ge n}A_k^c\right)
+    = \lim_{n \to \infty} \prod_{k \ge n} \mathbb{P}(A_k^c).\]
+  Now, by noting \(\log(1 - x) \le -x\) for all \(x \in [0, 1)\), we have
+  \[\log \mathbb{P}\left(\bigcup_{k \ge n} A_k^c\right) = 
+    \log \prod_{k \ge n} (1 - \mathbb{P}(A_k))
+    \le -\sum_{k \ge n} \mathbb{P}(A_k)\]
+  where \(\sum_{k \ge n} \mathbb{P}(A_k) = \infty\) for all \(n\). 
+  
+  Hence, 
+  \(\log \mathbb{P}\left(\bigcup_{k \ge n} A_k^c\right) = - \infty\) and thus, 
+  \(1 - \mathbb{P}(\{A_n \text{ i.o.}\}) = 0\) as required.
+\end{proof}
+
+We will provide a new proof for the existence of a subsequence which converges 
+almost everywhere from a sequence which converges in probability.
+
+\begin{corollary}
+  If \(\xi_n \to \xi\) in probability then there exists a subsequence 
+  \((\xi_{n_k}) \subseteq (\xi_n)\) which converges almost everywhere to \(\xi\).
+\end{corollary}
+\begin{proof}
+  Since \(\lim_{n \to \infty} \mathbb{P}(|\xi_n - \xi|) > 1 / k) = 0\) for all 
+  \(k\), there exists a subsequence \((\xi_{n_k})\) of \((\xi_n)\) such that 
+  \[\mathbb{P}(|\xi_{n_k} - \xi| > 1 / k) \le 2^{-k}.\]
+  Hence, as \(\sum_{k = 1}^\infty \mathbb{P}(|\xi_{n_k} - \xi| > 1 / k) \le 
+  \sum_{k = 1}^\infty 2^{-k} = 1 < \infty\), the first Borel-Cantelli lemma 
+  implies \(\mathbb{P}(\{|\xi_{n_k} - \xi| > 1 / k \text{ i.o.}\}) = 0\)
+  which is exactly the set of elements which do not converge.
+\end{proof}
+
+\begin{corollary}
+  If \((\xi_n)\) is a sequence of random variables such that 
+  \(\xi_1 \ge \xi_2 \ge \cdots \ge 0\) and \(\xi_n \to 0\) in probability. 
+  Then, \(\xi_n\) converges almost everywhere to 0.
+\end{corollary}
+\begin{proof}
+  As \(\xi_n \to 0\) in probability, it has a subsequence which converges to 0 
+  almost everywhere. Then, as \(\xi_n\) is decreasing, a element \(\omega\) 
+  satisfying \(\xi_{n_k}(\omega) \to 0\) also satisfies \(\xi_n(\omega) \to 0\).
+  Thus, the set of non-convergent elements has measure 0 as required.
+\end{proof}
+
+\subsection{Strong Law of Large Numbers}
+
+\begin{definition}
+  A sequence of random variables \((\xi_n)\) is said to satisfy the weak/strong 
+  law of large numbers (LLN) if \(\xi_n\) are integrable and 
+  \(\frac{S_n - \mathbb{E}S_n}{n}\) converges in probability/almost everywhere 
+  to 0 where \(S_n := \sum_{i = 1}^n \xi_i\).
+\end{definition}
+
+We had previously proved the weak law of large numbers for sequences of 
+i.i.d. random variables with finite variance. We will now consider strong 
+LLN.
+
+\begin{lemma}[Cantelli's Strong Law of Large Numbers]
+  Let \((\xi_n)\) be a sequence of i.i.d random variables such that 
+  \(\mathbb{E}\xi_1^4 < \infty\). Then, \((\xi_n)\) satisfies the strong LLN.
+\end{lemma}
+\begin{proof}
+  WLOG. we may assume \(\mathbb{E}\xi_1 = 0\) and so \(\mathbb{E}S_n = 0\).
+  Let \(\epsilon > 0\), and define 
+  \[A_n := \{\omega \mid |S_n(\omega)/n| > \epsilon\}.\]
+  Then, it suffices to show that \(\mathbb{P}(\limsup |S_n / n| > \epsilon) = 
+  \mathbb{P}(\{A_n \text{ i.o.}\}) = 0\). Indeed, this follows by 
+  Borel-Cantelli where 
+  \[\mathbb{P}(A_n) < \frac{1}{\epsilon^4} \mathbb{E}\left(\left|\frac{S_n}{n}\right|^4\right)\]
+  by Chebyshev's inequality and so, by considering
+  \[\begin{split}
+    \mathbb{E}S_n^4 & = \sum_{i = 1}^n \mathbb{E}\xi_i^4 + 
+    \sum_{i < j} {4 \choose 2} \mathbb{E}\xi_i^2 \mathbb{E}\xi_j^2 + \mathbb{E}\cdots
+    = n \mathbb{E}\xi_1^4 + 3n(n - 1)(\mathbb{E}\xi_1^2)^2 \\
+    & \le n\mathbb{E}\xi_1^4 + 3n(n - 1) \mathbb{E}\xi_1^4 
+    \le n^2 (4\mathbb{E}\xi_1^4)
+  \end{split}\]
+  where \(\mathbb{E}\cdots = 0\) as they represent terms with a singular \(\xi_i\), 
+  and hence, by independence \(\mathbb{E} \cdots = \mathbb{E}\xi_i \mathbb{E}\cdots = 0\).
+  Thus, \(\sum_n \mathbb{E}(|S_n / n|^4) \le \sum_n 1 / n^2 < \infty\), implying 
+  \(\sum_n \mathbb{P}(A_n) < \infty\) which is the condition needed for Borel-Cantelli.
+\end{proof}
+
+\begin{theorem}[Kolmogorov's Inequality]
+  Let \((\xi_n)\) be a sequence of independent random variables with finite 
+  variance (we note that this is implied by finite second (or higher) moment 
+  by Lyapunov inequality). Then, for all \(n \ge 1\), \(\epsilon > 0\), 
+  \[\mathbb{P}\left(\max_{1 \le k \le n}|S_k - \mathbb{E}S_k| \ge \epsilon\right) \le 
+    \frac{V_{S_n}}{\epsilon^2}.\]
+\end{theorem}
+\begin{proof}
+  WLOG. we may assume \(\mathbb{E}\xi_i = 0\). Defining 
+  \(A := \{\max_{1 \le k \le n} |S_k| \ge \epsilon\}\), and 
+  \[A_k := \{|S_j| < \epsilon, j = 1, \cdots, k - 1, |S_k| \ge \epsilon\}.\]
+  It is clear that \(A_k\) are mutually disjoint, \(A = \bigcup_{i = 1}^n A_i\) 
+  and, \(\mathbb{E}S_n^2 \ge \mathbb{E} S_n^2 \mathbf{1}_A = 
+  \sum_{i = 1}^n \mathbb{E}S_n^2 \mathbf{1}_{A_i}\). Considering 
+  \[\begin{split}
+    \mathbb{E}S_n^2 \mathbf{1}_{A_i} & = 
+    \mathbb{E}(S_i + \xi_{i + 1} + \cdots + \xi_n)^2\mathbf{1}_{A_i}\\
+    & = \mathbb{E}S_i^2\mathbf{1}_{A_i} + 2\mathbb{E}S_i(\xi_{i + 1} + \cdots + \xi_n)\mathbf{1}_{A_i}
+      + \mathbb{E}(\xi_{i + 1} + \cdots + \xi_n)^2\mathbf{1}_{A_i}
+  \end{split}\]
+  where by independence, 
+  \[\mathbb{E}S_i(\xi_1 + \cdots + \xi_n)\mathbf{1}_{A_i} = 
+    \mathbb{E}S_i\mathbf{1}_{A_i}\mathbb{E}(\xi_1 + \cdots + \xi_n) = 0,\]
+  and so, 
+  \[\mathbb{E}S_n^2 \mathbf{1}_{A_i} = 
+  \mathbb{E}S_i^2\mathbf{1}_{A_i} + 
+  + \mathbb{E}(\xi_{i + 1} + \cdots + \xi_n)^2\mathbf{1}_{A_i} 
+  \ge \mathbb{E}S_i^2\mathbf{1}_{A_i}.\]
+  Hence, combining the inequalities, we obtain \(\mathbb{E}S_n^2 \ge 
+  \mathbb{E}S_i^2 \mathbf{1}_{A} \ge \epsilon^2 \mathbb{P}(A)\) which is 
+  exactly the required inequality after dividing both sides by \(\epsilon^2\).
+\end{proof}
+
+\begin{theorem}[Two-series Theorem]
+  Let \((\xi_n)\) be a sequence of independent random variable. If 
+  \(\sum_{n = 1}^\infty \mathbb{E} \xi_n\) and \(\sum_{n = 1}^\infty V_{\xi_n}\) 
+  both converge, then the series \(\sum_{n = 1}^\infty \xi_n\) converges almost 
+  everywhere.
+\end{theorem}
+\begin{proof}
+  In the case that \(\mathbb{E}\xi_i = 0\), we will show \((S_n)\) is Cauchy 
+  almost everywhere, i.e. 
+  \[\lim_{k \to \infty} \sup_{m, n \ge k}|S_m - S_n| = 0\]
+  almost everywhere. However, defining \(T_k := \sup_{m, n \ge k}|S_m - S_n|\), 
+  we have a sequence of decreasing, non-negative random variables, and hence, 
+  it suffice to show \(T_n\) converges to 0 in probability. We note that 
+  \[0 \le \sup_{n, m \ge k}|S_n - S_k| \le 
+    \sup_{n, m \ge k}(|S_n - S_k| + |S_k - S_m|) = 
+    2\sup_{n \ge k}|S_n - S_k| =: 2\sigma_k.\]
+  Hence, it suffice to show \(\sigma_k \to 0\) in probability. Fix \(\epsilon > 0\), 
+  then, by Kolmogorov's inequality, 
+  \[\mathbb{P}(\sigma_k \ge \epsilon) = 
+    \lim_{m \to \infty} \mathbb{P}(\max_{k \le n \le m}|S_n - S_k| \ge \epsilon)
+    \le \frac{1}{\epsilon^2} \lim_{m \to \infty} \sum_{n = k + 1}^m V_{\xi_n}
+     = \frac{1}{\epsilon^2} \sum_{n = k + 1}^m V_{\xi_n}.\]
+  Now, as \(\sum V_{\xi_n}\) converges, the right hand side tends to 0 as 
+  \(k \to \infty\) and thus, \(\sigma_k \to 0\) in probability.
+
+  In the case that \(\mathbb{E}\xi_j \neq 0\), one may simply consider 
+  \[\sum_{n = 1}^\infty \xi_n = \sum_{n = 1}^\infty (\xi_n - \mathbb{E}\xi_n) 
+    + \sum_{n = 1}^\infty \mathbb{E}\xi_n\]
+  where \(\sum_{n = 1}^\infty \mathbb{E}\xi_n\) converges by assumption and 
+  \(\sum_{n = 1}^\infty (\xi_n - \mathbb{E}\xi_n)\) converges almost everywhere 
+  by the first case.
+\end{proof}
+
+\begin{lemma}[Toeplitz]
+  Let \((a_n)\) be a non-negative real sequence and \(b_n := \sum_{k = 1}^n a_k\) 
+  such that \(b_n \to \infty\). Furthermore, let \(x_n \to x\). Then, 
+  \[\lim_{n \to \infty}\frac{1}{b_n} \sum_{k = 1}^n a_k x_k = x.\]
+\end{lemma}
+\begin{proof}
+  Elementary analysis.
+\end{proof}
+
+\begin{lemma}[Kronecker]
+  Let \((a_n)\) be a non-negative real sequence and \(b_n := \sum_{k = 1}^n a_k\) 
+  such that \(b_n \to \infty\). Furthermore, let \((x_n)\) be a sequence such that 
+  \(\sum_{k = 1}^\infty x_n\) converge. Then, 
+  \[\lim_{n \to \infty}\frac{1}{b_n}\sum_{k = 1}^\infty b_k x_k = 0.\]
+\end{lemma}
+\begin{proof}
+  Follows by summation by parts.
+\end{proof}
+
+\begin{theorem}
+  Let \((\xi_n)\) be a sequence of independent random variables with finite 
+  variance and let \((b_n)\) be a sequence of non-negative real numbers such that 
+  \(b_n \to \infty\), then, if \(\sum_{k = 1}^\infty \frac{V_{\xi_k}}{b_k^2} < \infty\),
+  we have 
+  \[\frac{S_n - \mathbb{E}S_n}{b_n} \to 0\]
+  almost everywhere.
+  
+  We note that if we simply choose \(b_n = n\), we obtain a condition for 
+  strong LLN.
+\end{theorem}
+\begin{proof}
+  We observe that 
+  \[\begin{split}
+    \frac{S_n - \mathbb{E}S_n}{b_n} & = 
+    \frac{1}{b_n} \sum_{k = 1}^n b_k \frac{\xi_k - \mathbb{E}\xi_k}{b_k}
+  \end{split}\]
+  and \(V_{\sum_{k = 1}^n \frac{\xi_k - \mathbb{E}\xi_k}{b_k}} = \sum_{k = 1}^n \frac{V_{\xi_k}}{b_k^2}\)
+  which converges by assumption. Then, by the two-series theorem, 
+  \(\sum_{k = 1}^n \frac{\xi_k - \mathbb{E}\xi_k}{b_k}\) converges 
+  almost surely. Thus, applying Kronecker's lemma at all points of convergence, 
+  we obtain the required result.
+\end{proof}
+
 \end{document}
