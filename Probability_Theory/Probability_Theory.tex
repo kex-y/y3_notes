@@ -1877,4 +1877,78 @@ LLN.
   we obtain the required result.
 \end{proof}
 
+\begin{lemma}
+  Let \(\xi \ge 0\) be a non-negative random variable. Then, 
+  \[\sum_{n = 1}^\infty\mathbb{P}(\xi \ge n) \le \mathbb{E}\xi \le 
+    1 + \sum_{n = 1}^\infty\mathbb{P}(\xi \ge n).\]
+\end{lemma}
+\begin{proof}
+  This follows by 
+  \[\begin{split}
+    \sum_{n = 1}^\infty \mathbb{P}(\xi \ge n) & = 
+    \sum_{n = 1}^\infty \sum_{k \ge n} \mathbb{P}(k \le \xi \le k + 1)
+    = \sum_{k = 1}^\infty k \mathbb{P}(k \le \xi < k + 1)\\
+    & = \sum_{k = 1}^\infty \mathbb{E}(k \mathbf{1}_{[k, k + 1)}(\xi))
+    \le \sum_{k = 1}^\infty \mathbb{E}(\xi \mathbf{1}_{[k, k + 1)}(\xi))
+    = \mathbb{E}\xi \\
+    & \le \sum_{k = 1}^\infty \mathbb{E}((k + 1) \mathbf{1}_{[k, k + 1)}(\xi))
+    = 1 + \sum_{n = 1}^\infty\mathbb{P}(\xi \ge n).
+  \end{split}\]
+\end{proof}
+
+\begin{theorem}[Kolmogorov's Strong Law of Large Numbers]
+  Let \((\xi_n)_{n = 1}^\infty\) be a sequence of i.i.d. random variables with 
+  finite expectation so \(\mathbb{E}\xi_1 = m\), then 
+  \[\frac{1}{n}S_n \to m\]
+  almost everywhere.
+\end{theorem}
+
+We note that \(S_n / n \to m\) almost everywhere is equivalent to 
+\(\sum_{k = 1}^n (\xi_k - \mathbb{E}\xi_k) = o(n)\) as \(n \to \infty\) almost 
+everywhere.
+
+\begin{proof}
+  WLOG. we may assume \(\mathbb{E}\xi_1 = 0\), and it suffices to show 
+  \(S_n / n \to 0\) almost everywhere. As 
+  \(\mathbb{E}|\xi_1|<\infty\), by the above lemma we have  
+  \(\sum_{n = 1}^\infty \mathbb{P}(|\xi_n| \ge n) \le \mathbb{E}|\xi_1| < \infty\). 
+  Hence, by Borel-Cantelli, \(\mathbb{P}(|\xi_n| \ge n \text{ i.o.}) = 0\) 
+  and so \(\mathbb{P}(|\xi_n| < n \text{ e.v.}) = 1\).
+
+  Now, defining 
+  \[\tilde \xi_n = \begin{cases}
+    \xi_n, & \ |\xi_n| < n,\\
+    0, & \ |\xi_n| \ge n,
+  \end{cases}\]
+  the above implies \(S_n / n \to 0\) almost everywhere if and only if 
+  \(\sum_{k = 1}^n \tilde \xi_k / n \to 0\) almost everywhere. Noting 
+  \[\mathbb{E}\tilde \xi_n = \mathbb{E} \xi_n \mathbf{1}_{|\xi_n| < n} = 
+    \mathbb{E}\xi_1 \mathbf{1}_{|\xi_1| < n}\]
+  tends to \(\mathbb{E}\xi_1\) as \(n \to \infty\) almost everywhere. Now, 
+  by Toeplitz lemma with \(x_n := \mathbb{E}\tilde \xi_n\), we have 
+  \(\frac{1}{n} \sum_{k = 1}^n \mathbb{E}\tilde \xi_k \to 0\)
+  almost everywhere as \(n \to \infty\). Thus, \(S_n / n \to 0\) 
+  if and only if \(\frac{1}{n}(\sum_k (\tilde \xi_k - \mathbb{E} \tilde \xi_k))
+  \to 0\) almost everywhere. Then, applying Kronecker's lemma with 
+  \(b_n = n, x_n = (\tilde \xi_n - \mathbb{E} \tilde \xi_n) / n\), we obtain
+  \(\frac{1}{n}(\sum_k (\tilde \xi_k - \mathbb{E} \tilde \xi_k)) \to 0\) if 
+  \(\sum_{n = 1}^\infty \frac{\tilde \xi_n - \mathbb{E}\tilde \xi_n}{n}\) 
+  converges. Then, applying the two-series theorem, it suffices to show 
+  \[\sum_{n = 1}^\infty V\left(\frac{\tilde \xi_n - \mathbb{E}\tilde \xi_n}{n}\right)
+    = \sum_{n = 1}^\infty \frac{V(\tilde \xi_n - \mathbb{E}\tilde \xi_n)}{n^2} < \infty.\]
+  But this follows by considering 
+  \[\begin{split}
+    \sum_{n = 1}^\infty \frac{V(\tilde \xi_n  - \mathbb{E}\tilde \xi_n)}{n^2}
+    & \le \sum_{n = 1}^\infty \frac{\mathbb{E}\tilde \xi_n^2}{n^2} = 
+    \sum_{n = 1}^\infty \frac{1}{n^2}\mathbb{E}(\xi_1^2 \mathbf{1}_{|\xi_1| < n})\\
+    & = \sum_{n = 1}^\infty \frac{1}{n^2}
+      \sum_{k = 1}^n\mathbb{E}(\xi_1^2 \mathbf{1}_{k - 1\le |\xi_1| < k})\\
+    & = \sum_{k = 1}^\infty
+      \mathbb{E}(\xi_1^2 \mathbf{1}_{k - 1\le |\xi_1| < k})
+      \sum_{n \ge k} \frac{1}{n^2}\\
+    & \le 2 \sum_{k = 1}^\infty \mathbb{E}(|\xi_1|\mathbf{1}_{k - 1 \le |\xi_1| < k})
+      = 2 \mathbb{E}|\xi_1| < \infty.
+  \end{split}\]
+\end{proof}
+
 \end{document}
