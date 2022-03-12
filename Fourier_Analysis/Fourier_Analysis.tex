@@ -1047,8 +1047,8 @@ the definition of Fourier transforms.
   and the Fubini theorem, 
   \[\begin{split}
     \int_{\mathbb{R}} f_1 \overline{f_2} \dd \lambda & = 
-    \int \frac{1}{2\pi} \int g_1(y)e^{iyx} \lambda(\dd(y)) \overline{g_2(y)} 
-      \lambda(\dd(x))\\
+    \int \frac{1}{2\pi} \int g_1(y)e^{iyx} \lambda(\dd y) \overline{g_2(y)} 
+      \lambda(\dd x)\\
     & = \frac{1}{2\pi} \int g_1(y) \overline{\int f_2(x)e^{-iyx} 
       \lambda(\dd x)} \lambda(\dd y)\\
     & = \frac{1}{2\pi} \int g_1(y) \overline{g_2(y)} \lambda(\dd y).
@@ -2169,7 +2169,7 @@ easily.
   If \(f : \mathbb{R} \to \mathbb{R}\) has jumps at \(x_1, x_2, \cdots\) and 
   is continuously differentiable elsewhere, its distributional derivative is 
   \[\mathbf{1}_{\mathbb{R} \setminus \{x_n\}_n}
-    f'(x) + \sum_{i = 1}^\infty f(x_i)\delta(x - x_i).\]
+    f'(x) + \sum_{i = 1}^\infty (f({x_i}_+) - f({x_i}_-))\delta(x - x_i).\]
 \end{proposition}
 
 Consider now the function \(f\) with \(2\pi\)-period on \(\mathbb{R}\) defined by 
