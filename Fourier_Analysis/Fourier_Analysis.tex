@@ -1089,16 +1089,14 @@ the definition of Fourier transforms.
     \frac{1}{2\pi}\int g_1 \overline{g_2} \dd \lambda.\]
 \end{corollary}
 \begin{proof}
-  Try using the polarization identity:
-  \[\langle u, v\rangle = \frac{1}{4}(\|u + v\|^2 - \|u - v\|^2 
-  + i\|u + iv\|^2 - i\|u - iv\|^2).\]
+  Consider the Plancherel theorem for \(f_1 - f_2\) and \(f_1 - if_2\).
 \end{proof}
 
 \subsection{Laplace Transform}
 
-In the case that a function is neither \(L_1\), we may not in general
+In the case that a function is neither \(L_2\), we may not in general
 use the Fourier transform directly. Instead, we would like to consider an 
-analogue of the Fourier transform on of which is known as the Laplace transform.
+analogue of the Fourier transform known as the Laplace transform.
 In particular, the idea is that some nonintegrable functions \(f\) becomes 
 integrable by multiplying it with \(e^{-\gamma x}\) for some 
 \(\gamma \in \mathbb{R}\). Namely, we take 
@@ -2190,5 +2188,190 @@ since the partial sums converges as distributions. Thus, comparing the
 two, we obtain 
 \[\sum_{n = -\infty}^\infty e^{inx} = 2\pi \sum_{k = -\infty}^\infty \delta(x - 2\pi k).\]
 
+\subsection{Application to Differential Equations}
+
+We will in this section discuss the application of distributions to differential 
+equations.
+
+Let us first consider the case \(y' = f\).
+
+\begin{lemma}
+  Let \(\mathcal{D}^{(1)}\) be the set of \(\phi \in \mathcal{D}\) such that 
+  \(\phi\) is a derivative of some \(\psi \in \mathcal{D}\). Then, 
+  \(\phi \in \mathcal{D}^{(1)}\) if and only if \(\int \phi \dd \lambda = 0\).
+\end{lemma}
+\begin{proof}
+  If \(\phi = \psi'\), then \(\int \phi \dd \lambda = \psi\mid_{-\infty}^\infty = 0\)
+  by compact support. On the other hand, if \(\int \phi \dd \lambda = 0\), then
+  we may define 
+  \[\psi(x) := \int_{(-\infty, x]} \phi \dd \lambda.\]
+  It is clear that \(\psi\) is infinitely differentiable, and sine 
+  \(\int \phi \dd \lambda = 0\), \(\psi\) has compact support, and hence, 
+  \(\psi \in \mathcal{D}\). Furthermore, by the fundamental theorem of calculus, 
+  \(\psi' = \phi\) proving the lemma.
+\end{proof}
+
+\begin{proposition}
+  Let \(y\) a distribution such that \(y' = 0\). Then, \(y\) is a constant.
+\end{proposition}
+\begin{proof}
+  By definition, \(y'(\phi) = -y(\phi') = 0\) for all \(\phi \in \mathcal{D}\).
+  As \(\mathcal{D}^{(1)}\) is a linear subspace of \(\mathcal{D}\), by the 
+  above lemma, \(\ker y = \mathcal{D}^{(1)}\). Since the cokernel of a linear 
+  functional has dimension 1, every element \(\phi \in \mathcal{D}\) can be 
+  written as \(c\phi_0 + \phi_1\) where \(\phi_0 \in \mathcal{D} \setminus 
+  \mathcal{D}^{(1)}\) is fixed satisfying \(\int \phi_0 \dd \lambda = 1\) and
+  \(\phi_0 \in \mathcal{D}^{(1)}\). 
+
+  Integrating both sides of \(\phi = c\phi_0 + \phi_1\), we obtain
+  \(c = \int \phi \dd \lambda\) and thus, \(y(\phi_0)\) uniquely defines 
+  \(y\) as 
+  \[y(\phi) = cy(\phi_0) = y(\phi_0) \int \phi \dd \lambda = 
+    \int y(\phi_0)\phi \dd \lambda = T_c(\phi)\]
+  where \(T_c\) is the distribution corresponding to the constant function \(c\).
+  Thus, \(y = T_c\) which is the constant distribution.
+\end{proof}
+
+\begin{corollary}
+  If \(f' = g'\), then \(f - g\) is a constant. 
+\end{corollary}
+
+\begin{theorem}
+  Let \(f\) be a distribution, there exists some distribution \(y \in \mathcal{D}'\) 
+  such that \(y' = f\).
+\end{theorem}
+\begin{proof}
+  By definition, \(y'(\phi) = -y(\phi') = f(\phi)\) for all \(\phi \in \mathcal{D}\).
+  Then, again by recalling that for all \(\phi \in \mathcal{D}\), we may write 
+  \(\phi = c\phi_0 + \phi_1\), where \(\phi_1 \in \mathcal{D}^{(1)}\), we 
+  define 
+  \[y(\phi) = y(c\phi_0 + \phi_1) := -f\left(x \mapsto 
+    \int_{(-\infty, x]} \phi_1 \dd \lambda\right),\]
+  which satisfy \(y' = f\) as required since for all \(\phi \in \mathcal{D}\),
+  \[y'(\phi) = -y(\phi') = f\left(x \mapsto \int_{(-\infty, x]} \phi' \dd \lambda\right)\
+    = f(\phi).\]
+\end{proof}
+
+Any solution added by a constant is another solution and so, the equation \(y' = f\) 
+has only solutions unique up to a constant.
+
+\begin{theorem}
+  Consider the system of homogeneous differential equations 
+  \[y'_j = \sum_{k = 1}^n a_{jk}(x)y_k, j = 1, \cdots, n\]
+  where \(a_{jk}\) are infinitely differentiable functions. Then, all solutions 
+  to such a system (in distribution) are regular. 
+
+  On the other hand, if the system is not homogeneous,
+  \[y'_j = \sum_{k = 1}^n a_{jk}(x)y_k + f_j, j = 1, \cdots, n\]
+  where \(a_{jk}\) are infinitely differentiable functions and \(f_j\) are 
+  distributions. Then, solutions of the system \(y_j \in \mathcal{D}'\) 
+  exists and is determined uniquely up to an arbitrarily solution of the 
+  homogeneous system. In the case that \(f_j\) are regular, then the solution 
+  of the system is also regular. 
+\end{theorem}
+\begin{proof}
+  Omitted.
+\end{proof}
+
+\subsection{Functions of Several Variables and On the Unit Circle}
+
+Consider the set of functions \(\phi\) on \(\mathbb{R}^n\) such that \(\phi\) 
+has partial derivatives of all order with respect to all \(n\) of its variables.
+Furthermore, suppose \(\phi\) has bounded support such that \(\phi\) vanishes 
+outside some ball of finite radius.  
+
+One may introduce a topology on this linear space such that the convergence 
+satisfies 
+\[\phi_n \to \phi \iff \exists B \text{ bounded}, \phi_k(B) = \{0\} \wedge \forall x \in B, 
+  \frac{\partial^r \phi_k}{\partial x_1^{\alpha_1} \cdots \partial x_n^{\alpha_n}}
+  \to 
+  \frac{\partial^r \phi}{\partial x_1^{\alpha_1} \cdots \partial x_n^{\alpha_n}}
+  \text{ uniformly}\]
+where \(r = \sum_{i = 1}^n \alpha_i\) for any 
+\(\alpha_1, \cdots, \alpha_n \in 0, 1, \cdots\). We denote this space 
+\(\mathcal{D}(\mathbb{R}^n)\) and we by generalize our definition of distributions 
+to this space.
+
+\begin{definition}
+  A continuous linear functional on \(\mathcal{D}(\mathbb{R}^n)\) is called a 
+  distribution of \(n\)-variables. Similarly, we denote the space 
+  of such distributions by \(\mathcal{D}'(\mathbb{R}^n)\).
+\end{definition}
+
+As before, locally integrable functions \(f\) on \(\mathbb{R}^n\) induces 
+distributions and almost all results for single variables remains to hold for 
+multivariate functions, e.g. the derivative of a multivariate distribution is 
+defined as 
+\[\frac{\partial^r f}{\partial x_1^{\alpha_1} \cdots \partial x_n^{\alpha_n}}
+  = (-1)^r \left\langle f, 
+  \frac{\partial^r \phi}{\partial x_1^{\alpha_1} \cdots \partial x_n^{\alpha_n}} \right\rangle.\]
+
+Another class of important functions is the set of infinitely 
+differentiable functions on \(\mathbb{T}\) where 
+\[\mathbb{T} := \{e^{i\phi} \mid 0 \le \phi < 2\pi\}.\]
+One can introduce a topology on the linear space of these functions such that 
+\(\phi_n \to \phi\) if and only if \(\phi_n^{(k)} \to \phi^{(k)}\) uniformly 
+on \(\mathbb{T}\) for all \(k = 0, 1, \cdots\). We note that the compact support 
+requirement is redundant as \(\mathbb{T}\) is compact. We denote this space 
+by \(D(\mathbb{T})\).
+
+\begin{definition}
+  A continuous linear functional on \(\mathcal{D}(\mathbb{T})\) is a distribution 
+  on the unit circle. 
+\end{definition}
+
+Functions and distributions on \(\mathbb{T}\) are related to periodic functions 
+and distribution (see definition below) on \(\mathbb{R}\). 
+
+\begin{definition}
+  Let \(f \in \mathcal{D}'\) is a periodic distribution with period \(a\) if 
+  \(f(\phi(x - a)) = f(\phi)\) for all \(\phi \in \mathcal{D}\).
+\end{definition}
+
+\subsection{Tempered Distribution}
+
+Recall the space of Schwarz functions \(S_\infty\). Namely, infinitely 
+differentiable functions \(\phi\) such that for all \(p, q = 0, 1, \cdots\), 
+there exists some \(C_{p, q} > 0\), such that
+\[|x^p \phi^{(q)}(x)| \le C_{p, q}\] 
+for all \(x\). Note that \(\mathcal{D} \subseteq S_\infty\).
+
+\(S_\infty\) is a countably normed space with the following norms (exercise)
+such that for all \(\phi \in S_\infty\),
+\[\|\phi\|_n := \sum_{p + q = n} \sup_{\substack{x, 0 \le j \le p\\0 \le k \le q}}
+|(1 + |x|^j)\phi^{(k)}(x)|.\] 
+
+\begin{lemma}
+  A sequence \(\phi_n\) of Schwarz functions converges to \(\phi \in S_\infty\) 
+  if and only if \(q = 0, 1, \cdots\), the sequence \(\phi_n^{(q)}\) converges 
+  uniformly on any bounded interval and for all \(p, q = 0, 1, \cdots\), 
+  there exists a uniform bound \(C_{p, q}\) such that 
+  \[|x^p \phi_n^{(q)}(x)| < C_{p, q}\]
+  for all \(n, x\).
+\end{lemma}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{definition}
+  A linear continuous functional on \(S_\infty\) is a tempered distribution.
+  We denote the space of tempered distributions as \(S'\).
+\end{definition}
+
+The regular functionals on \(S_\infty\) are defined similarly to that of 
+\(\mathcal{D}\). Namely, for all functions \(f\), we define the regular tempered 
+distribution of \(f\) (if it exists) as 
+\[T_f : \phi \in S_\infty \mapsto \int f\phi \dd \lambda.\]
+We note that in this case \(S' \subseteq \mathcal{D}'\) as \(e^{x^2}\) 
+is regular in \(\mathcal{D}'\) while not regular in \(S_\infty\) 
+(as \(e^{-x} \in S_\infty\) while \(\int e^{x^2} e^{-x} \lambda(\dd x) = \infty\)).
+
+Similar to \(\mathcal{D}\), 
+\begin{itemize}
+  \item a linear functional \(f\) on \(S_\infty\) is continuous if and only if 
+  \(f(\phi_n) \to f(\phi)\) for all \(\phi_n \to \phi\) in \(S_\infty\).
+  \item a sequence \((f_n) \subseteq S'\) is said to converge to \(f \in S'\) 
+  if \(f_n(\phi) \to f(\phi)\) for all \(\phi \in S_\infty\).
+\end{itemize}
 
 \end{document}
