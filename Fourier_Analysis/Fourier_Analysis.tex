@@ -2374,4 +2374,113 @@ Similar to \(\mathcal{D}\),
   if \(f_n(\phi) \to f(\phi)\) for all \(\phi \in S_\infty\).
 \end{itemize}
 
+\subsection{Fourier Transform of Distributions}
+
+Recall that Fourier transform, as a linear operator, forms an automorphism 
+on \(S_\infty\). This allows us to define the Fourier transform of 
+distributions on \(S_\infty\). 
+
+\begin{definition}[Fourier Transform of a Tempered Distribution]
+  The Fourier transform of a tempered distribution \(f \in S'\) is the distribution 
+  \(\mathcal{F}[f] = g \in S'\) given by 
+  \[g(\phi) := f(\mathcal{F}[\phi])\]
+  for all \(\phi \in S_\infty\). Namely, \(\mathcal{F}[f] = f \circ \mathcal{F}\)
+  where \(\mathcal{F} : S_\infty \to S_\infty\) is considered as a linear map 
+  on the space of Schwarz functions.
+\end{definition}
+
+We remark that \(L_1(\mathbb{R}) \subseteq S'\) where we consider \(L_1\)
+functions in \(S'\) as their regular distribution. For these functions, 
+the regular distribution of their Fourier transform equals the Fourier 
+transform of their regular distribution. 
+
+\begin{proposition}
+  Let \(f \in L_1(\mathbb{R})\). Then, \(T_f \in S'\) and 
+  \[\mathcal{F}[T_f] = T_{\mathcal{F}[f]}.\]
+\end{proposition}
+\begin{proof}
+  First consider when \(f \in S_\infty\) which result follows by Fubini. 
+  Then, by the density of \(S_\infty\) in \(L_1\), we obtain the general 
+  result.
+\end{proof}
+
+We leave the following computations as easy exercises.
+
+\begin{proposition}
+  Let \(f_1(x) = c\) be a constant function, \(f_2(x) = e^{iax}\). 
+  Then, \(\mathcal{F}[f_1] = 2\pi c \delta(x)\) and 
+  \(\mathcal{F}[f_2] = 2\pi \delta(x - a)\).
+\end{proposition}
+
+\begin{proposition}
+  \(\mathcal{F}[\delta(x - a)] = e^{-iax}\) for all \(a \in \mathbb{R}\). 
+\end{proposition}
+
+\begin{proposition}
+  Let \(f \in S'\) such that \(f(\phi) = \int \frac{\psi(x)}{x} \lambda(\dd x)\) 
+  where the integral is taken as the principle value. Then, 
+  \(\mathcal{F}[f] = -\pi i\text{sign}\).
+\end{proposition}
+\begin{proof}
+  Denote \(g := \mathcal{F}[f]\) and we consider \(g'\). Indeed, for all 
+  \(\phi \in S_\infty\),
+  \[\begin{split}
+    g'(\phi) & = g(-\phi') = f(-\mathcal{F}[\phi']) = 
+      f(-iy \mathcal{F}[\phi]) = -\int \mathcal{F}[\phi] \dd \lambda = 
+      -2\pi i \phi(0). 
+  \end{split}\]
+  Thus, \(g' = - 2\pi i \delta\). As we have seen from the exercises, 
+  \(\text{sign}' = 2\delta\), and so, as the solutions to differential equations 
+  are unique up to a constant, \(g = -\pi i \text{sign} + C\) for some 
+  constant \(C\). Finally, by considering even test functions, \(C = 0\), and 
+  hence \(\mathcal{F}[f] = -\pi i\text{sign}\) as required.
+\end{proof}
+
+We would now like to generalise the Fourier transform to other test spaces, 
+namely \(\mathcal{D}\). Unlike \(S_\infty\), the Fourier transform is not 
+invariant under \(\mathcal{D}\), and so, let us first describe the image 
+of the Fourier transform in more generalised settings.
+
+Straight away we note that \(\mathcal{F}[\mathcal{D}] \subseteq 
+\mathcal{F}[S_\infty] = S_\infty\). Let \(\phi \in \mathcal{D}\), 
+with support \([-a, a]\). Then, 
+\[\psi(y) := \mathcal{F}[\phi](y) = \int_{[-a, a]} e^{-iyx} \phi(x) \dd \lambda(x).\]
+Since the integral is over a finite interval and the integrand 
+\(e^{-iyx}\phi(x)\) is analytic in \(y\) and continuous in \(x\), \(\psi\)
+extends to an entire function on \(\mathbb{C}\). Moreover, integrating by 
+parts, we obtain 
+\[|y|^q |\psi(y)| = \left|\int_{[-a, a]} e^{-iyx}\phi^{(q)}(x) \dd \lambda(x)\right|
+  \le C_q e^{a|\text{im}(y)|}.\] 
+Thus, the Fourier transform maps \(\mathcal{D}\) into the linear space \(\mathcal{Z}\) 
+consisting of entire functions \(\psi\) which satisfy 
+\[|y|^q |\psi(y)| \le C_q(\psi) e^{a(\psi)|\text{im}(y)|},\]
+for all \(q\) and some \(C_q(\psi)\) and \(a(\psi)\).
+
+Conversely, any function \(\psi \in \mathcal{Z}\), is a Fourier transform 
+of some \(\phi \in \mathcal{D}\). Indeed, for all \(\psi \in \mathcal{Z}\), 
+we define \(\phi\) to be its inverse Fourier transform, namely, 
+\[\phi(x) := \frac{1}{2\pi} \int \psi(y) e^{iyx} \dd \lambda(y),\]
+which exists by the condition of \(\mathcal{Z}\).
+I claim that \(\phi \in \mathcal{D}\). Indeed, formal differentiable under the 
+sign of the integral results in absolutely and uniformly convergent 
+integral. Therefore, \(\phi\) is differentiable, and 
+\[\phi^{(q)}(x) = \frac{1}{2\pi} \int (iy)^q \psi(y) e^{iyx} \dd \lambda(x).\]
+Furthermore, \(\phi\) is compactly supported via a construction of a 
+contour integral (see official notes for proof).
+
+\begin{corollary}
+  The Fourier transform forms a linear 
+  bijection between \(\mathcal{D}\) and \(\mathcal{Z}\).
+\end{corollary}
+
+With the above considerations, we can define the Fourier transform on 
+general distributions.
+
+\begin{definition}[Fourier Transform of a Distribution]
+  The Fourier transform of a distribution \(f \in \mathcal{D}'\) is the 
+  distribution \(\mathcal{F}[f] \in \mathcal{Z}^* =: \mathcal{Z}'\) given by 
+  \[\mathcal{F}[f](\phi) = f(\mathcal{F}[\phi])\]
+  for all \(\phi \in \mathcal{Z}\).
+\end{definition}
+
 \end{document}
