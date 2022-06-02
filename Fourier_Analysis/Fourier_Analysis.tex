@@ -32,7 +32,7 @@
 }{% if KOMA class
   \KOMAoptions{parskip=half}}
 \makeatother
-\usepackage{xcolor}\pagecolor[RGB]{28,30,38} \color[RGB]{213,216,218}
+\usepackage{xcolor}\pagecolor[RGB]{227,225,217} \color[RGB]{42,39,37}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
@@ -412,7 +412,7 @@ with a point which has measure 0.
 \begin{center}
   \begin{tikzpicture}
     \begin{axis}[
-        legend style={fill=black,draw=white},
+        legend style={fill=white,draw=black},
         axis lines = left,
         xlabel = \(z\),
         ylabel = {\(D_n(z)\)},
@@ -429,14 +429,14 @@ with a point which has measure 0.
     \addplot [
         domain=-pi:pi, 
         samples=500, 
-        color=yellow,
+        color=orange,
     ]
     {sin(deg((9 / 2) * x)) / sin(deg(x / 2))};    
     \addlegendentry{\(n = 4\)}
     \addplot [
         domain=-pi:pi, 
         samples=500, 
-        color=green,
+        color=blue,
     ]
     {sin(deg((17 / 2) * x)) / sin(deg(x / 2))};    
     \addlegendentry{\(n = 8\)}

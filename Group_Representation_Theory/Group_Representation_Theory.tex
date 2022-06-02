@@ -32,7 +32,7 @@
 }{% if KOMA class
   \KOMAoptions{parskip=half}}
 \makeatother
-\usepackage{xcolor}\pagecolor[RGB]{28,30,38} \color[RGB]{213,216,218}
+\usepackage{xcolor}\pagecolor[RGB]{227,225,217} \color[RGB]{42,39,37}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
@@ -1369,71 +1369,72 @@ Let us denote this representation by \(\rho_{V \boxtimes W}\).
   Omitted.
 \end{proof}
 
-\newpage
-\section{Restriction and Coinduction}
+% Incomplete!
+% \newpage
+% \section{Restriction and Coinduction}
 
-We have already used the following definition though it is useful to introduce 
-a notation for it. 
+% We have already used the following definition though it is useful to introduce 
+% a notation for it. 
 
-\begin{definition}[Resetricted Representation]
-  Given a subgroup \(H < G\) and a representation \((V, \rho_V)\) of \(G\), 
-  the restricted representation \(\text{Res}_H^G(V)\) is the representation 
-  of \(H\) defined by \((V, \rho_v \circ i)\) where \(i\) is the inclusion map 
-  from \(H\) to \(G\).
-\end{definition}
+% \begin{definition}[Resetricted Representation]
+%   Given a subgroup \(H < G\) and a representation \((V, \rho_V)\) of \(G\), 
+%   the restricted representation \(\text{Res}_H^G(V)\) is the representation 
+%   of \(H\) defined by \((V, \rho_v \circ i)\) where \(i\) is the inclusion map 
+%   from \(H\) to \(G\).
+% \end{definition}
 
-As the underlying vector space remains the same, we have 
-\(\dim V = \dim \text{Res}_H^G(V)\).
+% As the underlying vector space remains the same, we have 
+% \(\dim V = \dim \text{Res}_H^G(V)\).
 
-Conversely, we would like to obtain a representation of \(G\) from a 
-representation of \(H\). This process is known as induction and the resulting 
-representation is called the (co)induced representation.
+% Conversely, we would like to obtain a representation of \(G\) from a 
+% representation of \(H\). This process is known as induction and the resulting 
+% representation is called the (co)induced representation.
 
-\begin{definition}[Coinduced Representation]
-  Let \(H < G\) be a subgroup and \((V, \rho_V)\) be a representation of \(H\). 
-  Then, the coinduced representation \(\text{coInd}_H^G(V)\) is defined as 
-  \[\text{coInd}_H^G(V) := \{f : G \to V \mid f(hg) = \rho_V(h)f(g), \ 
-    \forall g \in G, h \in H\},\]
-  with the action of \(G\) given by \((g \cdot \phi)(g') := \phi(g'g)\).
-\end{definition}
+% \begin{definition}[Coinduced Representation]
+%   Let \(H < G\) be a subgroup and \((V, \rho_V)\) be a representation of \(H\). 
+%   Then, the coinduced representation \(\text{coInd}_H^G(V)\) is defined as 
+%   \[\text{coInd}_H^G(V) := \{f : G \to V \mid f(hg) = \rho_V(h)f(g), \ 
+%     \forall g \in G, h \in H\},\]
+%   with the action of \(G\) given by \((g \cdot \phi)(g') := \phi(g'g)\).
+% \end{definition}
 
-We see that \(\text{coInd}_H^G(V)\) are functions from \(G\) to \(V\) which are 
-\(H\)-invariant. Equivalently, the coinduced representation can be defined 
-by \(\text{coInd}_H^G(V) = \text{Hom}_H(\mathbb{C}[G], V)\). Unlike the 
-restricted representation, the coinduced representation does not fix the 
-dimension.
+% We see that \(\text{coInd}_H^G(V)\) are functions from \(G\) to \(V\) which are 
+% \(H\)-invariant. Equivalently, the coinduced representation can be defined 
+% by \(\text{coInd}_H^G(V) = \text{Hom}_H(\mathbb{C}[G], V)\). Unlike the 
+% restricted representation, the coinduced representation does not fix the 
+% dimension.
 
-\begin{proposition}
-  Denoting \(H \setminus G\) the set of right cosets of \(H\) in \(G\), the map 
-  \[\Psi : \text{Fun}(H \setminus G, V) \to \text{coInd}_H^G(V) : 
-    \phi \mapsto (hg_i \mapsto \rho_V(h)\phi(Hg_i))\]
-  is a linear isomorphism.
-\end{proposition}
-\begin{proof}
-  Definition check.
-\end{proof}
+% \begin{proposition}
+%   Denoting \(H \setminus G\) the set of right cosets of \(H\) in \(G\), the map 
+%   \[\Psi : \text{Fun}(H \setminus G, V) \to \text{coInd}_H^G(V) : 
+%     \phi \mapsto (hg_i \mapsto \rho_V(h)\phi(Hg_i))\]
+%   is a linear isomorphism.
+% \end{proposition}
+% \begin{proof}
+%   Definition check.
+% \end{proof}
 
-\begin{corollary}
-  Let \([G : H]\) be the index of the subgroup \(H\), then 
-  \[\dim \text{coInd}_H^G(V) = [G : H]\dim V.\]
-\end{corollary}
-\begin{proof}
-  If \([G : H] = \infty\) then both sides of the equation are infinite. 
-  Suppose that \([G : H] = n < \infty\), then by the above isomorphism, 
-  we have \(\dim \text{coInd}_H^G(V) = \dim \text{Fun}(H \setminus G, V) = 
-  \dim V^n = [G : H] \dim V\).
-\end{proof}
+% \begin{corollary}
+%   Let \([G : H]\) be the index of the subgroup \(H\), then 
+%   \[\dim \text{coInd}_H^G(V) = [G : H]\dim V.\]
+% \end{corollary}
+% \begin{proof}
+%   If \([G : H] = \infty\) then both sides of the equation are infinite. 
+%   Suppose that \([G : H] = n < \infty\), then by the above isomorphism, 
+%   we have \(\dim \text{coInd}_H^G(V) = \dim \text{Fun}(H \setminus G, V) = 
+%   \dim V^n = [G : H] \dim V\).
+% \end{proof}
 
-\begin{definition}
-  Let \(X\) be a nonempty set and let \(x \in X\). Then we define 
-  \(V(x) \subseteq \text{Fun}(X, V)\) be the subspace of functions which have 
-  value zero on every element of \(X\) except \(x\). 
-\end{definition}
+% \begin{definition}
+%   Let \(X\) be a nonempty set and let \(x \in X\). Then we define 
+%   \(V(x) \subseteq \text{Fun}(X, V)\) be the subspace of functions which have 
+%   value zero on every element of \(X\) except \(x\). 
+% \end{definition}
 
-\begin{proposition}
-  \(V(x) \cong V\), \(\bigoplus_{x \in X} V(x) \subseteq \text{Fun}(X, V)\) which 
-  becomes an equality for \(X\) finite, and \(\text{Fun}(X, V) \cong V^{|X|}\).
-\end{proposition}
+% \begin{proposition}
+%   \(V(x) \cong V\), \(\bigoplus_{x \in X} V(x) \subseteq \text{Fun}(X, V)\) which 
+%   becomes an equality for \(X\) finite, and \(\text{Fun}(X, V) \cong V^{|X|}\).
+% \end{proposition}
 
 \newpage 
 \section{Character Theory}
@@ -2514,185 +2515,185 @@ We say the this map decomposes \(V\) into isotypic components, i.e.
 \(V^i\) is the span of all subrepresentations of \(V\) isomorphic to 
 \(V_i\).
 
-\newpage
-\section{Connections to Geometry}
+% \newpage
+% \section{Connections to Geometry}
 
-This section will provide some connections between representation theory to 
-geometry. All content in this section are not examinable.
+% This section will provide some connections between representation theory to 
+% geometry. All content in this section are not examinable.
 
-\subsection{Dirac Operator and Clifford Algebra}
+% \subsection{Dirac Operator and Clifford Algebra}
 
-The Dirac operator is an operator initially motivated by relativistic quantum 
-mechanics and is defined to be a square root of the Laplacian operator, i.e. 
-the Dirac operator \(D\) is an operator such that 
-\[D^2 = \Delta = \pdv[2]{x_1} + \cdots + \pdv[2]{x_n}.\]
-The non-relativistic Schrödinger equation (without potential, i.e. free particle) 
-is 
-\[i\hbar \pdv{\psi}{t} = - \frac{\hbar^2}{2m} \Delta \psi\]
-where \(\psi : \mathbb{R}^n \to \mathbb{C}\) is the wave function evolving in 
-time. Written in terms of the Hamiltonian \(H\), we have the equation 
-\(\dot \psi = H\psi\) (omitting some constants). We note that this equation 
-treats time and space separately and is therefore non-relativistic.
+% The Dirac operator is an operator initially motivated by relativistic quantum 
+% mechanics and is defined to be a square root of the Laplacian operator, i.e. 
+% the Dirac operator \(D\) is an operator such that 
+% \[D^2 = \Delta = \pdv[2]{x_1} + \cdots + \pdv[2]{x_n}.\]
+% The non-relativistic Schrödinger equation (without potential, i.e. free particle) 
+% is 
+% \[i\hbar \pdv{\psi}{t} = - \frac{\hbar^2}{2m} \Delta \psi\]
+% where \(\psi : \mathbb{R}^n \to \mathbb{C}\) is the wave function evolving in 
+% time. Written in terms of the Hamiltonian \(H\), we have the equation 
+% \(\dot \psi = H\psi\) (omitting some constants). We note that this equation 
+% treats time and space separately and is therefore non-relativistic.
 
-In relativity on the other hand, we have the momentum-energy four-vector 
-\[p^2 c^2 + m^2 c^4 = E^2\]
-where \(p\) is the momentum, \(c\) is the speed of light, \(m\) is the mass 
-and \(E\) is the energy. This equation suggests another operator describing 
-energy (in contrast to the Hamiltonian) and so, we replace the 
-Schrödinger equation with
-\[\frac{1}{c^2}\left(i\hbar \pdv{t}\right)^2 \psi + \hbar^2 \Delta\psi = 
-  m^2c^2 \psi.\]
-Denoting the operator \(\tilde \Delta := 
-\left(\frac{i \hbar}{c}\pdv{t}\right)^2 + \left(\hbar \pdv{x_1}\right)^2 + \cdots 
-+ \left(\hbar \pdv{x_n}\right)^2\), the equation becomes \(\tilde \Delta \psi = 
-m^2 c^2 \psi\). We call \(\tilde \Delta\) the space-time Laplacian. However, 
-unlike the Schrödinger equation, this is now a second order differential equation 
-and the solution will depend on not only the wave function at time 0, but also 
-its derivative at 0. This is problematic as the derivative might be badly behaved 
-and \(\psi\) might not be \(L^2\).
+% In relativity on the other hand, we have the momentum-energy four-vector 
+% \[p^2 c^2 + m^2 c^4 = E^2\]
+% where \(p\) is the momentum, \(c\) is the speed of light, \(m\) is the mass 
+% and \(E\) is the energy. This equation suggests another operator describing 
+% energy (in contrast to the Hamiltonian) and so, we replace the 
+% Schrödinger equation with
+% \[\frac{1}{c^2}\left(i\hbar \pdv{t}\right)^2 \psi + \hbar^2 \Delta\psi = 
+%   m^2c^2 \psi.\]
+% Denoting the operator \(\tilde \Delta := 
+% \left(\frac{i \hbar}{c}\pdv{t}\right)^2 + \left(\hbar \pdv{x_1}\right)^2 + \cdots 
+% + \left(\hbar \pdv{x_n}\right)^2\), the equation becomes \(\tilde \Delta \psi = 
+% m^2 c^2 \psi\). We call \(\tilde \Delta\) the space-time Laplacian. However, 
+% unlike the Schrödinger equation, this is now a second order differential equation 
+% and the solution will depend on not only the wave function at time 0, but also 
+% its derivative at 0. This is problematic as the derivative might be badly behaved 
+% and \(\psi\) might not be \(L^2\).
 
-Now, if there exists an operator \(D\) such that \(D^2 = \tilde \Delta\), 
-we can solve \(D\psi = mc \psi\) and this equation is known as the Dirac equation.
-Although it is not yet clear such an operator exists.
+% Now, if there exists an operator \(D\) such that \(D^2 = \tilde \Delta\), 
+% we can solve \(D\psi = mc \psi\) and this equation is known as the Dirac equation.
+% Although it is not yet clear such an operator exists.
 
-For simplicity, assume we are working with the usual Laplacian \(\Delta\) though 
-it is not difficult to generalize these ideas.
+% For simplicity, assume we are working with the usual Laplacian \(\Delta\) though 
+% it is not difficult to generalize these ideas.
 
-In the case \(n = 1\), \(D\) is simply the derivative and indeed, 
-\(D^2 = \dv[2]{x} = \Delta\). For higher dimensions, we will need to use matrices 
-with the solutions being vectors. In particular, for \(n = 2\), we may take 
-\[\left(
-  \begin{pmatrix}
-    0 & 1 \\
-    1 & 0
-  \end{pmatrix}
-  \pdv{x} +
-  \begin{pmatrix}
-    0 & -i \\
-    i & 0
-  \end{pmatrix}
-  \pdv{y}
-\right)^2 = 
-  \pdv[2]{x} + \pdv[2]{y} = \Delta,\]
-which acts on a vector of functions \((f_1, f_2)^T\). Similarly, 
-for \(n = 3\), we have 
-\[\left(
-  \begin{pmatrix}
-    0 & 1 \\
-    1 & 0
-  \end{pmatrix}
-  \pdv{x} +
-  \begin{pmatrix}
-    0 & -i \\
-    i & 0
-  \end{pmatrix}
-  \pdv{y} + 
-  \begin{pmatrix}
-    1 & 0 \\
-    0 & -1
-  \end{pmatrix}
-  \pdv{z}
-\right)^2 = 
-  \pdv[2]{x} + \pdv[2]{y} + \pdv[2]{z} = \Delta.\]
-These matrices are known as Pauli matrices and anticommute. In relativity, 
-we are intereseted in \(n = 4\) (3 space dimensions and 1 time dimension) 
-and in this case, we will need \(4 \times 4\) matrices acting on 
-\((f_1, \cdots, f_4)^T\).
+% In the case \(n = 1\), \(D\) is simply the derivative and indeed, 
+% \(D^2 = \dv[2]{x} = \Delta\). For higher dimensions, we will need to use matrices 
+% with the solutions being vectors. In particular, for \(n = 2\), we may take 
+% \[\left(
+%   \begin{pmatrix}
+%     0 & 1 \\
+%     1 & 0
+%   \end{pmatrix}
+%   \pdv{x} +
+%   \begin{pmatrix}
+%     0 & -i \\
+%     i & 0
+%   \end{pmatrix}
+%   \pdv{y}
+% \right)^2 = 
+%   \pdv[2]{x} + \pdv[2]{y} = \Delta,\]
+% which acts on a vector of functions \((f_1, f_2)^T\). Similarly, 
+% for \(n = 3\), we have 
+% \[\left(
+%   \begin{pmatrix}
+%     0 & 1 \\
+%     1 & 0
+%   \end{pmatrix}
+%   \pdv{x} +
+%   \begin{pmatrix}
+%     0 & -i \\
+%     i & 0
+%   \end{pmatrix}
+%   \pdv{y} + 
+%   \begin{pmatrix}
+%     1 & 0 \\
+%     0 & -1
+%   \end{pmatrix}
+%   \pdv{z}
+% \right)^2 = 
+%   \pdv[2]{x} + \pdv[2]{y} + \pdv[2]{z} = \Delta.\]
+% These matrices are known as Pauli matrices and anticommute. In relativity, 
+% we are intereseted in \(n = 4\) (3 space dimensions and 1 time dimension) 
+% and in this case, we will need \(4 \times 4\) matrices acting on 
+% \((f_1, \cdots, f_4)^T\).
 
-From an abstract point of view, we want in general 
-\[D = \sum_{i = 1}^n e_i \pdv{x_i} \text{ where } e_i e_j = -e_je_i, e_i^2 = 1\]
-for all \(i, j = 1, \cdots, n\), \(i \neq j\).
+% From an abstract point of view, we want in general 
+% \[D = \sum_{i = 1}^n e_i \pdv{x_i} \text{ where } e_i e_j = -e_je_i, e_i^2 = 1\]
+% for all \(i, j = 1, \cdots, n\), \(i \neq j\).
 
-\begin{definition}[Clifford Algebra]
-  The Clifford algebra is 
-  \[\mathbb{C}l_n := \frac{\mathbb{C}\langle e_1, \cdots, e_n \rangle}{
-    \langle e_i e_j = -e_j e_i, e_1^2 = \cdots = e_n^2 = 1 \rangle}.\]
-  We use the angled brackets to stress \(e_i\) do not commute.
-\end{definition}
+% \begin{definition}[Clifford Algebra]
+%   The Clifford algebra is 
+%   \[\mathbb{C}l_n := \frac{\mathbb{C}\langle e_1, \cdots, e_n \rangle}{
+%     \langle e_i e_j = -e_j e_i, e_1^2 = \cdots = e_n^2 = 1 \rangle}.\]
+%   We use the angled brackets to stress \(e_i\) do not commute.
+% \end{definition}
 
-\begin{theorem}[Algebraic version of Bott periodicity]
-  \(\mathbb{C}l_{2n} \cong \text{Mat}_{2^n}(\mathbb{C})\) and 
-  \(\mathbb{C}l_{2n + 1} \cong \text{Mat}_{2^n}(\mathbb{C}) \oplus 
-  \text{Mat}_{2^n}(\mathbb{C})\).
-\end{theorem}
+% \begin{theorem}[Algebraic version of Bott periodicity]
+%   \(\mathbb{C}l_{2n} \cong \text{Mat}_{2^n}(\mathbb{C})\) and 
+%   \(\mathbb{C}l_{2n + 1} \cong \text{Mat}_{2^n}(\mathbb{C}) \oplus 
+%   \text{Mat}_{2^n}(\mathbb{C})\).
+% \end{theorem}
 
-\begin{corollary}
-  \(\mathbb{C}l_n\) is semisimple and for even \(n\), we have the 
-  unique \(2^n\)-dimensional module and for odd \(n\), we have the two 
-  unique \(2^n\)-dimensional modules.
-\end{corollary}
+% \begin{corollary}
+%   \(\mathbb{C}l_n\) is semisimple and for even \(n\), we have the 
+%   unique \(2^n\)-dimensional module and for odd \(n\), we have the two 
+%   unique \(2^n\)-dimensional modules.
+% \end{corollary}
 
-As a consequence, a Dirac operator \(D\) satisfying \(D^2 = \Delta\) on 
-\(\mathbb{R}^n\), we require matrices of size \(2^{\lfloor n / 2\rfloor}\).
-Thus, solutions of \(D\psi = \lambda \psi\) are vectors of functions 
-\((f_1, \cdots, f_N)^T\) where \(N = 2^{\lfloor n / 2 \rfloor}\).
+% As a consequence, a Dirac operator \(D\) satisfying \(D^2 = \Delta\) on 
+% \(\mathbb{R}^n\), we require matrices of size \(2^{\lfloor n / 2\rfloor}\).
+% Thus, solutions of \(D\psi = \lambda \psi\) are vectors of functions 
+% \((f_1, \cdots, f_N)^T\) where \(N = 2^{\lfloor n / 2 \rfloor}\).
 
-\begin{definition}[Real Clifford Algebra]
-  The real Clifford algebra is 
-  \[Cl_{\mathbb{R}}(p, q) := \frac{\mathbb{R}\langle x_1, \cdots, x_{p + q}\rangle}
-  {\langle x_i x_j + x_j x_i = 0, x_1^2 = \cdots = x_p^2 = 1, 
-    x_{p + 1}^2 = \cdots = x_{p + q}^2 = -1\rangle}.\]
-\end{definition}
+% \begin{definition}[Real Clifford Algebra]
+%   The real Clifford algebra is 
+%   \[Cl_{\mathbb{R}}(p, q) := \frac{\mathbb{R}\langle x_1, \cdots, x_{p + q}\rangle}
+%   {\langle x_i x_j + x_j x_i = 0, x_1^2 = \cdots = x_p^2 = 1, 
+%     x_{p + 1}^2 = \cdots = x_{p + q}^2 = -1\rangle}.\]
+% \end{definition}
 
-We note \(Cl_{\mathbb{R}}(0, q)\) is \(\mathbb{R}\) for \(q = 0\), \(\mathbb{C}\) 
-for \(q = 1\) and \(\mathbb{H}\) for \(q = 2\).
+% We note \(Cl_{\mathbb{R}}(0, q)\) is \(\mathbb{R}\) for \(q = 0\), \(\mathbb{C}\) 
+% for \(q = 1\) and \(\mathbb{H}\) for \(q = 2\).
 
-With this in mind, the Pauli matrices are simply the values of the Clifford 
-algebra written as matrices.
+% With this in mind, the Pauli matrices are simply the values of the Clifford 
+% algebra written as matrices.
 
-\subsubsection{The Spin Group}
+% \subsubsection{The Spin Group}
 
-Let us recall the orthogonal and special orthogonal group. In particular, we 
-have the groups 
-\[O(n, \mathbb{R}) := \{A \in GL_n(\mathbb{R}) \mid A^T = A^{-1}\},\]
-and 
-\[SO(n, \mathbb{R}) := \{A \in O(n, \mathbb{R}) \mid \det A = 1\}.\]
-In particular, as \(A^T = A^{-1}\) implies \(\det A = \pm 1\), we may think 
-the orthogonal group as the group of isometries while the special orthogonal 
-group as the subgroup of the orthogonal group which preserves the orientation.
+% Let us recall the orthogonal and special orthogonal group. In particular, we 
+% have the groups 
+% \[O(n, \mathbb{R}) := \{A \in GL_n(\mathbb{R}) \mid A^T = A^{-1}\},\]
+% and 
+% \[SO(n, \mathbb{R}) := \{A \in O(n, \mathbb{R}) \mid \det A = 1\}.\]
+% In particular, as \(A^T = A^{-1}\) implies \(\det A = \pm 1\), we may think 
+% the orthogonal group as the group of isometries while the special orthogonal 
+% group as the subgroup of the orthogonal group which preserves the orientation.
 
-We observe that \(O(n, \mathbb{R})\) preserves the dot product and the norm, 
-and so, it preserves the Laplacian. With this, the orthogonal group acts 
-on the Clifford algebra where 
-\(e_i \mapsto Ae_i\)
-for all \(A \in O(n, \mathbb{R})\). Furthermore, these actions can be obtained 
-by conjugation. With this, conjugation provides a surjective homomorphism from 
-\(S^3\) to \(SO(3, \mathbb{R}) \hookrightarrow \mathbb{R}i \oplus \mathbb{R}j 
-\oplus \mathbb{R}k\) where the map has kernel \(\{\pm 1\}\) (the center).
-With this, \(SO(3, \mathbb{R})\) has a nontrivial covering \(S^3\) and this 
-is called the ``spin group''.
+% We observe that \(O(n, \mathbb{R})\) preserves the dot product and the norm, 
+% and so, it preserves the Laplacian. With this, the orthogonal group acts 
+% on the Clifford algebra where 
+% \(e_i \mapsto Ae_i\)
+% for all \(A \in O(n, \mathbb{R})\). Furthermore, these actions can be obtained 
+% by conjugation. With this, conjugation provides a surjective homomorphism from 
+% \(S^3\) to \(SO(3, \mathbb{R}) \hookrightarrow \mathbb{R}i \oplus \mathbb{R}j 
+% \oplus \mathbb{R}k\) where the map has kernel \(\{\pm 1\}\) (the center).
+% With this, \(SO(3, \mathbb{R})\) has a nontrivial covering \(S^3\) and this 
+% is called the ``spin group''.
 
-We may construct the spin group in general using the Clifford algebra.
-Insider \(Cl_{\mathbb{R}}(0, n)\), we have the unit vectors \(v \in \mathbb{R}^n 
-\subseteq Cl_{\mathbb{R}}(0, n)\), i.e. \(v \cdot v = 1 \iff v^2 = -1\) in 
-\(\mathbb{Cl}_{\mathbb{R}}(0, n)\). Now, the mapping \(w \mapsto v w v\) is a
-reflection as \(v^2 = -1\). Generally, defining 
-\[\text{Pin}(n, \mathbb{R}) := \langle v \in \mathbb{R}^n \mid v^2 = -1 \rangle 
-\to O(n, \mathbb{R}) : v \mapsto (w \mapsto v w v),\]
-we have a subgroup \(\text{Spin}(n, \mathbb{R}) \le \text{Pin}(n, \mathbb{R})\) 
-such that 
-\[\text{Spin}(n, \mathbb{R}) := \langle v, w \in \mathbb{R}^n \mid v^2 = -1 = w^2 
-\rangle \to SO(n, \mathbb{R})\]
-which maps product of even number of unit vectors to the product of even number 
-of reflections. One may similarly define \(\text{Spin}(n, \mathbb{C}) \subseteq 
-\mathbb{C}l(n)\) and \(\text{Spin}(p, q, \mathbb{R}) \subseteq Cl_{\mathbb{R}}(p, q)\).
+% We may construct the spin group in general using the Clifford algebra.
+% Insider \(Cl_{\mathbb{R}}(0, n)\), we have the unit vectors \(v \in \mathbb{R}^n 
+% \subseteq Cl_{\mathbb{R}}(0, n)\), i.e. \(v \cdot v = 1 \iff v^2 = -1\) in 
+% \(\mathbb{Cl}_{\mathbb{R}}(0, n)\). Now, the mapping \(w \mapsto v w v\) is a
+% reflection as \(v^2 = -1\). Generally, defining 
+% \[\text{Pin}(n, \mathbb{R}) := \langle v \in \mathbb{R}^n \mid v^2 = -1 \rangle 
+% \to O(n, \mathbb{R}) : v \mapsto (w \mapsto v w v),\]
+% we have a subgroup \(\text{Spin}(n, \mathbb{R}) \le \text{Pin}(n, \mathbb{R})\) 
+% such that 
+% \[\text{Spin}(n, \mathbb{R}) := \langle v, w \in \mathbb{R}^n \mid v^2 = -1 = w^2 
+% \rangle \to SO(n, \mathbb{R})\]
+% which maps product of even number of unit vectors to the product of even number 
+% of reflections. One may similarly define \(\text{Spin}(n, \mathbb{C}) \subseteq 
+% \mathbb{C}l(n)\) and \(\text{Spin}(p, q, \mathbb{R}) \subseteq Cl_{\mathbb{R}}(p, q)\).
 
-Generally, spin and pin do act as subgroups of the Clifford algebra. As a consequence 
-of this, using the compatibility of the spinor \(2^{\lfloor n / 2 \rfloor}\)-dimensional 
-module over the Clifford algebra with orthogonal transformations, we can define the 
-Dirac operator not just on \(\mathbb{R}^n\) be on ``spin'' manifolds.
+% Generally, spin and pin do act as subgroups of the Clifford algebra. As a consequence 
+% of this, using the compatibility of the spinor \(2^{\lfloor n / 2 \rfloor}\)-dimensional 
+% module over the Clifford algebra with orthogonal transformations, we can define the 
+% Dirac operator not just on \(\mathbb{R}^n\) be on ``spin'' manifolds.
 
-\begin{proposition}
-  The irreducible representations of \(SO(n, \mathbb{R})\) are natural 
-  subspaces of \((\mathbb{R}^n)^{\otimes m}\) for \(m \ge 0\) up to 
-  isomorphism.
-\end{proposition}
+% \begin{proposition}
+%   The irreducible representations of \(SO(n, \mathbb{R})\) are natural 
+%   subspaces of \((\mathbb{R}^n)^{\otimes m}\) for \(m \ge 0\) up to 
+%   isomorphism.
+% \end{proposition}
 
-\begin{proposition}
-  The irreducible complex representations of \(\text{Spin}(n, \mathbb{R})\) are 
-  the above and the natural subspaces of the \(2^{\lfloor n / 2 \rfloor}\)-dimensional 
-  representations of \(\mathbb{C}l(n)\) and their tensor powers up to isomorphism.
-\end{proposition}
+% \begin{proposition}
+%   The irreducible complex representations of \(\text{Spin}(n, \mathbb{R})\) are 
+%   the above and the natural subspaces of the \(2^{\lfloor n / 2 \rfloor}\)-dimensional 
+%   representations of \(\mathbb{C}l(n)\) and their tensor powers up to isomorphism.
+% \end{proposition}
 
 
 \end{document} 
