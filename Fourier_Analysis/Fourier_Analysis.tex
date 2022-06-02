@@ -452,7 +452,7 @@ part of the course - the theory of distributions.
 
 \subsection{Conditions for Point-wise Convergence}
 
-We observe that \(\|D_n\|_1 = 1\) and so we may write 
+We observe that \(\int D_n = 1\) and so we may write 
 \[S_n(x) - f(x) = \int_{[-\pi, \pi]} (f(x + z) - f(x)) D_n(z) \lambda(\dd z).\]
 Clearly, \(S_n(x) \to f(x)\) as \(n \to \infty\) if and only if the right hand side
 of the above tends to 0. 
@@ -509,7 +509,7 @@ Fourier series at a point \(x\).
     & = \frac{1}{2\pi}\int_{[-\pi, \pi]} \frac{f(x + z) - f(x)}{z} 
       \frac{z}{\sin \frac{z}{2}} \sin \left(\frac{2 n + 1}{2}z\right)\lambda(\dd z).\\
   \end{split}\]
-  Then, if Dini's condition is satisfied, as \(\sin \frac{z}{2}\) is bounded on 
+  Then, if Dini's condition is satisfied, as \(z / \sin \frac{z}{2}\) is integrable on 
   \([-\pi, \pi]\), we have 
   \[\frac{f(x + z) - f(x)}{z} \frac{z}{\sin \frac{z}{2}} \in L_1[-\pi, \pi]\]
   and hence, by the Riemann-Lebesgue lemma, \(S_n(x) - f(x) \to 0\) as 
@@ -526,12 +526,12 @@ the argument in the proof remains to hold if we replace the Dini condition by
 \[\int_{[-\delta, 0] } \left|\frac{f(x + t) - f(t)}{t}\right| \lambda(\dd t) < \infty
 \text{ and } 
 \int_{[0, \delta] } \left|\frac{f(x + t) - f(t)}{t}\right| \lambda(\dd t) < \infty.\]
-Then, denoting \(f(x + 0), f(x - 0)\) the limit of \(f\) at \(x\) from the right and the 
+Then, denoting \(f(x +), f(x -)\) the limit of \(f\) at \(x\) from the right and the 
 left respectively, we have
 \[\begin{split}
-  &S_n(x) - \frac{f(x + 0) + f(x - 0)}{2} =\\ 
-  &\int_{[-\pi, 0]} (f(x + z) - f(x - 0)) D_n(z) \lambda(\dd z)
- + \int_{[0, \pi]} (f(x + z) - f(x + 0)) D_n(z) \lambda(\dd z)
+  &S_n(x) - \frac{f(x^+) + f(x^-)}{2} =\\ 
+  &\int_{[-\pi, 0]} (f(x + z) - f(x^-)) D_n(z) \lambda(\dd z)
+ + \int_{[0, \pi]} (f(x + z) - f(x^+)) D_n(z) \lambda(\dd z)
  \end{split}\]
 Hence, the \(S_n(x)\) converges to the average of the limit \(f\) at \(x\) from 
 the left and from the right.
@@ -543,12 +543,14 @@ Let us summarise the above in the following statement.
   discontinuities of the first kind, and also possesses at each point left and right 
   derivatives, Then, its Fourier series converges everywhere and its sum equals 
   \(f(x)\) at points of continuity and equals 
-  \[\frac{f(x + 0) + f(x - 0)}{2}\]
+  \[\frac{f(x^+) + f(x^-)}{2}\]
   at points of discontinuity.
 \end{proposition}
 
 We remark there exists continuous functions whose Fourier series diverge at some 
-points. More curiously, there exists \(L_1\) functions which diverge at all points.
+points. More curiously, there exists \(L_1\) functions which diverge at all points 
+(see \textit{Functional analysis} for the construction of a function which diverges 
+at any given point).
 
 \subsection{Continuous Functions}
 
@@ -579,12 +581,13 @@ we have the following theorem.
   \end{itemize}
 \end{lemma}
 \begin{proof}
-  Exercise.
+  Hint: note the identity 
+  \(\sum_{k = 0}^{n -1} \sin((2k + 1) u)= \frac{\sin^2(nu)}{\sin u}\).
 \end{proof}
 
-\begin{theorem}[Fejer's]
+\begin{theorem}[Fejer]
   If \(f\) is a continuous function with period \(2\pi\), then the sequence \((\sigma_n)\) 
-  of its Fejer's's sums converges to \(f\) uniformly on \(\mathbb{R}\).
+  of its Fejer's sums converges to \(f\) uniformly on \(\mathbb{R}\).
 \end{theorem}
 \begin{proof}
   Recall that 
@@ -874,7 +877,7 @@ smoother \(\mathcal{F}[f]\) is.
   If \(e^{\delta |x|}f(x) \in L_1\) for some \(\delta > 0\), then 
   \(\int f(x)e^{ix \zeta} \lambda(\dd x)\) uniformly converges for all 
   \(\zeta = y + iz\), \(|z| < \delta\). Therefore, 
-  \[g(\zeta) := \int f(x) e^{ix\zeta}\]
+  \[g(\zeta) := \int f(x) e^{ix\zeta} \lambda(\dd x)\]
   is an analytic function on the neighbourhood \(\mathbb{R} \times (-\delta, \delta)\).
 \end{corollary}
 
@@ -953,7 +956,7 @@ transform is useful for solving differential equations.
 Consider a linear 
 differential equation with constant coefficients for \(f(x)\) 
 \[f^{(n)} + a_1 f^{(n - 1)} + \cdots + a_{n - 1}f' + a_n f = \phi(x)\]
-under the Fourier transform is mapped to (denoting \(\mathcal{F}[f] = g\),
+under the Fourier transform is mapped to (denoting \(\mathcal{F}[f] = g\)),
 \[(iy)^ng(y) + a_1 (iy)^{n - 1}g(y) + \cdots + a_{n - 1} iy g(y) + a_n g(y) = \mathcal{F}[\phi](y)\]
 if \(f, \phi \in L_1\). Thus, solving for \(g\), one may apply the inverse Fourier 
 transform to obtain \(f\). 
@@ -974,7 +977,7 @@ and we are asked to find \(u(x, t)\) for all \(t > 0\).
     \item \(u(x, t), D_x u(x ,t), D^2_x u(x, t) \in L_1\) for all \(t \ge 0\);
     \item for all \(T \ge 0\), there exists some \(f_T \in L_1\) such that 
       for all \(0 \le t \le T\),
-      \[|D_t u(x. t)| \le f_T(x),\]
+      \[|D_t u(x, t)| \le f_T(x),\]
   \end{itemize}
   then this solution is unique (I'm claiming this, is this true?) 
   and can be found explicitly.
@@ -2018,7 +2021,7 @@ functions.
 \end{definition}
 
 \begin{definition}[Test Functions]
-  The space of test functions on the set \(A \subseteq \mathbb{R}\) is simply 
+  The space of test functions on the set \(A \subseteq \mathbb{R}^n\) is simply 
   \(\mathcal{D}(A) = C_c^\infty(A)\) and we denote 
   \(\mathcal{D} = \mathcal{D}(\mathbb{R}) = C_c^\infty(\mathbb{R})\).
 
@@ -2037,7 +2040,7 @@ is a neighbourhood of 0 in \(\mathcal{D}_m\) (recall \(\mathcal{D}_m\) is equipp
 with the topology induced by the norms). 
 
 One can show \(\mathcal{D}\) equipped with this topology forms a topological 
-vector space (the proof is rather involved and omitted).
+vector space (the proof is rather involved and so, is omitted).
 
 \begin{lemma}
   A sequence \((\phi_n)_{n = 1}^\infty \subseteq \mathcal{D}\) converges to 
@@ -2088,7 +2091,7 @@ Let us consider some examples of distributions.
     regular (otherwise we call them singular).  
   \item The \(\delta\)-distribution: \(\delta(\phi) = \phi(0)\).
   \item Shifted \(\delta\) defined as \(\delta(x - a)(\phi) = \phi(a)\).
-  \item The function \(1 / x\) is no integrable at 0. However, 
+  \item The function \(1 / x\) is not integrable at 0. However, 
   \(\int \frac{1}{x} \phi(x) \lambda(\dd x)\) exists as a principal value integral. 
   Indeed, suppose \(\phi \in \mathcal{D}\) is supported on \([-R, R]\), we have 
   \[\begin{split}
@@ -2097,15 +2100,21 @@ Let us consider some examples of distributions.
         \phi(0) \int_{[-R, R]} \frac{\lambda(\dd x)}{x}
   \end{split}\]
   which exists by integration by parts and noting that 
-  \(\int_{[-R, R]} \frac{\lambda(\dd x)}{x}\) has principal value 0. Hence, 
-  \(T_{1 / x}\) defines a distribution.
+  \(\int_{[-R, R]} \frac{\lambda(\dd x)}{x}\) has principal value 0, i.e.  
+  \[\begin{split}
+  \left|\int \frac{1}{x}\phi(x) \lambda(\dd x)\right| & = 
+  \left|\int_{[-R, R]} \frac{\phi(x) - \phi(0)}{x} \lambda(\dd x)\right| = 
+  \left|\int_{[-R, R]} \phi'(x) \log|x| \lambda(\dd x)\right|\\
+  & \le 2R |\log(R) - 1| \sup_{|x| \le R} |\phi'(x)| \to 0
+  \end{split}\]
+  as \(\phi \to 0\). Hence, \(T_{1 / x}\) defines a distribution.
 \end{itemize}
 
 \begin{lemma}
   A linear functional \(f\) on \(\mathcal{D}\) is continuous if and only if \(f\) 
   is continuous as a linear functional on \(\mathcal{D}_m\) for all \(m\), i.e. 
   for all \(m\), there exists some \(C, n\) such that 
-  \[|f(\phi)| \le C\|\phi\|^{(m)}_n = C\sup_{0 \le k \le n, |x| \le m}|\phi^{(k)}(x)\]
+  \[|f(\phi)| \le C\|\phi\|^{(m)}_n = C\sup_{0 \le k \le n, |x| \le m}|\phi^{(k)}(x)|\]
   for all \(\phi \in \mathcal{D}_m\).
 \end{lemma}
 \begin{proof}
