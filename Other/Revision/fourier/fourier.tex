@@ -1,0 +1,236 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{fontspec}
+  \setmainfont{Bitstream Charter}
+  % Cabin -- round
+  % Bitstream Charter -- almost computer modern
+  % \usepackage{unicode-math}
+  % \defaultfontfeatures{Scale=MatchLowercase}
+  % \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Fourier Analysis Revision Notes},
+  pdfauthor={Kexing Ying},
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=red,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin = 1.5in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{esint}
+\usepackage[ruled,vlined]{algorithm2e}
+\theoremstyle{definition}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{corollary}{Corollary}
+\newtheorem*{remark}{Remark}
+\newtheorem*{definition}{Definition}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{proposition}{Proposition}
+\newtheorem*{example}{Example}
+\newcommand{\diag}{\mathop{\mathrm{diag}}}
+\newcommand{\Arg}{\mathop{\mathrm{Arg}}}
+\newcommand{\hess}{\mathop{\mathrm{Hess}}}
+\newcommand\eqae{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily a.e.}}}{=}}}
+
+\title{Fourier Analysis Revision Notes}
+\author{Kexing Ying}
+
+\begin{document}
+\maketitle
+
+\section*{Inner Product Spaces}
+
+We denote \(R\) a (real or complex) inner product space (Euclidean space).
+
+\begin{definition}[Complete System]
+  A system \(\{X_\alpha\}_{\alpha \in A}\) is said to be complete if its linear 
+  closure is \(R\), namely \(\langle X_\alpha \mid \alpha \in A\rangle = R\).
+\end{definition}
+
+\begin{definition}[Orthogonal Basis]
+  A system is an orthogonal basis if it is orthogonal and complete.
+\end{definition}
+
+\begin{proposition}
+  If \(R\) is separable, then any orthogonal system  of \(R\) is countable.
+\end{proposition}
+
+\begin{proposition}
+  Any separable real inner product space possesses a orthonormal basis.
+\end{proposition}
+
+\begin{definition}[Fourier Coefficients]
+  Given an orthonormal system \(\{\phi_n\}_{n = 1}^\infty\) of \(R\). The Fourier
+  coefficients of any \(f \in R\) is defined to be 
+  \[c_k := \langle f, \phi_k\rangle\]
+  for all \(k\). The formal sum \(\sum_{k = 1}^\infty c_k \phi_k\) is called the 
+  Fourier series of \(f\).
+\end{definition}
+
+\begin{definition}[Closed System]
+  An othonormal system \(\{\phi_n\}\) is closed if 
+  \[\sum_{k = 1}^\infty c_k^2 = \|f\|^2\]
+  for all \(f \in R\). We call this property Parseval's identity.
+\end{definition}
+
+\begin{proposition}[Bessel's Inequality]
+  Given the orthonormal system \(\{\phi_n\}\) of \(R\), we have 
+  \[\sum_{k = 1}^\infty |c_k|^2 \le \|f\|^2\]
+  for all \(f \in R\).
+\end{proposition}
+
+\begin{theorem}
+  In a separable inner product space \(R\), an orthonormal system is complete 
+  if and only if it is closed.
+\end{theorem}
+
+\begin{proposition}
+  Given \(f, g\) and a closed system \(\{\phi_n\}\) of \(R\), \(\langle f, g\rangle = 
+  \sum_{k = 1}^\infty c_k^f c_k^g\) where \(c_k^f, c_k^g\) are the Fourier coefficients
+  of \(f, g\) respectively.
+\end{proposition}
+
+\section*{Contour Integration}
+
+\begin{proposition}[Jordan's Lemma]
+  If \(f\) is holomorphic except for finitely many singularities, and \(f(z) \to 0\) 
+  as \(|z| \to \infty\), then 
+  \[\int_{\gamma_R} f(z)e^{i\lambda z}\dd z \to 0\]
+  for all \(\lambda > 0\) where \(\gamma_R\) is the upper half circle of radius \(R\) 
+  centred at 0 oriented counter-clockwise.
+\end{proposition}
+
+In the case Jordan's lemma fails due to \(\lambda < 0\), try integrating on the 
+lower half circle.
+
+\begin{proposition}
+  \(e^{iz} = 1 + O(|z|)\). Useful for integrating on small contours.
+\end{proposition}
+
+\section*{Fourier Series}
+
+Smoother functions have quicker decaying of Fourier coefficients.
+
+\begin{proposition}
+  For all \(f \in L^2[-\pi, \pi]\), \(\|f - S_n\|_2 \to 0\) where \(S_n\) is the 
+  \(n\)-th partial sum of the Fourier series of \(f\).
+\end{proposition}
+
+\begin{theorem}[Dini's Condition for Pointwise Convergence]
+  If \(f \in L^1[-\pi, \pi]\) and for any \(x \in [-\pi, \pi]\), there exists some 
+  \(\delta > 0\) such that 
+  \[\int_{[-\delta, \delta]} \left|\frac{f(x + t) - f(x)}{t}\right| \lambda(\dd t) < \infty\]
+  exists, then \(S_n(x) \to f(x)\) as \(n \to \infty\) for all \(x\).
+\end{theorem}
+
+Dini's condition is in some sense as strong as possible. Indeed, if 
+\(\frac{f(x + t) - f(x)}{t}\) is not locally integrable at some \(x\), we can find 
+a continuous function \(g\) with \(|g| \le f\) with non-convergence Fourier series 
+at \(x\).
+
+If \(f\) is continuous at \(x\) and has a derivative at \(x\) (or the limit exists 
+from either the left or the right), then Dini's condition is satisfied at \(x\).
+
+A continuous function with period \(2\pi\) is uniquely determined by its Fourier series. 
+Furthermore, we can reconstruct a continuous function from its Fourier series by 
+using the Fejer sums. Indeed, denoting \(\sigma_n\) the \(n\)-th Fejer sum, 
+\(\sigma_n \to f\) uniformly.
+
+\begin{proposition}[Poisson Summation Formula]
+  Given \(f \in L^1\), 
+  \[2\pi t \sum_{n = -\infty}^{\infty}f(2\pi t n) = \sum_{n = -\infty}^\infty \mathcal{F}[f](n / t).\]
+\end{proposition}
+
+\section*{Fourier Transform}
+
+\begin{proposition}
+  Let \(f \in L^1\). Then \(\mathcal{F}[f] = 0\) implies \(f = 0\) almost everywhere.
+\end{proposition}
+
+\begin{proposition}
+  For \(f, f_n \in L^1\) such that \(f_n \to f\) in \(L^1\), then 
+  \(\mathcal{F}[f_n] \to \mathcal{F}[f]\) uniformly.
+\end{proposition}
+
+\begin{proposition}
+  For \(f \in L^1\), \(\mathcal{F}[f](y) \to 0\) as \(|y| \to \infty\).
+\end{proposition}
+
+\begin{corollary}
+  For \(f \in L^1\), \(\mathcal{F}[f]\) is uniformly continuous.
+\end{corollary}
+
+\begin{proposition}
+  For \(f \in L^1\) differentiable with \(f' \in L^1\) and \(f\) absolutely continuous 
+  on any finite interval, \(\mathcal{F}[f'](y) = iy\mathcal{F}[f](y)\).
+\end{proposition}
+
+\begin{proposition}
+  For \(f \in L^1\) such that \(xf(x) \in L^1\), we have \(\mathcal{F}[f]\) is 
+  differentiable and \(D_y\mathcal{F}[f](y) = \mathcal{F}[-ixf(x)]\).
+\end{proposition}
+
+We also have the following properties: for \(f, g \in L^1\), \(c, c_1, c_2 \in \mathbb{R}\),
+\begin{itemize}
+  \item Linearity: \(\mathcal{F}[c_1 f + c_2 g] = c_1\mathcal{F}[f] + c_2 \mathcal{F}[g]\).
+  \item Translation: \(\mathcal{F}[x \mapsto f(x - a)](y) = e^{-iay} \mathcal{F}[f](y)\).
+  \item Rephasing: \(\mathcal{F}[x \mapsto e^{-icx}f(x)](y) = \mathcal{F}[f](y + c)\).
+  \item Scaling: \(\mathcal{F}[x \mapsto f(cx)](y) = \frac{1}{|c|} \mathcal{F}[f](y / c)\).
+  \item Convolution: \(\mathcal{F}[f * g] = \mathcal{F}[f] \mathcal{F}[g]\).
+\end{itemize}
+
+\end{document}

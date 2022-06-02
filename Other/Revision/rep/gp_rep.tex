@@ -1,0 +1,233 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{fontspec}
+  \setmainfont{Bitstream Charter}
+  % Cabin -- round
+  % Bitstream Charter -- almost computer modern
+  % \usepackage{unicode-math}
+  % \defaultfontfeatures{Scale=MatchLowercase}
+  % \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Group Representation Revision Notes},
+  pdfauthor={Kexing Ying},
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=red,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin = 1.5in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{esint}
+\usepackage[ruled,vlined]{algorithm2e}
+\theoremstyle{definition}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{corollary}{Corollary}
+\newtheorem*{remark}{Remark}
+\newtheorem*{definition}{Definition}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{proposition}{Proposition}
+\newtheorem*{example}{Example}
+\newcommand{\diag}{\mathop{\mathrm{diag}}}
+\newcommand{\Arg}{\mathop{\mathrm{Arg}}}
+\newcommand{\hess}{\mathop{\mathrm{Hess}}}
+\newcommand\eqae{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily a.e.}}}{=}}}
+
+\title{Group Representation Revision Notes}
+\author{Kexing Ying}
+
+\begin{document}
+\maketitle
+
+\section*{Group Representation}
+
+Finding 1-dimensional subrepresentations in \((\mathbb{C}[G], \rho_{\text{reg}})\): 
+Denote the 1-dimensional representations of \(G\) by \((\mathbb{C}, \theta)\), 
+then, define \(v_\theta := \sum_{g \in G} \overline{\theta(g)} g \in \mathbb{C}[G]\), 
+we observe, for all \(h \in G\), \(hv_\theta = \theta(h)v_\theta\). Hence, 
+\(v_\theta\) is a shared eigenvector of \(\rho_{\text{reg}}(g)\) with eigenvalue \(\theta(g)\), 
+implying \(\langle v_\theta \rangle\) is a 1-dimensional subrepresentation of 
+\(\mathbb{C}[G]\) isomorphic to \(\theta\).
+
+\section*{Symmetric and Dihedral Groups}
+
+The dihedral group \(D_n\) is the finite group with the presentation 
+\[D_n = \langle x, y \mid x^n = 1 = y^2, y x y^{-1} = 1 \rangle.\]
+It has the following important properties:
+\begin{itemize}
+  \item \(|D_n| = 2n\);
+  \item \(D_n\) has \((n  + 3)/2\) conjugacy classes if \(n\) is odd and \((n + 6)/2\) if \(n\) is even 
+    (this tells us how many irreducible representations there are);
+  \item \((D_n)_{ab} = C_2\) if \(n\) is odd and \((D_n)_{ab} = C_2 \times C_2\) if \(n\) is even;
+  \item geometrically, elements of the dihedral group corresponds to rotations and reflections. 
+    In particular, for \(n\) even, this includes all reflections along opposite vertices and edges;
+  \item \(D_n\) always has the two-dimensional irreducible representation \((\mathbb{C}^2, \rho_{\mathbb{C}^2})\) 
+    given by 
+    \[\rho_{\mathbb{C}^2}(x) = \begin{pmatrix}
+      \cos \frac{2\pi}{n} & -\sin \frac{2\pi}{n} \\
+      \sin \frac{2\pi}{n} & \cos \frac{2\pi}{n}
+    \end{pmatrix},  \
+    \rho_{\mathbb{C}^2}(y) = \begin{pmatrix}
+      \cos \frac{4\pi}{n} & \sin \frac{4\pi}{n} \\
+      \sin \frac{4\pi}{n} & -\cos \frac{4\pi}{n}
+    \end{pmatrix}.\]
+  \item The elements which commute with elements of \(\text{End}(\mathbb{C}^2)\) (\((\mathbb{C}^2, \rho_{\mathbb{C}^2})\) 
+    is the representation in the above point) are the identity and rotation by \(\pi / 2\);
+  \item \(D_3 \simeq S_3\).
+\end{itemize}
+
+To find all irreducible representations of \(D_n\), we can construct the following 
+homomorphisms (note that these might not be automorphisms), 
+\[\phi_k : D_n \to D_n : x^a y^b \mapsto x^{ka}y^b.\]
+It is clear that \(\rho_{\mathbb{C}^2} \circ \phi_k\) is an irreducible representation. 
+Furthermore, these are non-isomorphic for \(1 \le k < n / 2\) by considering their characters. 
+These and the aforementioned one-dimensional representations must be all of the irreducible ones 
+by sum of squares. 
+
+Denoting \(\mathbf{n} := \{1, \cdots, n\}\), the symmetric group \(S_n\) is the set of bijections 
+between \(\mathbf{n}\) to itself. It has the following properties:
+\begin{itemize}
+  \item \(|S_n| = n!\);
+  \item for all \(\sigma \in S_n\), the conjugacy class \([\sigma]\) contains all elements of \(S_n\) 
+    which have the same cycle type as \(\sigma\). Thus, to find the number of conjugacy classes, 
+    one count the number of possible cycle types/partitions; 
+  \item \(\text{sgn} : S_n \to \{\pm 1\} : \sigma \mapsto \text{sgn}(\sigma)\) is a group homomorphism;
+  \item \(\ker \text{sgn} = A_n\)  where \(A_n\) is the alternating group;
+  \item \(C_2 \simeq \{\pm 1\} \simeq S_n / A_n \simeq (S_n)_{ab}\); 
+  \item hence \(S_n\) has only two one-dimensional representations, namely the trivial and the sign 
+    representation;
+  \item defining \(P_\sigma \in GL_n(\mathbb{C})\) the permutation matrix corresponding to \(\sigma\),
+    \((\mathbb{C}^n, \rho_{\text{perm}})\) where \(\rho_{\text{perm}} : \sigma \mapsto P_{\sigma}\) is 
+    a representation known as the permutation representation;
+  \item the permutation representation is reducible and, in particular,
+    \[(\mathbb{C}^n, \rho_{\text{perm}}) = (\mathbb{C}, \rho_{\text{triv}}) \oplus 
+      (\mathbb{C}^{n - 1}, \rho_{\text{refl}}),\]
+    where the reflection representation \((\mathbb{C}^{n - 1}, \rho_{\text{refl}})\) is 
+    a subrepresentation of the permutation representation on the sub-linear space 
+    \(\{x \in \mathbb{C}^n \mid \sum_{i = 1}^n x_i = 0\}\).
+\end{itemize}
+
+As \(A_n\) is a subgroup of \(S_n\), we may compute the number of conjugacy classes of 
+\(A_n\) from that of \(S_n\). 
+
+\begin{theorem}
+  A conjugacy class of \(S_n\) splits into two disjoint conjugacy classes of \(A_n\) if and only 
+  if its cycle type consists of distinct odd integers. Otherwise, its simply remains a single 
+  conjugacy class in \(A_n\).
+\end{theorem}
+
+We have the following surjection \(q : S_4 \to S_3\) such that 
+\[q((12)) = (12), q((23)) = (23), q((34)) = (12)\]
+which can be restricted such that \(q|_{A_4} : A_4 \to A_3 \simeq C_3\) is a surjection.
+
+\section*{Tensor and Dual}
+
+For arbitrary representations \((V_1, \rho_1), (V_2, \rho_2), (W, \rho_W)\) of \(G\), 
+we have the linear isomorphisms 
+\[\text{Hom}_G(V_1 \oplus V_2, W) \simeq \text{Hom}_G(V_1, W) \oplus \text{Hom}_G(V_2, W),\]
+\[\text{Hom}_G(W, V_1 \oplus V_2) \simeq \text{Hom}_G(W, V_1) \oplus \text{Hom}_G(W, V_2).\]
+
+There is a canonical linear injection 
+\[V^* \otimes W \to \text{Hom}(V, W)\] 
+which is an isomorphism if \(V\) is finite dimensional.
+
+\section*{Character Theory}
+
+Characters of \(g\) with order \(n\) is the sum (some, possibly all) of \(n\)-th roots of unity.
+
+Inner product on class functions (which contains characters) is defined by 
+\[\langle \chi_1, \chi_2 \rangle := \frac{1}{|G|} \sum_{g \in G} \chi_1(g)\overline{\chi_2(g)}.\]
+The set of characters of irreducible representations form an orthonormal basis with respect to 
+this inner product. Thus, by Maschke's, for all representations \(V = \bigoplus_i V_i^{\oplus n_i}\),
+where \(V_i\) are irreducible representations, we can find the multiplicity \(n_i\) with 
+\[\langle \chi_V, \chi_{V_i} \rangle = \langle \sum_j n_j \chi_{V_j}, \chi_{V_i}\rangle = 
+  \sum_j n_j \delta_{ji} = n_i.\]
+To find the last row of the character table, we have the following identity
+\[\chi_{V_j}(g) = -(\dim V_j)^{-1} \sum_{i \neq j} \dim V_i \chi_{V_i}(g).\]
+To find the size of the conjugacy classes given a character table, we have 
+\[\frac{|G|}{|\mathcal{C}_i|} = \sum_{k = 1}^m |\chi_{V_k}(g_i)|^2\]
+where \(V_1, \cdots, V_m\) are all the irreducible representations and \(g_i \in \mathcal{C}_i\).
+
+If \((V, \rho)\) is the regular representation of \(G\), it has character \(\chi(e) = |G|\) and 
+\(\chi(g) = 0\) for all \(g \neq e\).
+
+A group \(G\) is \textbf{not} simple iff there exists a nontrivial character \(\chi\) such that 
+\(\chi(g) = \chi(e)\) for some \(g \neq e\).
+
+For \(g \in G\) of finite order, \(|\chi_V(g)| \le \dim V\) with equality iff 
+\(\rho_V(g)\) is a scalar multiple of the identity.
+
+Normal subgroups of \(G\) are precisely the subgroups \(N_J\) of the form
+\[N_J := \{n \in G \mid \chi_{V_j}(n) = \chi_{V_j}(e), \forall j \in J\},\]
+for \(J \subseteq \{1, \cdots, m\}\).
+
+\section*{Algebra Representations}
+
+If \((V, \rho)\) is a finite dimensional representation of \(G\), then \(\rho(G)\) spans 
+\(\text{End}(V)\) if and only if \((V, \rho)\) is irreducible. The reverse direction 
+requires semisimple algebras.
+
+Similar to the group case, if \(\rho_V : A \to \text{End}(V)\) is surjective 
+for a \(A\)-module \((V, \rho_V)\), the \((V, \rho_V)\) is simple. If \(V\) is 
+finite dimensional, the converse also holds.
+
+For modules \(V, W\), \(V \simeq W\) implies \(\chi_V = \chi_W\). The converse is 
+true if \(A\) is semisimple.
+
+For \(W \le V\) a submodule, we have \(\chi_V = \chi_W + \chi_{V / W}\). This provides 
+a counter example to the converse of the above statement if \(V\) is not semisimple. 
+
+\end{document}

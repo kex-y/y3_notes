@@ -1,0 +1,379 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{fontspec}
+  \setmainfont{Bitstream Charter}
+  % Cabin -- round
+  % Bitstream Charter -- almost computer modern
+  % \usepackage{unicode-math}
+  % \defaultfontfeatures{Scale=MatchLowercase}
+  % \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Algebra III Revision Notes},
+  pdfauthor={Kexing Ying},
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=red,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin = 1.5in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{esint}
+\usepackage[ruled,vlined]{algorithm2e}
+\theoremstyle{definition}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{corollary}{Corollary}
+\newtheorem*{remark}{Remark}
+\newtheorem*{definition}{Definition}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{proposition}{Proposition}
+\newtheorem*{example}{Example}
+\newcommand{\diag}{\mathop{\mathrm{diag}}}
+\newcommand{\Arg}{\mathop{\mathrm{Arg}}}
+\newcommand{\hess}{\mathop{\mathrm{Hess}}}
+\newcommand\eqae{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily a.e.}}}{=}}}
+
+\title{Algebra III Revision Notes}
+\author{Kexing Ying}
+
+\begin{document}
+\maketitle
+
+\section*{Ring Theory}
+
+In a PID
+\[\text{prime} \iff \text{irreducible} \iff \text{maximal ideal} \iff \text{quotient is a field}
+  \iff \text{quotient ID.}\]
+To find irreducible elements in a Euclidean domain, note that
+\begin{itemize}
+  \item invertible elements have norm 1
+  \item elements have prime norm iff irreducible (Gaussian integers \(a + bi\), \(ab \neq 0\))
+\end{itemize}
+Finding GCD in (multiplicative) Euclidean domain:
+\begin{itemize}
+  \item compute the norms
+  \item find GCD of the norms \(l\), the norm of the GCD must divide \(l\)
+  \item find the elements which has norm dividing \(l\)
+\end{itemize}
+Given ideals \(I = \langle a_i \mid i \in \mathcal{I}\rangle, J = \langle b_j \mid j \in \mathcal{J}\rangle\),
+\[IJ = \langle a_ib_j \mid i \in \mathcal{I}, j \in \mathcal{J}\rangle.\]
+
+In a Euclidean domain (requires \(N(ab) = N(a)N(b) \ge N(a)\)) \(R\), \(N(a) = N(1)\) iff \(a \in R^\times\).
+
+Show ideal not principle in \(\mathbb{Z}[\sqrt{-n}]\): Define the multiplicative function 
+\(N : \mathbb{Z}[\sqrt{-n}] \to \mathbb{N} : a + b \sqrt{-n} \mapsto a^2 + n b^2\). Then,
+if \(\langle \alpha, \beta \rangle = \langle \gamma \rangle\), \(N(\gamma) \mid N(\alpha), N(\beta)\),
+from this show contradiction.
+
+\section*{Field Extensions}
+
+We will in this section denote \(K \subseteq L\) fields and assume \(L\) as a vector space 
+over \(K\) has finite dimension.
+
+\begin{definition}[Degree]
+  Let \(K \subseteq L\) be fields. Then \([L : K] := \dim_K L\) is the degree of \(L\) over \(K\).
+\end{definition}
+
+\begin{theorem}
+  Given field extensions \(K \subseteq L \subseteq M\), 
+  \[[M : L][L : K] = [M : K].\]
+\end{theorem}
+
+Given \(\alpha \in L\) we define the evaluation map \(\text{ev}_\alpha : K[X] \to L : P(X) \mapsto P(\alpha)\).
+We have the following observations.
+\begin{itemize}
+  \item assume \(\ker \text{ev}_\alpha \neq \{0\}\) and so, as \(K[X]\) is a PID (as it is an Euclidean domain), 
+    there exists some \(P(X) \in K[X]\) such that \(\ker \text{ev}_\alpha = \langle P(X) \rangle\). We call 
+    \(P(X)\) is \textit{minimal polynomial} of \(\alpha\);
+  \item as \(\text{Im}(\text{ev}_\alpha)\) is a subring of \(K\), \(K[X] / \langle P(X) \rangle \simeq \text{Im}(\text{ev}_\alpha)\)
+    is an integral domain, and so, \(\langle P(X) \rangle\) is a prime ideal;
+  \item recalling that non-zero prime ideals in a PID are maximal, \(K[X] / \langle P(X) \rangle\) 
+    is in fact a field;
+  \item we denote \(K(\alpha)\) as \(K[X] / \langle P(X) \rangle\).
+\end{itemize}
+
+\begin{theorem}
+  Applying quotient remainder using the Euclidean norm on \(K[X]\), 
+  \([K(\alpha) : K] = \deg P(X)\).
+\end{theorem}
+
+\begin{theorem}
+  If \([L : K] < \infty\), then every element of \(L\) is algebraic over \(K\), 
+  i.e. for all \(\alpha \in L\), there exists \(P(X) \in K[X]\) such that \(P(\alpha) = 0\).
+  This follows as \(1, \alpha, \cdots, \alpha^{[L : K]}\) is linear dependent as vectors 
+  in \(L\) over \(K\).
+\end{theorem}
+
+\begin{theorem}
+  If \(K\) has characteristics \(p\), then the map \(x \mapsto x^q\) is a field endomorphism 
+  and is known as the Frobenious endomorphism.
+\end{theorem}
+
+\begin{theorem}
+  If \(|K| = q = p^r\), then the map \(x \mapsto x^q\) is a field automorphism.
+\end{theorem}
+
+\begin{theorem}
+  If \(A\) is an abelian group such that \(|A| = n\) and for all \(d \mid n\), \(A\) has exactly 
+  \(d\) elements of order dividing \(d\), then \(A\) is cyclic. 
+\end{theorem}
+
+\begin{corollary}
+  \(K^\times\) is cyclic since \(X^{p^r - 1} - 1\) factors into \(p^r - 1\) distinct roots in 
+  \(K\) and has divisor \(X^d - 1\) for every \(d \mid |K|\).
+\end{corollary}
+
+\begin{theorem}
+  If \(K\) has characteristics \(p\), then \(K = \mathbb{F}_p(\alpha)\) for some \(\alpha\). 
+  Namely, we consider \(K\) as a field extension of \(\mathbb{F}_p\) by recalling the theory of 
+  prime fields.
+\end{theorem}
+
+\begin{theorem}
+  All irreducible polynomials of \(K[X]\) where \(|K| = q = p^s\) of degree \(r\) appears exactly once 
+  in the divisors of \(X^{q^r} - X\).
+\end{theorem}
+
+\begin{corollary}
+  Any two finite fields of the same cardinality are isomorphic.
+\end{corollary}
+
+Over \(\mathbb{F}_p\), \(P(X^p) = P(X)^p\) as \(X \mapsto X^p\) is a field automorphism.
+
+Product of roots of a monic polynomial is the \((-1)^d c_0\) where \(c_0\) is the constant coefficient. 
+So, if the \(c_0 = 1\) of a monic polynomial in \(\mathbb{Z}[X]\), the roots must be \(\pm 1\) which 
+can be manually checked.
+
+One may apply the quadratic formula for a degree 2 polynomial in \(\mathbb{C}[X, Y]\).
+
+Given \(P(X), Q(X) \in K[X]\), \(P\) irreducible. Then, if \(P, Q\) share a root \(P \mid Q\) 
+(proof by considering their GCD cannot be 1 by Bezout).
+
+Use \textbf{derivatives} to show polynomial has no repeated factors (show it has no shared roots with 
+its derivative).
+
+\textbf{Product of roots = constant coeff. of monic} (useful for checking the degree 3 polynomial is irreducible).
+
+\subsection*{Factorisation in UFD}
+
+\begin{theorem}[Gauss's Lemma]
+  Let \(R\) be a UFD and let \(P(X), Q(X) \in R[X]\) be primitive (i.e. coefficients have GCD 1), 
+  then the produce \(P(X)Q(X)\) is also primitive.
+\end{theorem}
+
+\begin{corollary}
+  If \(P(X) \in R[X]\) has a divisor \(A(X) \in K[X]\) where \(K\) is the field of fraction of \(R\), 
+  then there exists some \(\alpha \in K^\times\) such that \(\alpha A(X) \in R[X]\) and 
+  \(\alpha A(X) \mid P(X)\).
+\end{corollary}
+
+\begin{corollary}
+  If \(R\) is a UFD then so is \(R[X]\).
+\end{corollary}
+
+\begin{proposition}
+  Let \(P(X) \in R[X]\). \(P(X)\) is irreducible if and only if \(Q_r(X) := r^d P(X / r)\) is 
+  irreducible for any \(r \in R\) where \(d = \deg P(X)\).
+\end{proposition}
+
+\begin{proposition}
+  Let \(P(X) \in R[X]\) be monic and let \(I\) be a prime ideal of \(R\). Then, if 
+  \(P(X)\) is irreducible as a polynomial in \(R / I[X]\), then \(P(X)\) is irreducible 
+  in \(R[X]\).
+\end{proposition}
+
+\begin{proposition}[Eisenstein's Criterion]
+  Let \(P(X) = c_0 + c_1X + \cdots + X^n\) be a monic polynomial in \(R[X]\) and let
+  \(I\) be a prime ideal of \(R\). Then, if for all \(0 \le i \le n - 1\), 
+  \(c_i \in I\) and \(c_0 \not\in I^2\), then \(P(X)\) is irreducible in \(R[X]\).
+\end{proposition}
+
+Showing \(\sum_{i = 0}^n X^i\) is irreducible in \(\mathbb{Q}[X]\): write \(T = X - 1\) and we 
+observe 
+\[\sum_{i = 0}^n X^i = \frac{X^{n + 1} - 1}{X - 1} = \frac{(T + 1)^{n + 1} - 1}{T} = T^n + \cdots =: P(T)\]
+where by the binomial formula, all non-leading coefficients of \(P(T)\) are divisible by \(n + 1\) 
+while the constant term is \(n + 1\) and so not divisible by \((n + 1)^2\). Thus, if \(n + 1\) is 
+prime, we may conclude irreducibility by Eisentein's. Alternative adjustments can be made if 
+\(n + 1\) is not prime.
+
+\section*{Module Theory}
+
+Basic concepts: module, submodule, generating set, finitely generated, quotient, direct sum, 
+module homomorphism, kernel, image, universal property for modules, free module, universal 
+property of free modules.
+
+Let \(M\) be any \(R\)-module with generating set \(S\). Then, 
+by the universal property of free modules, we have the natural homomorphism 
+\(\tilde \iota : R[S] \to M\) induced by the inclusion map \(\iota : S \hookrightarrow M\).
+Now, denoting \(K = \ker \tilde \iota\), let \(T\) be a generating set of \(K\), 
+we have the short exact sequence 
+\[0 \to R[T] \to R[S] \to M \to 0.\]
+Hence, denoting the first map by \(\phi\), we have the isomorphism 
+\[M \simeq R[S] / \phi(R[T])\]
+and this is called a presentation of \(M\). If both modules in the quotient have finite 
+rank, \(M\) is called finitely presented. In the case both \(|S| = n, |T| = m\) are finite, 
+one can encode the information of \(M\) into a presentation matrix \(\Phi\) where 
+\[\phi(t_i) = \sum_{j = 1}^n \Phi_{ji}s_j.\]
+Namely, \(\Phi : R^m \to R^n\) is a homomorphism such that 
+\[M \simeq R^n / \Phi R^m.\]
+Elementary column operations changes the relation to an equivalent set of relations 
+while elementary row operations changes the generating set.
+
+Smith normal form algorithm on the matrix \(A\) over a Euclidean domain:
+
+The main step is to write \(A\) in a form such that \(a_{11}\) is the only 
+non-zero entry in the first row and the first column such that \(a_{11}\) divides every entry of \(A\).
+\begin{itemize}
+  \item Exchange rows and column such that \(a_{11}\) has the smallest Euclidean norm.
+  \item Applying Euclidean algorithm to make each entry of the first row and column 
+    have norm strictly less than \(a_{11}\) by adding multiples of the first row and 
+    column to the other rows and columns.
+  \item Repeat the above two steps until all entries of the first row and column are zero. 
+  \item Now, if there is some \(a_{ij}\) not divisible by \(a_11\), add the \(i\)-th column 
+    to the first (this does not change \(a_{11}\) as \(a_{1i} = 0\)).
+  \item Repeat from step 1 (this will decrease the norm of \(a_{11}\)).
+\end{itemize}
+Then, applying this algorithm to the minors of \(A\) inductively, we end up with the 
+Smith normal form of \(A\).  
+
+\begin{theorem}[Classification of finitely generated modules over a Euclidean domain]
+  Let \(M\) be a finitely generated module over a Euclidean domain \(R\). Then, there 
+  exists a unique integer \(r\) and non-units \(a_1, \cdots, a_n\) of \(R\) such that 
+  \(a_i \mid a_{i + 1}\) and 
+  \[M \simeq R^r \oplus R / \langle a_1 \rangle \oplus R / \langle a_2 \rangle 
+    \oplus \cdots \oplus R / \langle a_n \rangle.\] 
+\end{theorem}
+The above classification holds for PID as well though we did not prove it.
+
+\begin{corollary}
+  Let \(A\) be a finitely generated abelian group. Then there is a unique integer 
+  \(r\) and integers \(a_1, \cdots, a_t > 1\) with \(a_1 \mid a_2 \mid \cdots \mid a_t\) 
+  such that 
+  \[A \simeq \mathbb{Z}^r \oplus \mathbb{Z} / a_1\mathbb{Z} \oplus \mathbb{Z} / a_2\mathbb{Z} 
+    \oplus \cdots \oplus \mathbb{Z} / a_t\mathbb{Z}.\]
+\end{corollary}
+
+Let \(K\) be a field, \(V\) a finite dimensional \(K\)-vector space and let \(L : V \to V\) 
+a linear map, then we define the \(K[T]\)-module (or \(K[X]\)-module) \(M_L\) by taking 
+the underlying set \(V\) and defining scalar multiplication by 
+\[P(T) \cdot v := P(L)(v)\]
+for all \(P(T) \in K[T]\) and \(v \in V\) where \(P(L) : V \to V\) is the linear map 
+obtained by applying \(P\) on \(L\).
+
+It is clear that a basis \(\{v_1, \cdots, v_m\}\) of \(V\) generates \(M_L\) as a 
+\(K[T]\)-module. Furthermore, writing \(A\) the matrix corresponding to \(L\) with 
+respect to this basis so that \(Lv_i = \sum_{j = 1}^m a_{ji} v_j\), we have the relations 
+\(T \in K[T]\), \(T \cdot v_i = L v_i = \sum_{j = 1}^m a_{ji} v_j\). These relations 
+generate all relations. Thus, \(M_L\) has presentation matrix \(T \text{id}_m - A\).
+
+Now, as \(M_L\) is finitely generated as a \(K[T]\)-module, by the classification of 
+finitely generated modules, we have \(P_1(T), \cdots, P_t(T) \in K[T]\) such that 
+\(P_1(T) \mid \cdots \mid P_t(T)\) and 
+\[M_L \simeq K[T] / \langle P_1(T) \rangle \oplus \cdots \oplus K[T] / \langle P_t(T) \rangle.\]
+where the rank is 0 as the number of generators of \(M_L\) equals the number of 
+generators of the relations.
+
+Now, by considering \(K[T] / \langle P(T) \rangle\) has basis \(1, T, \cdots, T^{d - 1}\) where 
+\(d = \deg P(T)\), \(L\) restricted on \(K[T] / \langle P(T) \rangle\) has action 
+``multiplication by \(T\)'' represented by the companion matrix of \(P(T)\) with respect 
+to this basis. Hence, we have the rational canonical form of \(L\) given by 
+block matrices for which the \(i\)-th block is the companion matrix of \(P_i(T)\).
+
+Thus, if \(K\) is algebraically closed, each \(P_i(T)\) can be factored into a product of 
+linear factors which allows us to conclude the Jordan normal form theorem.
+
+Writting 
+\[M_L \simeq K[T] / \langle P_1(T) \rangle \oplus \cdots \oplus K[T] / \langle P_t(T) \rangle,\]
+the minimal polynomial of \(L\) is \(P_t\) and the characteristic polynomial of \(L\) 
+is \(\prod P_i\).
+
+The minimal polynomial of a linear map \(L\) is the unique monic generator of the ideal 
+\(\{P(T) \mid P(L) = 0\}\) of \(K[T]\).
+
+\subsection*{Noetherian}
+
+\begin{definition}[Notherian]
+  An \(R\)-module \(M\) is Noetherian if every increasing chain of \(M\)-submodules 
+  stabilizes.
+\end{definition}
+
+\begin{theorem}
+  An \(R\)-module \(M\) is Noetherian if and only if every \(M\)-submodule is finitely 
+  generated.
+\end{theorem}
+
+\begin{corollary}
+  Any PID is Noetherian over itself.
+\end{corollary}
+
+Some properties of Noetherian modules:
+\begin{itemize}
+  \item The quotient of Noetherian modules is Noetherian.
+  \item If \(N \le M\) is Noetherian and \(M / N\) is Noetherian, then so is \(M\).
+  \item Direct sums of Noetherian modules is Noetherian.
+  \item \(R\) Noetherian implies \(R^k\) Noetherian as it is a direct sum of \(k\)-copies of \(R\).
+  \item If \(R\) is a Noetherian ring and \(f : R \to S\) is a surjective ring homomorphism, then \(S\) is Noetherian.
+\end{itemize}
+
+\begin{theorem}
+  Any finitely generated module over a Noetherian ring is Noetherian.
+\end{theorem}
+
+\begin{theorem}[Hilbert Basis Theorem]
+  \(R\) is Noetherian if and only if \(R[X]\) is Noetherian.
+\end{theorem}
+
+\end{document}

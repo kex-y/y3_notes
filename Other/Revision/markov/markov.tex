@@ -1,0 +1,304 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{fontspec}
+  \setmainfont{Bitstream Charter}
+  % Cabin -- round
+  % Bitstream Charter -- almost computer modern
+  % \usepackage{unicode-math}
+  % \defaultfontfeatures{Scale=MatchLowercase}
+  % \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Markov Processes Revision Notes},
+  pdfauthor={Kexing Ying},
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=red,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin = 1.5in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{esint}
+\usepackage[ruled,vlined]{algorithm2e}
+\theoremstyle{definition}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{corollary}{Corollary}
+\newtheorem*{remark}{Remark}
+\newtheorem*{definition}{Definition}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{proposition}{Proposition}
+\newtheorem*{example}{Example}
+\newcommand\eqae{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily a.e.}}}{=}}}
+
+\title{Markov Processes Revision Notes}
+\author{Kexing Ying}
+
+\begin{document}
+\maketitle
+
+\section*{Markov Chains}
+
+\begin{itemize}
+  \item The strong Markov property implies that for a finite stopping time \(T\), 
+  \[\mathbb{P}(x_{n + T} \in A \mid \mathcal{F}_T) = P^n(x_T, A).\]
+  \item Given a chain \(\{x_n\}\) with initial distribution \(\mu\) and recurrent state 
+  \(j \in \mathcal{X}\) where \(\mathbb{P}_\mu(T_j < \infty) = 1\), the intervals 
+  \[\{T^n_j - T^{n - 1}_j\}_{n \ge 1}\]
+  are independent and \(\mathbb{P}(T^{k + 1}_j - T^k_j = m) = \mathbb{P}_j(T_j = m)\).
+  \item A state \(j \in \mathcal{X}\) is transient if and only if \(\sum_{n = 1}^\infty P^n_{jj} < \infty\).
+  \item For THMCLLN, we proved the lemma 
+  \[\frac{1}{n}\sum_{l = 0}^{T_i^n} f(x_l) \to \mathbb{E}_iT_i \int f \dd \pi.\] 
+\end{itemize}
+
+\section*{Feller and Strong Feller}
+
+\begin{proposition}
+  If \(g : \mathbb{R}^n \to \mathbb{R}_+\) is Borel measurable and in \(L^1\) with 
+  \(\int g \dd \lambda = 1\), then the transition operator 
+  \[Tf(x) := \int f(y) g(x- y) \lambda(\dd y) = (f * g)(x)\]
+  is strong Feller.
+\end{proposition}
+
+\begin{proposition}
+  If \(x \mapsto P(x, \cdot) : \mathcal{X} \to \mathcal{P}(\mathcal{X})\) is continuous 
+  with respect to the total variation norm, then \(P\) is strong Feller.
+\end{proposition}
+
+\begin{proposition}
+  Given measures \(\mu, \nu \in \mathcal{P}(\mathcal{X})\), 
+  \(\text{supp}(\mu) \cap \text{supp}(\nu) = \varnothing\) implies \(\mu \perp \nu\).
+
+  Furthermore, if \(\mu, \nu\) are mutually singular, invariant probability measures of a strong Feller 
+  process, then \(\text{supp}(\mu) \cap \text{supp}(\nu) = \varnothing\).
+\end{proposition}
+
+\begin{proposition}
+  A strong Feller process admitting a common point of support in every invariant 
+  probability measure has at most one invariant probability measure (Caution: result 
+  requires mastery material).
+\end{proposition}
+
+\section*{Invariant Measures in the General Case}
+
+\begin{theorem}[Krylov-Bogoliubov]
+  Let \((x_n)\) be a Feller process with transition probability \(P\) on a compact 
+  separable metric space \(\mathcal{X}\), then, if there exists some \(x_0 \in \mathcal{X}\)
+  such that \(\{P^n(x_0, \cdot) \mid n \in \mathbb{N}\}\) is tight, \(P\) admits 
+  an invariant probability measure.
+\end{theorem}
+
+\begin{corollary}
+  If \(\mathcal{X}\) is compact, every Feller process admits an invariant probability 
+  measure as every family of probability measures on a compact set is tight.
+\end{corollary}
+
+\begin{corollary}
+  Any a.e. bounded Feller Markov process \((x_n)\) admits an invariant probability measure.
+\end{corollary}
+\begin{proof}
+  Suppose \(|x_n| \le M\) almost everywhere. Then, for all \(\epsilon > 0\), 
+  defining \(K = [-M. M]\) (which is compact), we have 
+  \[P^n(x_0, K) = \mathbb{P}(x_n \in K \mid x_0) = \mathbb{E}(\mathbf{1}_K(x_n) \mid x_0).\]
+  Thus, as \(\mathbf{1}_K(x_n) = \mathbf{1}\) a.e. \(\mathbb{E}(\mathbf{1}_K(x_n) \mid x_0)\) 
+  is a \(\sigma(x_0)\)-measurable function which is \(\mathbf{1}\) a.e. So, 
+  taking any \(\omega \in \mathbb{E}(\mathbf{1}_K(x_n) \mid x_0)^{-1}\{1\}\), 
+  \[P^n(x_0(\omega), K) = \mathbb{E}(\mathbf{1}_K(x_n) \mid x_0)(\omega) = 1 \ge 1 - \epsilon\]
+  implying tightness of \(\{P^n(x_0, \cdot)\}\). Hence, we may conclude by Krylov-Bogoliubov.
+\end{proof}
+
+The Lyapunov function test builds upon the Krylov-Bogoliubov theorem. In particular, 
+the existence of a Lyapunov function \(V\) implies \(\mathcal{X}_0 := \{V < \infty\}\) 
+has measure 1, and furthermore, as \(TV(x) \le \gamma V(x) + C\), for every 
+\(x\) satisfying \(V(x) < \infty\), \(P^n(x, \mathcal{X}_0) = 1\) implying tightness 
+as required.
+
+\begin{definition}[Lyapunov Function]
+  A function \(V : \mathcal{X} \to \overline{\mathbb{R}_+}\) is a Lyapunov function 
+  if 
+  \begin{itemize}
+    \item \(V^{-1}(\mathbb{R}_+) \neq \varnothing\) (i.e. \(V\) is not always \(\infty\));
+    \item for all \(a \in \mathbb{R}_+\), \(\{V \le a\}\) is compact;
+    \item there exists \(0 < \gamma < 1\) and some \(C\) such that 
+      \[TV(x) = \int_{\mathcal{X}}V(y) P(x, \dd y) \le \gamma V(x) + C\]
+      for all \(x\) such that \(V(x) < \infty\).
+  \end{itemize}
+\end{definition}
+
+Note that \(V\) continuous and \(\lim_{x \to \pm \infty} V(x) = +\infty\) implies 
+point 2.
+
+Common Lyapunov functions include \(V(x) = |x|^p\) and \(V(x) = \log |x|\).
+
+\begin{theorem}[Lyapunov Function Test]
+  A Feller process which admits a Lyapunov function admits an invariant probability 
+  measure.
+\end{theorem}
+
+Useful inequalities:
+\begin{itemize}
+  \item \((x + y)^2 \le (1+\epsilon^{-2})x^2 + (1+\epsilon^2)y^2\).
+  \item for any \(p \ge 1, \delta > 0\), there exists some \(K > 1\),
+    \[|1 + x|^p \le K|x|^p + 1 + \delta.\]
+    Note that for \(x \le 0\), \(|1 + x|^p \le 1 + |x|^p\);
+  \item (Young's inequality) for \(a, b \ge 0, p, q > 1\) such that \(1 / p + 1 / q = 1\)
+    (i.e. \(p, q\) are Hoelder conjugates), 
+    \[ab \le \frac{a^p}{p} + \frac{b^q}{q}.\]
+\end{itemize}
+
+\subsection*{Uniqueness of the Invariant Measure}
+
+\begin{definition}[Coupling]
+  Given probability measures \(\pi_1, \pi_2\) on \(\mathcal{X}\), a measure \(\mu\) 
+  on \(\mathcal{X}^2\) is a coupling of \(\pi_1\) and \(\pi_2\) if \((p_i)_* \mu = \pi_i\)
+  for \(i = 1, 2\) where \(p_i : \mathcal{X}^2 \to \mathcal{X}\) is the projection map 
+  onto the \(i\)-th component.
+\end{definition}
+
+\begin{proposition}
+  If \(\pi_1, \pi_2\) are probability measures on \(\mathcal{X}\) and 
+  \(\Delta := \{(x, x) \mid x \in \mathcal{X}\} \subseteq \mathcal{X}^2\). Then 
+  \(\pi_1 = \pi_2\) if there exists a coupling \(\mu\) of \(\pi_1, \pi_2\) such 
+  that \(\mu(\Delta) = 1\). Equivalently, 
+  \[\int_{\mathcal{X}^2} 1 \wedge d(x, y) \mu(\dd x, \dd y) = 0,\]
+  as \(\Delta = \{(x, y) \in \mathcal{X}^2 \mid 1 \wedge d(x, y) = 0\}\).
+\end{proposition}
+
+\begin{theorem}[Deterministic Contraction]
+  If there exists a constant \(\gamma \in (0, 1)\) such that for all \(x, y \in \mathcal{X}\),
+  \[\mathbb{E}d(F(x, \xi_1), F(y, \xi_1)) \le \gamma d(x, y),\]
+  then the random dynamical system defined by \(x_{n + 1} = F(x_n, \xi_{n + 1})\)
+  where \(\{\xi_n\}\) are i.i.d. random variables has at most one invariant probability 
+  measure.
+\end{theorem}
+
+The proof of this follows by constructing two synchronised coupling, for which 
+their joint laws are couplings (and hence, are tight). Taking a convergent subsequence, 
+we know its limit is also a coupling. Thus, it suffices to show the condition 
+in the above proposition applies.
+
+Minorisation also provides a method for showing uniqueness.
+
+\begin{definition}[Minorised]
+  The transitional probabilities \(P = \{P(x, \cdot)\}_{x \in \mathcal{X}}\) is said 
+  to be minorised by \(\eta \in \mathcal{P}(\mathcal{X})\) if there exists some 
+  \(a > 0\) such that for all \(x \in \mathcal{X}\),
+  \[P(x, \cdot) \ge a \eta.\]
+  Also known as Doeblin's condition.
+\end{definition}
+
+\begin{theorem}
+  Let \(P\) be a transition probability on a space \(\mathcal{X}\) which is minorised 
+  by \(\eta \in \mathcal{P}(\mathcal{X})\) (by some \(a > 0\)). Then, 
+  \begin{itemize}
+    \item \(P\) has a unique invariant probability measure \(\pi\);
+    \item for all \(\mu, \nu \in \mathcal{P}(\mathcal{X})\), 
+      \[\|T^{n + 1}\mu - T^{n + 1}\nu\|_{TV} \le (1 - a)^n \|\mu - \nu\|_{TV}.\]
+  \end{itemize}
+\end{theorem}
+Clearly, the second point implies the first by Banach fixed point theorem.
+
+As with Banach fixed point theorem, the above result remains to hold if there 
+exists some \(n_0\) such that \(P^{n_0}(x, \cdot) \ge a \eta\) for all \(x\). 
+
+\subsection*{Invariant Sets}
+
+\begin{definition}[\(P\)-Invariant Set]
+  Given a transition probability \(P\), a set \(A\) is \(P\)-invariant if 
+  \(P(x, A) = 1\) for all \(x \in A\).
+\end{definition}
+
+One may restrict a transition probability \(P\) on a \(P\)-invariant set \(A\) 
+by taking \(P|_A := \{P(x, \cdot) \mid x \in A\}\). Then, 
+\[P(x, B \cap A) = P|_A(x, B)\]
+for all \(x \in A\), \(B \in \mathcal{B}(\mathcal{X})\).
+
+In general, we would like to find \(P\)-invariant sets which are closed as we would 
+like the state space \(A\) of \(P|_A\) to be \textit{complete} separable. Hence, 
+if \(A \subseteq \mathcal{X}\) is compact, we may apply Krylov-Bogoliubov should 
+\(P|_A\) be Feller.
+
+\begin{proposition}
+  Let \(\pi^0 \in \mathcal{P}(\mathcal{X})\), \(\pi := \pi^0 \cap A \in \mathcal{P}(\mathcal{X})\) 
+  where \(A\) is a \(P\)-invariant set. Then, \(\pi^0\) restricted on \(A\) is invariant for 
+  \(P|_A\) if and only if \(\pi\) is invariant on \(P\).
+\end{proposition}
+
+\begin{theorem}
+  Let \(A\) be \(P\)-invariant where \(P\) is Feller. Then \(P|_A\) is also Feller, and 
+  if \(A\) is compact, there exists an invariant probability measure for \(P\) 
+  by Krylov-Bogoliubov and the above proposition.
+\end{theorem}
+
+\begin{definition}
+  Given a \(P\)-invariant set \(A\), we define inductively \(A_0 := A\) and 
+  \[A_{n + 1} := \{x \in \mathcal{X} \mid P(x, A_n) > 0\}.\]
+  This sequence is monotonically increasing. 
+\end{definition}
+
+\begin{proposition}
+  Let \(A\) be \(P\)-invariant such that \(\bigcup_{n \ge 0} A_n = \mathcal{X}\).
+  Then, every invariant probability measure \(\pi\) is concentrated on \(A\), 
+  i.e. \(\pi(A) = 1\).
+\end{proposition}
+
+With this proposition, one may use the above criterions to show uniqueness of 
+invariant probability measure on \(A\) which implies unique invariant probability 
+measure on \(\mathcal{X}\).
+
+To show a set \(A\) has measure 1 under all invariant measures (useful to find support), 
+it suffices to show it is \(P\)-invariant and \(\bigcup A_n = \mathcal{X}\).
+
+\end{document}

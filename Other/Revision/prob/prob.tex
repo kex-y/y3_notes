@@ -1,0 +1,164 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{fontspec}
+  \setmainfont{Bitstream Charter}
+  % Cabin -- round
+  % Bitstream Charter -- almost computer modern
+  % \usepackage{unicode-math}
+  % \defaultfontfeatures{Scale=MatchLowercase}
+  % \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Probability Theory Revision Notes},
+  pdfauthor={Kexing Ying},
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=red,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin = 1.5in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{esint}
+\usepackage[ruled,vlined]{algorithm2e}
+\theoremstyle{definition}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{corollary}{Corollary}
+\newtheorem*{remark}{Remark}
+\newtheorem*{definition}{Definition}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{proposition}{Proposition}
+\newtheorem*{example}{Example}
+\newcommand{\diag}{\mathop{\mathrm{diag}}}
+\newcommand{\Arg}{\mathop{\mathrm{Arg}}}
+\newcommand{\hess}{\mathop{\mathrm{Hess}}}
+\newcommand\eqae{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily a.e.}}}{=}}}
+
+\title{Probability Theory Revision Notes}
+\author{Kexing Ying}
+
+\begin{document}
+\maketitle
+
+\begin{theorem}
+  For non-negative random variable \(\xi\), 
+  \[\mathbb{E}\xi^k = k \int t^{k - 1} \mathbb{P}(\xi \ge t) \lambda(\dd t).\]
+\end{theorem}
+
+\begin{theorem}
+  If \(\mathbb{E}|\xi_n|^k\) converges to 0 for some \(k\), then \(\xi_n \to 0\) 
+  in probability.
+\end{theorem}
+
+\begin{theorem}
+  If \(\sum \mathbb{P}(|\xi_n| \ge \epsilon) < \infty\), then \(\xi_n \to 0\) almost everywhere 
+  (consider what it means for \(\omega \in \{\xi_n \not \to 0\}\)).  
+\end{theorem}
+
+\begin{corollary}
+  If \(\sum \mathbb{E}|\xi_n|^k < \infty\) for some \(k\), then \(\xi_n \to 0\) almost everywhere.
+\end{corollary}
+
+\begin{theorem}
+  \(\xi_n \to \xi\) almost every where if and only if \(\mathbb{P}(\sup_{k \ge n}|\xi_k - \xi| \ge \epsilon) \to 0\) 
+  for all \(\epsilon > 0\) (Exercise sheet 5).
+\end{theorem}
+
+Method for showing SLLN without KSLLN (requires independence, equal mean (WLOG, mean 0), 
+not necessary identically distributed):
+\begin{itemize}
+  \item By relabelling, we have by Kolmogorov's inequality 
+  \[\mathbb{P}\left(\max_{2^n \le k \le 2^{n + 1}} |S_k| \ge \epsilon\right) \le 
+    \frac{1}{\epsilon^2} \sum_{k = 2^n}^{2^{n + 1}} V_{\xi_k}.\]
+  \item Choosing \(\epsilon\) to be \(n\epsilon\), we have 
+  \[\mathbb{P}\left(\max_{2^n \le k \le 2^{n + 1}} \left|\frac{1}{n}S_k\right| \ge \epsilon\right) \le 
+    \frac{1}{n^2\epsilon^2} \sum_{k = 2^n}^{2^{n + 1}} V_{\xi_k}.\]
+  \item Summing over \(n\), we have 
+  \[\sum_{n = 1}^\infty \mathbb{P}\left(\max_{2^n \le k \le 2^{n + 1}} \left|\frac{1}{n}S_k\right| \ge \epsilon\right) \le 
+    \sum_{n = 1}^\infty \frac{1}{n^2\epsilon^2} V_{\xi_n} < \infty\]
+  if \(V_{\xi_n} \le 1\) or some other conditions.
+  \item Hence, by the first Borel-Cantelli lemma, 
+  \[\mathbb{P}\left(\left|\frac{1}{n}S_k\right| \ge \epsilon \text{ i.o.}\right) = 
+    \mathbb{P}\left(\max_{2^n \le k \le 2^{n + 1}} \left|\frac{1}{n}S_k\right| \ge \epsilon \text{ i.o.}\right) = 0.\]
+  \item Thus, for all \(\epsilon > 0\)
+  \[\mathbb{P}\left(\bigcup_{n = 1}^\infty \bigcap_{m \ge n} \left|\frac{1}{n} S_k\right| < \epsilon\right)
+    = \mathbb{P}\left\{\left|\frac{1}{n}S_k\right| \ge \epsilon \text{ i.o.}\right\}^c = 1\]
+  which implies convergence to 0 almost everywhere by intersecting over \(\epsilon\).
+\end{itemize}
+
+\section*{Characteristic Function}
+
+Let \(\xi\) be a random variable and let \(\phi\) be its characteristic function
+\begin{itemize}
+  \item \(\phi(t) =\mathbb{E}e^{it\xi}\);
+  \item \(|\phi(t)| \le \phi(0) = 1\);
+  \item \(\phi(-t) = \overline{\phi(t)}\);
+  \item \(\phi\) is uniformly continuous on \(\mathbb{R}\);
+  \item \(\mathbb{E}\xi^r = i^{-r}\phi^{(r)}(0)\) if \(\mathbb{E}|\xi|^n < \infty\) where \(r \le n\);
+  \item for random variables \(\xi_1, \cdots, \xi_n\), the characteristic function of 
+    \(\sum \xi_i\) is \(\prod \phi_i\) if and only if \(\xi_i\) are independent;
+  \item convex linear combinations of characteristic functions is a characteristic function;
+  \item given \(\alpha \in \mathbb{R}\), \(\overline{\phi}, \text{Re}(\phi), |\phi|^2\) and \(\phi(\alpha t)\) are all characteristic functions;
+  \item if \(|\phi(t_0)| = 1\) for some \(t_0 \neq 0\), then \(\xi\) is a pure point random variable;
+  \item if \(|\phi(t)| = 1\) for all \(|t| \in (-\epsilon, \epsilon)\) then \(\xi\) is degenerate;
+  \item see also Bochner, Polya and Marcinkievicz theorems.
+\end{itemize}
+
+\begin{theorem}
+  If \(\xi\) is a discrete random variable with characteristic function \(\phi\), then 
+  \[\mathbb{P}(\xi = k) = \frac{1}{2\pi}\int_{[-\pi, \pi]} e^{-ikt}\phi(t) \lambda(\dd t).\]
+\end{theorem}
+
+\end{document}
