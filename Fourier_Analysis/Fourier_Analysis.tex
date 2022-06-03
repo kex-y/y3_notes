@@ -1231,6 +1231,25 @@ simply the Lebesgue integral taken with respect to that measure.
   called the Fourier-Stieltjes transform of \(F\).
 \end{definition}
 
+\begin{theorem}[Inversion of the Fourier-Stieltjes Transform]
+  Let \(F \in S_\infty\) and let \(g\) by its Fourier-Stieltjes transform. Then 
+  for all \(a < b\), 
+  \[F(b) - F(a) = \frac{1}{2\pi} \int_{\mathbb{R}} g(y) \frac{e^{-iya} - e^{-iyb}}{iy} \lambda(\dd y).\]
+\end{theorem}
+\begin{proof}
+  Since \(F \in S_\infty\), there exists \(F'\) such that \(F' \dd\lambda = \dd F\) and 
+  \(F'\) is differentiable (so Dini's condition holds everywhere). Thus, 
+  \[\begin{split}
+    \int g(y) \frac{e^{-iya} - e^{-iyb}}{iy} \lambda(\dd y) & = 
+    \int \int e^{-iyx} \dd F(x) \frac{e^{-iya} - e^{-iyb}}{iy} \lambda(\dd y)\\
+    & = \int \mathcal{F}[F'](y) \frac{e^{-iya} - e^{-iyb}}{iy} \lambda(\dd y)\\
+    & = \int \mathcal{F}[F](y) (e^{-iya} - e^{-iyb}) \lambda(\dd y) = 2\pi(F(b) - F(a))
+  \end{split}\]
+\end{proof}
+
+The inversion formula is true in a much more general context and the statement and proof of this 
+can be found in the probability theory course regarding characteristic functions.
+
 \begin{lemma}
   The Fourier-Stieltjes transform (F.S.T.) of \(F\), \(g\) is bounded and continuous 
   on \(\mathbb{R}\).
