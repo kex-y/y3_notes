@@ -233,4 +233,27 @@ We also have the following properties: for \(f, g \in L^1\), \(c, c_1, c_2 \in \
   \item Convolution: \(\mathcal{F}[f * g] = \mathcal{F}[f] \mathcal{F}[g]\).
 \end{itemize}
 
+\section*{Distribution}
+
+\(|x|' = \text{sgn}(x), \text{sgn}(x)' = 2\delta, \text{sgn}(x - a)' = 2\delta(x - a)\).
+
+Suppose \(f \in S'\). Then,
+\[\langle \mathcal{F}[f'], \phi\rangle = \langle f', \mathcal{F}[\phi]\rangle 
+  = - \langle f, \mathcal{F}[\phi]'\rangle
+  = \langle f, \mathcal{F}[it\phi(t)]\rangle = \langle \mathcal{F}[f], it\phi(t)\rangle
+  = \langle ix \mathcal{F}[f], \phi\rangle\]
+implying \(\mathcal{F}[f'] = ix \mathcal{F}[f]\). Hence, \(\mathcal{F}[f] = -ix^{-1}\mathcal{F}[f']\).
+
+Similarly,
+\[\begin{split} 
+    \langle \mathcal{F}[f]', \phi \rangle & = - \langle \mathcal{F}[f], \phi'\rangle 
+    = - \langle f, \mathcal{F}[\phi'] \rangle\\
+    & = -\langle f, it \mathcal{F}[\phi](t)\rangle
+    = - \langle ixf(x), \mathcal{F}[\phi] \rangle = -i \langle \mathcal{F}[xf(x)], \phi \rangle
+\end{split}\]
+so \(\mathcal{F}[xf(x)] = i \mathcal{F}[f]'\).
+
+By a similar process, the Fourier transform of a tempered distribution satisfy 
+all the normal properties as mentioned in the previous section.
+
 \end{document}
